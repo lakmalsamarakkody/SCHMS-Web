@@ -1,3 +1,4 @@
+<html>
 {{ template.header|raw }}
 <body>
 
@@ -7,16 +8,11 @@
 
 
 				<div class="jumbotron mt-5 mx-auto">
-					<h1 class="display-3">Hello, world!</h1>
-					<p class="lead">This is a simple PHP Framework developed by Avanciro (PVT) Ltd.</p>
-					<h4>Stack :</h4>
-					<ul>
-						<li>PHP</li>
-						<li>Eloquent</li>
-						<li>Twig</li>
-					</ul>
+					<h1 class="display-3">BIT Project - 2019</h1>
+					<p class="lead">School Management System </p>
+					<h4>WP/NG/DAVID DE SILVA JUNIOR SECONDARY SCHOOL <br/> PEELLAWATHTHA <br/>ANDIAMBALAMA</h4>
 					<p class="lead">
-						<a class="btn btn-primary btn-lg" href="https://www.avanciro.com" target="_blank" role="button">More</a>
+						<a class="btn btn-primary btn-lg" href="{{ app.url }}/themes/{{ app.theme }}/user/login.html" role="button">Login Panel</a>
 					</p>
 				</div>
 
@@ -25,7 +21,6 @@
 		</div>
 	</div>
 
-	{{ template.footer|raw }}
-
+{{ template.footer|raw }}
 </body>
 </html>
