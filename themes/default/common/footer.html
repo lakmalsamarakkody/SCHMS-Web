@@ -1,0 +1,7 @@
+
+	<!-- JS -->
+	<script type="text/javascript" src="{{ app.url }}/themes/{{ app.theme }}/assets/libs/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ app.url }}/themes/{{ app.theme }}/assets/libs/bts/js/bootstrap.min.js"></script>
+{% for script in scripts %}
+	<script type="text/javascript" src="{{ script }}"></script>
+{% endfor  %}

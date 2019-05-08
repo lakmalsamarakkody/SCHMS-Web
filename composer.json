@@ -1,0 +1,9 @@
+{
+        "config": {
+                "vendor-dir": "libs"
+        },
+        "require": {
+                "illuminate/database": "^5.6",
+                "twig/twig": "^2.5"
+        }
+}
