@@ -1,0 +1,58 @@
+/* CSS of home/index */
+.index{
+    min-height: 100%;
+}
+
+.footer{
+    background-color: #333333;
+    color: #cccccc;
+    font-size: 80%
+}
+
+
+/* CSS of user/login */
+.login{
+    background-image: linear-gradient(#6f6fff,#d1a9ff);
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+}
+
+.login h1{
+    color: #ffffff;
+    
+}
+
+.login h2{
+    color: #cccccc;
+}
+
+
+/* CSS of user/admin_panel */
+.admin-panel{
+}
+
+.admin-panel .main-bar{
+    background-color: #6f6fff;
+    height: 50px;
+}
+
+.admin-panel .side-bar{   
+    background-color: #ffffff;
+    color: #6f6fff;
+    border-right: 1px solid #6f6fff;
+}
+
+.admin-panel .side-bar ul{
+    list-style-type: none;
+}
+
+
+
+  
+  
+  
+  
