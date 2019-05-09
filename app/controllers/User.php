@@ -13,8 +13,8 @@ class User extends Controller {
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 
 		// RENDER VIEW
-		$this->load->view('user/login', $data);
+        $this->load->view('user/login', $data);
+        
     }
 }
-
 ?>
