@@ -1,0 +1,29 @@
+2019/05/14 23:36:36 [error] 10219#10219: *1 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Class 'CommonSidenav' not found in /opt/apps/sites/skeleton.int/app/core/Loader.php:56
+Stack trace:
+#0 /opt/apps/sites/skeleton.int/app/controllers/User.php(29): Loader->controller(Array, Array)
+#1 /opt/apps/sites/skeleton.int/app/core/App.php(44): User->admin_panel()
+#2 /opt/apps/sites/skeleton.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/apps/sites/skeleton.int/app/core/Loader.php on line 56" while reading response header from upstream, client: 127.0.0.1, server: skeleton.int, request: "GET /user/admin_panel/ HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "skeleton.int"
+2019/05/14 23:36:41 [error] 10219#10219: *1 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Class 'CommonSidenav' not found in /opt/apps/sites/skeleton.int/app/core/Loader.php:56
+Stack trace:
+#0 /opt/apps/sites/skeleton.int/app/controllers/User.php(29): Loader->controller(Array, Array)
+#1 /opt/apps/sites/skeleton.int/app/core/App.php(44): User->admin_panel()
+#2 /opt/apps/sites/skeleton.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/apps/sites/skeleton.int/app/core/Loader.php on line 56" while reading response header from upstream, client: 127.0.0.1, server: skeleton.int, request: "GET /user/admin_panel/ HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "skeleton.int"
+2019/05/14 23:37:28 [error] 10219#10219: *1 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Class 'CommonSidenav' not found in /opt/apps/sites/skeleton.int/app/core/Loader.php:56
+Stack trace:
+#0 /opt/apps/sites/skeleton.int/app/controllers/User.php(29): Loader->controller(Array, Array)
+#1 /opt/apps/sites/skeleton.int/app/core/App.php(44): User->admin_panel()
+#2 /opt/apps/sites/skeleton.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/apps/sites/skeleton.int/app/core/Loader.php on line 56" while reading response header from upstream, client: 127.0.0.1, server: skeleton.int, request: "GET /user/admin_panel/ HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "skeleton.int"
+2019/05/15 00:02:07 [error] 10219#10219: *21 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function get() on null in /opt/apps/sites/skeleton.int/app/core/Controller.php:20
+Stack trace:
+#0 /opt/apps/sites/skeleton.int/app/controllers/Login.php(7): Controller->__get('config')
+#1 /opt/apps/sites/skeleton.int/app/core/App.php(252): Login->login(Object(Registry))
+#2 /opt/apps/sites/skeleton.int/app/core/App.php(35): App->configureController()
+#3 /opt/apps/sites/skeleton.int/index.php(37): App->__construct(Object(Registry))
+#4 {main}
+  thrown in /opt/apps/sites/skeleton.int/app/core/Controller.php on line 20" while reading response header from upstream, client: 127.0.0.1, server: skeleton.int, request: "GET /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "skeleton.int"

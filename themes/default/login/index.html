@@ -1,0 +1,32 @@
+<html>
+{{ template.header|raw }}
+<body>
+
+<div class="container-fluid login"> 
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-6">
+                <h1>School Management System</h1> <hr/>
+                <h2>David De Silva Secondary School</h2>
+            </div>
+
+            <div class="col-md-4 offset-1">
+                <form name="loginform" method="post" action="admin_panel">            
+                    <div class="form-group"> 
+                        <input class="form-control" type="text" name="username" placeholder="Username"/>
+                    </div>
+            
+                    <div class="form-group mt-3">
+                        <input class="form-control" type="password" name="password" placeholder="Password" />
+                    </div>
+                    
+                    <input class="btn btn-primary mt-5 pr-3" type="submit" name="login" value="Login" />
+                    <input class="btn btn-secondary mt-5" type="reset" name="reset" value=" Clear"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ template.footer|raw }}
+</body>
+</html>
