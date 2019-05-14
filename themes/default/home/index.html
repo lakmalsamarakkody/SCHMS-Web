@@ -1,26 +1,26 @@
-<html>
 {{ template.header|raw }}
+
 <body>
 
-	<div class="container-fluid">
-		<div class="container index">
-			<div class="row">
+    <div class="container-fluid home">
+        <div class="row">
+            <div class="col-md-2 left-pane">
+                <div class="row">
+                    <div class="col-md-12 logo">
+                        logo
+                    </div>
 
+                    <div class="col-md-12">
+                        {{ template.sidenav|raw }}
+                    </div>                             
+                </div>
+            </div>
 
-				<div class="jumbotron mt-5 mx-auto">
-					<h1 class="display-3">BIT Project - 2019</h1>
-					<p class="lead">School Management System </p>
-					<h4>WP/NG/DAVID DE SILVA JUNIOR SECONDARY SCHOOL <br/> PEELLAWATHTHA <br/> ANDIAMBALAMA </h4>
-					<p class="lead">
-						<a class="btn btn-primary btn-lg mt-5" href="user/login" role="button">Login Panel</a>
-					</p>
-				</div>
-
-
-			</div>
-		</div>
-	</div>
+            <div class="col-md-10 content">               
+               Data
+            </div>
+        </div>
+    </div>
 
 {{ template.footer|raw }}
 </body>
-</html>

@@ -11,6 +11,7 @@ class Home extends Controller {
 		// HEADER / FOOTER
 		$data['template']['header']		= $this->load->controller('common/header', $data);
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
+		$data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
 
 		// RENDER VIEW
 		$this->load->view('home/index', $data);

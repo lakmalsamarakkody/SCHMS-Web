@@ -1,24 +1,128 @@
-/* CSS of home/index */
-.index{
-    min-height: 100%;
+:root{
+    --main-bg-color: #333333;
+    --nav-main-text-color:#cccccc;
+    --nav-sub-text-color:#bbbbbb;
+    --nav-hover-color: #222222;
 }
 
+/* ScrollBar */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  
+/* CSS of common/footer */
 .footer{
-    background-color: #333333;
-    color: #cccccc;
+    background-color: var(--main-bg-color);
+    color: var(--nav-main-text-color);
     font-size: 80%
 }
 
 
-/* CSS of user/login */
+/* CSS of common/sidenav */
+.sidenav{
+    padding-left: 0%;
+    margin: 0%;
+}
+
+.sidenav li{
+    cursor: pointer;
+    list-style: none;  
+}
+
+.sidenav li a{
+    text-decoration: none;
+    color: var(--nav-sub-text-color)
+}
+
+.sidenav li.main-menu{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 10%;
+    font-size: 18px;
+    color: var(--nav-main-text-color);
+    display: flex;
+    align-items: center;
+}
+
+.sidenav li.main-menu a{
+    display: flex;
+    align-items: center;
+}
+
+.sidenav li.main-menu:hover{
+    background-color: var(--nav-hover-color);
+}
+
+.sidenav .main-menu .la{
+    font-size: 30px;
+}
+
+.sidenav li.sub-menu{
+   
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 20%;
+    font-size: 16px;
+    color: var(--nav-main-text-color);
+}
+
+.sidenav li.sub-menu a{
+    display: flex;
+    align-items: center;
+}
+
+.sidenav li.sub-menu:hover{
+    background-color: var(--nav-hover-color);
+}
+
+.sidenav .sub-menu .la{
+    font-size: 20px;
+}
+
+
+/* CSS of home/index */
+.home .left-pane{
+    background-color: var(--main-bg-color);
+    height: 100vh;
+    padding: 0%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.home .left-pane .logo{
+    height: 15vh;
+}
+
+.home .content{
+    overflow-y: auto;
+}
+
+
+/* CSS of login/index */
 .login{
-    background-image: linear-gradient(#6f6fff,#d1a9ff);
+    background-image: linear-gradient(#5555ff,#ff88ff);
     display: flex;
     align-items: center;
     flex-direction: column; 
     justify-content: center;
     width: 100%;
-    min-height: 100%;
+    height: 100vh;
 }
 
 .login h1{
@@ -31,24 +135,8 @@
 }
 
 
-/* CSS of user/admin_panel */
-.admin-panel{
-}
 
-.admin-panel .main-bar{
-    background-color: #6f6fff;
-    height: 50px;
-}
 
-.admin-panel .side-bar{   
-    background-color: #ffffff;
-    color: #6f6fff;
-    border-right: 1px solid #6f6fff;
-}
-
-.admin-panel .side-bar ul{
-    list-style-type: none;
-}
 
 
 
