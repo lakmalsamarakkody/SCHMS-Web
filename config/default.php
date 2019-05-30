@@ -5,7 +5,7 @@ $_['site_title']			=	'Skeleton';
 
 // APP CONFIG
 $_['app_theme']				=	'default';
-$_['base_url']				=	'http://skeleton.int';
+$_['base_url']				=	'http://bit-project.int';
 
 // TWIG
 $_['twig_debug']			=	true;
