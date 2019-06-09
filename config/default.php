@@ -1,7 +1,7 @@
 <?php
 
 // SITE CONFIG
-$_['site_title']			=	'Skeleton';
+$_['site_title']			=	'SCHMS - David De Silva College';
 
 // APP CONFIG
 $_['app_theme']				=	'default';

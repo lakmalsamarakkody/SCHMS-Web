@@ -1,79 +1,84 @@
-<ul class="sidenav">
+<div class="col-md-12 logo">
+       <img src="{{ app.url }}/assets/img/profile-pic.jpg" width="100px" height="100px" class="rounded-circle img-thumbnail">
+</div>
 
-    <li class="main-menu" id="dashboard">
-        <a href="{{ app.url }}"><i class="la la-dashboard"></i><span class="">&nbsp;Dashboard</span></a>
-    </li>
+<div class="col-md-12">
+    <ul class="sidenav">
 
-    <li class="main-menu" data-toggle="collapse" data-target="#student">
-       <i class="la la-graduation-cap"></i><span>&nbsp;Students</span>
-    </li>
+        <li class="main-menu" id="dashboard">
+            <a href="{{ app.url }}"><i class="la la-dashboard"></i><span class="">&nbsp;Dashboard</span></a>
+        </li>
     
-    <ul class="collapse submenu" id="student">
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/student/"><i class="la la-globe"></i><span>&nbsp;Overview</span></a>
+        <li class="main-menu" data-toggle="collapse" data-target="#student">
+            <i class="la la-graduation-cap"></i><span>&nbsp;Students</span>
         </li>
         
-        <li class="sub-menu">
-            <a href="{{ app.url }}/student/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
+            <ul class="collapse" id="student">
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/student/"><i class="la la-globe"></i><span>&nbsp;Overview</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/student/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/student/edit"><i class="la la-pencil"></i><span>&nbsp;Edit</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/student/remove"><i class="la la-minus-circle"></i><span>&nbsp;Remove</span></a>
+                </li>
+            </ul>
+            
+        <li class="main-menu" data-toggle="collapse" data-target="#teacher">
+            <i class="la la-users"></i><span>&nbsp;Teachers</span>
         </li>
         
-        <li class="sub-menu">
-            <a href="{{ app.url }}/student/edit"><i class="la la-pencil"></i><span>&nbsp;Edit</span></a>
-        </li>
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/student/remove"><i class="la la-minus-circle"></i><span>&nbsp;Remove</span></a>
-        </li>
-        
-    </ul>
-        
-    <li class="main-menu" data-toggle="collapse" data-target="#teacher">
-        <i class="la la-users"></i><span>&nbsp;Teachers</span>
-    </li>
+            <ul class="collapse" id="teacher">
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/teacher/"><i class="la la-globe"></i><span>&nbsp;Overview</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/teacher/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/teacher/edit"><i class="la la-pencil"></i><span>&nbsp;Edit</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/teacher/remove"><i class="la la-minus-circle"></i><span>&nbsp;Remove</span></a>
+                </li>
+            </ul>
     
-    <ul class="collapse" id="teacher">
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/teacher/"><i class="la la-globe"></i><span>&nbsp;Overview</span></a>
+        <li class="main-menu" data-toggle="collapse" data-target="#user">
+            <i class="la la-users"></i><span>&nbsp;Users</span>
         </li>
         
-        <li class="sub-menu">
-            <a href="{{ app.url }}/teacher/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
-        </li>
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/teacher/edit"><i class="la la-pencil"></i><span>&nbsp;Edit</span></a>
-        </li>
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/teacher/remove"><i class="la la-minus-circle"></i><span>&nbsp;Remove</span></a>
-        </li>
-        
+            <ul class="collapse" id="user">
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/user/"><i class="la la-globe"></i><span>&nbsp;Overview</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/user/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/user/edit"><i class="la la-pencil"></i><span>&nbsp;Edit</span></a>
+                </li>
+                
+                <li class="sub-menu">
+                    <a href="{{ app.url }}/user/remove"><i class="la la-minus-circle"></i><span>&nbsp;Remove</span></a>
+                </li> 
+            </ul>
     </ul>
+</div>
 
-    <li class="main-menu" data-toggle="collapse" data-target="#user">
-        <i class="la la-users"></i><span>&nbsp;Users</span>
-    </li>
-    
-    <ul class="collapse" id="user">
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/user/"><i class="la la-globe"></i><span>&nbsp;Overview</span></a>
-        </li>
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/user/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
-        </li>
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/user/edit"><i class="la la-pencil"></i><span>&nbsp;Edit</span></a>
-        </li>
-        
-        <li class="sub-menu">
-            <a href="{{ app.url }}/user/remove"><i class="la la-minus-circle"></i><span>&nbsp;Remove</span></a>
-        </li>
-        
-    </ul>
-</ul>
+
           
