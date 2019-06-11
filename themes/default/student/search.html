@@ -1,0 +1,57 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content stusearch">
+                <div class="stusearchfilter">
+
+                    <form>
+
+                        <div class="form-group">
+                            <label for="adddate">Admission Date</label>
+                            <input type="date" class="form-control" id="adddate" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addno">Admission Number</label>
+                            <input type="number" class="form-control" id="addno" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fn">Name</label>
+                            <input type="text" class="form-control" id="fn" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="class">Class</label>
+                            <input type="text" class="form-control" id="class" required/>
+                        </div>                    
+
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" class="form-control" id="dob" required/>
+                            <small id="dobHelp" class="form-text text-muted">ex - 30/12/1995</small>
+                        </div>
+
+                        <div class="form-group mb-5">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" required/>
+                        </div>
+
+                        <input class="btn btn-outline-primary" type="submit" value="Search"/>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>
