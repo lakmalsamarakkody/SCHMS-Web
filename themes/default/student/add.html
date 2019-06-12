@@ -7,293 +7,300 @@
             
             {{ template.sidenav|raw }}                            
 
-            <div class="col-md-10 content stuadd">
+            <div class="col-md-10 content">
 
-                <form name="admission" method="POST" action="#">
-                    <div id="accordionAdmission">
-                    
-                        <div class="card">
+                {{ template.topmenu|raw }}
 
-                            <div class="card-header" id="headingAdmission" data-toggle="collapse" data-target="#collapseAdmission" aria-expanded="true" aria-controls="collapseAdmission">
-                                New Student Admission
-                            </div>
+                <div class="stuadd">
+
+                    <form name="admission" method="POST" action="#">
+                        <div id="accordionAdmission">
                         
-                            <div id="collapseAdmission" class="collapse show" aria-labelledby="headingAdmission" data-parent="#accordionAdmission">
-                                <div class="card-body">
-
-                                    <div class="form-row">                                        
-                                        <div class="form-group col-md-4 mr-auto">
-                                            <label for="addno">Admission Number</label>
-                                            <input type="number" class="form-control" id="addno" required/>
-                                            <small id="addnolHelp" class="form-text text-muted">will assigned Automatically</small>
+                            <div class="card">
+    
+                                <div class="card-header" id="headingAdmission" data-toggle="collapse" data-target="#collapseAdmission" aria-expanded="true" aria-controls="collapseAdmission">
+                                    New Student Admission
+                                </div>
+                            
+                                <div id="collapseAdmission" class="collapse show" aria-labelledby="headingAdmission" data-parent="#accordionAdmission">
+                                    <div class="card-body">
+    
+                                        <div class="form-row">                                        
+                                            <div class="form-group col-md-4 mr-auto">
+                                                <label for="addno">Admission Number</label>
+                                                <input type="number" class="form-control" id="addno" required/>
+                                                <small id="addnolHelp" class="form-text text-muted">will assigned Automatically</small>
+                                            </div>
+    
+                                            <div class="form-group col-md-4 ml-auto">
+                                                <label for="adddate">Admission Date</label>
+                                                <input type="date" class="form-control" id="adddate" required/>
+                                                <small id="adddateHelp" class="form-text text-muted">If unchanged todate will be submitted</small>
+                                            </div>                                 
                                         </div>
-
-                                        <div class="form-group col-md-4 ml-auto">
-                                            <label for="adddate">Admission Date</label>
-                                            <input type="date" class="form-control" id="adddate" required/>
-                                            <small id="adddateHelp" class="form-text text-muted">If unchanged todate will be submitted</small>
-                                        </div>                                 
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="class">Class</label>
-                                        <input type="text" class="form-control" id="class" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="sub">Subjects</label>
-                                        <input type="text" class="form-control" id="sub" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="cat">Category</label>
-                                        <input type="text" class="form-control" id="cat" required/>
-                                        <small id="catHelp" class="form-text text-muted">Health reports should be submitted</small>
+    
+                                        <div class="form-group">
+                                            <label for="class">Class</label>
+                                            <input type="text" class="form-control" id="class" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="sub">Subjects</label>
+                                            <input type="text" class="form-control" id="sub" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="cat">Category</label>
+                                            <input type="text" class="form-control" id="cat" required/>
+                                            <small id="catHelp" class="form-text text-muted">Health reports should be submitted</small>
+                                        </div>
                                     </div>
                                 </div>
+    
                             </div>
-
-                        </div>
-
-                        <div class="card">
-
-                            <div class="card-header" id="headingPersonal" data-toggle="collapse" data-target="#collapsePersonal" aria-expanded="false" aria-controls="collapsePersonal">
-                                Personal Details                         
-                            </div>
-
-                            <div id="collapsePersonal" class="collapse" aria-labelledby="headingPersonal" data-parent="#accordionAdmission">
-                                <div class="card-body">
-
-                                    <div class="form-group">
-                                        <label for="fn">Full Name</label>
-                                        <input type="text" class="form-control" id="fn" required/>
-                                        <small id="fnHelp" class="form-text text-muted">ex - SAMARAKKODY ARACHCHIGE LAKMAL SAMARAKKODY</small>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="fni">Name with Initials</label>
-                                        <input type="text" class="form-control" id="fni" required/>
-                                        <small id="fniHelp" class="form-text text-muted">ex - S A L SAMARAKKODY</small>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="dob">Date of Birth</label>
-                                        <input type="date" class="form-control" id="dob" required/>
-                                        <small id="dobHelp" class="form-text text-muted">ex - 30/12/1995</small>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="gen">Gender</label>
-                                        <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="male" required/>Male</div>
-                                        <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="female"/>Female</div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="address">Address</label>
-                                        <input type="text" class="form-control" id="address" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input type="text" class="form-control" id="city" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="dist">District</label>
-                                        <input type="text" class="form-control" id="dist" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="bp">Birth Place</label>
-                                        <input type="text" class="form-control" id="bp"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="bg">Blood Group</label>
-                                        <input type="text" class="form-control" id="bg"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="rel">Religion</label>
-                                        <input type="text" class="form-control" id="rel"/>
+    
+                            <div class="card">
+    
+                                <div class="card-header" id="headingPersonal" data-toggle="collapse" data-target="#collapsePersonal" aria-expanded="false" aria-controls="collapsePersonal">
+                                    Personal Details                         
+                                </div>
+    
+                                <div id="collapsePersonal" class="collapse" aria-labelledby="headingPersonal" data-parent="#accordionAdmission">
+                                    <div class="card-body">
+    
+                                        <div class="form-group">
+                                            <label for="fn">Full Name</label>
+                                            <input type="text" class="form-control" id="fn" required/>
+                                            <small id="fnHelp" class="form-text text-muted">ex - SAMARAKKODY ARACHCHIGE LAKMAL SAMARAKKODY</small>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="fni">Name with Initials</label>
+                                            <input type="text" class="form-control" id="fni" required/>
+                                            <small id="fniHelp" class="form-text text-muted">ex - S A L SAMARAKKODY</small>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="dob">Date of Birth</label>
+                                            <input type="date" class="form-control" id="dob" required/>
+                                            <small id="dobHelp" class="form-text text-muted">ex - 30/12/1995</small>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="gen">Gender</label>
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="male" required/>Male</div>
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="female"/>Female</div>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="address">Address</label>
+                                            <input type="text" class="form-control" id="address" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <input type="text" class="form-control" id="city" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="dist">District</label>
+                                            <input type="text" class="form-control" id="dist" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="bp">Birth Place</label>
+                                            <input type="text" class="form-control" id="bp"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="bg">Blood Group</label>
+                                            <input type="text" class="form-control" id="bg"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="rel">Religion</label>
+                                            <input type="text" class="form-control" id="rel"/>
+                                        </div>
                                     </div>
                                 </div>
+    
                             </div>
-
-                        </div>
-
-                        <div class="card">
-
-                            <div class="card-header" id="headingGuardian" data-toggle="collapse" data-target="#collapseGuardian" aria-expanded="false" aria-controls="collapseGuardian">
-                                Father/Guardian 's Details
-                            </div>
-
-                            <div id="collapseGuardian" class="collapse" aria-labelledby="headingGuardian" data-parent="#accordionAdmission">
-                                <div class="card-body">
-
-                                    <div class="form-group">
-                                        <label for="g1fn">Full Name</label>
-                                        <input type="text" class="form-control" id="g1fn" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1fni">Name with Initials</label>
-                                        <input type="text" class="form-control" id="g1fni" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1dob">Date of Birth</label>
-                                        <input type="date" class="form-control" id="g1dob" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1gen">Gender</label>
-                                        <div class="form-check"><input type="radio" class="form-check-input" id="g1gen" name="g1gen" value="male" required/>Male</div>
-                                        <div class="form-check"><input type="radio" class="form-check-input" id="g1gen" name="g1gen" value="female"/>Female</div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1rel">Relation</label>
-                                        <input type="text" class="form-control" id="g1rel" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1tel">Phone Number</label>
-                                        <input type="number" class="form-control" id="g1tel" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1mobi">Mobile Number</label>
-                                        <input type="number" class="form-control" id="g1mobi"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1nic">NIC</label>
-                                        <input type="text" class="form-control" id="g1nic" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1occu">Occupation</label>
-                                        <input type="text" class="form-control" id="g1occu"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1inc">Income</label>
-                                        <input type="number" class="form-control" id="g1inc"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1mail">Email</label>
-                                        <input type="text" class="form-control" id="g1mail"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1address">Address</label>
-                                        <input type="text" class="form-control" id="g1address" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1city">City</label>
-                                        <input type="text" class="form-control" id="g1city" required/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g1dist">District</label>
-                                        <input type="text" class="form-control" id="g1dist" required/>
+    
+                            <div class="card">
+    
+                                <div class="card-header" id="headingGuardian" data-toggle="collapse" data-target="#collapseGuardian" aria-expanded="false" aria-controls="collapseGuardian">
+                                    Father/Guardian 's Details
+                                </div>
+    
+                                <div id="collapseGuardian" class="collapse" aria-labelledby="headingGuardian" data-parent="#accordionAdmission">
+                                    <div class="card-body">
+    
+                                        <div class="form-group">
+                                            <label for="g1fn">Full Name</label>
+                                            <input type="text" class="form-control" id="g1fn" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1fni">Name with Initials</label>
+                                            <input type="text" class="form-control" id="g1fni" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1dob">Date of Birth</label>
+                                            <input type="date" class="form-control" id="g1dob" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1gen">Gender</label>
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="g1gen" name="g1gen" value="male" required/>Male</div>
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="g1gen" name="g1gen" value="female"/>Female</div>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1rel">Relation</label>
+                                            <input type="text" class="form-control" id="g1rel" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1tel">Phone Number</label>
+                                            <input type="number" class="form-control" id="g1tel" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1mobi">Mobile Number</label>
+                                            <input type="number" class="form-control" id="g1mobi"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1nic">NIC</label>
+                                            <input type="text" class="form-control" id="g1nic" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1occu">Occupation</label>
+                                            <input type="text" class="form-control" id="g1occu"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1inc">Income</label>
+                                            <input type="number" class="form-control" id="g1inc"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1mail">Email</label>
+                                            <input type="text" class="form-control" id="g1mail"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1address">Address</label>
+                                            <input type="text" class="form-control" id="g1address" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1city">City</label>
+                                            <input type="text" class="form-control" id="g1city" required/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g1dist">District</label>
+                                            <input type="text" class="form-control" id="g1dist" required/>
+                                        </div>
                                     </div>
                                 </div>
+    
                             </div>
-
-                        </div>
-
-                        <div class="card">
-
-                            <div class="card-header" id="headingGuardian2" data-toggle="collapse" data-target="#collapseGuardian2" aria-expanded="false" aria-controls="collapseGuardian2">
-                                Mother/2nd Guardian 's Details
-                            </div>
-
-                            <div id="collapseGuardian2" class="collapse" aria-labelledby="headingGuardian2" data-parent="#accordionAdmission">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="g2fn">Full Name</label>
-                                        <input type="text" class="form-control" id="g2fn"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2fni">Name with Initials</label>
-                                        <input type="text" class="form-control" id="g2fni"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2dob">Date of Birth</label>
-                                        <input type="date" class="form-control" id="g2dob"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2gen">Gender</label>
-                                        <div class="form-check"><input type="radio" class="form-check-input" id="g2gen" name="g2gen" value="male"/>Male</div>
-                                        <div class="form-check"><input type="radio" class="form-check-input" id="g2gen" name="g2gen" value="female"/>Female</div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2rel">Relation</label>
-                                        <input type="date" class="form-control" id="g2rel"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2tel">Phone Number</label>
-                                        <input type="number" class="form-control" id="g2tel"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2mobi">Mobile Number</label>
-                                        <input type="number" class="form-control" id="g2mobi"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2nic">NIC</label>
-                                        <input type="text" class="form-control" id="g2nic"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2occu">Occupation</label>
-                                        <input type="text" class="form-control" id="g2occu"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2inc">Income</label>
-                                        <input type="number" class="form-control" id="g2inc"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2mail">Email</label>
-                                        <input type="text" class="form-control" id="g2mail"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2address">Address</label>
-                                        <input type="text" class="form-control" id="g2address"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2city">City</label>
-                                        <input type="text" class="form-control" id="g2city"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="g2dist">District</label>
-                                        <input type="text" class="form-control" id="g2dist"/>
+    
+                            <div class="card">
+    
+                                <div class="card-header" id="headingGuardian2" data-toggle="collapse" data-target="#collapseGuardian2" aria-expanded="false" aria-controls="collapseGuardian2">
+                                    Mother/2nd Guardian 's Details
+                                </div>
+    
+                                <div id="collapseGuardian2" class="collapse" aria-labelledby="headingGuardian2" data-parent="#accordionAdmission">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="g2fn">Full Name</label>
+                                            <input type="text" class="form-control" id="g2fn"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2fni">Name with Initials</label>
+                                            <input type="text" class="form-control" id="g2fni"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2dob">Date of Birth</label>
+                                            <input type="date" class="form-control" id="g2dob"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2gen">Gender</label>
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="g2gen" name="g2gen" value="male"/>Male</div>
+                                            <div class="form-check"><input type="radio" class="form-check-input" id="g2gen" name="g2gen" value="female"/>Female</div>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2rel">Relation</label>
+                                            <input type="date" class="form-control" id="g2rel"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2tel">Phone Number</label>
+                                            <input type="number" class="form-control" id="g2tel"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2mobi">Mobile Number</label>
+                                            <input type="number" class="form-control" id="g2mobi"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2nic">NIC</label>
+                                            <input type="text" class="form-control" id="g2nic"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2occu">Occupation</label>
+                                            <input type="text" class="form-control" id="g2occu"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2inc">Income</label>
+                                            <input type="number" class="form-control" id="g2inc"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2mail">Email</label>
+                                            <input type="text" class="form-control" id="g2mail"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2address">Address</label>
+                                            <input type="text" class="form-control" id="g2address"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2city">City</label>
+                                            <input type="text" class="form-control" id="g2city"/>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label for="g2dist">District</label>
+                                            <input type="text" class="form-control" id="g2dist"/>
+                                        </div>
                                     </div>
                                 </div>
+    
                             </div>
-
                         </div>
-                    </div>
+    
+                        <input type="submit" class="btn btn-outline-primary" value="Register" />
+                        <input type="reset" class="btn btn-outline-secondary" value="Clear" />
+    
+                    </form>
 
-                    <input type="submit" class="btn btn-outline-primary" value="Register" />
-                    <input type="reset" class="btn btn-outline-secondary" value="Clear" />
-
-                </form>
+                </div>
+                
 
             </div>
             

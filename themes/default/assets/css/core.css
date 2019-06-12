@@ -1,10 +1,9 @@
 /* site */
 :root{
     --main-theme-color: #727cf5;
-    --main-bg-color: #f3f3f5;
-    --main-text-color: #2672b5;
+    --main-bg-color: #fbfbfb;
+    --main-text-color: #6c6c6c;
     --sub-text-color: #98a6ad;
-    --sidenav-main-text-color: #ffffff;
     --sidenav-sub-text-color: #CEDCE4;
     --footer-bg-color: #333333;
 }
@@ -67,10 +66,33 @@ body{
 }
 /* common/topmenu */
 .topmenu{
-    height: 5%vh;
+    font-weight: bold;
+    height: 7vh;
+    color: var(--sub-text-color);
     background-color: var(--white);
+    padding: 1% 0% 1% 0%;
 }
 
+.topmenu .title{
+    text-align: left;
+}
+
+.topmenu .time{
+    text-align: center;
+}
+
+.topmenu .settings{
+    text-align: right;
+    cursor: pointer;
+}
+
+.topmenu i{
+    font-size: 30px;
+}
+
+.topmenu .sub-menu .dropdown-menu .dropdown-item{
+    color: var(--main-theme-color);
+}
 
 /* common/sidenav */
 .left-pane{
@@ -125,7 +147,7 @@ body{
 }
 
 .sidenav li.main-menu:hover{
-    color: var(--sidenav-main-text-color);
+    color: var(--white);
 }
 
 .sidenav .main-menu .la{
@@ -148,7 +170,7 @@ body{
 }
 
 .sidenav li.sub-menu:hover{
-    color: var(--sidenav-main-text-color);
+    color: var(--white);
 }
 
 .sidenav .sub-menu .la{
@@ -203,12 +225,25 @@ body{
 
 /* student/search */
 .stusearch{
-    padding: 5% 15% 0% 15%;
+    padding: 5% 20% 5% 20%;
 }
 
-.stusearchfilter{
+.stusearch .stusearchfilter{
     background-color: var(--white);
     padding: 5%;
+    border: 2px solid var(--sub-text-color);
+    text-align: center;
+}
+
+.stusearch .stusearchheading{
+    color: var(--white);
+    background-color: var(--main-theme-color);
+    padding: 2%;
+    text-align: center;
+}
+
+.stusearch .stusearchfilter input{
+    text-align: center;
 }
 
 .stusearch .form-group{
@@ -242,19 +277,20 @@ body{
 /* user */
 /* user/add */
 .useradd{
-    padding: 5% 15% 5% 15%;
+    padding: 5% 20% 5% 20%;
 }
 
 .useraddpanel{
     background-color: var(--white);
-    color: var(--main-theme-color);
+    color: var(--main-text-color);
     text-align: center;
+    border: 2px solid var(--sub-text-color);
 }
 
 .usercreateheading{
     color: var(--white);
     background-color: var(--main-theme-color);
-    padding: 5%;
+    padding: 2%;
 }
 
 .usercreatebody{

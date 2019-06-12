@@ -12,6 +12,7 @@ class User extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
         $this->load->view('user/index', $data);
@@ -29,6 +30,7 @@ class User extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
         $this->load->view('user/add', $data);
@@ -46,6 +48,7 @@ class User extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
         $this->load->view('user/edit', $data);
@@ -63,6 +66,7 @@ class User extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
         $this->load->view('user/remove', $data);
@@ -80,6 +84,7 @@ class User extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
         $this->load->view('user/search', $data);

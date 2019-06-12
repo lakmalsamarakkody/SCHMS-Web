@@ -7,7 +7,11 @@
             
             {{ template.sidenav|raw }}
 
-                <div class="col-md-10 content teacheradd">
+            <div class="col-md-10 content">
+
+                {{ template.topmenu|raw }}
+
+                <div class="teacheradd">
 
                     <form name="empadmission" method="POST" action="#">
                         <div id="accordionAdmission">
@@ -131,9 +135,9 @@
                         <input type="submit" class="btn btn-outline-primary" value="Register" />
                         <input type="reset" class="btn btn-outline-secondary" value="Clear" />
                     </form>
+                </div>                    
 
-                </div>
-
+            </div>
         </div>
     </div>
 
