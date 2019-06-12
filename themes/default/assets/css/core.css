@@ -65,6 +65,11 @@ body{
     color: var(--sub-text-color);
     font-size: 80%
 }
+/* common/topmenu */
+.topmenu{
+    height: 5%vh;
+    background-color: var(--white);
+}
 
 
 /* common/sidenav */
@@ -92,7 +97,7 @@ body{
 }
 
 .sidenav{
-    padding-left: 0%;
+    padding: 0% 0% 10% 0%;
     margin: 0%;
 }
 
@@ -107,9 +112,7 @@ body{
 }
 
 .sidenav li.main-menu{
-    padding-top: 5%;
-    padding-bottom: 5%;
-    padding-left: 10%;
+    padding: 5% 0% 5% 10%;
     font-size: 18px;
     color: var(--sidenav-sub-text-color);
     display: flex;
@@ -134,10 +137,7 @@ body{
 }
 
 .sidenav li.sub-menu{
-   
-    padding-top: 5%;
-    padding-bottom: 5%;
-    padding-left: 20%;
+    padding: 5% 0% 5% 10%;
     font-size: 16px;
     color: var(--sidenav-sub-text-color);
 }
@@ -180,7 +180,7 @@ body{
 
 /* student/add */
 .stuadd{
-    padding: 5% 15% 0% 15%;
+    padding: 5% 15% 5% 15%;
 }
 
 .stuadd form{
@@ -259,4 +259,8 @@ body{
 
 .usercreatebody{
     padding: 4% 10% 4% 10%;
+}
+
+.usercreatebody input{
+   text-align: center;
 }

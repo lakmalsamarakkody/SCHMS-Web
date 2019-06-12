@@ -18,25 +18,34 @@
                         
                         <div class="usercreatebody">
 
-                            <div class="form-group">
+                            <div class="form-row">
+                                <div class="form-group col-md-4 mr-auto">
+                                    <label for="role">User Role</label>
+                                    <select class="form-control" id="role" required></select>
+                                </div>
+                            </div>                            
+
+                            <div class="form-group col-md-6 mx-auto">
                                 <label for="un">Username</label>
                                 <input type="text" class="form-control" id="un" required/>
                                 <small id="unHelp" class="form-text text-muted">Username should not contain special characters and spaces</small>
                             </div>
 
-                            <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" required/>
+                            <div class="form-row">
+                                <div class="form-group col-md-4 ml-auto">
+                                    <label for="pw">Password</label>
+                                    <input type="password" class="form-control" id="pw" required/>
                                 </div>
-
-                            <div class="form-group">
-                                <label for="pw">Password</label>
-                                <input type="password" class="form-control" id="pw" required/>
+                            
+                                <div class="form-group col-md-4 mr-auto">
+                                    <label for="cpw">Confirm Password</label>
+                                    <input type="password" class="form-control" id="cpw" required/>
+                                </div>
                             </div>
 
-                            <div class="form-group mb-5">
-                                <label for="cpw">Confirm Password</label>
-                                <input type="password" class="form-control" id="cpw" required/>
+                            <div class="form-group col-md-9 mx-auto mb-5">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" required/>
                             </div>
 
                             <input class="btn btn-outline-warning" type="submit" value="Create"/>

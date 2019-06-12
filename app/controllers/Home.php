@@ -12,6 +12,7 @@ class Home extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 		$data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+		$data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
 		$this->load->view('home/index', $data);
