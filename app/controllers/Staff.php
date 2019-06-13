@@ -1,6 +1,6 @@
 <?php
 
-class Teacher extends Controller {
+class Staff extends Controller {
     public function index() {
     
         // SITE DETAILS
@@ -15,7 +15,7 @@ class Teacher extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
-        $this->load->view('teacher/index', $data);
+        $this->load->view('staff/index', $data);
         
     }
     
@@ -33,7 +33,7 @@ class Teacher extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
-        $this->load->view('teacher/add', $data);
+        $this->load->view('staff/add', $data);
         
     }
     
@@ -51,7 +51,7 @@ class Teacher extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
-        $this->load->view('teacher/edit', $data);
+        $this->load->view('staff/edit', $data);
         
     }    
 
@@ -69,7 +69,7 @@ class Teacher extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
-        $this->load->view('teacher/remove', $data);
+        $this->load->view('staff/remove', $data);
         
     }
 
@@ -87,7 +87,7 @@ class Teacher extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
-        $this->load->view('teacher/search', $data);
+        $this->load->view('staff/search', $data);
         
     }
     

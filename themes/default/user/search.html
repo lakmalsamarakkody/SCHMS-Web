@@ -12,7 +12,55 @@
                 {{ template.topmenu|raw }}
 
                 <div class="usersearch">
-                    search user
+
+                    <div class="usersearchheading">
+                        <h3>Search</h3>
+                    </div>
+
+                    <div class="usersearchfilter">
+                        <form>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4 mr-auto">
+                                    <label for="role">User Role</label>
+                                    <select class="form-control" id="role" required></select>
+                                </div>
+
+                                <div class="form-group col-md-4 ml-auto">
+                                    <label for="empno">Emp ID</label>
+                                    <input type="number" class="form-control" id="empno" required></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fn">Name</label>
+                                <input type="text" class="form-control" id="fn" required/>
+                            </div>
+
+                            <div class="form-row mb-5">
+                                <div class="form-group col-md-4">
+                                    <label for="class">Class</label>
+                                    <input type="text" class="form-control" id="class" required/>
+                                </div>                    
+        
+                                <div class="form-group col-md-4">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dob" required/>
+                                    <small id="dobHelp" class="form-text text-muted">ex - 12/30/1995</small>
+                                </div>
+        
+                                <div class="form-group col-md-4">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" required/>
+                                </div>
+                            </div>
+
+                            <input class="btn btn-outline-primary" type="submit" value="Search"/>    
+
+                        </form>
+    
+                    </div>
+
                 </div>
             </div>
             
