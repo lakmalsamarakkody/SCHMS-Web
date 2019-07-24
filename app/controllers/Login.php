@@ -12,6 +12,11 @@ class Login extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 
+		//Login
+		if (isset($_POST['is_submit'])):
+
+		endif;
+
 		// RENDER VIEW
         $this->load->view('login/index', $data);
         
