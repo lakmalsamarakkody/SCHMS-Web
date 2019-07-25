@@ -12,7 +12,7 @@ $_['twig_debug']			=	true;
 
 // DATABASE
 $_['db_driver']				=	'mysql';
-$_['db_charset']				='utf8';
+$_['db_charset']			=   'utf8';
 $_['db_collation']			=	'utf8_unicode_ci';
 $_['db_host']				=	'localhost';
 $_['db_name']				=	'schms';

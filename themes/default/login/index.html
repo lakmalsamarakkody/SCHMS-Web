@@ -11,7 +11,12 @@
             </div>
 
             <div class="col-md-4 offset-1">
-                <form name="loginform" method="post" action="{{ app.url }}">
+
+                {% if msg %}
+                <div class="alert alert-danger">{{ msg }}</div>
+                {% endif %}
+
+                <form method="post" action="">
 
                     <div class="form-group"> 
                         <input class="form-control" type="text" name="username" placeholder="Username"/>
@@ -24,7 +29,7 @@
                     <input type="hidden" name="is_submit" value="true"/>
                     <button class="btn btn-primary mt-5 pr-3"type="submit">Login</button>
                     <input class="btn btn-secondary mt-5" type="reset" name="reset" value="Clear"/>
-                    
+
                 </form>
             </div>
         </div>

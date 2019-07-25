@@ -27,3 +27,91 @@ Stack trace:
 #3 /opt/apps/sites/skeleton.int/index.php(37): App->__construct(Object(Registry))
 #4 {main}
   thrown in /opt/apps/sites/skeleton.int/app/core/Controller.php on line 20" while reading response header from upstream, client: 127.0.0.1, server: skeleton.int, request: "GET /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "skeleton.int"
+2019/07/25 00:54:34 [error] 10202#10202: *1 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 00:54:51 [error] 10202#10202: *1 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 00:56:41 [error] 10202#10202: *9 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'root', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'root', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/bit" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 00:57:14 [error] 10202#10202: *9 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'root', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'root', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/bit" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 00:59:05 [error] 10202#10202: *28 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 00:59:09 [error] 10202#10202: *28 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 00:59:15 [error] 10202#10202: *28 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 01:01:09 [error] 10202#10202: *34 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 01:02:34 [error] 10202#10202: *34 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 01:03:03 [error] 10202#10202: *34 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/07/25 01:03:10 [error] 10202#10202: *34 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: could not find driver in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'schms', 'admin', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'schms', 'admin', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate\Database\Connectors\ConnectionFactory->Illuminate\Database\Connectors\{closure}()
+#5 /opt/dev/sites/b" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
