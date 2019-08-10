@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 09, 2019 at 06:49 PM
--- Server version: 10.4.7-MariaDB
--- PHP Version: 7.3.8
+-- Generation Time: Aug 09, 2019 at 11:29 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,10 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `attendance` (
   `id` bigint(20) NOT NULL,
-  `stu_emp_id` int(11) NOT NULL,
+  `stu_emp_id` int(6) NOT NULL,
   `type` enum('Student','Staff') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date` date NOT NULL,
-  `time` time NOT NULL
+  `date_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -43,9 +42,9 @@ CREATE TABLE `attendance` (
 --
 
 CREATE TABLE `backup` (
-  `id` int(11) NOT NULL,
+  `id` int(6) NOT NULL,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date` datetime NOT NULL,
+  `date_time` datetime NOT NULL,
   `file_size` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -56,8 +55,8 @@ CREATE TABLE `backup` (
 --
 
 CREATE TABLE `class` (
-  `id` int(11) NOT NULL,
-  `grade_id` int(11) NOT NULL,
+  `id` int(3) NOT NULL,
+  `grade_id` int(2) NOT NULL,
   `name` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -68,7 +67,7 @@ CREATE TABLE `class` (
 --
 
 CREATE TABLE `coach` (
-  `id` int(11) NOT NULL,
+  `id` int(6) NOT NULL,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nic` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_home` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -82,8 +81,8 @@ CREATE TABLE `coach` (
 --
 
 CREATE TABLE `coach_has_sport` (
-  `sport_id` int(11) NOT NULL,
-  `coach_id` int(11) NOT NULL
+  `sport_id` int(3) NOT NULL,
+  `coach_id` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -93,9 +92,9 @@ CREATE TABLE `coach_has_sport` (
 --
 
 CREATE TABLE `district` (
-  `id` int(11) NOT NULL,
+  `id` int(2) NOT NULL,
   `district` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `province_id` int(11) NOT NULL
+  `province_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -136,7 +135,7 @@ INSERT INTO `district` (`id`, `district`, `province_id`) VALUES
 --
 
 CREATE TABLE `exam` (
-  `id` int(11) NOT NULL,
+  `id` int(4) NOT NULL,
   `type` enum('Term 1','Term 2','Term 3','Scholarship','Ordianry Level','Assignment') COLLATE utf8mb4_unicode_ci NOT NULL,
   `year` year(4) NOT NULL,
   `created` datetime NOT NULL
@@ -149,10 +148,10 @@ CREATE TABLE `exam` (
 --
 
 CREATE TABLE `exam_schedule` (
-  `id` int(11) NOT NULL,
-  `exam_id` int(11) NOT NULL,
-  `grade_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
+  `id` int(4) NOT NULL,
+  `exam_id` int(4) NOT NULL,
+  `grade_id` int(2) NOT NULL,
+  `subject_id` int(3) NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -164,7 +163,7 @@ CREATE TABLE `exam_schedule` (
 --
 
 CREATE TABLE `grade` (
-  `id` int(11) NOT NULL,
+  `id` int(2) NOT NULL,
   `name` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -175,7 +174,7 @@ CREATE TABLE `grade` (
 --
 
 CREATE TABLE `health` (
-  `id` int(11) NOT NULL,
+  `id` int(8) NOT NULL,
   `type` enum('Student','Staff') COLLATE utf8mb4_unicode_ci NOT NULL,
   `blood_group` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `Specialities` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -189,11 +188,11 @@ CREATE TABLE `health` (
 --
 
 CREATE TABLE `health_student` (
-  `id` bigint(20) NOT NULL,
-  `stu_id` int(11) NOT NULL,
-  `height` int(11) NOT NULL,
-  `weight` int(11) NOT NULL,
-  `year` date NOT NULL
+  `id` int(11) NOT NULL,
+  `stu_id` int(6) NOT NULL,
+  `height` int(3) NOT NULL,
+  `weight` int(3) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -203,12 +202,12 @@ CREATE TABLE `health_student` (
 --
 
 CREATE TABLE `message` (
-  `id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `sender_id` int(6) NOT NULL,
   `sender_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `receiver_id` int(11) NOT NULL,
+  `receiver_id` int(6) NOT NULL,
   `receiver_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time` datetime NOT NULL,
+  `date_time` datetime NOT NULL,
   `body` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -219,12 +218,12 @@ CREATE TABLE `message` (
 --
 
 CREATE TABLE `notification` (
-  `id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `sender_id` int(6) NOT NULL,
   `sender_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `receiver_id` int(11) NOT NULL,
+  `receiver_id` int(6) NOT NULL,
   `receiver_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time` datetime NOT NULL,
+  `date_time` datetime NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `text` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -236,25 +235,24 @@ CREATE TABLE `notification` (
 --
 
 CREATE TABLE `parent` (
-  `id` int(11) NOT NULL,
+  `id` int(7) NOT NULL,
   `nic` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `full_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `initials` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `surname` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
-  `gender` enum('male','female') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` enum('Male','Female') COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `land_phone` char(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile_no` char(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `land_phone` char(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile_no` char(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `occupation` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `income` int(11) NOT NULL,
+  `income` int(7) NOT NULL,
   `street` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `district` enum('Ampara','Anuradhapura','Badulla','Batticaloa','Colombo','Galle','Gampaha','Hambantota','Jaffna','Kalutara','Kandy','Kegalle','Kilinochchi','Kurunegala','Mannar','Matale','Matara','Monaragala','Mullaitivu','Nuwara Eliya','Polonnaruwa','Puttalam','Ratnapura','Trincomalee','Vavuniya') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `province` enum('Central','Eastern','North','North Western','Northern','Sabaragamuwa','Southern','Uva','Western','') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district_id` int(2) NOT NULL,
   `birth_place` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `blood_group` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `religion` enum('Buddhist','Christian','Muslim','Hindu','Other') COLLATE utf8mb4_unicode_ci NOT NULL
+  `religion` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -264,7 +262,7 @@ CREATE TABLE `parent` (
 --
 
 CREATE TABLE `province` (
-  `id` int(11) NOT NULL,
+  `id` int(2) NOT NULL,
   `province` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -290,7 +288,7 @@ INSERT INTO `province` (`id`, `province`) VALUES
 --
 
 CREATE TABLE `religion` (
-  `id` int(11) NOT NULL,
+  `id` int(2) NOT NULL,
   `religion` enum('Buddhism','Christian','Muslim','Hindu','Other') COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -301,13 +299,13 @@ CREATE TABLE `religion` (
 --
 
 CREATE TABLE `results_ordinarylevel` (
-  `id` bigint(20) NOT NULL,
-  `stu_id` int(11) NOT NULL,
-  `exam_index` int(11) NOT NULL,
+  `id` int(6) NOT NULL,
+  `stu_id` int(6) NOT NULL,
+  `exam_index` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `year` year(4) NOT NULL,
-  `subject_id` int(11) NOT NULL,
+  `subject_id` int(3) NOT NULL,
   `marks` enum('A','B','C','S','W') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rank` int(11) NOT NULL
+  `rank` int(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -317,8 +315,9 @@ CREATE TABLE `results_ordinarylevel` (
 --
 
 CREATE TABLE `results_scholarship` (
-  `id` bigint(20) NOT NULL,
-  `admission_no` int(11) NOT NULL,
+  `id` int(6) NOT NULL,
+  `stu_id` int(6) NOT NULL,
+  `exam_index` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `year` year(4) NOT NULL,
   `result` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -330,7 +329,7 @@ CREATE TABLE `results_scholarship` (
 --
 
 CREATE TABLE `results_scholarship_passmark` (
-  `id` int(11) NOT NULL,
+  `id` int(3) NOT NULL,
   `year` year(4) NOT NULL,
   `mark` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -342,11 +341,11 @@ CREATE TABLE `results_scholarship_passmark` (
 --
 
 CREATE TABLE `results_termtest` (
-  `id` bigint(20) NOT NULL,
-  `stu_id` int(11) NOT NULL,
-  `term` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `stu_id` int(6) NOT NULL,
+  `term` enum('Term 1','Term 2','Term 3') COLLATE utf8mb4_unicode_ci NOT NULL,
   `year` year(4) NOT NULL,
-  `subject_id` int(11) NOT NULL,
+  `subject_id` int(3) NOT NULL,
   `marks` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -357,7 +356,7 @@ CREATE TABLE `results_termtest` (
 --
 
 CREATE TABLE `sport` (
-  `id` int(11) NOT NULL,
+  `id` int(3) NOT NULL,
   `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -368,27 +367,27 @@ CREATE TABLE `sport` (
 --
 
 CREATE TABLE `staff` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `id` int(6) NOT NULL,
+  `emp_id` int(6) NOT NULL,
   `nic` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admission_date` date NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `type_id` int(2) NOT NULL,
+  `category_id` int(2) NOT NULL,
   `position` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `class_id` int(11) NOT NULL,
+  `class_id` int(3) NOT NULL,
   `full_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `initials` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `surname` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
-  `gender` enum('male','female') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` enum('Male','Female') COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_home` char(9) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_mobile` char(9) COLLATE utf8mb4_unicode_ci NOT NULL,
   `street` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `district_id` int(11) NOT NULL,
-  `religion_id` int(11) NOT NULL,
-  `health_id` int(11) NOT NULL
+  `district_id` int(2) NOT NULL,
+  `religion_id` int(2) NOT NULL,
+  `health_id` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -398,9 +397,8 @@ CREATE TABLE `staff` (
 --
 
 CREATE TABLE `staff_category` (
-  `id` int(11) NOT NULL,
-  `category` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type_id` int(11) NOT NULL
+  `id` int(2) NOT NULL,
+  `category` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -410,8 +408,28 @@ CREATE TABLE `staff_category` (
 --
 
 CREATE TABLE `staff_has_subject` (
-  `staff_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL
+  `staff_id` int(6) NOT NULL,
+  `subject_id` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff_timetable`
+--
+
+CREATE TABLE `staff_timetable` (
+  `id` int(6) NOT NULL,
+  `staff_id` int(6) NOT NULL,
+  `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `period_1` int(3) NOT NULL,
+  `period_2` int(3) NOT NULL,
+  `period_3` int(3) NOT NULL,
+  `period_4` int(3) NOT NULL,
+  `period_5` int(3) NOT NULL,
+  `period_6` int(3) NOT NULL,
+  `period_7` int(3) NOT NULL,
+  `period_8` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -421,8 +439,9 @@ CREATE TABLE `staff_has_subject` (
 --
 
 CREATE TABLE `staff_type` (
-  `id` int(11) NOT NULL,
-  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int(2) NOT NULL,
+  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -432,23 +451,22 @@ CREATE TABLE `staff_type` (
 --
 
 CREATE TABLE `student` (
-  `id` int(11) NOT NULL,
-  `admission_no` int(11) NOT NULL,
+  `id` int(6) NOT NULL,
+  `admission_no` int(6) NOT NULL,
   `admission_date` datetime NOT NULL,
-  `grade_id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
+  `class_id` int(3) NOT NULL,
   `full_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `initials` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `surname` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
-  `gender` enum('male','female') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` enum('Male','Female') COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_home` char(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `district_id` int(11) NOT NULL,
-  `religion_id` int(11) NOT NULL,
-  `health_id` int(11) NOT NULL
+  `district_id` int(2) NOT NULL,
+  `religion_id` int(2) NOT NULL,
+  `health_id` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -459,7 +477,7 @@ CREATE TABLE `student` (
 
 CREATE TABLE `student_achievement` (
   `id` int(11) NOT NULL,
-  `stu_id` int(11) NOT NULL,
+  `stu_id` int(6) NOT NULL,
   `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` int(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -471,8 +489,8 @@ CREATE TABLE `student_achievement` (
 --
 
 CREATE TABLE `student_has_sport` (
-  `sport_id` int(11) NOT NULL,
-  `stu_id` int(11) NOT NULL,
+  `sport_id` int(3) NOT NULL,
+  `stu_id` int(6) NOT NULL,
   `achievement_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -483,20 +501,40 @@ CREATE TABLE `student_has_sport` (
 --
 
 CREATE TABLE `student_has_subject` (
-  `stu_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL
+  `stu_id` int(6) NOT NULL,
+  `subject_id` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_sportachievement`
+-- Table structure for table `student_sport_achievement`
 --
 
-CREATE TABLE `student_sportachievement` (
+CREATE TABLE `student_sport_achievement` (
   `id` int(11) NOT NULL,
   `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` int(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_timetable`
+--
+
+CREATE TABLE `student_timetable` (
+  `id` int(6) NOT NULL,
+  `class_id` int(3) NOT NULL,
+  `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `period_1` int(3) NOT NULL,
+  `period_2` int(3) NOT NULL,
+  `period_3` int(3) NOT NULL,
+  `period_4` int(3) NOT NULL,
+  `period_5` int(3) NOT NULL,
+  `period_6` int(3) NOT NULL,
+  `period_7` int(3) NOT NULL,
+  `period_8` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -506,8 +544,8 @@ CREATE TABLE `student_sportachievement` (
 --
 
 CREATE TABLE `subject` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int(3) NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -517,12 +555,12 @@ CREATE TABLE `subject` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `id` int(7) NOT NULL,
+  `emp_id` int(6) NOT NULL,
   `username` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role_id` int(11) NOT NULL,
+  `role_id` int(2) NOT NULL,
   `status` enum('Active','Inactive') COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -540,7 +578,7 @@ INSERT INTO `user` (`id`, `emp_id`, `username`, `password`, `email`, `role_id`, 
 --
 
 CREATE TABLE `user_role` (
-  `id` int(11) NOT NULL,
+  `id` int(2) NOT NULL,
   `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -551,8 +589,8 @@ CREATE TABLE `user_role` (
 --
 
 CREATE TABLE `user_role_has_permission` (
-  `role_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL
+  `role_id` int(2) NOT NULL,
+  `permission_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -562,7 +600,7 @@ CREATE TABLE `user_role_has_permission` (
 --
 
 CREATE TABLE `user_role_permission` (
-  `id` int(11) NOT NULL,
+  `id` int(2) NOT NULL,
   `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -574,7 +612,8 @@ CREATE TABLE `user_role_permission` (
 -- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stu_emp_id` (`stu_emp_id`);
 
 --
 -- Indexes for table `backup`
@@ -703,6 +742,12 @@ ALTER TABLE `staff_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `staff_timetable`
+--
+ALTER TABLE `staff_timetable`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `staff_type`
 --
 ALTER TABLE `staff_type`
@@ -721,9 +766,15 @@ ALTER TABLE `student_achievement`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `student_sportachievement`
+-- Indexes for table `student_sport_achievement`
 --
-ALTER TABLE `student_sportachievement`
+ALTER TABLE `student_sport_achievement`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `student_timetable`
+--
+ALTER TABLE `student_timetable`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -758,55 +809,66 @@ ALTER TABLE `user_role_permission`
 -- AUTO_INCREMENT for table `backup`
 --
 ALTER TABLE `backup`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `district`
 --
 ALTER TABLE `district`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `health`
 --
 ALTER TABLE `health`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(7) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `province`
 --
 ALTER TABLE `province`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `sport`
 --
 ALTER TABLE `sport`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`stu_emp_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`stu_emp_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
