@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 09, 2019 at 11:29 PM
+-- Generation Time: Aug 10, 2019 at 05:00 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.7
 
@@ -32,7 +32,10 @@ CREATE TABLE `attendance` (
   `id` bigint(20) NOT NULL,
   `stu_emp_id` int(6) NOT NULL,
   `type` enum('Student','Staff') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_time` datetime NOT NULL
+  `date_time` datetime NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -45,7 +48,10 @@ CREATE TABLE `backup` (
   `id` int(6) NOT NULL,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_time` datetime NOT NULL,
-  `file_size` int(11) NOT NULL
+  `file_size` int(11) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -57,7 +63,33 @@ CREATE TABLE `backup` (
 CREATE TABLE `class` (
   `id` int(3) NOT NULL,
   `grade_id` int(2) NOT NULL,
-  `name` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_timetable`
+--
+
+CREATE TABLE `class_timetable` (
+  `id` int(6) NOT NULL,
+  `class_id` int(3) NOT NULL,
+  `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `period_1` int(3) NOT NULL,
+  `period_2` int(3) NOT NULL,
+  `period_3` int(3) NOT NULL,
+  `period_4` int(3) NOT NULL,
+  `period_5` int(3) NOT NULL,
+  `period_6` int(3) NOT NULL,
+  `period_7` int(3) NOT NULL,
+  `period_8` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -71,7 +103,10 @@ CREATE TABLE `coach` (
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nic` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_home` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_mobile` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
+  `phone_mobile` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -82,7 +117,10 @@ CREATE TABLE `coach` (
 
 CREATE TABLE `coach_has_sport` (
   `sport_id` int(3) NOT NULL,
-  `coach_id` int(6) NOT NULL
+  `coach_id` int(6) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -93,40 +131,12 @@ CREATE TABLE `coach_has_sport` (
 
 CREATE TABLE `district` (
   `id` int(2) NOT NULL,
-  `district` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `province_id` int(2) NOT NULL
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `province_id` int(2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `district`
---
-
-INSERT INTO `district` (`id`, `district`, `province_id`) VALUES
-(1, 'Ampara', 0),
-(2, 'Anuradhapura', 0),
-(3, 'Badulla', 0),
-(4, 'Batticaloa', 0),
-(5, 'Colombo', 0),
-(6, 'Galle', 0),
-(7, 'Gampaha', 0),
-(8, 'Hambantota', 0),
-(9, 'Jaffna', 0),
-(10, 'Kalutara', 0),
-(11, 'Kandy', 0),
-(12, 'Kegalle', 0),
-(13, 'Kilinochchi', 0),
-(14, 'Kurunegala', 0),
-(15, 'Mannar', 0),
-(16, 'Matale', 0),
-(17, 'Matara', 0),
-(18, 'Monaragala', 0),
-(19, 'Mullaitivu', 0),
-(20, 'Nuwara Eliya', 0),
-(21, 'Polonnaruwa', 0),
-(22, 'Puttalam', 0),
-(23, 'Ratnapura', 0),
-(24, 'Trincomalee', 0),
-(25, 'Vavuniya', 0);
 
 -- --------------------------------------------------------
 
@@ -138,7 +148,9 @@ CREATE TABLE `exam` (
   `id` int(4) NOT NULL,
   `type` enum('Term 1','Term 2','Term 3','Scholarship','Ordianry Level','Assignment') COLLATE utf8mb4_unicode_ci NOT NULL,
   `year` year(4) NOT NULL,
-  `created` datetime NOT NULL
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -153,7 +165,25 @@ CREATE TABLE `exam_schedule` (
   `grade_id` int(2) NOT NULL,
   `subject_id` int(3) NOT NULL,
   `start_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL
+  `end_time` datetime NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_scholarship_passmark`
+--
+
+CREATE TABLE `exam_scholarship_passmark` (
+  `id` int(3) NOT NULL,
+  `year` year(4) NOT NULL,
+  `mark` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -164,7 +194,10 @@ CREATE TABLE `exam_schedule` (
 
 CREATE TABLE `grade` (
   `id` int(2) NOT NULL,
-  `name` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -178,21 +211,10 @@ CREATE TABLE `health` (
   `type` enum('Student','Staff') COLLATE utf8mb4_unicode_ci NOT NULL,
   `blood_group` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `Specialities` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Surgeries` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `health_student`
---
-
-CREATE TABLE `health_student` (
-  `id` int(11) NOT NULL,
-  `stu_id` int(6) NOT NULL,
-  `height` int(3) NOT NULL,
-  `weight` int(3) NOT NULL,
-  `date` date NOT NULL
+  `Surgeries` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -208,7 +230,10 @@ CREATE TABLE `message` (
   `receiver_id` int(6) NOT NULL,
   `receiver_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_time` datetime NOT NULL,
-  `body` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
+  `body` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -225,7 +250,10 @@ CREATE TABLE `notification` (
   `receiver_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_time` datetime NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `text` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
+  `text` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -252,7 +280,10 @@ CREATE TABLE `parent` (
   `district_id` int(2) NOT NULL,
   `birth_place` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `blood_group` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `religion` int(2) NOT NULL
+  `religion` int(2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -263,23 +294,11 @@ CREATE TABLE `parent` (
 
 CREATE TABLE `province` (
   `id` int(2) NOT NULL,
-  `province` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `province`
---
-
-INSERT INTO `province` (`id`, `province`) VALUES
-(1, 'Central'),
-(2, 'Eastern'),
-(3, 'North Central'),
-(4, 'North Western'),
-(5, 'Northern'),
-(6, 'Sabaragamuwa'),
-(7, 'Southern'),
-(8, 'Uva'),
-(9, 'Western');
 
 -- --------------------------------------------------------
 
@@ -289,7 +308,10 @@ INSERT INTO `province` (`id`, `province`) VALUES
 
 CREATE TABLE `religion` (
   `id` int(2) NOT NULL,
-  `religion` enum('Buddhism','Christian','Muslim','Hindu','Other') COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` enum('Buddhism','Christian','Muslim','Hindu','Other') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -300,12 +322,13 @@ CREATE TABLE `religion` (
 
 CREATE TABLE `results_ordinarylevel` (
   `id` int(6) NOT NULL,
-  `stu_id` int(6) NOT NULL,
-  `exam_index` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year` year(4) NOT NULL,
+  `stu_exam_id` int(8) NOT NULL,
   `subject_id` int(3) NOT NULL,
-  `marks` enum('A','B','C','S','W') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rank` int(7) NOT NULL
+  `grade` enum('A','B','C','S','W') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rank` int(7) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -316,22 +339,11 @@ CREATE TABLE `results_ordinarylevel` (
 
 CREATE TABLE `results_scholarship` (
   `id` int(6) NOT NULL,
-  `stu_id` int(6) NOT NULL,
-  `exam_index` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year` year(4) NOT NULL,
-  `result` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `results_scholarship_passmark`
---
-
-CREATE TABLE `results_scholarship_passmark` (
-  `id` int(3) NOT NULL,
-  `year` year(4) NOT NULL,
-  `mark` int(3) NOT NULL
+  `stu_exam_id` int(8) NOT NULL,
+  `marks` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -341,12 +353,13 @@ CREATE TABLE `results_scholarship_passmark` (
 --
 
 CREATE TABLE `results_termtest` (
-  `id` int(11) NOT NULL,
-  `stu_id` int(6) NOT NULL,
-  `term` enum('Term 1','Term 2','Term 3') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year` year(4) NOT NULL,
+  `id` int(8) NOT NULL,
+  `stu_exam_id` int(8) NOT NULL,
   `subject_id` int(3) NOT NULL,
-  `marks` decimal(5,2) NOT NULL
+  `marks` decimal(5,2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -357,7 +370,10 @@ CREATE TABLE `results_termtest` (
 
 CREATE TABLE `sport` (
   `id` int(3) NOT NULL,
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -372,7 +388,6 @@ CREATE TABLE `staff` (
   `nic` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admission_date` date NOT NULL,
   `type_id` int(2) NOT NULL,
-  `category_id` int(2) NOT NULL,
   `position` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `class_id` int(3) NOT NULL,
   `full_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -387,7 +402,10 @@ CREATE TABLE `staff` (
   `city` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `district_id` int(2) NOT NULL,
   `religion_id` int(2) NOT NULL,
-  `health_id` int(8) NOT NULL
+  `health_id` int(8) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -398,7 +416,10 @@ CREATE TABLE `staff` (
 
 CREATE TABLE `staff_category` (
   `id` int(2) NOT NULL,
-  `category` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -409,7 +430,10 @@ CREATE TABLE `staff_category` (
 
 CREATE TABLE `staff_has_subject` (
   `staff_id` int(6) NOT NULL,
-  `subject_id` int(3) NOT NULL
+  `subject_id` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -429,7 +453,10 @@ CREATE TABLE `staff_timetable` (
   `period_5` int(3) NOT NULL,
   `period_6` int(3) NOT NULL,
   `period_7` int(3) NOT NULL,
-  `period_8` int(3) NOT NULL
+  `period_8` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -440,8 +467,11 @@ CREATE TABLE `staff_timetable` (
 
 CREATE TABLE `staff_type` (
   `id` int(2) NOT NULL,
-  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_id` int(2) NOT NULL
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` int(2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -466,7 +496,10 @@ CREATE TABLE `student` (
   `city` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `district_id` int(2) NOT NULL,
   `religion_id` int(2) NOT NULL,
-  `health_id` int(8) NOT NULL
+  `health_id` int(8) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -479,7 +512,41 @@ CREATE TABLE `student_achievement` (
   `id` int(11) NOT NULL,
   `stu_id` int(6) NOT NULL,
   `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` int(200) NOT NULL
+  `description` int(200) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_class`
+--
+
+CREATE TABLE `student_class` (
+  `stu_id` int(6) NOT NULL,
+  `class_id` int(3) NOT NULL,
+  `index_no` int(2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_has_exam`
+--
+
+CREATE TABLE `student_has_exam` (
+  `id` int(8) NOT NULL,
+  `stu_id` int(6) NOT NULL,
+  `exam_id` int(4) NOT NULL,
+  `index_no` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -489,9 +556,12 @@ CREATE TABLE `student_achievement` (
 --
 
 CREATE TABLE `student_has_sport` (
+  `id` int(8) NOT NULL,
   `sport_id` int(3) NOT NULL,
   `stu_id` int(6) NOT NULL,
-  `achievement_id` int(11) NOT NULL
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -502,7 +572,27 @@ CREATE TABLE `student_has_sport` (
 
 CREATE TABLE `student_has_subject` (
   `stu_id` int(6) NOT NULL,
-  `subject_id` int(3) NOT NULL
+  `subject_id` int(3) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_health`
+--
+
+CREATE TABLE `student_health` (
+  `id` int(11) NOT NULL,
+  `stu_id` int(6) NOT NULL,
+  `height` int(3) NOT NULL,
+  `weight` int(3) NOT NULL,
+  `date` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -513,28 +603,12 @@ CREATE TABLE `student_has_subject` (
 
 CREATE TABLE `student_sport_achievement` (
   `id` int(11) NOT NULL,
+  `stu_sport_id` int(8) NOT NULL,
   `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` int(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `student_timetable`
---
-
-CREATE TABLE `student_timetable` (
-  `id` int(6) NOT NULL,
-  `class_id` int(3) NOT NULL,
-  `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `period_1` int(3) NOT NULL,
-  `period_2` int(3) NOT NULL,
-  `period_3` int(3) NOT NULL,
-  `period_4` int(3) NOT NULL,
-  `period_5` int(3) NOT NULL,
-  `period_6` int(3) NOT NULL,
-  `period_7` int(3) NOT NULL,
-  `period_8` int(3) NOT NULL
+  `description` int(200) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -545,7 +619,10 @@ CREATE TABLE `student_timetable` (
 
 CREATE TABLE `subject` (
   `id` int(3) NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -556,20 +633,16 @@ CREATE TABLE `subject` (
 
 CREATE TABLE `user` (
   `id` int(7) NOT NULL,
-  `emp_id` int(6) NOT NULL,
+  `staff_id` int(6) NOT NULL,
   `username` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role_id` int(2) NOT NULL,
-  `status` enum('Active','Inactive') COLLATE utf8mb4_unicode_ci NOT NULL
+  `status` enum('Active','Inactive') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `emp_id`, `username`, `password`, `email`, `role_id`, `status`) VALUES
-(1, 100100100, 'lakmal', '$2y$10$TnIIDzJc29elWCvjdF12E.FJ9LuA9pjEaeejEMGn/JhTsHNxVy7EW', 'lakmalsamarakkody@schms.int', 1, 'Active');
 
 -- --------------------------------------------------------
 
@@ -579,7 +652,10 @@ INSERT INTO `user` (`id`, `emp_id`, `username`, `password`, `email`, `role_id`, 
 
 CREATE TABLE `user_role` (
   `id` int(2) NOT NULL,
-  `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+  `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -590,7 +666,10 @@ CREATE TABLE `user_role` (
 
 CREATE TABLE `user_role_has_permission` (
   `role_id` int(2) NOT NULL,
-  `permission_id` int(2) NOT NULL
+  `permission_id` int(2) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -601,7 +680,10 @@ CREATE TABLE `user_role_has_permission` (
 
 CREATE TABLE `user_role_permission` (
   `id` int(2) NOT NULL,
-  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -625,6 +707,13 @@ ALTER TABLE `backup`
 -- Indexes for table `class`
 --
 ALTER TABLE `class`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `class_grade_id_fk` (`grade_id`);
+
+--
+-- Indexes for table `class_timetable`
+--
+ALTER TABLE `class_timetable`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -634,10 +723,18 @@ ALTER TABLE `coach`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `coach_has_sport`
+--
+ALTER TABLE `coach_has_sport`
+  ADD KEY `coach_has_sport_sport_id_fk` (`sport_id`),
+  ADD KEY `coach_has_sport_coach_id_fk` (`coach_id`);
+
+--
 -- Indexes for table `district`
 --
 ALTER TABLE `district`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `district_province_id_fk` (`province_id`);
 
 --
 -- Indexes for table `exam`
@@ -649,6 +746,15 @@ ALTER TABLE `exam`
 -- Indexes for table `exam_schedule`
 --
 ALTER TABLE `exam_schedule`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exam_schedule_exam_id_fk` (`exam_id`),
+  ADD KEY `exam_schedule_grade_id_fk` (`grade_id`),
+  ADD KEY `exam_schedule_subject_id_fk` (`subject_id`);
+
+--
+-- Indexes for table `exam_scholarship_passmark`
+--
+ALTER TABLE `exam_scholarship_passmark`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -661,12 +767,6 @@ ALTER TABLE `grade`
 -- Indexes for table `health`
 --
 ALTER TABLE `health`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `health_student`
---
-ALTER TABLE `health_student`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -703,25 +803,24 @@ ALTER TABLE `religion`
 -- Indexes for table `results_ordinarylevel`
 --
 ALTER TABLE `results_ordinarylevel`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `results_ordinarylevel_student_has_exam_id_fk` (`stu_exam_id`),
+  ADD KEY `results_ordinarylevel_subject_id_fk` (`subject_id`);
 
 --
 -- Indexes for table `results_scholarship`
 --
 ALTER TABLE `results_scholarship`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `results_scholarship_passmark`
---
-ALTER TABLE `results_scholarship_passmark`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `results_scholarship_student_has_exam_id_fk` (`stu_exam_id`);
 
 --
 -- Indexes for table `results_termtest`
 --
 ALTER TABLE `results_termtest`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `results_termtest_student_has_exam_id_fk` (`stu_exam_id`),
+  ADD KEY `results_termtest_subject_id_fk` (`subject_id`);
 
 --
 -- Indexes for table `sport`
@@ -733,7 +832,12 @@ ALTER TABLE `sport`
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `staff_staff_type_id_fk` (`type_id`),
+  ADD KEY `staff_class_id_fk` (`class_id`),
+  ADD KEY `staff_district_id_fk` (`district_id`),
+  ADD KEY `staff_religion_id_fk` (`religion_id`),
+  ADD KEY `staff_health_id_fk` (`health_id`);
 
 --
 -- Indexes for table `staff_category`
@@ -742,40 +846,85 @@ ALTER TABLE `staff_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `staff_has_subject`
+--
+ALTER TABLE `staff_has_subject`
+  ADD KEY `staff_has_subject_staff_id_fk` (`staff_id`),
+  ADD KEY `staff_has_subject_subject_id_fk` (`subject_id`);
+
+--
 -- Indexes for table `staff_timetable`
 --
 ALTER TABLE `staff_timetable`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `staff_timetable_staff_id_fk` (`staff_id`);
 
 --
 -- Indexes for table `staff_type`
 --
 ALTER TABLE `staff_type`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `staff_type_staff_category_id_fk` (`category_id`);
 
 --
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_class_id_fk` (`class_id`),
+  ADD KEY `student_district_id_fk` (`district_id`),
+  ADD KEY `student_religion_id_fk` (`religion_id`),
+  ADD KEY `student_health_id_fk` (`health_id`);
 
 --
 -- Indexes for table `student_achievement`
 --
 ALTER TABLE `student_achievement`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_achievement_student_id_fk` (`stu_id`);
+
+--
+-- Indexes for table `student_class`
+--
+ALTER TABLE `student_class`
+  ADD PRIMARY KEY (`stu_id`,`class_id`),
+  ADD KEY `student_class_class_id_fk` (`class_id`);
+
+--
+-- Indexes for table `student_has_exam`
+--
+ALTER TABLE `student_has_exam`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_has_exam_student_id_fk` (`stu_id`);
+
+--
+-- Indexes for table `student_has_sport`
+--
+ALTER TABLE `student_has_sport`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_has_sport_sport_id_fk` (`sport_id`),
+  ADD KEY `student_has_sport_student_id_fk` (`stu_id`);
+
+--
+-- Indexes for table `student_has_subject`
+--
+ALTER TABLE `student_has_subject`
+  ADD KEY `student_has_subject_student_id_fk` (`stu_id`),
+  ADD KEY `student_has_subject_subject_id_fk` (`subject_id`);
+
+--
+-- Indexes for table `student_health`
+--
+ALTER TABLE `student_health`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_health_student_id_fk` (`stu_id`);
 
 --
 -- Indexes for table `student_sport_achievement`
 --
 ALTER TABLE `student_sport_achievement`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `student_timetable`
---
-ALTER TABLE `student_timetable`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_sport_achievement_student_has_sport_id_fk` (`stu_sport_id`);
 
 --
 -- Indexes for table `subject`
@@ -787,13 +936,22 @@ ALTER TABLE `subject`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_staff_id_fk` (`staff_id`),
+  ADD KEY `user_user_role_id_fk` (`role_id`);
 
 --
 -- Indexes for table `user_role`
 --
 ALTER TABLE `user_role`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_role_has_permission`
+--
+ALTER TABLE `user_role_has_permission`
+  ADD KEY `user_role_has_permission_user_role_id_fk` (`role_id`),
+  ADD KEY `user_role_has_permission_user_role_permission_id_fk` (`permission_id`);
 
 --
 -- Indexes for table `user_role_permission`
@@ -869,6 +1027,150 @@ ALTER TABLE `user`
 ALTER TABLE `attendance`
   ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`stu_emp_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`stu_emp_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `class`
+--
+ALTER TABLE `class`
+  ADD CONSTRAINT `class_grade_id_fk` FOREIGN KEY (`grade_id`) REFERENCES `grade` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `coach_has_sport`
+--
+ALTER TABLE `coach_has_sport`
+  ADD CONSTRAINT `coach_has_sport_coach_id_fk` FOREIGN KEY (`coach_id`) REFERENCES `coach` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `coach_has_sport_sport_id_fk` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `district`
+--
+ALTER TABLE `district`
+  ADD CONSTRAINT `district_province_id_fk` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `exam_schedule`
+--
+ALTER TABLE `exam_schedule`
+  ADD CONSTRAINT `exam_schedule_exam_id_fk` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `exam_schedule_grade_id_fk` FOREIGN KEY (`grade_id`) REFERENCES `grade` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `exam_schedule_subject_id_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `results_ordinarylevel`
+--
+ALTER TABLE `results_ordinarylevel`
+  ADD CONSTRAINT `results_ordinarylevel_student_has_exam_id_fk` FOREIGN KEY (`stu_exam_id`) REFERENCES `student_has_exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `results_ordinarylevel_subject_id_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `results_scholarship`
+--
+ALTER TABLE `results_scholarship`
+  ADD CONSTRAINT `results_scholarship_student_has_exam_id_fk` FOREIGN KEY (`stu_exam_id`) REFERENCES `student_has_exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `results_termtest`
+--
+ALTER TABLE `results_termtest`
+  ADD CONSTRAINT `results_termtest_student_has_exam_id_fk` FOREIGN KEY (`stu_exam_id`) REFERENCES `student_has_exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `results_termtest_subject_id_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `staff`
+--
+ALTER TABLE `staff`
+  ADD CONSTRAINT `staff_class_id_fk` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `staff_district_id_fk` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `staff_health_id_fk` FOREIGN KEY (`health_id`) REFERENCES `health` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `staff_religion_id_fk` FOREIGN KEY (`religion_id`) REFERENCES `religion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `staff_staff_type_id_fk` FOREIGN KEY (`type_id`) REFERENCES `staff_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `staff_has_subject`
+--
+ALTER TABLE `staff_has_subject`
+  ADD CONSTRAINT `staff_has_subject_staff_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `staff_has_subject_subject_id_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `staff_timetable`
+--
+ALTER TABLE `staff_timetable`
+  ADD CONSTRAINT `staff_timetable_staff_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `staff_type`
+--
+ALTER TABLE `staff_type`
+  ADD CONSTRAINT `staff_type_staff_category_id_fk` FOREIGN KEY (`category_id`) REFERENCES `staff_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student`
+--
+ALTER TABLE `student`
+  ADD CONSTRAINT `student_class_id_fk` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_district_id_fk` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_health_id_fk` FOREIGN KEY (`health_id`) REFERENCES `health` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_religion_id_fk` FOREIGN KEY (`religion_id`) REFERENCES `religion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_achievement`
+--
+ALTER TABLE `student_achievement`
+  ADD CONSTRAINT `student_achievement_student_id_fk` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_class`
+--
+ALTER TABLE `student_class`
+  ADD CONSTRAINT `student_class_class_id_fk` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_class_student_id_fk` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_has_exam`
+--
+ALTER TABLE `student_has_exam`
+  ADD CONSTRAINT `student_has_exam_student_id_fk` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_has_sport`
+--
+ALTER TABLE `student_has_sport`
+  ADD CONSTRAINT `student_has_sport_sport_id_fk` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_has_sport_student_id_fk` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_has_subject`
+--
+ALTER TABLE `student_has_subject`
+  ADD CONSTRAINT `student_has_subject_student_id_fk` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_has_subject_subject_id_fk` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_health`
+--
+ALTER TABLE `student_health`
+  ADD CONSTRAINT `student_health_student_id_fk` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_sport_achievement`
+--
+ALTER TABLE `student_sport_achievement`
+  ADD CONSTRAINT `student_sport_achievement_student_has_sport_id_fk` FOREIGN KEY (`stu_sport_id`) REFERENCES `student_has_sport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_staff_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_user_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_role_has_permission`
+--
+ALTER TABLE `user_role_has_permission`
+  ADD CONSTRAINT `user_role_has_permission_user_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_role_has_permission_user_role_permission_id_fk` FOREIGN KEY (`permission_id`) REFERENCES `user_role_permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
