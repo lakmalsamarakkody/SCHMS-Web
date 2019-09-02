@@ -15,12 +15,12 @@ class Home extends Controller {
 		$data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		//Check Login Status
-		// if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 
-		// 	header( 'Location:' . $this->config->get('base_url') . '/logout' );
-		// 	exit();
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
 
-		// endif;
+		endif;
 
 		// RENDER VIEW
 		$this->load->view('home/index', $data);

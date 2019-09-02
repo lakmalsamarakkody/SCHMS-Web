@@ -25,7 +25,7 @@ class Login extends Controller {
 
 				if($User != null):
 
-					if(password_verify ($_POST['password'],$User->password) == true):
+					if(password_verify ($_POST['password'],$User->password)):
 
 						$_SESSION['user']['is_login'] = true;
 						$_SESSION['user']['id'] = $User->id;
@@ -41,7 +41,7 @@ class Login extends Controller {
 
 				else:
 
-					$User = $this->model_user::where('emp_id',$_POST['username']) -> where('username',"") -> where('password',"") ->first();
+					$User = $this->model_user::where('stu_staff_parent_id',$_POST['username']) -> where('username',"") -> where('password',"") ->first();
 
 					if($User != null):
 
@@ -72,7 +72,7 @@ class Login extends Controller {
 		endif;
 
 		// RENDER VIEW
-        $this->load->view('login/index', $data);
+		$this->load->view('login/index', $data);
         
 	}
 }

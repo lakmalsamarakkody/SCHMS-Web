@@ -3,7 +3,7 @@
     --main-theme-color: #727cf5;
     --main-bg-color: #fbfbfb;
     --main-text-color: #6c6c6c;
-    --sub-text-color: #98a6ad;
+    --sub-text-color: #b8c9d1;
     --sidenav-sub-text-color: #CEDCE4;
     --footer-bg-color: #333333;
 }
@@ -188,12 +188,20 @@ body{
     height: 100vh;
 }
 
-.login h1{
+.login .title{
+    position: static;
+}
+
+.login .loginform{
+    position: static;
+}
+
+.login .title h1{
     color: var(--white);
     
 }
 
-.login h2{
+.login .title h2{
     color: var(--sub-text-color);
 }
 

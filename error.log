@@ -139,3 +139,67 @@ Stack trace:
 #3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
 #4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
 #" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 12:48:31 [error] 1845#1845: *13 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 12:49:07 [error] 1845#1845: *13 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 13:13:47 [error] 1845#1845: *153 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 13:29:42 [error] 1845#1845: *305 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 13:29:58 [error] 1845#1845: *305 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 13:30:27 [error] 1845#1845: *305 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 13:33:02 [error] 1845#1845: *335 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/02 13:59:49 [error] 1845#1845: *491 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emp_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
