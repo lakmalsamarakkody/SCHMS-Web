@@ -8,16 +8,30 @@
         Wedensday 12 June 2019 - 7:56 pm
     </div>
 
-    <div class="col-md-2 settings">        
-           
-                <i class="la la-cogs" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    <div class="col-md-2">
+
+        <div class="row justify-content-end">
+            <div class="col-md-1 notifications">
+                <i class="la la-bell" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <p> <i class="la la-globe"></i> No notifications </p>
+                </div>
+            </div>
+
+        
+            <div class="col-md-1 settings">        
+                
+                <i class="la la-cog" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">My Profile</a>
-                    <a class="dropdown-item" href="{{ app.url }}/logout">Logout</a>
+                    <a class="dropdown-item" href="#"> <i class="la la-user"></i>  My Profile </a>
+                    <a class="dropdown-item" href="{{ app.url }}/logout"> <i class="la la-sign-out"></i>  Logout </a>
                 </div>
 
-       
+            </div>
+        </div>
+
     </div>
 
 </div>

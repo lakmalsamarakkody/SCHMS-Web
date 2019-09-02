@@ -6,16 +6,122 @@
         <div class="row">
             
             {{ template.sidenav|raw }}
-
+            
             <div class="col-md-10 content">
                 
                 {{ template.topmenu|raw }}
 
                 <div class="staffsearch">
-                    search staff
+
+                    <div class="staffsearchheading">
+                        <h3>Staff Search</h3>
+                    </div>
+
+                    <div class="staffsearchfilter">
+                        <form>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="empid">Employee ID</label>
+                                    <input type="number" class="form-control" id="empid" required/>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dob" required/>
+                                    <small id="dobHelp" class="form-text text-muted">ex - 12/30/1995</small>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="adddate">Admission Date</label>
+                                    <input type="date" class="form-control" id="adddate" required/>
+                                    <small id="dobHelp" class="form-text text-muted">ex : 01/15/2018</small>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label for="fn">Name</label>
+                                    <input type="text" class="form-control" id="fn" required/>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="nic">NIC</label>
+                                    <input type="text" class="form-control" id="nic" required/>
+                                </div>
+                            </div>
+                            
+                            <hr/>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="class">Class</label>
+                                    <input type="text" class="form-control" id="class" required/>
+                                </div>  
+                                
+                                <div class="form-group col-md-4">
+                                    <label for="grade">Grade</label>
+                                    <input type="text" class="form-control" id="grade" required/>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="gen">Gender</label>
+                                    <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="male" checked/>Male</div>
+                                    <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="female"/>Female</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" required/>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="district">District</label>
+                                    <input type="text" class="form-control" id="district" required/>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="province">Province</label>
+                                    <input type="text" class="form-control" id="province" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="subject">Subject</label>
+                                    <input type="text" class="form-control" id="subject" required/>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="type">Staff Type</label>
+                                    <input type="text" class="form-control" id="type" required/>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="sport">Sport</label>
+                                    <input type="text" class="form-control" id="sport" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="religion">Religion</label>
+                                    <input type="text" class="form-control" id="religion" required/>
+                                </div>
+                            </div>
+                            
+                                
+                            <input class="btn btn-outline-primary mt-5 pl-5 pr-5" type="submit" value="Search"/>    
+
+                        </form>
+    
+                    </div>
+
                 </div>
             </div>
-            
+
         </div>
     </div>
 

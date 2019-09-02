@@ -1,7 +1,8 @@
 /* site */
 :root{
     --main-theme-color: #727cf5;
-    --main-bg-color: #fbfbfb;
+    --main-bg-color: #e6e6e65b;
+    --sub-theme-color: #8f75da;
     --main-text-color: #6c6c6c;
     --sub-text-color: #b8c9d1;
     --sidenav-sub-text-color: #CEDCE4;
@@ -18,15 +19,15 @@ body{
 }
 
 .btn-outline-primary{
-    color: var(--main-theme-color);
+    color: var(--sub-theme-color);
     background-color: var(--white);
-    border-color: var(--main-theme-color);
+    border-color: var(--sub-theme-color);
 }
 
 .btn-outline-primary:hover{
     color: var(--white);
-    background-color: var(--main-theme-color);
-    border-color: var(--main-theme-color);
+    background-color: var(--sub-theme-color);
+    border-color: var(--sub-theme-color);
 }
 
 .btn-outline-secondary{
@@ -35,6 +36,15 @@ body{
 
 .btn-outline-danger{
     background-color: var(--white);
+}
+
+hr{
+    display: block; 
+    height: 1px;
+    border: 0; 
+    border-top: 1px solid var(--sub-theme-color);
+    margin: 4em 0; 
+    padding: 0;
 }
 
 /* ScrollBar */
@@ -68,7 +78,7 @@ body{
 .topmenu{
     font-weight: bold;
     height: 7vh;
-    color: var(--sub-text-color);
+    color: var(--sub-theme-color);
     background-color: var(--white);
     padding: 1% 0% 1% 0%;
 }
@@ -81,17 +91,33 @@ body{
     text-align: center;
 }
 
-.topmenu .settings{
-    text-align: right;
+.topmenu .notifications{
     cursor: pointer;
+    padding-right: 2em;
 }
+
+.topmenu .settings{
+    cursor: pointer;
+    padding-right: 3em;
+}
+
 
 .topmenu i{
     font-size: 30px;
 }
 
-.topmenu .sub-menu .dropdown-menu .dropdown-item{
+.topmenu .notifications p{
     color: var(--main-theme-color);
+}
+
+.topmenu .settings .dropdown-menu .dropdown-item{
+    color: var(--main-theme-color);
+}
+
+.topmenu .settings .dropdown-menu .dropdown-item:hover{
+    font-weight: bold;
+    color: var(--sub-theme-color);
+    
 }
 
 /* common/sidenav */
@@ -110,7 +136,6 @@ body{
 
 .left-pane .logo .sidenavusername{
     color: var(--white);
-    /* background-color: var(--white); */
 }
 
 .left-pane .logo .sidenavuserhr{
@@ -205,8 +230,28 @@ body{
     color: var(--sub-text-color);
 }
 
+
 /* student */
 /* student/index */
+.stuindex{
+    padding: 1em;
+    padding-top: 2em;
+}
+
+.stuindex .heading{
+    color: var(--main-text-color);
+}
+
+.stuindex .card{
+    border: 0px;
+}
+
+.stuindex .card-header{
+    color: var(--sub-theme-color);
+    background-color: var(--white);
+    border: 0px;
+    font-weight: bold;
+}
 
 /* student/add */
 .stuadd{
@@ -223,39 +268,33 @@ body{
  
 .stuadd .card .card-header{
     cursor: pointer;
-    color: var(--main-theme-color);
+    color: var(--white);
+    background-color: var(--sub-theme-color);
     border-radius: .25rem;
 }
 
-.stuadd .form-control {
-    color:var(--sub-text-color);
-}
 
 /* student/search */
 .stusearch{
-    padding: 5% 20% 5% 20%;
+    padding: 5% 10% 5% 10%;
 }
 
 .stusearch .stusearchfilter{
     background-color: var(--white);
     padding: 5%;
-    border: 2px solid var(--sub-text-color);
+    border: 1px solid var(--sub-theme-color);
     text-align: center;
 }
 
 .stusearch .stusearchheading{
     color: var(--white);
-    background-color: var(--main-theme-color);
-    padding: 2%;
+    background-color: var(--sub-theme-color);
+    padding: 1%;
     text-align: center;
 }
 
 .stusearch .stusearchfilter input{
     text-align: center;
-}
-
-.stusearch .form-group{
-    color: var(--main-theme-color);
 }
 
 /* staff */
@@ -274,13 +313,38 @@ body{
  
 .staffadd .card .card-header{
     cursor: pointer;
-    color: var(--main-theme-color);
+    color: var(--white);
+    background-color: var(--sub-theme-color);
     border-radius: .25rem;
 }
 
 .staffadd .form-control {
     color:var(--sub-text-color);
 }
+
+/* staff/search */
+.staffsearch{
+    padding: 5% 10% 5% 10%;
+}
+
+.staffsearch .staffsearchfilter{
+    background-color: var(--white);
+    padding: 5%;
+    border: 1px solid var(--sub-theme-color);
+    text-align: center;
+}
+
+.staffsearch .staffsearchheading{
+    color: var(--white);
+    background-color: var(--sub-theme-color);
+    padding: 1%;
+    text-align: center;
+}
+
+.staffsearch .staffsearchfilter input{
+    text-align: center;
+}
+
 
 /* user */
 /* user/add */
@@ -292,12 +356,12 @@ body{
     background-color: var(--white);
     color: var(--main-text-color);
     text-align: center;
-    border: 2px solid var(--sub-text-color);
+    border: 1px solid var(--sub-theme-color);
 }
 
 .usercreateheading{
     color: var(--white);
-    background-color: var(--main-theme-color);
+    background-color: var(--sub-theme-color);
     padding: 2%;
 }
 
@@ -309,6 +373,7 @@ body{
    text-align: center;
 }
 
+
 /* user/search */
 .usersearch{
     padding: 5% 20% 5% 20%;
@@ -317,21 +382,17 @@ body{
 .usersearch .usersearchfilter{
     background-color: var(--white);
     padding: 5%;
-    border: 2px solid var(--sub-text-color);
+    border: 2px solid var(--sub-theme-color);
     text-align: center;
 }
 
 .usersearch .usersearchheading{
     color: var(--white);
-    background-color: var(--main-theme-color);
+    background-color: var(--sub-theme-color);
     padding: 2%;
     text-align: center;
 }
 
 .usersearch .usersearchfilter input{
     text-align: center;
-}
-
-.usersearch .form-group{
-    color: var(--main-theme-color);
 }
