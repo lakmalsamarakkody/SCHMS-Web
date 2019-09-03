@@ -14,9 +14,23 @@
                     <a href="{{ app.url }}"><i class="la la-dashboard"></i><span class="">&nbsp;Dashboard</span></a>
                 </li>
 
-                <li class="main-menu" id="attendance">
-                    <a href="{{ app.url }}"><i class="la la-area-chart"></i><span class="">&nbsp;Attendance</span></a>
+                <li class="main-menu" data-toggle="collapse" data-target="#attendance">
+                    <i class="la la-calendar"></i><span>&nbsp;Attendance</span></a>
                 </li>
+
+                    <ul class="collapse" id="attendance">
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/attendance/view"><i class="la la-search"></i><span>&nbsp;View Attendance</span></a>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/student/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/attendance/add"><i class="la la-plus-circle"></i><span>&nbsp;Mark Attendance</span></a>
+                        </li>
+                    </ul>
             
                 <li class="main-menu" data-toggle="collapse" data-target="#student">
                     <i class="la la-graduation-cap"></i><span>&nbsp;Students</span>
@@ -39,11 +53,11 @@
                     </ul>
 
                 <li class="main-menu" id="exam">
-                    <a href="{{ app.url }}"><i class="la la-file-text"></i><span class="">&nbsp;Exam Schedule</span></a>
+                    <a href="{{ app.url }}"><i class="la la-newspaper-o"></i><span class="">&nbsp;Exam Schedule</span></a>
                 </li>
 
                 <li class="main-menu" id="timetable">
-                    <a href="{{ app.url }}"><i class="la la-file-text"></i><span class="">&nbsp;Time table</span></a>
+                    <a href="{{ app.url }}"><i class="la la-clock-o"></i><span class="">&nbsp;Time table</span></a>
                 </li>
 
                 <li class="main-menu" id="results">
