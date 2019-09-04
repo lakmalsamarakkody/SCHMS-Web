@@ -5,6 +5,7 @@
 <div class="container-fluid login"> 
     <div class="container">
         <div class="row ">
+
             <div class="col-md-6 title">
                 <h1>School Management System</h1> <hr/>
                 <h2>David De Silva College &nbsp; Minuwangoda</h2>
@@ -12,7 +13,7 @@
 
             <div class="col-md-4 offset-1 loginform">
 
-                <form method="post">
+                <form name="loginform" method="post">
 
                     <div class="form-group"> 
                         <input class="form-control" type="text" name="username" placeholder="Username"/>
@@ -28,12 +29,13 @@
                     
                     <input type="hidden" name="is_submit" value="true"/>
                     <button class="btn btn-primary mt-5 pr-3" type="submit">Login</button>
-                    <input class="btn btn-secondary mt-5" type="reset" name="reset" value="Clear"/>
+                    <button class="btn btn-secondary mt-5" type="reset" name="reset"> Clear </button>
 
                    
 
                 </form>
             </div>
+            
         </div>
     </div>
 </div>

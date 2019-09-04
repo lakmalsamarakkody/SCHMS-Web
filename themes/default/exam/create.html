@@ -1,0 +1,79 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">
+                
+                {{ template.topmenu|raw }}
+
+                <div class="examcreate">
+                    
+                    <h4 class="page-title"> Create an Exam</h4>
+
+                    <div class="createform">
+
+                        <div class="form-row">
+                                <button class="btn btn-warning ml-auto mr-1" type="button" data-toggle="collapse" data-target="#createexamtype" aria-expanded="false" aria-controls="createexamtype">Edit/Remove exam type</button>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createexamtype" aria-expanded="false" aria-controls="createexamtype">Add new exam type</button>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3 ml-auto">
+                                <div class="collapse" id="createexamtype">
+                                    <div class="card card-body mt-3">
+
+                                        <div class="form-group">
+                                            <label for="examtype">Enter exam type</label>
+                                            <input type="text" class="form-control" id="examtype" required/>
+                                        </div>
+
+                                        <button class="btn btn-outline-primary ml-auto" type="submit"> Add </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form name="createexam">
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-1">
+                                    <label for="examyear">year</label>
+                                    <select class="form-control" id="examyear" required></select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="examtype">Exam type</label>
+                                    <select class="form-control" id="examtype" required></select>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="instructions">Instructions</label>
+                                    <textarea class="md-textarea form-control" id="instructions"></textarea>
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-row"></div>
+                                <button class="btn btn-outline-primary" type="submit"> Create </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>

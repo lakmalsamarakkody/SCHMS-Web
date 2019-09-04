@@ -1,0 +1,67 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">
+                
+                {{ template.topmenu|raw }}
+
+                <div class="attendancesearch">
+
+                    <h4 class="page-title">Search Attendance</h4>
+
+                    <div class="attendancefilter">
+                        
+                        <form name="form-search-attendance">
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-2">
+                                    <label for="addno">Admission / Emp ID</label>
+                                    <input type="number" class="form-control" id="addno" required/>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <label for="view">Select View</label>
+                                    <select class="form-control" id="view" required></select>
+                                </div>
+
+                                <div class="form-group col-md-1 mr-auto">
+                                    <label for="status">Select Status</label>
+                                    <select class="form-control" id="status" required></select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="datefrom">Date From</label>
+                                    <input type="date" class="form-control" id="datefrom" required/>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="dateto">Date To</label>
+                                    <input type="date" class="form-control" id="dateto" required/>
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group ml-auto mr-1">
+                                    <button class="btn btn-outline-primary" type="submit"> Go </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>

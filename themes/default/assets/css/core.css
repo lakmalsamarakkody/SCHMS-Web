@@ -15,6 +15,7 @@ body{
 
 .content{
     overflow-y: auto;
+    color: var(--main-text-color);
     background-color: var(--main-bg-color);
 }
 
@@ -38,13 +39,18 @@ body{
     background-color: var(--white);
 }
 
-hr{
+.hrsearch{
     display: block; 
     height: 1px;
     border: 0; 
     border-top: 1px solid var(--sub-theme-color);
-    margin: 4em 0; 
+    margin: 4rem 0; 
     padding: 0;
+}
+
+.page-title{
+    color: var(--main-text-color);
+    padding-top: 1rem;
 }
 
 /* ScrollBar */
@@ -66,6 +72,49 @@ hr{
   ::-webkit-scrollbar-thumb:hover {
     background: #ddd; 
   }
+
+
+/* attendance */
+/* attendance/index */
+.attendanceindex{
+      padding: 1rem;
+  }
+
+.attendanceindex .card{
+    border: 0px;
+}
+
+.attendanceindex .card-header{
+    color: var(--sub-theme-color);
+    background-color: var(--white);
+    border: 0px;
+    font-weight: bold;
+}
+
+.viewattendance{
+    margin-top: 3rem;
+}
+
+
+/* attendance/mark */
+.attendancemark{
+    padding: 1rem;
+}
+
+.attendancemark .attendancefilter{
+    padding-top: 2rem;
+}
+
+/* attendance/search */
+.attendancesearch{
+    padding: 1rem;
+}
+
+.attendancesearch .attendancefilter{
+    padding-top: 2rem;
+}
+
+
 
 /* common  */
 /* common/footer */
@@ -93,12 +142,12 @@ hr{
 
 .topmenu .notifications{
     cursor: pointer;
-    padding-right: 2em;
+    padding-right: 2rem;
 }
 
 .topmenu .settings{
     cursor: pointer;
-    padding-right: 3em;
+    padding-right: 3rem;
 }
 
 
@@ -202,6 +251,35 @@ hr{
     font-size: 20px;
 }
 
+/* exam */
+/* exam/index */
+.examindex{
+    padding: 1rem;
+}
+
+
+/* exam/search */
+.examsearch{
+    padding: 1rem;
+}
+
+
+/* exam/create */
+.examcreate{
+    padding: 1rem;
+}
+
+
+
+/* home */
+/* home/index */
+.homeindex{
+    padding: 1rem;
+}
+
+
+
+/* login */
 /* login/index */
 .login{
     background-image: linear-gradient(135deg,#8f75da 0,#727cf5 60%);
@@ -231,73 +309,39 @@ hr{
 }
 
 
-/* student */
-/* student/index */
-.stuindex{
-    padding: 1em;
-    padding-top: 2em;
+
+/* staff */
+/* staff/index */
+.staffindex{
+    padding: 1rem;
 }
 
-.stuindex .heading{
-    color: var(--main-text-color);
+
+/* staff/search */
+.staffsearch{
+    padding: 1rem;
 }
 
-.stuindex .card{
-    border: 0px;
-}
-
-.stuindex .card-header{
-    color: var(--sub-theme-color);
+.staffsearch .staffsearchfilter{
     background-color: var(--white);
+    margin: 2% 10% 3% 10%;
+    padding: 3% 5% 3% 5%;
     border: 0px;
-    font-weight: bold;
-}
-
-/* student/add */
-.stuadd{
-    padding: 5% 15% 5% 15%;
-}
-
-.stuadd form{
-    display: contents;
-}
-
-.stuadd .card{
-    margin-bottom: 2%;
-}
- 
-.stuadd .card .card-header{
-    cursor: pointer;
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    border-radius: .25rem;
-}
-
-
-/* student/search */
-.stusearch{
-    padding: 5% 10% 5% 10%;
-}
-
-.stusearch .stusearchfilter{
-    background-color: var(--white);
-    padding: 5%;
-    border: 1px solid var(--sub-theme-color);
     text-align: center;
 }
 
-.stusearch .stusearchheading{
+.staffsearch .staffsearchheading{
     color: var(--white);
     background-color: var(--sub-theme-color);
     padding: 1%;
     text-align: center;
 }
 
-.stusearch .stusearchfilter input{
+.staffsearch .staffsearchfilter input{
     text-align: center;
 }
 
-/* staff */
+
 /* staff/add */
 .staffadd{
     padding: 5% 15% 5% 15%;
@@ -322,31 +366,105 @@ hr{
     color:var(--sub-text-color);
 }
 
-/* staff/search */
-.staffsearch{
-    padding: 5% 10% 5% 10%;
+
+
+/* student */
+/* student/index */
+.stuindex{
+    padding: 1rem;
 }
 
-.staffsearch .staffsearchfilter{
+.stuindex .card{
+    border: 0px;
+}
+
+.stuindex .card-header{
+    color: var(--sub-theme-color);
     background-color: var(--white);
-    padding: 5%;
-    border: 1px solid var(--sub-theme-color);
+    border: 0px;
+    font-weight: bold;
+}
+
+
+/* student/search */
+.stusearch{
+    padding: 1rem;
+}
+
+.stusearch .stusearchfilter{
+    margin: 3% 10% 3% 10%;
+    padding: 3% 5% 3% 5%;
+    background-color: var(--white);
+    /* padding: 5%; */
+    border: 0px;
     text-align: center;
 }
 
-.staffsearch .staffsearchheading{
+.stusearch .stusearchheading{
     color: var(--white);
     background-color: var(--sub-theme-color);
     padding: 1%;
     text-align: center;
 }
 
-.staffsearch .staffsearchfilter input{
+.stusearch .stusearchfilter input{
     text-align: center;
 }
 
 
+/* student/add */
+.stuadd{
+    padding: 5% 15% 5% 15%;
+}
+
+.stuadd form{
+    display: contents;
+}
+
+.stuadd .card{
+    margin-bottom: 2%;
+}
+ 
+.stuadd .card .card-header{
+    cursor: pointer;
+    color: var(--white);
+    background-color: var(--sub-theme-color);
+    border-radius: .25rem;
+}
+
+
+
 /* user */
+/* user/index */
+.userindex{
+    padding: 1rem;
+}
+
+
+/* user/search */
+.usersearch{
+    padding: 10% 20% 5% 20%;
+}
+
+.usersearch .usersearchfilter{
+    background-color: var(--white);
+    padding: 5%;
+    border: 2px solid var(--sub-theme-color);
+    text-align: center;
+}
+
+.usersearch .usersearchheading{
+    color: var(--white);
+    background-color: var(--sub-theme-color);
+    padding: 2%;
+    text-align: center;
+}
+
+.usersearch .usersearchfilter input{
+    text-align: center;
+}
+
+
 /* user/add */
 .useradd{
     padding: 5% 20% 5% 20%;
@@ -371,28 +489,4 @@ hr{
 
 .usercreatebody input{
    text-align: center;
-}
-
-
-/* user/search */
-.usersearch{
-    padding: 5% 20% 5% 20%;
-}
-
-.usersearch .usersearchfilter{
-    background-color: var(--white);
-    padding: 5%;
-    border: 2px solid var(--sub-theme-color);
-    text-align: center;
-}
-
-.usersearch .usersearchheading{
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    padding: 2%;
-    text-align: center;
-}
-
-.usersearch .usersearchfilter input{
-    text-align: center;
 }
