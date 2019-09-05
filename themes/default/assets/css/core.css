@@ -144,7 +144,7 @@ body{
 
 
 .topmenu i{
-    font-size: 30px;
+    font-size: 2rem;
 }
 
 .topmenu .notifications p{
@@ -201,7 +201,7 @@ body{
 
 .sidenav li.main-menu{
     padding: 5% 0% 5% 10%;
-    font-size: 18px;
+    font-size: 1.1rem;
     color: var(--sidenav-sub-text-color);
     display: flex;
     align-items: center;
@@ -217,7 +217,7 @@ body{
 }
 
 .sidenav .main-menu .la{
-    font-size: 30px;
+    font-size: 1.8rem;
 }
 
 .sidenav #dashboard{
@@ -226,7 +226,7 @@ body{
 
 .sidenav li.sub-menu{
     padding: 5% 0% 5% 10%;
-    font-size: 16px;
+    font-size: 1rem;
     color: var(--sidenav-sub-text-color);
 }
 
@@ -240,7 +240,7 @@ body{
 }
 
 .sidenav .sub-menu .la{
-    font-size: 20px;
+    font-size: 1.5rem;
 }
 
 /* exam */
@@ -470,7 +470,7 @@ body{
 .usersearch .usersearchfilter{
     background-color: var(--white);
     padding: 5%;
-    border: 2px solid var(--sub-theme-color);
+    border: 1px solid var(--sub-theme-color);
     text-align: center;
 }
 
