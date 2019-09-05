@@ -11,64 +11,176 @@
                 
                 {{ template.topmenu|raw }}
 
-                <div class="examcreate">
+                <!-- START : BUTTON TRIGGER MODAL -->
+                <div class="form-row mt-5 mr-3">
+                    <button type="button" class="btn btn-warning ml-auto" data-toggle="modal" data-target="#view-exam-type"> Edit / Remove exam type </button>
+                    <button type="button" class="btn btn-primary ml-3"  data-toggle="modal" data-target="#create-exam-type"> Add new exam type </button>
+                </div>
+                <!-- END : BUTTON TRIGGER MODAL -->
                     
-                    <h4 class="page-title"> Create an Exam</h4>
+                    
+                <!-- START : MODAL CREATE EXAM-TYPE -->
+                <div class="modal fade" id="create-exam-type" tabindex="-1" role="dialog" aria-labelledby="create-exam-type-title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
 
-                    <div class="createform">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="create-exam-type-title"> Enter new exam type </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
 
-                        <div class="form-row">
-                                <button class="btn btn-warning ml-auto mr-1" type="button" data-toggle="collapse" data-target="#createexamtype" aria-expanded="false" aria-controls="createexamtype">Edit/Remove exam type</button>
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createexamtype" aria-expanded="false" aria-controls="createexamtype">Add new exam type</button>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-3 ml-auto">
-                                <div class="collapse" id="createexamtype">
-                                    <div class="card card-body mt-3">
-
-                                        <div class="form-group">
-                                            <label for="examtype">Enter exam type</label>
-                                            <input type="text" class="form-control" id="examtype" required/>
-                                        </div>
-
-                                        <button class="btn btn-outline-primary ml-auto" type="submit"> Add </button>
-
-                                    </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="examtype" required/>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> Close </button>
+                                <button type="button" class="btn btn-outline-primary"> Save changes </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END : MODAL CREATE EXAM-TYPE -->
+
+                <!-- START : MODAL EDIT/REMOVE EXAM-TYPE -->
+                <div class="modal fade" id="view-exam-type" tabindex="-1" role="dialog" aria-labelledby="view-exam-type-title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="view-exam-type-title"> Edit exam types </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                body
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> Close </button>
+                                <button type="button" class="btn btn-outline-danger"> Save changes </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END : MODAL EDIT/REMOVE EXAM-TYPE -->
+
+                <!-- START : EXAM CREATE PAGE -->
+                <div class="examcreate">
+
+                    <!-- START : ADD EXAM -->
+                    <div class="addexam">
+
+                        <h4 class="page-title"> Create an Exam </h4>
+
+                        <!-- START : EXAM CREATE FORM -->
                         <form name="createexam">
 
-                            <div class="form-row">
+                            <div class="form-row mt-4">
 
                                 <div class="form-group col-md-1">
-                                    <label for="examyear">year</label>
+                                    <label for="examyear"> Year </label>
                                     <select class="form-control" id="examyear" required></select>
                                 </div>
 
                                 <div class="form-group col-md-2">
-                                    <label for="examtype">Exam type</label>
+                                    <label for="examtype"> Exam type </label>
                                     <select class="form-control" id="examtype" required></select>
                                 </div>
 
-                                <div class="form-group col-md-3">
-                                    <label for="instructions">Instructions</label>
-                                    <textarea class="md-textarea form-control" id="instructions"></textarea>
+                                <div class="form-group col-md-2">
+                                    <label for="venue"> Venue </label>
+                                    <input type="text" class="form-control" id="venue"/>
+                                </div>
+
+                                <div class="form-group col-md-7">
+                                    <label for="instructions"> Instructions </label>
+                                    <textarea class="md-textarea form-control" rows="1" id="instructions" placeholder="type exam instructions here.."></textarea>
                                 </div>
 
                             </div>
                             
-                            <div class="form-row"></div>
-                                <button class="btn btn-outline-primary" type="submit"> Create </button>
+                            <div class="form-row">
+                                <div class="form-group ml-auto">
+                                    <button type="submit" class="btn btn-success"> Create exam </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <!-- END : EXAM CREATE FORM -->
+                    </div>
+                    <!-- END : ADD EXAM -->
+
+                    <!-- START : SCHEDULE EXAM -->
+                    <div class="scheduleexam">
+
+                        <h4 class="page-title mt-3"> Schedule an exam </h4>
+
+                        <form name="examschedule">
+
+                            <div class="form-row mt-4">
+
+                                <div class="form-group col-md-1">
+                                    <label for="examschyear"> Year </label>
+                                    <select class="form-control" id="examschyear" required></select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="exam"> Select Exam </label>
+                                    <select class="form-control" id="exam" required></select>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <label for="grade"> Grade </label>
+                                    <select class="form-control" id="grade" required></select>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <label for="subject"> Subject </label>
+                                    <select class="form-control" id="subject" required></select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="date"> Date </label>
+                                    <input type="date" class="form-control" id="date" required></select>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <label for="starttime"> Start time </label>
+                                    <input type="time" class="form-control" id="starttime" required></select>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <label for="endtime"> End time </label>
+                                    <input type="time" class="form-control" id="endtime"></select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-9">
+                                    <label for="instructions"> Instructions </label>
+                                    <textarea class="md-textarea form-control" rows="5" id="instructions"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group ml-auto">
+                                <button type="submit" class="btn btn-success"> Add Schedule </button>
                             </div>
 
                         </form>
 
                     </div>
+                    <!-- END : SCHEDULE EXAM -->
 
                 </div>
+                <!-- END : EXAM CREATE PAGE  -->
 
             </div>
             

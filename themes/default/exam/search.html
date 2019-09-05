@@ -13,7 +13,48 @@
 
                 <div class="examsearch">
                     
-                    <h4 class="page-title"> Search exam schedule</h4>
+                    <h4 class="page-title"> Search an exam</h4>
+
+                    <form name="examsearch">
+
+                        <div class="form-row mt-4">
+
+                            <div class="form-group col-md-1">
+                                <label for="examschyear"> Year </label>
+                                <select class="form-control" id="examschyear" required></select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="exam"> Select Exam </label>
+                                <select class="form-control" id="exam" required></select>
+                            </div>
+
+                            <div class="form-group col-md-1 ml-auto">
+                                <label for="grade"> Grade </label>
+                                <select class="form-control" id="grade" required></select>
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <label for="subject"> Subject </label>
+                                <select class="form-control" id="subject" required></select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="date"> Date </label>
+                                <input type="date" class="form-control" id="date" required></select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group ml-auto mr-1">
+                                <button type="submit" class="btn btn-success"> Search Exam Schedule </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <h4 class="page-title"> "Exam name" Exam Schedule</h4>
 
                 </div>
             </div>

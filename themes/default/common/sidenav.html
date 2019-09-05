@@ -53,7 +53,7 @@
                     </ul>
 
                 <li class="main-menu" data-toggle="collapse" data-target="#exam">
-                   <i class="la la-newspaper-o"></i><span class="">&nbsp;Exam Schedule</span></a>
+                    <i class="la la-newspaper-o"></i><span class="">&nbsp;Exam Schedule</span></a>
                 </li>
 
                     <ul class="collapse" id="exam">
@@ -72,9 +72,21 @@
                         
                     </ul>
 
-                <li class="main-menu" id="timetable">
-                    <a href="{{ app.url }}"><i class="la la-clock-o"></i><span class="">&nbsp;Time table</span></a>
+                <li class="main-menu" data-toggle="collapse" data-target="#timetable">
+                    <i class="la la-clock-o"></i><span class="">&nbsp;Time table</span></a>
                 </li>
+
+                    <ul class="collapse" id="timetable">
+                        
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/timetable/"><i class="la la-globe"></i><span>&nbsp;View</span></a>
+                        </li>
+                        
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/timetable/create"><i class="la la-plus-circle"></i><span>&nbsp;Create</span></a>
+                        </li>
+                        
+                    </ul>
 
                 <li class="main-menu" id="results">
                     <a href="{{ app.url }}"><i class="la la-certificate"></i><span class="">&nbsp;Results</span></a>

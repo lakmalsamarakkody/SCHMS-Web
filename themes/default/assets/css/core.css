@@ -19,24 +19,16 @@ body{
     background-color: var(--main-bg-color);
 }
 
-.btn-outline-primary{
+.btn-outline-theme-primary{
     color: var(--sub-theme-color);
     background-color: var(--white);
     border-color: var(--sub-theme-color);
 }
 
-.btn-outline-primary:hover{
+.btn-outline-theme-primary:hover{
     color: var(--white);
     background-color: var(--sub-theme-color);
     border-color: var(--sub-theme-color);
-}
-
-.btn-outline-secondary{
-    background-color: var(--white);
-}
-
-.btn-outline-danger{
-    background-color: var(--white);
 }
 
 .hrsearch{
@@ -257,6 +249,17 @@ body{
     padding: 1rem;
 }
 
+.examindex .card{
+    border: 0px;
+}
+
+.examindex .card-header{
+    color: var(--sub-theme-color);
+    background-color: var(--white);
+    border: 0px;
+    font-weight: bold;
+}
+
 
 /* exam/search */
 .examsearch{
@@ -431,6 +434,24 @@ body{
     background-color: var(--sub-theme-color);
     border-radius: .25rem;
 }
+
+/* timetable */
+/* timetable/index */
+.timetableindex{
+    padding: 1rem;
+}
+
+.timetableindex .timetable{
+    background-color: var(--white);
+    padding: 1rem;
+}
+
+.timetableindex .timetable .table thead th{
+    border: 0px;
+}
+
+
+/* timetablecreate */
 
 
 
