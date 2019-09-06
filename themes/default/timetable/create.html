@@ -1,0 +1,104 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">
+                
+                {{ template.topmenu|raw }}
+
+                <div class="timetablecreate">
+
+                    <section class="selectowner mt-5">
+
+                        <form name="selectownerform"></form>
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-1 ml-auto">
+                                    <label for="class"> Select Class </label>
+                                    <select class="form-control" id="class"></select>
+                                </div>
+
+                                <div class="form-group col-md-1 mr-1">
+                                    <label for="empid">Employee ID</label>
+                                    <input type="number" class="form-control" id="empid"/>
+                                </div>
+
+                                <div class="form-group col-md-3 p-0">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name"/>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group ml-auto">
+                                    <button type="submit" class="form-control btn btn-primary"> Search </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                    </section>
+
+                    <h4 class="page-title"> Create Time Table </h4>
+
+                    <!-- START : CLASS TIME TABLE -->
+                    <div class="timetable">
+
+                        <table class="table table-hover">
+
+                            <thead class="thead-dark">
+
+                                <tr>
+                                    <th scope="col">Period</th>
+                                    <th scope="col">Monday</th>
+                                    <th scope="col">Tuesday</th>
+                                    <th scope="col">Wednesday</th>
+                                    <th scope="col">Thursday</th>
+                                    <th scope="col">Friday</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>6A</td>
+                                    <td>6A</td>
+                                    <td>6A</td>
+                                    <td>6A</td>
+                                    <td>6A</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>6A</td>
+                                    <td>6B</td>
+                                    <td>7A</td>
+                                    <td>7B</td>
+                                    <td>8A</td>
+                                </tr>
+                            
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <!-- END : CLASS TIME TABLE -->
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>

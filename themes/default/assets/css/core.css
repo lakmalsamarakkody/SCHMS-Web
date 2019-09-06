@@ -220,6 +220,13 @@ body{
     font-size: 1.8rem;
 }
 
+.sidenav .main-menu .la-angle-down{
+    font-size: 1rem;
+    padding-left: 4rem;
+    padding-right: 2rem;
+    margin-left: auto;
+}
+
 .sidenav #dashboard{
     background-color: rgba(255,255,255,0.1)
 }
@@ -441,17 +448,25 @@ body{
     padding: 1rem;
 }
 
-.timetableindex .timetable{
+/* timetable/search */
+.timetablesearch{
+    padding: 1rem;
+}
+
+.timetablesearch .timetable{
     background-color: var(--white);
     padding: 1rem;
 }
 
-.timetableindex .timetable .table thead th{
+.timetablesearch .timetable .table thead th{
     border: 0px;
 }
 
 
 /* timetablecreate */
+.timetablecreate{
+    padding: 1rem;
+}
 
 
 
