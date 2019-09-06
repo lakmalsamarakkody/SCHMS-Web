@@ -200,20 +200,33 @@ body{
 }
 
 .sidenav li.main-menu{
-    padding: 5% 0% 5% 10%;
     font-size: 1.1rem;
     color: var(--sidenav-sub-text-color);
     display: flex;
     align-items: center;
 }
 
+.sidenav .main-menu :hover{
+    color: var(--white);
+}
+
+.sidenav li.main-menu .col-md-9{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    align-items: center;
+    margin: 0%;
+}
+
+.sidenav li.main-menu .col-md-3{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    align-items: center;
+    margin: 0%;
+}
+
 .sidenav li.main-menu a{
     display: flex;
     align-items: center;
-}
-
-.sidenav li.main-menu:hover{
-    color: var(--white);
 }
 
 .sidenav .main-menu .la{
@@ -222,13 +235,18 @@ body{
 
 .sidenav .main-menu .la-angle-down{
     font-size: 1rem;
-    padding-left: 4rem;
+    float: right;
+    padding-right: 1rem;
+    /* padding-left: 4rem;
     padding-right: 2rem;
-    margin-left: auto;
+    margin-left: auto; */
 }
 
 .sidenav #dashboard{
-    background-color: rgba(255,255,255,0.1)
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: rgba(255,255,255,0.1);
 }
 
 .sidenav li.sub-menu{
