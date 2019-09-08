@@ -4,14 +4,14 @@ This is a PHP Framework that follows MVC design patterns developed by Avanciro (
 
 ## Prerequisites
 
-To install avanciro.com script you need the following stack.
+To install SCHMS script you need the following stack.
 
 * [NGINX](https://nginx.org/en/) - High Performance HTTP server. (FOSS)
 * [PHP 7.2](http://php.net/releases/7_2_0.php) - A server-side scripting language.
 
 ## Stack
 
-These are the libs we stacked into Skeleton.
+These are the libs we stacked into SCHMS.
 
 * [Eloquent](https://laravel.com/docs/5.6/eloquent) - The Eloquent ORM by Laravel
 * [Twig](https://twig.symfony.com/) - The flexible, fast, and secure template engine for PHP
