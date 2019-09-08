@@ -11,6 +11,7 @@
 
 body{
     cursor: default;
+    font-size: 1rem;
 }
 
 .content{
@@ -61,12 +62,12 @@ body{
   /* Track */
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #b9b8bb94; 
+    background: #b9b8bb5b; 
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: rgb(167, 164, 164); 
+    background: rgba(180, 179, 179, 0.596); 
   }
 
 
@@ -185,7 +186,7 @@ body{
 }
 
 .sidenav{
-    padding: 0rem 0rem 1rem 0rem;
+    padding: 0rem 0rem 3rem 0rem;
     margin: 0%;
 }
 
@@ -237,9 +238,6 @@ body{
     font-size: 1rem;
     float: right;
     padding-right: 1rem;
-    /* padding-left: 4rem;
-    padding-right: 2rem;
-    margin-left: auto; */
 }
 
 .sidenav #dashboard{
@@ -248,7 +246,6 @@ body{
 }
 
 .sidenav li.sub-menu{
-    /* padding: 5% 0% 5% 10%; */
     padding: 0.7rem 0rem 0.7rem 1rem;
     font-size: 1rem;
     color: var(--sidenav-sub-text-color);
@@ -345,9 +342,15 @@ body{
 
 
 /* result/search */
+.resultsearch{
+    padding: 1rem;
+}
 
 
 /* result/add */
+.resultadd{
+    padding: 1rem;
+}
 
 
 

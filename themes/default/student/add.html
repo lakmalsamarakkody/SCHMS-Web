@@ -25,7 +25,8 @@
                                 <div id="collapseAdmission" class="collapse show" aria-labelledby="headingAdmission" data-parent="#accordionAdmission">
                                     <div class="card-body">
     
-                                        <div class="form-row">                                        
+                                        <div class="form-row">  
+
                                             <div class="form-group col-md-4 mr-auto">
                                                 <label for="addno">Admission Number</label>
                                                 <input type="number" class="form-control" id="addno" required/>
@@ -36,12 +37,24 @@
                                                 <label for="adddate">Admission Date</label>
                                                 <input type="date" class="form-control" id="adddate" required/>
                                                 <small id="adddateHelp" class="form-text text-muted">If unchanged current date will be submitted</small>
-                                            </div>                                 
+                                            </div>
+
                                         </div>
     
-                                        <div class="form-group">
-                                            <label for="class">Class</label>
-                                            <input type="text" class="form-control" id="class" required/>
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-1">
+                                                <label for="class">Class</label>
+                                                <select class="form-control" id="class" required></select>
+                                                <small id="addclass" class="form-text text-muted">New Class</small>
+                                            </div>
+
+                                            <div class="form-group col-md-11">
+                                                <label for="subject">Subjects</label>
+                                                <select class="form-control" id="subject" required></select>
+                                                <small id="addsubject" class="form-text text-muted">New Subject</small>
+                                            </div>
+
                                         </div>
 
                                     </div>
@@ -65,6 +78,7 @@
                                         </div>
     
                                         <div class="form-row">
+
                                             <div class="form-group col-md-4">
                                                 <label for="initials">Initials</label>
                                                 <input type="text" class="form-control" id="initials" required/>
@@ -76,6 +90,7 @@
                                                 <input type="text" class="form-control" id="sn" required/>
                                                 <small id="snHelp" class="form-text text-muted">ex - SAMARAKKODY</small>
                                             </div>
+                                            
                                         </div>
                                         
                                         <div class="form-row">
@@ -87,8 +102,8 @@
         
                                             <div class="form-group col-md-4 offset-2">
                                                 <label for="gen">Gender</label>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="male" checked/>Male</div>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="female"/>Female</div>
+                                                <select class="form-control" id="gen" required></select>
+                                                <small id="addgen" class="form-text text-muted">New Gender</small>
                                             </div>
                                         </div>
 
@@ -118,12 +133,13 @@
         
                                             <div class="form-group col-md-4">
                                                 <label for="dist">District</label>
-                                                <input type="text" class="form-control" id="dist" required/>
+                                                <select class="form-control" id="dist" required></select>
+                                                <small id="adddistrict" class="form-text text-muted">New District</small>
                                             </div>
     
                                             <div class="form-group col-md-4">
                                                 <label for="province">Province</label>
-                                                <input type="text" class="form-control" id="province" disabled/>
+                                                <select class="form-control" id="province" disabled></select>
                                             </div>
                                         </div>
                                         
@@ -135,7 +151,8 @@
         
                                             <div class="form-group col-md-4">
                                                 <label for="rel">Religion</label>
-                                                <input type="text" class="form-control" id="rel"/>
+                                                <select class="form-control" id="rel"></select>
+                                                <small id="addreligion" class="form-text text-muted">New Religion</small>
                                             </div>
                                         </div>
                                         
@@ -179,12 +196,13 @@
                                             <div class="form-group col-md-4">
                                                 <label for="g1rel">Relationship</label>
                                                 <input type="text" class="form-control" id="g1rel" required/>
+                                                <small id="addrelation" class="form-text text-muted">New Relationship</small>
                                             </div>
 
                                             <div class="form-group col-md-4">
                                                 <label for="g1gen">Gender</label>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="g1gen" name="g1gen" value="male" required/>Male</div>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="g1gen" name="g1gen" value="female"/>Female</div>
+                                                <select class="form-control" id="g1gen" required></select>
+                                                <small id="addgen" class="form-text text-muted">New Gender</small>
                                             </div>
 
                                         </div>
@@ -242,12 +260,13 @@
         
                                             <div class="form-group col-md-4">
                                                 <label for="g1dist">District</label>
-                                                <input type="text" class="form-control" id="g1dist" required/>
+                                                <select class="form-control" id="g1dist" required></select>
+                                                <small id="adddistrict" class="form-text text-muted">New District</small>
                                             </div>
     
                                             <div class="form-group col-md-4">
                                                 <label for="g1province">Province</label>
-                                                <input type="text" class="form-control" id="g1province" disabled/>
+                                                <select class="form-control" id="g1province" disabled></select>
                                             </div>
                                         </div>
                                         
@@ -291,12 +310,13 @@
                                             <div class="form-group col-md-4">
                                                 <label for="g2rel">Relationship</label>
                                                 <input type="text" class="form-control" id="g2rel" required/>
+                                                <small id="addrelation" class="form-text text-muted">New Relationship</small>
                                             </div>
 
                                             <div class="form-group col-md-4">
                                                 <label for="g2gen">Gender</label>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="g2gen" name="g2gen" value="male" required/>Male</div>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="g2gen" name="g2gen" value="female"/>Female</div>
+                                                <select class="form-control" id="g2gen" required></select>
+                                                <small id="addgen" class="form-text text-muted">New Gender</small>
                                             </div>
 
                                         </div>
@@ -354,12 +374,13 @@
         
                                             <div class="form-group col-md-4">
                                                 <label for="g2dist">District</label>
-                                                <input type="text" class="form-control" id="g2dist" required/>
+                                                <select class="form-control" id="g2dist" required></select>
+                                                <small id="adddistrict" class="form-text text-muted">New District</small>
                                             </div>
     
                                             <div class="form-group col-md-4">
                                                 <label for="g2province">Province</label>
-                                                <input type="text" class="form-control" id="g2province" disabled/>
+                                                <select class="form-control" id="g2province" disabled></select>
                                             </div>
                                         </div>
 

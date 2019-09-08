@@ -40,31 +40,36 @@
                                             <div class="form-group col-md-4">
                                                 <label for="nicno">NIC</label>
                                                 <input type="number" class="form-control" id="nicno" required/>
+                                                <small id="nicno" class="form-text text-muted">ex :- 953651408V</small>
                                             </div>
                                         </div>
                                        
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label for="type">Type</label>
-                                                <input type="text" class="form-control" id="type" required/>
+                                                <select class="form-control" id="type" required></select>
+                                                <small id="addtype" class="form-text text-muted">New Type</small>
                                             </div>
 
                                             <div class="form-group col-md-4">
                                                 <label for="position">Position</label>
                                                 <input type="text" class="form-control" id="position" required/>
+                                                <small id="addposition" class="form-text text-muted">New Position</small>
                                             </div>
                                         </div>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-2">
-                                                <label for="class">Class incharge</label>
-                                                <input type="text" class="form-control" id="class"/>
+                                                <label for="class">Class in Charge</label>
+                                                <select class="form-control" id="class"></select>
+                                                <small id="addclass" class="form-text text-muted">New Class</small>
                                             </div>
                                         </div>                                        
                                         
                                         <div class="form-group">
                                             <label for="sub">Subjects</label>
-                                            <input type="text" class="form-control" id="sub" required/>
+                                            <select class="form-control" id="sub" required></select>
+                                            <small id="addsubject" class="form-text text-muted">New Subject</small>
                                         </div>    
                                         
                                     </div>
@@ -88,6 +93,7 @@
                                         </div>
     
                                         <div class="form-row">
+
                                             <div class="form-group col-md-4">
                                                 <label for="ini">Initials</label>
                                                 <input type="text" class="form-control" id="ini" required/>
@@ -99,9 +105,11 @@
                                                 <input type="text" class="form-control" id="sn" required/>
                                                 <small id="snHelp" class="form-text text-muted">ex - SAMARAKKODY</small>
                                             </div>
+
                                         </div>
                                        
                                         <div class="form-row">
+
                                             <div class="form-group col-md-4">
                                                 <label for="dob">Date of Birth</label>
                                                 <input type="date" class="form-control" id="dob" required/>
@@ -110,12 +118,14 @@
 
                                             <div class="form-group col-md-2 offset-1">
                                                 <label for="gen">Gender</label>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="male" required/>Male</div>
-                                                <div class="form-check"><input type="radio" class="form-check-input" id="gen" name="gen" value="female"/>Female</div>
+                                                <select class="form-control" id="gen"></select>
+                                                <small id="addgender" class="form-text text-muted">New Gender</small>
                                             </div>
+
                                         </div>
                                                                                 
                                         <div class="form-row">
+
                                             <div class="form-group col-md-4">
                                                 <label for="email">Email</label>
                                                 <input type="email" class="form-control" id="email"/>
@@ -130,6 +140,7 @@
                                                 <label for="mobno">Mobile Number</label>
                                                 <input type="text" class="form-control" id="mobno"/>
                                             </div>
+
                                         </div>
 
                                         <div class="form-group">
@@ -145,12 +156,13 @@
         
                                             <div class="form-group col-md-4">
                                                 <label for="dist">District</label>
-                                                <input type="text" class="form-control" id="dist" required/>
+                                                <select class="form-control" id="dist" required></select>
+                                                <small id="adddistrict" class="form-text text-muted">New District</small>
                                             </div>
     
                                             <div class="form-group col-md-4">
                                                 <label for="province">Province</label>
-                                                <input type="text" class="form-control" id="province" disabled/>
+                                                <select class="form-control" id="province" disabled></select>
                                             </div>
                                         </div>
                                         
@@ -158,15 +170,19 @@
                                             <div class="form-group col-md-4">
                                                 <label for="rel">Religion</label>
                                                 <input type="text" class="form-control" id="rel"/>
+                                                <small id="addreligion" class="form-text text-muted">New Religion</small>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
                             </div>
                         </div>
+
                         <button type="submit" class="btn btn-primary"> Register </button>
                         <button type="reset" class="btn btn-secondary"> Clear </button>
+                        
                     </form>
                 </div>                    
 
