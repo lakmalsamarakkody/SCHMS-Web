@@ -42,7 +42,15 @@ body{
 
 .page-title{
     color: var(--main-text-color);
-    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.table{
+    background-color: var(--white);
+}
+
+.table thead th{
+    border: 0px;
 }
 
 /* ScrollBar */
@@ -69,7 +77,7 @@ body{
 /* attendance */
 /* attendance/index */
 .attendanceindex{
-      padding: 1rem;
+    padding: 1rem;
   }
 
 .attendanceindex .card{
@@ -81,10 +89,6 @@ body{
     background-color: var(--white);
     border: 0px;
     font-weight: bold;
-}
-
-.viewattendance{
-    margin-top: 3rem;
 }
 
 
@@ -471,15 +475,6 @@ body{
     padding: 1rem;
 }
 
-.timetablesearch .timetable{
-    background-color: var(--white);
-    padding: 1rem;
-}
-
-.timetablesearch .timetable .table thead th{
-    border: 0px;
-}
-
 
 /* timetablecreate */
 .timetablecreate{
@@ -493,6 +488,18 @@ body{
 .userindex{
     padding: 1rem;
 }
+
+.userindex .card{
+    border: 0px;
+}
+
+.userindex .card-header{
+    color: var(--sub-theme-color);
+    background-color: var(--white);
+    border: 0px;
+    font-weight: bold;
+}
+
 
 
 /* user/search */

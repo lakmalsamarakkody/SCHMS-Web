@@ -13,118 +13,123 @@
 
                 <div class="attendanceindex">
 
-                    <h4 class="page-title">Attendance View</h4>
+                    <!-- START : ATTENDANCE SUMMARY  -->
+                    <section class="attendaceview">
 
-                    <div class="row mt-5">
-                        
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    Total Students
+                        <h4 class="page-title">Attendance Summary</h4>
+
+                        <div class="row mt-5">
+                            
+                            <div class="col-md-3">
+
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        Total Students
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title">765</h5>
+                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to last year</p>
+                                        <a href="#" class="badge badge-primary">view details</a>
+
+                                    </div>
+
                                 </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to last year</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
-                                </div>
+
                             </div>
+
+                            <div class="col-md-3">
+
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        Today Attendance
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title">765</h5>
+                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
+                                        <a href="#" class="badge badge-primary">view details</a>
+
+                                    </div>
+
+                                </div>
+
+                            </div> 
+
+                            <div class="col-md-3">
+
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        Total Staff
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title">765</h5>
+                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
+                                        <a href="#" class="badge badge-primary">view details</a>
+
+                                    </div>
+
+                                </div>
+
+                            </div> 
+
+                            <div class="col-md-3">
+
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        Today Staff Attendance
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title">765</h5>
+                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
+                                        <a href="#" class="badge badge-primary">view details</a>
+
+                                    </div>
+                                </div>
+                            </div> 
+
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    Today Attendance
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
-                                </div>
-                            </div>
-                        </div> 
+                    </section>
+                    <!-- END : ATTENDANCE SUMMARY  -->
 
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    Total Staff
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
-                                </div>
-                            </div>
-                        </div> 
+                    <!-- START : ABSENT STAFF  -->
+                    <section class="absentstaff mt-5">
 
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    Today Staff Attendance
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
-                                </div>
-                            </div>
-                        </div> 
+                        <h4 class="page-title"> Today Absent Staff </h4>
 
-                    </div>
+                        <div class="absentstaff-table mt-4">
 
-                    <hr class="hrsearch">
-
-                    <div class="viewattendance">
-
-                        <form name="formviewattendance">
-
-                            <div class="form-row">
-                                <div class="form-group col-md-1 mr-auto">
-                                    <label for="view">Select View</label>
-                                    <select class="form-control" id="view" required></select>
-                                </div>
-
-                                <div class="form-group col-md-2 ml-auto">
-                                    <label for="month">Select Month</label>
-                                    <select class="form-control" id="month" required></select>
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    <label for="year">Select Year</label>
-                                    <select class="form-control" id="year" required></select>
-                                </div>
-
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group ml-auto mr-1">
-                                    <button class="btn btn-primary" type="submit"> Go </button>
-                                </div>
-                            </div>
-                        </form>
-
-                        <div class="row">
-                            <table class="table table-hover table-bordered table-responsive-md">
-
-                                <thead>
-                                    <tr>
-                                        <td> Index No </td>
-                                        <td> Name </td>
-                                        <td> Date</td>
-                                    </tr>
+                            <table class="table table-hover table-responsive-md">
+                                
+                                <thead class="thead-dark">
+                                    <th scope="col"> Staff ID </th>
+                                    <th scope="col"> Name </th>
+                                    <th scope="col"> Teacher in Charge Class </th>
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1 </th>
-                                        <td> S A L SAMARAKKODY</td>
-                                        <td> 01 12 2018</td>
-                                    </tr>
+                                    <th scope="col"> 1 </th>
+                                    <td> Mr.ABC </td>
+                                    <td> 6A </td>
                                 </tbody>
 
                             </table>
+
                         </div>
 
-                    </div>
+                    </section>
+                    <!-- END : ABSENT STAFF  -->
                     
                 </div>
             </div>

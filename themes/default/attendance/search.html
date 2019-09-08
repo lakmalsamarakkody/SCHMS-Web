@@ -13,50 +13,114 @@
 
                 <div class="attendancesearch">
 
-                    <h4 class="page-title">Search Attendance</h4>
+                    <!-- START : VIEW ATTENDANCE -->
+                    <section class="viewattendance">
 
-                    <div class="attendancefilter">
-                        
-                        <form name="form-search-attendance">
+                        <h4 class="page-title"> View Attendance</h4>
 
-                            <div class="form-row">
+                        <div class="select view mt-4">
+                            <form name="formviewattendance">
 
-                                <div class="form-group col-md-2">
-                                    <label for="addno">Admission / Emp ID</label>
-                                    <input type="number" class="form-control" id="addno" required/>
+                                <div class="form-row">
+                                    <div class="form-group col-md-1 mr-auto">
+                                        <label for="view">Select View</label>
+                                        <select class="form-control" id="view" required></select>
+                                    </div>
+
+                                    <div class="form-group col-md-2 ml-auto">
+                                        <label for="month">Select Month</label>
+                                        <select class="form-control" id="month" required></select>
+                                    </div>
+
+                                    <div class="form-group col-md-1">
+                                        <label for="year">Select Year</label>
+                                        <select class="form-control" id="year" required></select>
+                                    </div>
+
                                 </div>
-
-                                <div class="form-group col-md-1">
-                                    <label for="view">Select View</label>
-                                    <select class="form-control" id="view" required></select>
+                                
+                                <div class="form-row">
+                                    <div class="form-group ml-auto mr-1">
+                                        <button class="btn btn-primary" type="submit"> Go </button>
+                                    </div>
                                 </div>
+                            </form>
+                        </div>
 
-                                <div class="form-group col-md-1 mr-auto">
-                                    <label for="status">Select Status</label>
-                                    <select class="form-control" id="status" required></select>
-                                </div>
+                        <div class="view-table">
+                            <table class="table table-hover table-responsive-md">
 
-                                <div class="form-group mr-2">
-                                    <label for="datefrom">From</label>
-                                    <input type="date" class="form-control" id="datefrom" required/>
-                                </div>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col"> Index No </th>
+                                        <th scope="col"> Name </th>
+                                        <th scope="col"> Date</th>
+                                    </tr>
+                                </thead>
 
-                                <div class="form-group">
-                                    <label for="dateto">To</label>
-                                    <input type="date" class="form-control" id="dateto" required/>
-                                </div>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1 </th>
+                                        <td> S A L SAMARAKKODY</td>
+                                        <td> 01 12 2018</td>
+                                    </tr>
+                                </tbody>
 
-                            </div>
+                            </table>
+                        </div>
+
+                    </section>
+                    <!-- END : VIEW ATTENDANCE -->
+
+                    <!-- START : SEARCH ATTENDANCE -->
+                    <section class="searchattendance mt-5">
+
+                        <h4 class="page-title">Search Attendance</h4>
+
+                        <div class="attendancefilter">
                             
-                            <div class="form-row">
-                                <div class="form-group ml-auto mr-1">
-                                    <button class="btn btn-primary" type="submit"> Go </button>
+                            <form name="form-search-attendance">
+
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-2">
+                                        <label for="addno">Admission / Emp ID</label>
+                                        <input type="number" class="form-control" id="addno" required/>
+                                    </div>
+
+                                    <div class="form-group col-md-1">
+                                        <label for="view">Select View</label>
+                                        <select class="form-control" id="view" required></select>
+                                    </div>
+
+                                    <div class="form-group col-md-1 mr-auto">
+                                        <label for="status">Select Status</label>
+                                        <select class="form-control" id="status" required></select>
+                                    </div>
+
+                                    <div class="form-group mr-2">
+                                        <label for="datefrom">From</label>
+                                        <input type="date" class="form-control" id="datefrom" required/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="dateto">To</label>
+                                        <input type="date" class="form-control" id="dateto" required/>
+                                    </div>
+
                                 </div>
-                            </div>
-                        </form>
+                                
+                                <div class="form-row">
+                                    <div class="form-group ml-auto mr-1">
+                                        <button class="btn btn-primary" type="submit"> Go </button>
+                                    </div>
+                                </div>
+                            </form>
 
-                    </div>
+                        </div>
 
+                    </section>
+                    <!-- END : SEARCH ATTENDANCE -->
                 </div>
             </div>
             
