@@ -109,23 +109,83 @@
                         </li>
                         
                     </ul>
+                <!-- END : RESULT MENU -->
 
+                <!-- START : PROGRESS MENU -->
                 <li class="main-menu">
                     <div class="col-md-9"><a href="{{ app.url }}"><i class="la la-area-chart"></i><span>&nbsp;Progress Report</span></a></div>
-                    <div class="col-md-3"><i class="la la-angle-down" ></i></div>
+                    <div class="col-md-3" data-toggle="collapse" data-target="#progress"><i class="la la-angle-down"></i></div>
                 </li>
 
+                    <ul class="collapse" id="progress">
+                            
+                        <li class="sub-menu">
+                                <a href="{{ app.url }}/progress/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                            </li>
+                        
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/progress/add"><i class="la la-plus-circle"></i><span>&nbsp;Add</span></a>
+                        </li>
+                        
+                    </ul>
+                <!-- END : PROGRESS MENU -->
+
+                <!-- START : SPORT MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}"><i class="la la-futbol-o"></i><span>&nbsp;Sports</span></a></div>
+                    <div class="col-md-9"><a href="{{ app.url }}/sport"><i class="la la-futbol-o"></i><span>&nbsp;Sport</span></a></div>
+                    <div class="col-md-3" data-toggle="collapse" data-target="#result"><i class="la la-angle-down"></i></div>
                 </li>
 
+                    <ul class="collapse" id="sport">
+                            
+                        <li class="sub-menu">
+                                <a href="{{ app.url }}/sport/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                            </li>
+                        
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/sport/add"><i class="la la-plus-circle"></i><span>&nbsp;Add</span></a>
+                        </li>
+                        
+                    </ul>
+                <!-- END : SPORT MENU -->
+
+                <!-- START : HEALTH MENU -->
                 <li class="main-menu">
                     <div class="col-md-9"><a href="{{ app.url }}"><i class="la la-heartbeat"></i><span>&nbsp;Health Record</span></a></div>
+                    <div class="col-md-3" data-toggle="collapse" data-target="#result"><i class="la la-angle-down"></i></div>
                 </li>
 
+                    <ul class="collapse" id="health">
+                            
+                        <li class="sub-menu">
+                                <a href="{{ app.url }}/health/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                            </li>
+                        
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/health/add"><i class="la la-plus-circle"></i><span>&nbsp;Add</span></a>
+                        </li>
+                        
+                    </ul>
+                <!-- END : HEALTH MENU -->
+
+                <!-- START : PARENT MENU -->
                 <li class="main-menu">
-                <div class="col-md-9"><a href="{{ app.url }}"><i class="la la-female"></i><span>&nbsp;Parent</span></a></li>
+                    <div class="col-md-9"><a href="{{ app.url }}/parents"><i class="la la-female"></i><span>&nbsp;Parent</span></a></div>
+                    <div class="col-md-3" data-toggle="collapse" data-target="#parent"><i class="la la-angle-down"></i></div>
                 </li>
+
+                    <ul class="collapse" id="parent">
+                                
+                        <li class="sub-menu">
+                                <a href="{{ app.url }}/parents/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                            </li>
+                        
+                        <li class="sub-menu">
+                            <a href="{{ app.url }}/parents/add"><i class="la la-plus-circle"></i><span>&nbsp;Add</span></a>
+                        </li>
+                        
+                    </ul>
+                <!-- END : PARENT MENU -->
 
                 <!-- START : STAFF MENU -->
                 <li class="main-menu">

@@ -78,13 +78,13 @@ body{
   }
 
 .attendanceindex .card{
-    border: 0px;
+    border: 0rem;
 }
 
 .attendanceindex .card-header{
     color: var(--sub-theme-color);
     background-color: var(--white);
-    border: 0px;
+    border: 0rem;
     font-weight: bold;
 }
 
@@ -166,7 +166,7 @@ body{
 .left-pane{
     background-image: linear-gradient(135deg,#8f75da 0,#727cf5 60%);
     height: 100vh;
-    padding: 0%;
+    padding: 0rem;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -303,6 +303,45 @@ body{
 
 
 
+/* parent */
+/* parent/index */
+.parentindex{
+    padding: 1rem;
+}
+
+
+/* parent/search */
+.parentsearch{
+    padding: 1rem;
+}
+
+.parentsearch .search-filter{
+    padding: 5rem 15rem 5rem 15rem;
+}
+
+
+/* parent/add */
+.parentadd{
+    padding: 1rem;
+}
+
+.parentadd .parentaddform{
+    padding: 5rem 15rem 5rem 15rem;
+}
+
+.parentadd .card{
+    margin-bottom: 1rem;
+}
+ 
+.parentadd .card .card-header{
+    cursor: pointer;
+    color: var(--white);
+    background-color: var(--sub-theme-color);
+    border-radius: .25rem;
+}
+
+
+
 /* login */
 /* login/index */
 .login{
@@ -368,8 +407,8 @@ body{
 
 .staffsearch .staffsearchfilter{
     background-color: var(--white);
-    margin: 2% 10% 3% 10%;
-    padding: 3% 5% 3% 5%;
+    margin: 2rem 10rem 3rem 10rem;
+    padding: 3rem 5rem 3rem 5rem;
     border: 0rem;
     text-align: center;
 }
@@ -388,7 +427,7 @@ body{
 
 /* staff/add */
 .staffadd{
-    padding: 5% 15% 5% 15%;
+    padding: 5rem 15rem 5rem 15rem;
 }
 
 .staffadd form{
@@ -396,7 +435,7 @@ body{
 }
 
 .staffadd .card{
-    margin-bottom: 2%;
+    margin-bottom: 1rem;
 }
  
 .staffadd .card .card-header{
@@ -436,10 +475,9 @@ body{
 }
 
 .stusearch .stusearchfilter{
-    margin: 3% 10% 3% 10%;
-    padding: 3% 5% 3% 5%;
+    margin: 3rem 10rem 3rem 10rem;
+    padding: 3rem 5rem 3rem 5rem;
     background-color: var(--white);
-    /* padding: 5%; */
     border: 0rem;
     text-align: center;
 }
@@ -447,7 +485,7 @@ body{
 .stusearch .stusearchheading{
     color: var(--white);
     background-color: var(--sub-theme-color);
-    padding: 1%;
+    padding: 1rem;
     text-align: center;
 }
 
@@ -458,7 +496,7 @@ body{
 
 /* student/add */
 .stuadd{
-    padding: 5% 15% 5% 15%;
+    padding: 4rem 10rem 4rem 10rem;
 }
 
 .stuadd form{
@@ -466,7 +504,7 @@ body{
 }
 
 .stuadd .card{
-    margin-bottom: 2%;
+    margin-bottom: 1rem;
 }
  
 .stuadd .card .card-header{
@@ -521,7 +559,7 @@ body{
 
 .usersearch .usersearchfilter{
     background-color: var(--white);
-    padding: 5%;
+    padding: 4rem;
     border: 0.05rem solid var(--sub-theme-color);
     text-align: center;
 }
@@ -557,7 +595,6 @@ body{
 }
 
 .usercreatebody{
-    /* padding: 4% 10% 4% 10%; */
     padding: 4rem 6rem 4rem 6rem;
 }
 
