@@ -11,50 +11,59 @@
 
                 {{ template.topmenu|raw }}
 
-                <div class="parentadd">
+                <div class="container parentadd">
 
                     <h4 class="page-title"> Add Parent Details </h4>
 
+
                     <!-- START : SEARCH STUDENT -->
-                    <div class="stusearch">
+                    <div class="card mt-4">
+                        <div class="card-header">Search relevant student</div>
+                        <div class="card-body">
+                            
+                            <form name="stusearch">
+        
+                                <div class="form-row mt-4">
+        
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="addno">Admission Number</label>
+                                            <input type="number" class="form-control" id="addno" required/>
+                                        </div>
+                                    </div>
 
-                        <h5 class="page-title"> Search relevant student</h5>
-    
-                        <form name="stusearch">
-    
-                            <div class="form-row mt-4">
-    
-                                <div class="form-group col-md-2">
-                                    <label for="addno">Admission Number</label>
-                                    <input type="number" class="form-control" id="addno" required/>
-                                </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="adddate">Admission Date</label>
+                                            <input type="date" class="form-control" id="adddate" required/>
+                                            <small id="dobHelp" class="form-text text-muted">ex : 01/15/2018</small>
+                                        </div>
+                                    </div>
 
-                                <div class="form-group col-md-2">
-                                    <label for="adddate">Admission Date</label>
-                                    <input type="date" class="form-control" id="adddate" required/>
-                                    <small id="dobHelp" class="form-text text-muted">ex : 01/15/2018</small>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control" id="name" required/>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="class">Class</label>
+                                            <input type="text" class="form-control" id="class" required/>
+                                        </div>
+                                    </div>
+        
                                 </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" required/>
+        
+                                <div class="form-row">
+                                    <div class="form-group mr-auto ml-1">
+                                        <button type="submit" class="btn btn-primary"> Search Student </button>
+                                    </div>
                                 </div>
-    
-                                <div class="form-group col-md-1">
-                                    <label for="class">Class</label>
-                                    <input type="text" class="form-control" id="class" required/>
-                                </div>
-    
-                            </div>
-    
-                            <div class="form-row">
-                                <div class="form-group mr-auto ml-1">
-                                    <button type="submit" class="btn btn-primary"> Search Student </button>
-                                </div>
-                            </div>
-    
-                        </form>
-    
+        
+                            </form>
+                        </div>
                     </div>
                     <!-- END : SEARCH STUDENT -->
 
@@ -73,104 +82,130 @@
         
                                     <div id="collapseGuardian" class="collapse show" aria-labelledby="headingGuardian" data-parent="#accordionparentadd">
                                         <div class="card-body">
-        
-                                            <div class="form-group">
-                                                <label for="g1fn">Full Name</label>
-                                                <input type="text" class="form-control" id="g1fn" required/>
-                                            </div>
 
                                             <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1fi">Initials</label>
-                                                    <input type="text" class="form-control" id="g1fi" required/>
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="g1fn">Full Name</label>
+                                                        <input type="text" class="form-control" id="g1fn" required/>
+                                                    </div>
                                                 </div>
 
-                                                <div class="form-group col-md-8">
-                                                    <label for="g1fsn">Surname</label>
-                                                    <input type="text" class="form-control" id="g1fsn" required/>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1dob">Date of Birth</label>
-                                                    <input type="date" class="form-control" id="g1dob" required/>
-                                                </div>
-            
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1rel">Relationship</label>
-                                                    <input type="text" class="form-control" id="g1rel" required/>
-                                                    <small id="addrelation" class="form-text text-muted">New Relationship</small>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1fi">Initials</label>
+                                                        <input type="text" class="form-control" id="g1fi" required/>
+                                                    </div>
                                                 </div>
 
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1gen">Gender</label>
-                                                    <select class="form-control" id="g1gen" required></select>
+                                                <div class="col-8">
+                                                    <div class="form-group">
+                                                        <label for="g1fsn">Surname</label>
+                                                        <input type="text" class="form-control" id="g1fsn" required/>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1dob">Date of Birth</label>
+                                                        <input type="date" class="form-control" id="g1dob" required/>
+                                                    </div>
                                                 </div>
 
-                                            </div>
-                                            
-                                            <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1nic">National Identity Card (NIC)</label>
-                                                    <input type="text" class="form-control" id="g1nic" required/>
+                                                <div class="col-4">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="g1rel">Relationship</label>
+                                                        <input type="text" class="form-control" id="g1rel" required/>
+                                                        <small id="addrelation" class="form-text text-muted">New Relationship</small>
+                                                    </div>
                                                 </div>
-        
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1tel">Landline Number</label>
-                                                    <input type="number" class="form-control" id="g1tel" required/>
+
+                                                <div class="col-4">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="g1gen">Gender</label>
+                                                        <select class="form-control" id="g1gen" required></select>
+                                                    </div>
                                                 </div>
-            
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1mobi">Mobile Number</label>
-                                                    <input type="number" class="form-control" id="g1mobi"/>
+
+                                                <div class="col-4">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="g1nic">National Identity Card (NIC)</label>
+                                                        <input type="text" class="form-control" id="g1nic" required/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            
-                                            <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1occu">Occupation</label>
-                                                    <input type="text" class="form-control" id="g1occu"/>
+
+                                                <div class="col-4">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="g1tel">Landline Number</label>
+                                                        <input type="number" class="form-control" id="g1tel" required/>
+                                                    </div>
                                                 </div>
-        
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1pos">Position</label>
-                                                    <input type="text" class="form-control" id="g1pos"/>
+
+                                                <div class="col-4">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="g1mobi">Mobile Number</label>
+                                                        <input type="number" class="form-control" id="g1mobi"/>
+                                                    </div>
                                                 </div>
-            
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1inc">Annual Income</label>
-                                                    <input type="number" class="form-control" id="g1inc"/>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1occu">Occupation</label>
+                                                        <input type="text" class="form-control" id="g1occu"/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            
-        
-                                            <div class="form-group">
-                                                <label for="g1mail">Email</label>
-                                                <input type="text" class="form-control" id="g1mail"/>
-                                            </div>
-        
-                                            <div class="form-group">
-                                                <label for="g1address">Address</label>
-                                                <input type="text" class="form-control" id="g1address" required/>
-                                            </div>
-        
-                                            <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1city">City</label>
-                                                    <input type="text" class="form-control" id="g1city" required/>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1pos">Position</label>
+                                                        <input type="text" class="form-control" id="g1pos"/>
+                                                    </div>
                                                 </div>
-            
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1dist">District</label>
-                                                    <select class="form-control" id="g1dist" required></select>
-                                                    <small id="adddistrict" class="form-text text-muted">New District</small>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1inc">Annual Income</label>
+                                                        <input type="number" class="form-control" id="g1inc"/>
+                                                    </div>
                                                 </div>
-        
-                                                <div class="form-group col-md-4">
-                                                    <label for="g1province">Province</label>
-                                                    <select class="form-control" id="g1province" disabled></select>
+                                                
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="g1mail">Email</label>
+                                                        <input type="text" class="form-control" id="g1mail"/>
+                                                    </div>
                                                 </div>
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="g1address">Address</label>
+                                                        <input type="text" class="form-control" id="g1address" required/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1city">City</label>
+                                                        <input type="text" class="form-control" id="g1city" required/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1dist">District</label>
+                                                        <select class="form-control" id="g1dist" required></select>
+                                                        <small id="adddistrict" class="form-text text-muted">New District</small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="g1province">Province</label>
+                                                        <select class="form-control" id="g1province" disabled></select>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
                                             
                                         </div>
