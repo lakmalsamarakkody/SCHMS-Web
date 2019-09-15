@@ -412,22 +412,13 @@ h5.page-title{
 
 /* staff/search */
 .staffsearch{
-    padding: 1rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
-.staffsearch .staffsearchfilter{
-    background-color: var(--white);
-    margin: 2rem 10rem 3rem 10rem;
-    padding: 3rem 5rem 3rem 5rem;
-    border: 0rem;
-    text-align: center;
-}
-
-.staffsearch .staffsearchheading{
-    color: var(--white);
+.staffsearch .card .card-header {
     background-color: var(--sub-theme-color);
-    padding: 1%;
-    text-align: center;
+    color: var(--white);
 }
 
 .staffsearch .staffsearchfilter input{
