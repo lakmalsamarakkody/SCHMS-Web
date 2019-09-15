@@ -435,7 +435,8 @@ h5.page-title{
 
 /* staff/add */
 .staffadd{
-    padding: 5rem 15rem 5rem 15rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 .staffadd form{
@@ -504,7 +505,8 @@ h5.page-title{
 
 /* student/add */
 .stuadd{
-    padding: 4rem 10rem 4rem 10rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 .stuadd form{
