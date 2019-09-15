@@ -482,22 +482,14 @@ h5.page-title{
 
 /* student/search */
 .stusearch{
-    padding: 1rem;
+    /*padding: 1rem;*/
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
-.stusearch .stusearchfilter{
-    margin: 3rem 10rem 3rem 10rem;
-    padding: 3rem 5rem 3rem 5rem;
-    background-color: var(--white);
-    border: 0rem;
-    text-align: center;
-}
-
-.stusearch .stusearchheading{
-    color: var(--white);
+.stusearch .card-header {
     background-color: var(--sub-theme-color);
-    padding: 1rem;
-    text-align: center;
+    color: var(--white)
 }
 
 .stusearch .stusearchfilter input{
