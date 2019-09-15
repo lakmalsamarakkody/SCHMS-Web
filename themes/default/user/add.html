@@ -18,12 +18,13 @@
                             <div class="card">
                                 <div class="card-header" style="background-color: #8f75da; color: #FFFFFF;">ADD NEW USER</div>
                                 <div class="card-body">
+
                                     <form>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="">User Role</label>
-                                                    <select class="form-control" id="role" required>
+                                                    <label>User Role</label>
+                                                    <select class="form-control" id="role_id" required>
                                                         {% for role in user.roles %}
                                                         <option value="{{ role.id }}">{{ role.name }}</option>
                                                         {% endfor %}
@@ -32,40 +33,41 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="">Username</label>
-                                                    <input type="text" class="form-control" />
+                                                    <label>Username</label>
+                                                    <input type="text" id="username" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="">Password</label>
-                                                    <input type="password" class="form-control" />
+                                                    <label>Password</label>
+                                                    <input type="password" id="pass" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="">Confirm Password</label>
-                                                    <input type="password" class="form-control" />
+                                                    <label>Confirm Password</label>
+                                                    <input type="password" id="pass_confirm" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="">Email</label>
-                                                    <input type="text" class="form-control" />
+                                                    <label>Email</label>
+                                                    <input type="text" id="email" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="button-group mx-auto">
-                                                <button class="btn btn-danger">CREATE</button>
-                                                <button class="btn btn-secondary">CLEAR</button>
+                                                <button type="button" id="btn-submit" class="btn btn-danger">CREATE</button>
+                                                <button type="button" id="btn-clear" class="btn btn-secondary">CLEAR</button>
                                             </div>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -78,5 +80,54 @@
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+        $("#btn-submit").click(function(event) {
+            event.preventDefault();
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('role_id', $("#role_id").val());
+            formData.append('username', $("#username").val());
+            formData.append('pass', $("#pass").val());
+            formData.append('pass_confirm', $("#pass_confirm").val());
+            formData.append('email', $("#email").val());
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/user/ajax_add",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "User added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        alertify.alert("Failed", "User adding failed ... ");
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+
+        })
+
+        $("#btn-clear").click(function(event) {
+            event.preventDefault();
+
+            $("#username").val("")
+            $("#pass").val("")
+            $("#pass_confirm").val("")
+            $("#email").val("")
+        })
+    </script>
+
 </body>
+</html>
