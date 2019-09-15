@@ -11,64 +11,65 @@
 
                 {{ template.topmenu|raw }}
 
-                <div class="useradd">
-                    <div class="useraddpanel">
-    
-                        <form name="usercreate">
-    
-                            <div class="usercreateheading">
-                                <h3>Add new user</h3>
-                            </div>
-                            
-                            <div class="usercreatebody">
-    
-                                <div class="form-row">
-                                    <div class="form-group col-md-4 mr-auto">
-                                        <label for="role">User Role</label>
-                                        <select class="form-control" id="role" required></select>
-                                    </div>
+                <div class="container">
+                    <div class="row">
 
-                                    <div class="form-group col-md-4 ml-auto">
-                                        <label for="empno">Emp ID</label>
-                                        <input type="number" class="form-control" id="empno"></select>
-                                    </div>
-
-                                    <div class="form-group col-md-4 ml-auto">
-                                        <label for="nic">NIC</label>
-                                        <input type="number" class="form-control" id="nic" required></select>
-                                    </div>
-                                </div>                            
-    
-                                <div class="form-group col-md-6 mx-auto">
-                                    <label for="un">Username</label>
-                                    <input type="text" class="form-control" id="un" required/>
-                                    <small id="unHelp" class="form-text text-muted">Username should not contain special characters and spaces</small>
+                        <div class="col-md-8 mt-4 mx-auto">
+                            <div class="card">
+                                <div class="card-header" style="background-color: #8f75da; color: #FFFFFF;">ADD NEW USER</div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="">User Role</label>
+                                                    <select class="form-control" id="role" required>
+                                                        {% for role in user.roles %}
+                                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="">Username</label>
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="">Password</label>
+                                                    <input type="password" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="">Confirm Password</label>
+                                                    <input type="password" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="">Email</label>
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="button-group mx-auto">
+                                                <button class="btn btn-danger">CREATE</button>
+                                                <button class="btn btn-secondary">CLEAR</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-    
-                                <div class="form-row">
-                                    <div class="form-group col-md-4 ml-auto">
-                                        <label for="pw">Password</label>
-                                        <input type="password" class="form-control" id="pw" required/>
-                                    </div>
-                                
-                                    <div class="form-group col-md-4 mr-auto">
-                                        <label for="cpw">Confirm Password</label>
-                                        <input type="password" class="form-control" id="cpw" required/>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group col-md-9 mx-auto mb-5">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" required/>
-                                </div>
-    
-                                <button class="btn btn-danger" type="submit"> Create </button>
-                                <button class="btn btn-secondary" type="reset"> Clear </button>
-    
                             </div>
-    
-                        </form>
-    
+                        </div>
+
                     </div>
                 </div>
 

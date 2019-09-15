@@ -50,6 +50,14 @@ class User extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('user/role');
+
+        foreach( $this->model_user_role->select('id', 'role')->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->role;
+        endforeach;
+
 		// RENDER VIEW
         $this->load->view('user/add', $data);
         
