@@ -330,11 +330,13 @@ h5.page-title{
 
 /* parent/add */
 .parentadd{
-    padding: 1rem;
+    /*padding: 1rem;*/
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 .parentadd .parentaddform{
-    padding: 5rem 15rem 5rem 15rem;
+    /*padding: 5rem 15rem 5rem 15rem;*/
 }
 
 .parentadd .card{
