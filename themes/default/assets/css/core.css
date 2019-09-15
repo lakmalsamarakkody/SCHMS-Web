@@ -41,7 +41,12 @@ body{
     padding: 0;
 }
 
-.page-title{
+h4.page-title{
+    color: var(--main-text-color);
+    margin-top: 1rem;
+}
+
+h5.page-title{
     color: var(--main-text-color);
     margin-top: 1rem;
 }
@@ -316,7 +321,10 @@ body{
 }
 
 .parentsearch .search-filter{
-    padding: 5rem 15rem 5rem 15rem;
+    padding: 2rem 5rem 2rem 5rem;
+    margin: 5rem 15rem 5rem 15rem;
+    background-color: var(--white);
+    text-align: center;
 }
 
 

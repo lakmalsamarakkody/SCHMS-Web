@@ -15,8 +15,9 @@
 
                     <h4 class="page-title"> Add Parent Details </h4>
 
+                    <!-- START : SEARCH STUDENT -->
                     <div class="stusearch">
-            
+
                         <h5 class="page-title"> Search relevant student</h5>
     
                         <form name="stusearch">
@@ -55,12 +56,15 @@
                         </form>
     
                     </div>
+                    <!-- END : SEARCH STUDENT -->
 
+                    <!-- START : ADD PARENT -->
                     <div class="parentaddform">
 
                         <form name="parentadd" method="POST" action="#">
                             <div id="accordionparentadd">
         
+                                <!-- START : GUARDIAN 1 DETAILS -->
                                 <div class="card">
         
                                     <div class="card-header" id="headingGuardian" data-toggle="collapse" data-target="#collapseGuardian" aria-expanded="false" aria-controls="collapseGuardian">
@@ -102,7 +106,6 @@
                                                 <div class="form-group col-md-4">
                                                     <label for="g1gen">Gender</label>
                                                     <select class="form-control" id="g1gen" required></select>
-                                                    <small id="addgen" class="form-text text-muted">New Gender</small>
                                                 </div>
 
                                             </div>
@@ -174,7 +177,9 @@
                                     </div>
         
                                 </div>
+                                <!-- END : GUARDIAN 1 DETAILS -->
 
+                                <!-- START : GUARDIAN 2 DETAILS -->
                                 <div class="card">
 
                                     <div class="card-header" id="headingGuardian2" data-toggle="collapse" data-target="#collapseGuardian2" aria-expanded="false" aria-controls="collapseGuardian2">
@@ -298,15 +303,17 @@
                                     </div>
                                 
                                 </div>
+                                <!-- END : GUARDIAN 2 DETAILS -->
 
                             </div>
         
-                            <button type="submit" class="btn btn-primary"> Register </button>
+                            <button type="submit" class="btn btn-primary pl-5 pr-5"> Add </button>
                             <button type="reset" class="btn btn-secondary"> Clear </button>
         
                         </form>
 
                     </div>
+                    <!-- END : ADD PARENT -->
 
                 </div>
                 
