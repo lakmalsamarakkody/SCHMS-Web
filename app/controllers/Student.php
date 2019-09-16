@@ -50,6 +50,9 @@ class Student extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODELS
+        $this->load->model('class');
+
 		// RENDER VIEW
         $this->load->view('student/add', $data);
         

@@ -28,23 +28,23 @@
                                         <div class="form-row">
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="adddate">Admission Date</label>
-                                                    <input type="date" class="form-control" id="adddate" required/>
+                                                    <label for="admission_date">Admission Date</label>
+                                                    <input type="date" class="form-control" id="admission_date" required />
                                                     <small id="adddateHelp" class="form-text text-muted">If unchanged todate will be submitted</small>
                                                 </div>
                                             </div>
     
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="empno">Employee ID</label>
-                                                    <input type="number" class="form-control" id="empno" required/>
+                                                    <label for="employee_no">Employee ID</label>
+                                                    <input type="number" class="form-control" id="employee_no" required/>
                                                 </div>
                                             </div>
     
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="nicno">NIC</label>
-                                                    <input type="number" class="form-control" id="nicno" required/>
+                                                    <label for="nic_no">NIC</label>
+                                                    <input type="number" class="form-control" id="nic_no" required/>
                                                     <small id="nicno" class="form-text text-muted">ex :- 953651408V</small>
                                                 </div>
                                             </div>
@@ -52,7 +52,11 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="type">Type</label>
-                                                    <select class="form-control" id="type" required></select>
+                                                    <select class="form-control" id="type" required>
+                                                        {% for type in staff_types %}
+                                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                     <small id="addtype" class="form-text text-muted">New Type</small>
                                                 </div>
                                             </div>
@@ -68,15 +72,19 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="class">Class in Charge</label>
-                                                    <select class="form-control" id="class"></select>
+                                                    <select class="form-control" id="class">
+                                                        {% for class in classes %}
+                                                        <option value="{{ class.id }}">{{ class.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                     <small id="addclass" class="form-text text-muted">New Class</small>
                                                 </div>
                                             </div>
 
                                             <div class="col-12">
                                                 <div class="form-group">
-                                                    <label for="sub">Subjects</label>
-                                                    <select class="form-control" id="sub" required></select>
+                                                    <label for="subject_ids">Subjects</label>
+                                                    <select class="form-control" id="subject_ids" required></select>
                                                     <small id="addsubject" class="form-text text-muted">New Subject</small>
                                                 </div>
                                             </div>
@@ -135,15 +143,16 @@
                                                 <div class="form-group">
                                                     <label for="rel">Religion</label>
                                                     <input type="text" class="form-control" id="rel"/>
-                                                    <small id="addreligion" class="form-text text-muted">New Religion</small>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="gen">Gender</label>
-                                                    <select class="form-control" id="gen"></select>
-                                                    <small id="addgender" class="form-text text-muted">New Gender</small>
+                                                    <select class="form-control" id="gen">
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -186,7 +195,6 @@
                                                 <div class="form-group">
                                                     <label for="dist">District</label>
                                                     <select class="form-control" id="dist" required></select>
-                                                    <small id="adddistrict" class="form-text text-muted">New District</small>
                                                 </div>
                                             </div>
 
@@ -205,7 +213,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary"> Register </button>
+                        <button type="button" onClick="register();" class="btn btn-primary"> Register </button>
                         <button type="reset" class="btn btn-secondary"> Clear </button>
                         
                     </form>
@@ -215,5 +223,30 @@
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+        register = () => {
+
+            // PAYLOAD
+            var formData = new FormData
+            formData.append('admission_date', $("#admission_date").val())
+            formData.append('employee_no', $("#employee_no").val())
+            formData.append('nic_no', $("#nic_no").val())
+            formData.append('type', $("#type").val());
+            formData.append('position', $("#position").val());
+            formData.append('class', $("#class").val());
+            formData.append('subject_ids', $("#subject_ids").val());
+
+            console.log("ADMISSION DATE : " + $("#admission_date").val())
+            console.log("EMPLOYEE NO : " + $("#employee_no").val())
+            console.log("NIC NO : " + $("#nic_no").val())
+            console.log("TYPE : " + $("#type").val())
+            console.log("POSITION : " + $("#position").val())
+            console.log("CLASS : " + $("#class").val())
+            console.log("SUBJECT IDS : " + $("#subject_ids").val())
+
+        }
+    </script>
+
 </body>
