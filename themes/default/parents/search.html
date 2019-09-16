@@ -10,110 +10,128 @@
             <div class="col-md-10 content">               
                 {{ template.topmenu|raw }}
 
-                <div class="parentsearch">
+                <div class="container parentsearch">
                     
-                    <h4 class="page-title"> Search Parent </h4>
+                    <div class="card">
+                        <div class="card-header">
+                            Search Parent
+                        </div>
+                        <div class="card-body">
+                            <form action="">
+                                <h6><strong>Search by Parent Details</strong></h6>
+                                <br>
+                                <div class="form-row">
 
-                    <div class="search-filter">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_nic">NIC</label>
+                                            <input type="text" class="form-control" id="g_nic"/>
+                                        </div>
+                                    </div>
 
-                        <form name="search-parent" action="#">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_rel">Relationship</label>
+                                            <select class="form-control" id="g_rel"></select>
+                                        </div>
+                                    </div>
 
-                            <!-- START : ENTER PARENT DETAILS -->
-                            <h5 class="page-title mb-4"> Search by Parent Details</h5>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_gen">Gender</label>
+                                            <select class="form-control" id="g_gen"></select>
+                                        </div>
+                                    </div>
 
-                            <div class="form-row">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_city">City</label>
+                                            <select class="form-control" id="g_city"></select>
+                                        </div>
+                                    </div>
 
-                                <div class="form-group col-md-2">
-                                    <label for="g_nic">NIC</label>
-                                    <input type="text" class="form-control" id="g_nic"/>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_fn">Name</label>
+                                            <input type="text" class="form-control" id="g_fn"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_occu">Occupation</label>
+                                            <select class="form-control" id="g_occu"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_pos">Position</label>
+                                            <select class="form-control" id="g_pos"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="g_inc">Annual Income &gt; </label>
+                                            <input type="number" class="form-control" id="g_inc"/>
+                                        </div>   
+                                    </div>
                                 </div>
+                                <hr>
+                                <h6><strong>Search by Student Details</strong></h6>
+                                <br>
+                                <div class="form-row">
 
-                                <div class="form-group col-md-2">
-                                    <label for="g_rel">Relationship</label>
-                                    <select class="form-control" id="g_rel"></select>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="addno">Admission Number</label>
+                                            <input type="number" class="form-control" id="addno"/>
+                                        </div>                                        
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control" id="name"/>
+                                        </div>                                        
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="class">Class</label>
+                                            <select class="form-control" id="class"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="grade">Grade</label>
+                                            <select class="form-control" id="grade"></select>
+                                        </div>                                        
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="sport">Sport</label>
+                                            <select class="form-control" id="sport"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="religion">Religion</label>
+                                            <select class="form-control" id="religion"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary mt-3 px-5" type="submit"> Search </button>
+                                    </div>
+                                    
                                 </div>
-
-                                <div class="form-group col-md-1">
-                                    <label for="g_gen">Gender</label>
-                                    <select class="form-control" id="g_gen"></select>
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="g_city">City</label>
-                                    <select class="form-control" id="g_city"></select>
-                                </div>
-
-                                <div class="form-group col-md-5">
-                                    <label for="g_fn">Name</label>
-                                    <input type="text" class="form-control" id="g_fn"/>
-                                </div>
-                            
-                            </div>
-
-                            <div class="form-row">
-
-                                <div class="form-group col-md-2">
-                                    <label for="g_occu">Occupation</label>
-                                    <select class="form-control" id="g_occu"></select>
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="g_pos">Position</label>
-                                    <select class="form-control" id="g_pos"></select>
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="g_inc">Annual Income &gt; </label>
-                                    <input type="number" class="form-control" id="g_inc"/>
-                                </div>                                
-
-                            </div>
-                            <!-- END : ENTER PARENT DETAILS -->
-
-                            <hr class="hrsearch"/>
-
-                            <!-- START : STUDENT DETAILS -->
-                            <h5 class="page-title mb-4"> Search by Student Details</h5>
-
-                            <div class="form-row">
-
-                                <div class="form-group col-md-2">
-                                    <label for="addno">Admission Number</label>
-                                    <input type="number" class="form-control" id="addno"/>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name"/>
-                                </div>
-
-                                <div class="form-group col-md-1 ml-auto">
-                                    <label for="class">Class</label>
-                                    <select class="form-control" id="class"></select>
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    <label for="grade">Grade</label>
-                                    <select class="form-control" id="grade"></select>
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="sport">Sport</label>
-                                    <select class="form-control" id="sport"></select>
-                                </div>
-
-                                <div class="form-group col-md-2">
-                                    <label for="religion">Religion</label>
-                                    <select class="form-control" id="religion"></select>
-                                </div>
-
-                            </div>
-                            <!-- END : STUDENT DETAILS -->
-
-                            <button class="btn btn-primary mt-5 pl-5 pr-5" type="submit"> Search </button>
-
-                        </form>
-
+                            </form>
+                        </div>
                     </div>
 
                 </div>
