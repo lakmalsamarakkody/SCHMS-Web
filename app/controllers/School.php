@@ -23,12 +23,14 @@ class School extends Controller {
 		endif;
 
 		//MODEL
-		$this->load->model('school');
+		// $this->load->model('class');
 
-		foreach( $this->model_school->select('id', 'role')->get() as $key => $element ):
-            $data['user']['roles'][$key]['id'] = $element->id;
-            $data['user']['roles'][$key]['name'] = $element->role;
-        endforeach;
+		// foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->get() as $key => $element ):
+		// 	$data['class'][$key]['id'] = $element->id;
+		// 	$data['class'][$key]['grade_id'] = $element->grade_id;
+		// 	$data['class'][$key]['staff_id'] = $element->staff_id;
+        //     $data['class'][$key]['name'] = $element->name;
+        // endforeach;
 
 		// RENDER VIEW
 		$this->load->view('school/index', $data);

@@ -50,7 +50,7 @@ class User extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
-        //ChECK LOGIN STATUS
+        //CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );

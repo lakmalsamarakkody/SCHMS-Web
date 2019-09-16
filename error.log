@@ -203,3 +203,218 @@ Stack trace:
 #3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
 #4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, true)
 #5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/16 10:26:45 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/16 10:26:55 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/09/16 10:27:33 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:27:43 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:10 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:10 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:11 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:20 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:20 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:21 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:21 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:21 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:21 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:21 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:28:36 [error] 1771#1771: *264 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:29:50 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:29:51 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:29:51 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:29:51 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:29:51 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:29:51 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:29:51 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'lakmal_schms'@'localhost' (using password: YES) in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(68): PDO->__construct('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/Connector.php(44): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'lakmal_schms', 'SqE3sqBMdo1vYv4...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]:" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:30:32 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:30:33 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:30:33 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:30:33 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/16 10:31:33 [error] 1771#1771: *292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected "end" tag (expecting closing tag for the "for" tag defined near line 30). in /opt/dev/sites/bit-project.int/themes/default/school/index.html:36
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/For.php(40): Twig_Parser->subparse(Array)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_For->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
