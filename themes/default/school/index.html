@@ -17,9 +17,24 @@
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Grade </th>
+                                                <th scope="col"> Class </th>
+                                                <th scope="col"> Teacher in Charge </th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
-                                            <tr> <td>  </td></tr>
-                                        </tbody>
+                                            <!-- {% for class in Class %}
+                                            <tr>
+                                                <th scope="row"> {{ class.id }} </th>
+                                                <td> {{ class.grade_id }} </td>
+                                                <td> {{ class.name }} </td>
+                                                <td> {{ class.staff_id }}</td>
+                                            </tr>
+                                            {% end for %}  -->
+                                        </tbody>                                      
                                     </table>
                                 </div>
                                 <button type="button" class="btn btn-primary">Add New Class</button>
@@ -32,9 +47,7 @@
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
-                                        <tbody>
-                                            <tr> <th scope="row">  </th></tr>
-                                        </tbody>
+                                        
                                     </table>
                                 </div>                                
                                 <button type="button" class="btn btn-primary">Add New Grade</button>
