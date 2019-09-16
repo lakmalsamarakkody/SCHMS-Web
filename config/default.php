@@ -15,9 +15,9 @@ $_['db_driver']				=	'mysql';
 $_['db_charset']			=   'utf8';
 $_['db_collation']			=	'utf8_unicode_ci';
 $_['db_host']				=	'localhost';
-$_['db_name']				=	'schms';
-$_['db_user']				=	'schms';
-$_['db_pass']				=	'admin';
+$_['db_name']				=	'lakmal_schms';
+$_['db_user']				=	'lakmal_schms';
+$_['db_pass']				=	'SqE3sqBMdo1vYv4t';
 $_['db_prefix']				=	'';
 
 ?>
