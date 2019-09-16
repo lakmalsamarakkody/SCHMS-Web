@@ -11,7 +11,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col mx-auto">
                         <div class="card">
                             <h5 class="card-header"> Class </h5>
                             <div class="card-body">
@@ -26,14 +26,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- {% for class in Class %}
+                                            {% for class in class %}
                                             <tr>
                                                 <th scope="row"> {{ class.id }} </th>
-                                                <td> {{ class.grade_id }} </td>
+                                                <td> {{ class.grade.name }} </td>
                                                 <td> {{ class.name }} </td>
-                                                <td> {{ class.staff_id }}</td>
+                                                <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
                                             </tr>
-                                            {% end for %}  -->
+                                            {% endfor %} 
                                         </tbody>                                      
                                     </table>
                                 </div>
@@ -41,13 +41,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col mx-auto">
                         <div class="card">
                             <h5 class="card-header"> Grade </h5>
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
-                                        
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Grade </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for class in class %}
+                                            <tr>
+                                                <th scope="row"> {{ class.grade.id }} </th>
+                                                <td> {{ class.grade.name }} </td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
                                     </table>
                                 </div>                                
                                 <button type="button" class="btn btn-primary">Add New Grade</button>
