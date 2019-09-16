@@ -317,16 +317,14 @@ h5.page-title{
 
 /* parent/search */
 .parentsearch{
-    padding: 1rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
-.parentsearch .search-filter{
-    padding: 2rem 5rem 2rem 5rem;
-    margin: 5rem 15rem 5rem 15rem;
-    background-color: var(--white);
-    text-align: center;
+.parentsearch .card-header {
+    background-color: var(--sub-theme-color);
+    color: var(--white);
 }
-
 
 /* parent/add */
 .parentadd{
