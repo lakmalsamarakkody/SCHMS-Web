@@ -1,0 +1,51 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">               
+                {{ template.topmenu|raw }}
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="card">
+                            <h5 class="card-header"> Class </h5>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr> <td>  </td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button type="button" class="btn btn-primary">Add New Class</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card">
+                            <h5 class="card-header"> Grade </h5>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr> <th scope="row">  </th></tr>
+                                        </tbody>
+                                    </table>
+                                </div>                                
+                                <button type="button" class="btn btn-primary">Add New Grade</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>
