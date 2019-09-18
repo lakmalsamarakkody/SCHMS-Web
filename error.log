@@ -600,3 +600,224 @@ Stack trace:
 #2 {main}
   thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 36" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/"
 2019/09/16 11:37:38 [error] 1771#1771: *582 FastCGI sent in stderr: "PHP message: PHP Notice:  Array to string conversion in /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(378) : eval()'d code on line 83" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/"
+2019/09/18 11:40:51 [error] 2906#2906: *136 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: religion in /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(378) : eval()'d code on line 224" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 11:44:58 [error] 2906#2906: *159 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 11:45:47 [error] 2906#2906: *159 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 11:47:18 [error] 2906#2906: *168 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 11:47:30 [error] 2906#2906: *168 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 11:48:34 [error] 2906#2906: *168 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 11:49:13 [error] 2906#2906: *168 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:32:11 [error] 2906#2906: *650 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:37:54 [error] 2906#2906: *660 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:39:00 [error] 2906#2906: *663 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:33 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:35 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:36 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:36 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:43 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:43 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:44 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:44 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:44 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:42:58 [error] 2906#2906: *666 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:44:13 [error] 2906#2906: *683 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'Illuminate\Database\Eloquent\softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 9" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:44:37 [error] 2906#2906: *683 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'Illuminate\Database\Eloquent\softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Category.php on line 9" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:45:33 [error] 2906#2906: *683 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Trait 'softDeletes' not found in /opt/dev/sites/bit-project.int/app/models/staff/Type.php on line 8" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:46:45 [error] 2906#2906: *699 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:87
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 87" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:50:20 [error] 2906#2906: *716 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot use Illuminate\Database\Eloquent\SoftDeletes as SoftDeletes because the name is already in use in /opt/dev/sites/bit-project.int/app/models/Religion.php on line 5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/18 12:54:25 [error] 2906#2906: *728 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Staff::ajax_retrive_province_by_district(), 0 passed in /opt/dev/sites/bit-project.int/app/core/App.php on line 44 and exactly 1 expected in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:99
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_retrive_province_by_district()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 99" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/09/18 13:03:58 [error] 2906#2906: *853 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'name' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 107" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/10 HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 13:04:42 [error] 2906#2906: *853 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'name' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 107" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/12 HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 13:05:11 [error] 2906#2906: *853 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Staff::ajax_retrive_province_by_district(), 0 passed in /opt/dev/sites/bit-project.int/app/core/App.php on line 44 and exactly 1 expected in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:99
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_retrive_province_by_district()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 99" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/ HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/09/18 13:05:15 [error] 2906#2906: *853 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Staff::ajax_retrive_province_by_district(), 0 passed in /opt/dev/sites/bit-project.int/app/core/App.php on line 44 and exactly 1 expected in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:99
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_retrive_province_by_district()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 99" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/09/18 13:05:16 [error] 2906#2906: *853 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Staff::ajax_retrive_province_by_district(), 0 passed in /opt/dev/sites/bit-project.int/app/core/App.php on line 44 and exactly 1 expected in /opt/dev/sites/bit-project.int/app/controllers/Staff.php:99
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_retrive_province_by_district()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 99" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/ HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/09/18 13:05:57 [error] 2906#2906: *899 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'name' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 107" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/10 HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 13:07:12 [error] 2906#2906: *914 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'name' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 107" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/11 HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 13:07:55 [error] 2906#2906: *911 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'name' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 107" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/13 HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 13:08:36 [error] 2906#2906: *911 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'name' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 107" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /staff/ajax_retrive_province_by_district/13 HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/09/18 13:27:11 [error] 2906#2906: *1102 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.deleted_at' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, t" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/18 13:27:42 [error] 2906#2906: *1102 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.deleted_at' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, t" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/18 13:27:47 [error] 2906#2906: *1102 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.deleted_at' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, t" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/18 13:28:20 [error] 2906#2906: *1102 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.deleted_at' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, t" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/18 13:28:25 [error] 2906#2906: *1102 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.deleted_at' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, t" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/18 13:30:33 [error] 2906#2906: *1142 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user.deleted_at' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Array, t" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/18 14:12:14 [error] 2906#2906: *1292 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000]: General error: 1364 Field 'nic' doesn't have a default value in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `us...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `us...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `us...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `us...', Array)
+#5 /opt/dev/sites/bit-proj" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /user/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/user/add"
+2019/09/18 14:23:01 [error] 2906#2906: *1335 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'stu_staff_parent_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select * from `...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select * from `...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select * from `...', Arra" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /login HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/login"
+2019/09/18 15:26:03 [error] 2906#2906: *1544 FastCGI sent in stderr: "PHP message: PHP Warning:  Illegal string offset 'error' in /opt/dev/sites/bit-project.int/app/controllers/User.php on line 105" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /user/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/user/add"
+2019/09/18 18:03:04 [error] 2906#2906: *1874 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): Empty regular expression in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:03:26 [error] 2906#2906: *1874 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): Empty regular expression in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:05:26 [error] 2906#2906: *1891 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): No ending delimiter '/' found in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_20)?\d{2}(?:[01235678]\d\d(?<!(?:000' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Staff.php(166): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_add()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:08:33 [error] 2906#2906: *1898 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): No ending delimiter '/' found in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_20)?\d{2}(?:[01235678]\d\d(?<!(?:000' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Staff.php(166): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_add()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:08:39 [error] 2906#2906: *1898 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): No ending delimiter '/' found in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_20)?\d{2}(?:[01235678]\d\d(?<!(?:000' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Staff.php(166): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_add()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:09:09 [error] 2906#2906: *1898 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): No ending delimiter '/' found in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_20)?\d{2}(?:[01235678]\d\d(?<!(?:000' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Staff.php(166): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_add()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:09:25 [error] 2906#2906: *1898 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): No ending delimiter '/' found in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_20)?\d{2}(?:[01235678]\d\d(?<!(?:000' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Staff.php(166): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_add()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:11:38 [error] 2906#2906: *1906 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): No ending delimiter '/' found in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_20)?\d{2}(?:[01235678]\d\d(?<!(?:000' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Staff.php(166): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_add()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:13:01 [error] 2906#2906: *1908 FastCGI sent in stderr: "PHP message: PHP Parse error:  syntax error, unexpected '$is_valid_nic' (T_VARIABLE) in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 167" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:13:56 [error] 2906#2906: *1908 FastCGI sent in stderr: "PHP message: PHP Parse error:  syntax error, unexpected 'exit' (T_EXIT) in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 167" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:15:07 [error] 2906#2906: *1908 FastCGI sent in stderr: "PHP message: PHP Warning:  preg_match(): No ending delimiter '/' found in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 2160PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_20)?\d{2}(?:[01235678]\d\d(?<!(?:000' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Staff.php(169): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Staff->ajax_add()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/18 18:28:34 [error] 2906#2906: *1937 FastCGI sent in stderr: "PHP message: PHP Parse error:  syntax error, unexpected '===' (T_IS_IDENTICAL) in /opt/dev/sites/bit-project.int/app/controllers/Staff.php on line 170" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"

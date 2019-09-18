@@ -58,7 +58,7 @@ class User extends Controller {
 
 		endif;
 
-        // MODEL
+        // RETRIVE USER_ROLE
         $this->load->model('user/role');
 
         foreach( $this->model_user_role->select('id', 'role')->get() as $key => $element ):
@@ -93,13 +93,36 @@ class User extends Controller {
         // SET JSON HEADER
         header('Content-Type: application/json');
 
-        if ( GUMP::is_valid($this->request->post, array('role_id' => 'required|integer')) !== true ):
+        // VALIDATION : ROLE ID
+        if ( GUMP::is_valid($this->request->post, array('role_id' => 'required|integer|max_len,2')) !== true ):
             echo json_encode( array( "error" => "We didn't got valid role id ?" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        if ( GUMP::is_valid($this->request->post, array('username' => 'required|alpha_dash')) !== true ):
-            echo json_encode( array( "error" => "We didn't got valid username ?" ), JSON_PRETTY_PRINT );
+        // VALIDATION : USERNAME
+        $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'required|alpha_numeric|min_len,6|max_len,20'));
+        if ( $is_valid_username !== true ):
+            echo json_encode( array( "error" => $is_valid_username[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : PASS
+        $is_valid_password = GUMP::is_valid($this->request->post, array('pass' => 'required|alpha_numeric|min_len,6|max_len,255'));
+        if ( $is_valid_password !== true ):
+            echo json_encode( array( "error" => $is_valid_password[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : PASS CONFIRM
+        if ( $this->request->post['pass'] !== $this->request->post['pass_confirm'] ):
+            echo json_encode( array( "error" => "Entered Passwords doesn't match" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : EMAIL
+        $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'required|valid_email|max_len,50'));
+        if ( $is_valid_email  !== true ):
+            echo json_encode( array( "error" => $is_valid_email[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -111,7 +134,7 @@ class User extends Controller {
         $this->model_user->password = password_hash($this->request->post['pass'], PASSWORD_DEFAULT);
         $this->model_user->email = $this->request->post['email'];
         
-        
+        // SUBMIT
         if ( $this->model_user->save() ):
             echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
         else:

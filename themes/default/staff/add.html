@@ -44,40 +44,47 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="nic_no">NIC</label>
-                                                    <input type="number" class="form-control" id="nic_no" required/>
+                                                    <input type="text" class="form-control" id="nic_no" required/>
                                                     <small id="nicno" class="form-text text-muted">ex :- 953651408V</small>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="type">Type</label>
-                                                    <select class="form-control" id="type" required>
-                                                        {% for type in staff_types %}
-                                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                                    <label for="category">Category</label>
+                                                    <select class="form-control" id="category_id" required>
+                                                        <option selected`>- Select -</option>
+                                                        {% for category in staff_category %}
+                                                        <option value="{{ category.id }}">{{ category.name }}</option>
                                                         {% endfor %}
                                                     </select>
-                                                    <small id="addtype" class="form-text text-muted">New Type</small>
+                                                    <!-- <small id="addcategory" class="form-text text-muted">New category</small> -->
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="position">Position</label>
-                                                    <input type="text" class="form-control" id="position" required/>
-                                                    <small id="addposition" class="form-text text-muted">New Position</small>
+                                                    <label for="type">Type</label>
+                                                    <select class="form-control" id="type_id" required>
+                                                        <option selected>- Select -</option>
+                                                        {% for type in staff_type %}
+                                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <small id="addtype" class="form-text text-muted">New Type</small> -->
                                                 </div>
-                                            </div>
+                                            </div>                                            
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="class">Class in Charge</label>
-                                                    <select class="form-control" id="class">
-                                                        {% for class in classes %}
+                                                    <select class="form-control" id="class_id">
+                                                        <option selected>- Select -</option>
+                                                        {% for class in class %}
                                                         <option value="{{ class.id }}">{{ class.name }}</option>
                                                         {% endfor %}
                                                     </select>
-                                                    <small id="addclass" class="form-text text-muted">New Class</small>
+                                                    <!-- <small id="addclass" class="form-text text-muted">New Class</small> -->
                                                 </div>
                                             </div>
 
@@ -85,7 +92,7 @@
                                                 <div class="form-group">
                                                     <label for="subject_ids">Subjects</label>
                                                     <select class="form-control" id="subject_ids" required></select>
-                                                    <small id="addsubject" class="form-text text-muted">New Subject</small>
+                                                    <!-- <small id="addsubject" class="form-text text-muted">New Subject</small> -->
                                                 </div>
                                             </div>
 
@@ -141,17 +148,23 @@
 
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="rel">Religion</label>
-                                                    <input type="text" class="form-control" id="rel"/>
+                                                    <label for="rel_id">Religion</label>
+                                                    <select class="form-control" id="rel_id">
+                                                        <option selected>- Select -</option>
+                                                        {% for religion in religion %}
+                                                        <option value="{{ religion.id }}">{{ religion.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="gen">Gender</label>
-                                                    <select class="form-control" id="gen">
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
+                                                    <select class="form-control" id="gen" required>
+                                                        <option selected>- Select -</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -165,15 +178,15 @@
 
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="landno">Landline Number</label>
-                                                    <input type="text" class="form-control" id="landno"/>
+                                                    <label for="phone_home">Landline Number</label>
+                                                    <input type="text" class="form-control" id="phone_home"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="mobno">Mobile Number</label>
-                                                    <input type="text" class="form-control" id="mobno"/>
+                                                    <label for="phone_mobile">Mobile Number</label>
+                                                    <input type="text" class="form-control" id="phone_mobile"/>
                                                 </div>
                                             </div>
 
@@ -194,7 +207,12 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="dist">District</label>
-                                                    <select class="form-control" id="dist" required></select>
+                                                    <select class="form-control" id="dist" required>
+                                                        <option selected>- Select -</option>
+                                                        {% for district in district %}
+                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -233,20 +251,97 @@
             formData.append('admission_date', $("#admission_date").val())
             formData.append('employee_no', $("#employee_no").val())
             formData.append('nic_no', $("#nic_no").val())
-            formData.append('type', $("#type").val());
-            formData.append('position', $("#position").val());
-            formData.append('class', $("#class").val());
-            formData.append('subject_ids', $("#subject_ids").val());
+            formData.append('category_id', $("#category_id").val())
+            formData.append('type_id', $("#type_id").val())
+            formData.append('class_id', $("#class_id").val())
+            formData.append('subject_ids', $("#subject_ids").val())
+            formData.append('fn', $("#fn").val())
+            formData.append('ini', $("#ini").val())
+            formData.append('sn', $("#sn").val())
+            formData.append('dob', $("#dob").val())
+            formData.append('rel_id', $("#rel_id").val())
+            formData.append('gen', $("#gen").val())
+            formData.append('email', $("#email").val())
+            formData.append('phone_home', $("#phone_home").val())
+            formData.append('phone_mobile', $("#phone_mobile").val())
+            formData.append('address', $("#address").val())
+            formData.append('city', $("#city").val())
+            formData.append('district', $("#district").val())
+            formData.append('province', $("#province").val())
 
             console.log("ADMISSION DATE : " + $("#admission_date").val())
             console.log("EMPLOYEE NO : " + $("#employee_no").val())
             console.log("NIC NO : " + $("#nic_no").val())
+            console.log("CATEGORY : " + $("#category").val())
             console.log("TYPE : " + $("#type").val())
-            console.log("POSITION : " + $("#position").val())
             console.log("CLASS : " + $("#class").val())
             console.log("SUBJECT IDS : " + $("#subject_ids").val())
+            console.log("FN : " + $("#fn").val())
+            console.log("INI : " + $("#ini").val())
+            console.log("SN : " + $("#sn").val())
+            console.log("DOB : " + $("#dob").val())
+            console.log("RELIGION : " + $("#rel_id").val())
+            console.log("GEN : " + $("#gen").val())
+            console.log("EMAIL : " + $("#email").val())
+            console.log("LANDLINE : " + $("#phone_home").val())
+            console.log("MOBILE : " + $("#phone_mobile").val())
+            console.log("ADDRESS : " + $("#address").val())
+            console.log("CITY : " + $("#city").val())
+            console.log("DISTRICT : " + $("#district").val())
+            console.log("PROVINCE : " + $("#province").val())
 
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/staff/ajax_add",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+
+                    console.log(res);
+
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "User added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
         }
+
+        //VIEW PROVINCE BY DISTRICT
+        $("#dist").on('change', function () {
+
+            var id = $("#dist").val()
+
+            $.ajax({
+                url: '{{ app.url }}/staff/ajax_retrive_province_by_district/' + id,
+                processData: false,
+                contentType: false,
+                success: (res) => {
+                    $("#province").find('option')
+                    .remove()
+                    .end()
+                    .append('<option value='+ res.data.id +'>' + res.data.name + '</option>')
+                    .val(res.data.id)
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ")
+                    console.log(e.responseText)
+                }
+            })
+
+        })
+
     </script>
 
 </body>

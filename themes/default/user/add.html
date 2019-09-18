@@ -63,7 +63,7 @@
                                         <div class="row">
                                             <div class="button-group mx-auto">
                                                 <button type="button" id="btn-submit" class="btn btn-danger">CREATE</button>
-                                                <button type="button" id="btn-clear" class="btn btn-secondary">CLEAR</button>
+                                                <button type="reset" id="btn-clear" class="btn btn-secondary">CLEAR</button>
                                             </div>
                                         </div>
                                     </form>
@@ -108,7 +108,8 @@
                             location.reload();
                         })
                     } else {
-                        alertify.alert("Failed", "User adding failed ... ");
+                        console.log(res);
+                        alertify.alert(res.error);
                     }
                 },
                 error: (e) => {
@@ -119,14 +120,6 @@
 
         })
 
-        $("#btn-clear").click(function(event) {
-            event.preventDefault();
-
-            $("#username").val("")
-            $("#pass").val("")
-            $("#pass_confirm").val("")
-            $("#email").val("")
-        })
     </script>
 
 </body>

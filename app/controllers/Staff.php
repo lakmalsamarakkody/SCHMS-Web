@@ -51,28 +51,250 @@ class Staff extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODELS
-        $this->load->model('class');
+        $this->load->model('staff/category');
         $this->load->model('staff/type');
+        $this->load->model('class');
+        $this->load->model('religion');
+        $this->load->model('district');
+
+        // STAFF CATEGORY
+        foreach( $this->model_staff_category->select('id', 'name')->get() as $key => $element ):
+            $data['staff_category'][$key]['id'] = $element->id;
+            $data['staff_category'][$key]['name'] = $element->name;
+        endforeach;
 
         // STAFF TYPE
         foreach( $this->model_staff_type->select('id', 'name', 'category_id')->get() as $key => $element ):
-            $data['staff_types'][$key]['id'] = $element->id;
-            $data['staff_types'][$key]['name'] = $element->name;
-            $data['staff_types'][$key]['category_id'] = $element->category_id;
+            $data['staff_type'][$key]['id'] = $element->id;
+            $data['staff_type'][$key]['name'] = $element->name;
+            $data['staff_type'][$key]['category_id'] = $element->category_id;
         endforeach;
 
-        // CLASSES
+        // CLASS IN CHARGE
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
-            $data['classes'][$key]['id'] = $element->id;
-            $data['classes'][$key]['grade_id'] = $element->grade_id;
-            $data['classes'][$key]['staff_id'] = $element->staff_id;
-            $data['classes'][$key]['name'] = $element->name;
+            $data['class'][$key]['id'] = $element->id;
+            $data['class'][$key]['grade_id'] = $element->grade_id;
+            $data['class'][$key]['staff_id'] = $element->staff_id;
+            $data['class'][$key]['name'] = $element->name;
+        endforeach;
+
+        //RELIGION
+        foreach( $this->model_religion->select('id', 'name')->get() as $key => $element ):
+            $data['religion'][$key]['id'] = $element->id;
+            $data['religion'][$key]['name'] = $element->name;
+        endforeach;
+
+        //DISTRICT
+        foreach( $this->model_district->select('id', 'province_id', 'name')->get() as $key => $element ):
+            $data['district'][$key]['id'] = $element->id;
+            $data['district'][$key]['province_id'] = $element->province_id;
+            $data['district'][$key]['name'] = $element->name;
         endforeach;
 
 		// RENDER VIEW
         $this->load->view('staff/add', $data);
         
-    }   
+    }
+
+    public function ajax_retrive_province_by_district($id) {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('district');
+        $this->load->model('province');
+
+        $province_id = $this->model_district->select('province_id')->where('id', '=', $id)->first()->province_id;
+
+
+        echo json_encode(array( "status" => "success", "data" => $this->model_province->select('id', 'name')->where('id', '=', $province_id)->first() ));
+
+    }
     
+    public function ajax_add() {
+
+        /**
+         * This method will receive ajax request from
+         * the front end with the following payload
+         *   - admission_date
+         *   - employee_no
+         *   - nic_no
+         *   - category
+         *   - type
+         *   - class
+         *   - subject_ids
+         *   - fn
+         *   - ini
+         *   - sn
+         *   - dob
+         *   - rel_id
+         *   - gen
+         *   - email
+         *   - landno
+         *   - mobno
+         *   - address
+         *   - city
+         *   - district
+         *   - province
+         * 
+         * We need to validate the data and then perform
+         * the following tasks.
+         *    - validate
+         *    - CRUD
+         *    - response ( JSON )
+         */
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // VALIDATION : ADMISSION DATE
+        $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
+        if ( $is_valid_admission_date !== true ):
+            echo json_encode( array( "error" => $is_valid_admission_date[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : EMPLOYEE NO
+        $is_valid_username = GUMP::is_valid($this->request->post, array('employee_no' => 'required|integer|max_len,6'));
+        if ( $is_valid_username !== true ):
+            echo json_encode( array( "error" => $is_valid_username[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : NIC
+        $is_valid_nic = GUMP::is_valid($this->request->post, array('nic_no' => "required"));
+        if ( $is_valid_nic === true ):
+            if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['nic_no']) == false ):
+                echo json_encode( array( "error" => "Wrong NIC Format" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+        else:
+            echo json_encode( array( "error" => $is_valid_nic[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : CATEGORY_ID
+        $is_valid_category = GUMP::is_valid($this->request->post, array('category_id' => 'required|integer|max_len,2'));
+        if ( $is_valid_category !== true ):
+            echo json_encode( array( "error" => "Staff Category field is empty" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : TYPE_ID
+        $is_valid_type = GUMP::is_valid($this->request->post, array('type_id' => 'required|integer|max_len,2'));
+        if ( $is_valid_type !== true ):
+            echo json_encode( array( "error" => "Staff type field is empty" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : CLASS_ID
+        $is_valid_class = GUMP::is_valid($this->request->post, array('class_id' => 'integer|max_len,3'));
+        if ( $is_valid_class !== true ):
+            echo json_encode( array( "error" => $is_valid_class[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : SUBJECT_IDS
+        $is_valid_subject_ids = GUMP::is_valid($this->request->post, array('subject_ids' => 'integer|max_len,3'));
+        if ( $is_valid_subject_ids !== true ):
+            echo json_encode( array( "error" => $is_valid_subject_ids[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : FN
+        $is_valid_fn = GUMP::is_valid($this->request->post, array('fn' => 'required|alpha|max_len,100'));
+        if ( $is_valid_fn !== true ):
+            echo json_encode( array( "error" => $is_valid_fn[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : INI
+        $is_valid_ini = GUMP::is_valid($this->request->post, array('ini' => 'required|alpha|max_len,10'));
+        if ( $is_valid_ini !== true ):
+            echo json_encode( array( "error" => $is_valid_ini[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : SN
+        $is_valid_sn = GUMP::is_valid($this->request->post, array('sn' => 'required|alpha|max_len,50'));
+        if ( $is_valid_sn !== true ):
+            echo json_encode( array( "error" => $is_valid_sn[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : DOB
+        $is_valid_dob = GUMP::is_valid($this->request->post, array('dob' => 'required|date'));
+        if ( $is_valid_dob !== true ):
+            echo json_encode( array( "error" => $is_valid_dob[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : REL_ID
+        $is_valid_rel_id = GUMP::is_valid($this->request->post, array('rel_id' => 'integer|max_len,2'));
+        if ( $is_valid_rel_id !== true ):
+            echo json_encode( array( "error" => $is_valid_rel_id[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : GEN
+        $is_valid_gen = GUMP::is_valid($this->request->post, array('gen' => 'required|integer|max_len,1'));
+        if ( $is_valid_gen !== true ):
+            echo json_encode( array( "error" => $is_valid_gen[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : EMAIL
+        $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'required|email'));
+        if ( $is_valid_email !== true ):
+            echo json_encode( array( "error" => $is_valid_email[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : LANDLINE
+        $is_valid_phone_home = GUMP::is_valid($this->request->post, array('phone_home' => 'required|integer|max_len,10'));
+        if ( $is_valid_phone_home !== true ):
+            echo json_encode( array( "error" => $is_valid_phone_home[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : MOBILE
+        $is_valid_phone_mobile = GUMP::is_valid($this->request->post, array('phone_mobile' => 'required|integer|max_len,10'));
+        if ( $is_valid_phone_mobile !== true ):
+            echo json_encode( array( "error" => $is_valid_phone_mobile[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : ADDRESS
+        $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|alpha|max_len,50'));
+        if ( $is_valid_address !== true ):
+            echo json_encode( array( "error" => $is_valid_address[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : CITY
+        $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
+        if ( $is_valid_city !== true ):
+            echo json_encode( array( "error" => $is_valid_city[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : DISTRICT
+        $is_valid_dist = GUMP::is_valid($this->request->post, array('dist' => 'required|integer|max_len,2'));
+        if ( $is_valid_dist !== true ):
+            echo json_encode( array( "error" => $is_valid_dist[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        //MODEL
+
+        // SUBMIT
+        if ( $this->model_user->save() ):
+            echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+        else:
+            echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+        endif;
+
+    }
 }
 ?>

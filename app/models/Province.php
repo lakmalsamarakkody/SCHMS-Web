@@ -4,7 +4,7 @@
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Grade_Model extends EloquentModel {
+class Province_Model extends EloquentModel {
 
 	use SoftDeletes;
 	const CREATED_AT = 'created_on';
@@ -12,8 +12,8 @@ class Grade_Model extends EloquentModel {
 	const DELETED_AT = 'deleted_on';
 
 	// PARENT PROPERTIES
-	protected $table = 'grade';
-	protected $fillable = [ 'id', 'name'];
+	protected $table = 'province';
+	protected $fillable = [ 'id', 'name' ];
 
 }
 

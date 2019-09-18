@@ -3,11 +3,11 @@
     --main-theme-color: #727cf5;
     --main-bg-color: #e6e6e65b;
     --sub-theme-color: #8f75da;
-    --main-text-color: #6c6c6c;
-    --sub-text-color: #b8c9d1;
+    --main-text-color: #646363;
+    --sub-text-color: #979797;
     --sidenav-sub-text-color: #CEDCE4;
-    --footer-bg-color: #333333;
-}
+    --footer-bg-color: #333333; 
+} 
 
 body{
     cursor: default;

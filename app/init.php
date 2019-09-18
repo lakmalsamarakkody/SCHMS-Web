@@ -3,6 +3,8 @@
 // SET ABS PATH FOR INIT
 define('ABS_PATH', realpath(__DIR__ . '/..'));
 
+date_default_timezone_set('Asia/Colombo');
+
 // COMPOSER AUTO LOAD
 require_once ABS_PATH.'/libs/autoload.php';
 
