@@ -25,6 +25,7 @@
                                                 <div class="form-group">
                                                     <label>User Role</label>
                                                     <select class="form-control" id="role_id" required>
+                                                        <option selected disabled> - Select User Role - </option>
                                                         {% for role in user.roles %}
                                                         <option value="{{ role.id }}">{{ role.name }}</option>
                                                         {% endfor %}

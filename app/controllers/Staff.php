@@ -54,8 +54,10 @@ class Staff extends Controller {
         $this->load->model('staff/category');
         $this->load->model('staff/type');
         $this->load->model('class');
+        $this->load->model('grade');
         $this->load->model('religion');
         $this->load->model('district');
+
 
         // STAFF CATEGORY
         foreach( $this->model_staff_category->select('id', 'name')->get() as $key => $element ):
@@ -67,28 +69,30 @@ class Staff extends Controller {
         foreach( $this->model_staff_type->select('id', 'name', 'category_id')->get() as $key => $element ):
             $data['staff_type'][$key]['id'] = $element->id;
             $data['staff_type'][$key]['name'] = $element->name;
-            $data['staff_type'][$key]['category_id'] = $element->category_id;
+            $data['staff_type'][$key]['category']['id'] = $element->category_id;
         endforeach;
 
         // CLASS IN CHARGE
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
-            $data['class'][$key]['id'] = $element->id;
-            $data['class'][$key]['grade_id'] = $element->grade_id;
-            $data['class'][$key]['staff_id'] = $element->staff_id;
-            $data['class'][$key]['name'] = $element->name;
+            $data['staff_class'][$key]['id'] = $element->id;
+            $data['staff_class'][$key]['grade']['id'] = $element->grade_id;
+            $data['staff_class'][$key]['staff']['id'] = $element->staff_id;
+            $data['staff_class'][$key]['name'] = $element->name;
+
+            $data['staff_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
         endforeach;
 
         //RELIGION
         foreach( $this->model_religion->select('id', 'name')->get() as $key => $element ):
-            $data['religion'][$key]['id'] = $element->id;
-            $data['religion'][$key]['name'] = $element->name;
+            $data['staff_religion'][$key]['id'] = $element->id;
+            $data['staff_religion'][$key]['name'] = $element->name;
         endforeach;
 
         //DISTRICT
         foreach( $this->model_district->select('id', 'province_id', 'name')->get() as $key => $element ):
-            $data['district'][$key]['id'] = $element->id;
-            $data['district'][$key]['province_id'] = $element->province_id;
-            $data['district'][$key]['name'] = $element->name;
+            $data['staff_district'][$key]['id'] = $element->id;
+            $data['staff_district'][$key]['province']['id'] = $element->province_id;
+            $data['staff_district'][$key]['name'] = $element->name;
         endforeach;
 
 		// RENDER VIEW
@@ -136,7 +140,6 @@ class Staff extends Controller {
          *   - address
          *   - city
          *   - district
-         *   - province
          * 
          * We need to validate the data and then perform
          * the following tasks.
@@ -238,7 +241,7 @@ class Staff extends Controller {
         endif;
 
         // VALIDATION : GEN
-        $is_valid_gen = GUMP::is_valid($this->request->post, array('gen' => 'required|integer|max_len,1'));
+        $is_valid_gen = GUMP::is_valid($this->request->post, array('gen' => 'required|contains_list,(Male;Female)'));
         if ( $is_valid_gen !== true ):
             echo json_encode( array( "error" => $is_valid_gen[0] ), JSON_PRETTY_PRINT );
             exit();
@@ -266,7 +269,7 @@ class Staff extends Controller {
         endif;
 
         // VALIDATION : ADDRESS
-        $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|alpha|max_len,50'));
+        $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|alpha_numeric|max_len,50'));
         if ( $is_valid_address !== true ):
             echo json_encode( array( "error" => $is_valid_address[0] ), JSON_PRETTY_PRINT );
             exit();
@@ -287,9 +290,30 @@ class Staff extends Controller {
         endif;
 
         //MODEL
+        $this->load->model('staff');
+
+        $this->model_staff->role_id = $this->request->post['admission_date'];
+        $this->model_staff->role_id = $this->request->post['employee_no'];
+        $this->model_staff->role_id = $this->request->post['nic_no'];
+        $this->model_staff->role_id = $this->request->post['category_id'];
+        $this->model_staff->role_id = $this->request->post['type_id'];
+        $this->model_staff->role_id = $this->request->post['class_id'];
+        $this->model_staff->role_id = $this->request->post['subject_ids'];
+        $this->model_staff->role_id = $this->request->post['fn'];
+        $this->model_staff->role_id = $this->request->post['ini'];
+        $this->model_staff->role_id = $this->request->post['sn'];
+        $this->model_staff->role_id = $this->request->post['dob'];
+        $this->model_staff->role_id = $this->request->post['rel_id'];
+        $this->model_staff->role_id = $this->request->post['gen'];
+        $this->model_staff->role_id = $this->request->post['email'];
+        $this->model_staff->role_id = $this->request->post['phone_home'];
+        $this->model_staff->role_id = $this->request->post['phone_mobile'];
+        $this->model_staff->role_id = $this->request->post['address'];
+        $this->model_staff->role_id = $this->request->post['city'];
+        $this->model_staff->role_id = $this->request->post['dist'];
 
         // SUBMIT
-        if ( $this->model_user->save() ):
+        if ( $this->model_staff->save() ):
             echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
         else:
             echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );

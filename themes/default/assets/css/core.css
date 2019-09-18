@@ -138,6 +138,11 @@ h5.page-title{
     text-align: center;
 }
 
+.topmenu .messages{
+    cursor: pointer;
+    padding-right: 2rem;
+}
+
 .topmenu .notifications{
     cursor: pointer;
     padding-right: 2rem;
@@ -439,10 +444,6 @@ h5.page-title{
     color: var(--white);
     background-color: var(--sub-theme-color);
     border-radius: .25rem;
-}
-
-.staffadd .form-control {
-    color:var(--sub-text-color);
 }
 
 

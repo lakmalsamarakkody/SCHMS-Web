@@ -11,6 +11,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="row">
+                    <!-- START : CLASS MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
                             <h5 class="card-header"> Class </h5>
@@ -41,6 +42,9 @@
                             </div>
                         </div>
                     </div>
+                    <!-- END : CLASS MANAGER -->
+
+                    <!-- START : GRADE MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
                             <h5 class="card-header"> Grade </h5>
@@ -67,6 +71,37 @@
                             </div>
                         </div>
                     </div>
+                    <!-- END : GRADE MANAGER -->
+
+                    <!-- START : RELIGION MANAGER -->
+                    <div class="col mx-auto">
+                            <div class="card">
+                                <h5 class="card-header"> Religion </h5>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Religion </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for religion in religion %}
+                                                <tr>
+                                                    <th scope="row"> {{ religion.id }} </th>
+                                                    <td> {{ religion.name }} </td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>                                
+                                    <button type="button" class="btn btn-primary">Add New Religion</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END : GRADE MANAGER -->
+
                 </div>
 
             </div>

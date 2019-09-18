@@ -37,25 +37,37 @@
                                             
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="adddate">Admission Date</label>
-                                                    <input type="date" class="form-control" id="adddate" required/>
-                                                    <small id="adddateHelp" class="form-text text-muted">If unchanged current date will be submitted</small>
+                                                    <label for="admission_date">Admission Date</label>
+                                                    <div class="input-group date" id="datetimepicker_admission_date" data-target-input="nearest">
+                                                        <input id="adddate" class="form-control datetimepicker-input" data-target="#datetimepicker_admission_date" required />
+                                                        <div class="input-group-append" data-target="#datetimepicker_admission_date" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="la la-calendar"></i></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label for="class">Class</label>
-                                                    <select class="form-control" id="class" required></select>
-                                                    <small id="addclass" class="form-text text-muted">New Class</small>
+                                                    <select class="form-control" id="class" required>
+                                                        <option selected disabled> - Select Class - </option>
+                                                        {% for class in student_class %}
+                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <small id="addclass" class="form-text text-muted">New Class</small> -->
                                                 </div>
                                             </div>
 
                                             <div class="col-10">
                                                 <div class="form-group">
-                                                    <label for="subject">Subjects</label>
-                                                    <select class="form-control" id="subject" required></select>
-                                                    <small id="addsubject" class="form-text text-muted">New Subject</small>
+                                                    <label for="subject_ids">Subjects</label>
+                                                    <select class="form-control" id="subject_ids" required>
+                                                        <option selected disabled> - Select Subject - </option>
+                                                        <option value="0"> Chemistry (රසායන විද්‍යාව) </option>
+                                                    </select>
+                                                    <!-- <small id="addsubject" class="form-text text-muted">New Subject</small> -->
                                                 </div>
                                             </div>
 
@@ -112,8 +124,12 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="gen">Gender</label>
-                                                    <select class="form-control" id="gen" required></select>
-                                                    <small id="addgen" class="form-text text-muted">New Gender</small>
+                                                    <select class="form-control" id="gen" required>
+                                                        <option selected disabled> - Select Gender - </option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                    <!-- <small id="addgen" class="form-text text-muted">New Gender</small> -->
                                                 </div>                                                
                                             </div>
 
@@ -127,7 +143,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="mobno">Mobile Number</label>
-                                                    <input type="text" class="form-control" id="mono"/>
+                                                    <input type="text" class="form-control" id="mobno"/>
                                                 </div>
                                             </div>
 
@@ -148,8 +164,13 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="dist">District</label>
-                                                    <select class="form-control" id="dist" required></select>
-                                                    <small id="adddistrict" class="form-text text-muted">New District</small>
+                                                    <select class="form-control" id="dist" required>
+                                                        <option selected disabled> - Select District - </option>
+                                                        {% for district in student_district %}
+                                                            <option value="{{ district.id }}"> {{ district.name }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <small id="adddistrict" class="form-text text-muted">New District</small> -->
                                                 </div>
                                             </div>
 
@@ -170,8 +191,13 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="rel">Religion</label>
-                                                    <select class="form-control" id="rel"></select>
-                                                    <small id="addreligion" class="form-text text-muted">New Religion</small>
+                                                    <select class="form-control" id="rel">
+                                                        <option selected disabled> - Select Religion - </option>
+                                                        {% for religion in student_religion %}
+                                                            <option value="{{ religion.id }}"> {{ religion.name }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <small id="addreligion" class="form-text text-muted">New Religion</small> -->
                                                 </div>
                                             </div>
 
@@ -202,15 +228,15 @@
                                             
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="g1fi">Initials</label>
-                                                    <input type="text" class="form-control" id="g1fi" required/>
+                                                    <label for="g1ini">Initials</label>
+                                                    <input type="text" class="form-control" id="g1ini" required/>
                                                 </div>                                                
                                             </div>
                                             
                                             <div class="col-8">
                                                 <div class="form-group">
-                                                    <label for="g1fsn">Surname</label>
-                                                    <input type="text" class="form-control" id="g1fsn" required/>
+                                                    <label for="g1sn">Surname</label>
+                                                    <input type="text" class="form-control" id="g1sn" required/>
                                                 </div>                    
                                             </div>
                                             
@@ -224,16 +250,25 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="g1rel">Relationship</label>
-                                                    <input type="text" class="form-control" id="g1rel" required/>
-                                                    <small id="addrelation" class="form-text text-muted">New Relationship</small>
+                                                    <select class="form-control" id="g1rel" required>
+                                                        <option selected disabled> - Select Relationship - </option>
+                                                        {% for relation_type in student_relation_type %}
+                                                            <option value="{{ relation_type.id }}"> {{ relation_type.name }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <small id="addrelation" class="form-text text-muted">New Relationship</small> -->
                                                 </div>
                                             </div>
                                             
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="g1gen">Gender</label>
-                                                    <select class="form-control" id="g1gen" required></select>
-                                                    <small id="addgen" class="form-text text-muted">New Gender</small>
+                                                    <select class="form-control" id="g1gen" required>
+                                                        <option selected disabled> - Select Gender - </option>
+                                                        <option value="Male"> Male </option>
+                                                        <option value="Female"> Female </option>
+                                                    </select>
+                                                    <!-- <small id="addgen" class="form-text text-muted">New Gender</small> -->
                                                 </div>
                                             </div>
 
@@ -247,14 +282,14 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="g1tel">Landline Number</label>
-                                                    <input type="number" class="form-control" id="g1tel" required/>
+                                                    <input type="text" class="form-control" id="g1tel" required/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="g1mobi">Mobile Number</label>
-                                                    <input type="number" class="form-control" id="g1mobi"/>
+                                                    <input type="text" class="form-control" id="g1mobi"/>
                                                 </div>
                                             </div>
 
@@ -303,8 +338,13 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="g1dist">District</label>
-                                                    <select class="form-control" id="g1dist" required></select>
-                                                    <small id="adddistrict" class="form-text text-muted">New District</small>
+                                                    <select class="form-control" id="g1dist" required>
+                                                        <option selected disabled> - Select District - </option>
+                                                        {% for district in student_district %}
+                                                            <option value="{{ district.id }}"> {{ district.name }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <small id="adddistrict" class="form-text text-muted">New District</small> -->
                                                 </div>                                                
                                             </div>
 
@@ -315,8 +355,6 @@
                                                 </div>
                                             </div>
 
-
-
                                         </div>
                                             
                                     </div>
@@ -326,7 +364,7 @@
     
                         </div>
     
-                        <button type="submit" class="btn btn-primary"> Register </button>
+                        <button type="button" class="btn btn-primary" onClick="register();"> Register </button>
                         <button type="reset" class="btn btn-secondary"> Clear </button>
     
                     </form>
@@ -339,5 +377,140 @@
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+
+        // FORMDATA REGISTERING
+        register = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // STUDENT DATA
+            formData.append('addno', $("#addno").val())
+            formData.append('adddate', $("#adddate").val())
+            formData.append('class', $("#class").val())
+            formData.append('subject', $("#subject").val())
+            formData.append('fn', $("#fn").val())
+            formData.append('initials', $("#initials").val())
+            formData.append('sn', $("#sn").val())
+            formData.append('dob', $("#dob").val())
+            formData.append('gen', $("#gen").val())
+            formData.append('email', $("#email").val())
+            formData.append('mobno', $("#mobno").val())
+            formData.append('address', $("#address").val())
+            formData.append('city', $("#city").val())
+            formData.append('dist', $("#dist").val())
+            formData.append('province', $("#province").val())
+            formData.append('bp', $("#bp").val())
+            formData.append('rel', $("#rel").val())
+
+            // GUARDIAN 1ST DATA
+            formData.append('g1fn', $("#g1fn").val())
+            formData.append('g1ini', $("#g1ini").val())
+            formData.append('g1sn', $("#g1sn").val())
+            formData.append('g1dob', $("#g1dob").val())
+            formData.append('g1rel', $("#g1rel").val())
+            formData.append('g1gen', $("#g1gen").val())
+            formData.append('g1nic', $("#g1nic").val())
+            formData.append('g1tel', $("#g1tel").val())
+            formData.append('g1mobi', $("#g1mobi").val())
+            formData.append('g1occu', $("#g1occu").val())
+            formData.append('g1pos', $("#g1pos").val())
+            formData.append('g1inc', $("#g1inc").val())
+            formData.append('g1mail', $("#g1mail").val())
+            formData.append('g1address', $("#g1address").val())
+            formData.append('g1city', $("#g1city").val())
+            formData.append('g1dist', $("#g1dist").val())
+            formData.append('g1province', $("#g1province").val())
+
+        
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/student/ajax_add",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+
+                    console.log(res);
+
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "User added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+
+        //VIEW PROVINCE BY DISTRICT
+        $("#dist").on('change', function () {
+
+            var id = $("#dist").val()
+
+            $.ajax({
+                url: '{{ app.url }}/student/ajax_retrive_province_by_district/' + id,
+                processData: false,
+                contentType: false,
+                success: (res) => {
+                    $("#province").find('option')
+                    .remove()
+                    .end()
+                    .append('<option value='+ res.data.id +'>' + res.data.name + '</option>')
+                    .val(res.data.id)
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ")
+                    console.log(e.responseText)
+                }
+            })
+
+        })
+
+        //VIEW PROVINCE BY DISTRICT
+        $("#g1dist").on('change', function () {
+
+        var id = $("#g1dist").val()
+
+            $.ajax({
+                url: '{{ app.url }}/student/ajax_retrive_province_by_district/' + id,
+                processData: false,
+                contentType: false,
+                success: (res) => {
+                    $("#g1province").find('option')
+                    .remove()
+                    .end()
+                    .append('<option value='+ res.data.id +'>' + res.data.name + '</option>')
+                    .val(res.data.id)
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ")
+                    console.log(e.responseText)
+                }
+            })
+
+        })
+
+        // DATE TIME PICKER
+        $("#datetimepicker_admission_date").datetimepicker({
+            format: 'YYYY-MM-DD',
+            icons: {
+                up: 'la la-angle-up',
+                down: 'la la-angle-down'
+            }
+        })
+
+    </script>
 </body>
