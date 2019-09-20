@@ -18,20 +18,20 @@
                             Search Student
                         </div>
                         <div class="card-body">
-                            <form action="">
+                            <form method="post">
                                 <div class="form-row">
                                     
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="addno">Admission Number</label>
-                                            <input type="number" class="form-control" id="addno" required/>
+                                            <input type="number" class="form-control" name="addno"/>
                                         </div>                                    
                                     </div>
                                     
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="adddate">Admission Date</label>
-                                            <input type="date" class="form-control" id="adddate" required/>
+                                            <input type="date" class="form-control" name="adddate"/>
                                             <small id="dobHelp" class="form-text text-muted">ex : 01/15/2018</small>
                                         </div>                                    
                                     </div>
@@ -39,7 +39,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="dob">Date of Birth</label>
-                                            <input type="date" class="form-control" id="dob" required/>
+                                            <input type="date" class="form-control" id="dob"/>
                                             <small id="dobHelp" class="form-text text-muted">ex : 12/30/1995</small>
                                         </div>
                                     </div>
@@ -47,87 +47,126 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input type="text" class="form-control" id="name" required/>
+                                            <input type="text" class="form-control" name="name"/>
                                         </div>
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="class">Class</label>
-                                            <input type="text" class="form-control" id="class" required/>
+                                            <select class="form-control" id="class">
+                                                <option selected disabled> - Select Class - </option>
+                                                {% for class in student_class %}
+                                                <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>  
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="grade">Grade</label>
-                                            <input type="text" class="form-control" id="grade" required/>
+                                            <select class="form-control" id="grade">
+                                                <option selected disabled> - Select Grade - </option>
+                                                {% for grade in student_grade%}
+                                                <option value="{{ grade.id }}"> Grade - {{ grade.name }} </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>                                
 
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="role">Gender</label>
-                                            <select class="form-control" id="role" required></select>
+                                            <select class="form-control" id="role">
+                                                <option selected disabled> - Select Gender - </option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="city">City</label>
-                                            <input type="text" class="form-control" id="city" required/>
+                                            <input type="text" class="form-control" id="city"/>
                                         </div>
                                     </div>                            
 
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="district">District</label>
-                                            <input type="text" class="form-control" id="district" required/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="province">Province</label>
-                                            <input type="text" class="form-control" id="province" required/>
+                                            <select class="form-control" id="district">
+                                                <option selected disabled> - Select District - </option>
+                                                {% for district in student_district %}
+                                                    <option value="{{ district.id }}"> {{ district.name }} </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="subject">Subject</label>
-                                            <input type="text" class="form-control" id="subject" required/>
+                                            <select class="form-control" id="subject">
+                                                <option selected disabled> - Select Subject - </option>
+                                                {% for subject in student_subject%}
+                                                <option value="{{ subject.id }}"> {{ subject.name }} </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="exam">Exam</label>
-                                            <input type="text" class="form-control" id="exam" required/>
+                                            <select class="form-control" id="exam">
+                                                <option selected disabled> - Select Exam - </option>
+                                                {% for exam in student_exam%}
+                                                <option value="{{ exam.id }}"> SHIT - {{ exam.year }} </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="sport">Sport</label>
-                                            <input type="text" class="form-control" id="sport" required/>
+                                            <select class="form-control" id="sport">
+                                                <option selected disabled> - Select Sport - </option>
+                                                {% for sport in student_sport%}
+                                                <option value="{{ sport.id }}"> {{ sport.name }} </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="religion">Religion</label>
-                                            <input type="text" class="form-control" id="religion" required/>
+                                            <select class="form-control" id="religion">
+                                                <option selected disabled> - Select Religion - </option>
+                                                {% for religion in student_religion%}
+                                                <option value="{{ religion.id }}"> {{ religion.name }} </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
+                                        <input type="hidden" name="isSubmited" value="true" />
                                         <button class="btn btn-primary mt-3 px-5" type="submit"> Search </button>
                                     </div>
 
                                 </div>
                             </form>
                         </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <pre>
+                            {{ dump(students) }}
+                        </pre>
                     </div>
 
 

@@ -51,6 +51,7 @@ class Staff extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODELS
+        $this->load->model('staff');
         $this->load->model('staff/category');
         $this->load->model('staff/type');
         $this->load->model('class');
@@ -148,169 +149,190 @@ class Staff extends Controller {
          *    - response ( JSON )
          */
 
+        // MODEL
+        $this->load->model('staff');
+
         // SET JSON HEADER
         header('Content-Type: application/json');
 
-        // VALIDATION : ADMISSION DATE
+        // VALIDATION : admission_date
         $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
         if ( $is_valid_admission_date !== true ):
             echo json_encode( array( "error" => $is_valid_admission_date[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : EMPLOYEE NO
-        $is_valid_username = GUMP::is_valid($this->request->post, array('employee_no' => 'required|integer|max_len,6'));
-        if ( $is_valid_username !== true ):
-            echo json_encode( array( "error" => $is_valid_username[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : employee_number
+        $is_valid_employee_number = GUMP::is_valid($this->request->post, array('employee_number' => 'required|numeric|max_len,6'));
+        if ( $is_valid_employee_number !== true ):
+            echo json_encode( array( "error" => $is_valid_employee_number[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : NIC
-        $is_valid_nic = GUMP::is_valid($this->request->post, array('nic_no' => "required"));
-        if ( $is_valid_nic === true ):
-            if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['nic_no']) == false ):
-                echo json_encode( array( "error" => "Wrong NIC Format" ), JSON_PRETTY_PRINT );
+        // employee_number IS ENTERED : CHECK FOR DUPLICATE
+        if ( $this->model_staff->select('id')->where('employee_number', '=', $this->request->post['employee_number'])->first() != NULL ):
+            echo json_encode( array( "error" => "Employee ID is already present" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : nic_number
+        $is_valid_nic_number = GUMP::is_valid($this->request->post, array('nic_number' => "required"));
+        if ( $is_valid_nic_number === true ):
+            if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['nic_number']) == false ):
+                echo json_encode( array( "error" => "Wrong NIC Format tttt" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
         else:
-            echo json_encode( array( "error" => $is_valid_nic[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => $is_valid_nic_number[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : CATEGORY_ID
-        $is_valid_category = GUMP::is_valid($this->request->post, array('category_id' => 'required|integer|max_len,2'));
+        // nic_number IS ENTERED : CHECK FOR DUPLICATE
+        if ( $this->model_staff->select('id')->where('nic', '=', $this->request->post['nic_number'])->first() != NULL ):
+            echo json_encode( array( "error" => "Employee NIC is already present" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : category
+        $is_valid_category = GUMP::is_valid($this->request->post, array('category' => 'required|numeric|max_len,2'));
         if ( $is_valid_category !== true ):
-            echo json_encode( array( "error" => "Staff Category field is empty" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => $is_valid_category[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : TYPE_ID
-        $is_valid_type = GUMP::is_valid($this->request->post, array('type_id' => 'required|integer|max_len,2'));
+        // VALIDATION : type
+        $is_valid_type = GUMP::is_valid($this->request->post, array('type' => 'required|numeric|max_len,2'));
         if ( $is_valid_type !== true ):
-            echo json_encode( array( "error" => "Staff type field is empty" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => $is_valid_type[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : CLASS_ID
-        $is_valid_class = GUMP::is_valid($this->request->post, array('class_id' => 'integer|max_len,3'));
-        if ( $is_valid_class !== true ):
-            echo json_encode( array( "error" => $is_valid_class[0] ), JSON_PRETTY_PRINT );
+        // // VALIDATION : class
+        // $is_valid_class = GUMP::is_valid($this->request->post, array('class' => 'numeric|max_len,3'));
+        // if ( $is_valid_class !== true ):
+        //     echo json_encode( array( "error" => $is_valid_class[0] ), JSON_PRETTY_PRINT );
+        //     exit();
+        // endif;
+
+        // // VALIDATION : subjects
+        // $is_valid_subjects = GUMP::is_valid($this->request->post, array('subjects' => 'numeric|max_len,3'));
+        // if ( $is_valid_subjects !== true ):
+        //     echo json_encode( array( "error" => $is_valid_subjects[0] ), JSON_PRETTY_PRINT );
+        //     exit();
+        // endif;
+
+        // VALIDATION : full_name
+        $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
+        if ( $is_valid_full_name !== true ):
+            echo json_encode( array( "error" => $is_valid_full_name[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : SUBJECT_IDS
-        $is_valid_subject_ids = GUMP::is_valid($this->request->post, array('subject_ids' => 'integer|max_len,3'));
-        if ( $is_valid_subject_ids !== true ):
-            echo json_encode( array( "error" => $is_valid_subject_ids[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : initials
+        $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,10'));
+        if ( $is_valid_initials !== true ):
+            echo json_encode( array( "error" => $is_valid_initials[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : FN
-        $is_valid_fn = GUMP::is_valid($this->request->post, array('fn' => 'required|alpha|max_len,100'));
-        if ( $is_valid_fn !== true ):
-            echo json_encode( array( "error" => $is_valid_fn[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : surname
+        $is_valid_surname = GUMP::is_valid($this->request->post, array('surname' => 'required|valid_name|max_len,50'));
+        if ( $is_valid_surname !== true ):
+            echo json_encode( array( "error" => $is_valid_surname[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : INI
-        $is_valid_ini = GUMP::is_valid($this->request->post, array('ini' => 'required|alpha|max_len,10'));
-        if ( $is_valid_ini !== true ):
-            echo json_encode( array( "error" => $is_valid_ini[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : date_of_birth
+        $is_valid_date_of_birth = GUMP::is_valid($this->request->post, array('date_of_birth' => 'required|date'));
+        if ( $is_valid_date_of_birth !== true ):
+            echo json_encode( array( "error" => $is_valid_date_of_birth[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : SN
-        $is_valid_sn = GUMP::is_valid($this->request->post, array('sn' => 'required|alpha|max_len,50'));
-        if ( $is_valid_sn !== true ):
-            echo json_encode( array( "error" => $is_valid_sn[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : religion
+        $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|max_len,2'));
+        if ( $is_valid_religion !== true ):
+            echo json_encode( array( "error" => $is_valid_religion[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : DOB
-        $is_valid_dob = GUMP::is_valid($this->request->post, array('dob' => 'required|date'));
-        if ( $is_valid_dob !== true ):
-            echo json_encode( array( "error" => $is_valid_dob[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : gender
+        $is_valid_gender = GUMP::is_valid($this->request->post, array('gender' => 'required|contains_list,Male;Female'));
+        if ( $is_valid_gender !== true ):
+            echo json_encode( array( "error" => $is_valid_gender[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : REL_ID
-        $is_valid_rel_id = GUMP::is_valid($this->request->post, array('rel_id' => 'integer|max_len,2'));
-        if ( $is_valid_rel_id !== true ):
-            echo json_encode( array( "error" => $is_valid_rel_id[0] ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
-
-        // VALIDATION : GEN
-        $is_valid_gen = GUMP::is_valid($this->request->post, array('gen' => 'required|contains_list,(Male;Female)'));
-        if ( $is_valid_gen !== true ):
-            echo json_encode( array( "error" => $is_valid_gen[0] ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
-
-        // VALIDATION : EMAIL
-        $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'required|email'));
+        // VALIDATION : email
+        $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'valid_email'));
         if ( $is_valid_email !== true ):
             echo json_encode( array( "error" => $is_valid_email[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : LANDLINE
-        $is_valid_phone_home = GUMP::is_valid($this->request->post, array('phone_home' => 'required|integer|max_len,10'));
-        if ( $is_valid_phone_home !== true ):
-            echo json_encode( array( "error" => $is_valid_phone_home[0] ), JSON_PRETTY_PRINT );
+            // email IS ENTERED : CHECK FOR DUPLICATE
+            if ( $this->model_staff->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
+                echo json_encode( array( "error" => "Employee Email is already present" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+        // VALIDATION : telephone
+        $is_valid_telephone = GUMP::is_valid($this->request->post, array('telephone' => 'numeric|max_len,10'));
+        if ( $is_valid_telephone !== true ):
+            echo json_encode( array( "error" => $is_valid_telephone[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : MOBILE
-        $is_valid_phone_mobile = GUMP::is_valid($this->request->post, array('phone_mobile' => 'required|integer|max_len,10'));
-        if ( $is_valid_phone_mobile !== true ):
-            echo json_encode( array( "error" => $is_valid_phone_mobile[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : mobile_number
+        $is_valid_mobile_number = GUMP::is_valid($this->request->post, array('mobile_number' => 'numeric|max_len,10'));
+        if ( $is_valid_mobile_number !== true ):
+            echo json_encode( array( "error" => $is_valid_mobile_number[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : ADDRESS
-        $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|alpha_numeric|max_len,50'));
+        // VALIDATION : address
+        $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|street_address|max_len,50'));
         if ( $is_valid_address !== true ):
             echo json_encode( array( "error" => $is_valid_address[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : CITY
-        $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
+        // VALIDATION : city
+        $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|valid_name|max_len,20'));
         if ( $is_valid_city !== true ):
             echo json_encode( array( "error" => $is_valid_city[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : DISTRICT
-        $is_valid_dist = GUMP::is_valid($this->request->post, array('dist' => 'required|integer|max_len,2'));
-        if ( $is_valid_dist !== true ):
-            echo json_encode( array( "error" => $is_valid_dist[0] ), JSON_PRETTY_PRINT );
+        $is_valid_district = GUMP::is_valid($this->request->post, array('district' => 'numeric|max_len,2'));
+        if ( $is_valid_district !== true ):
+            echo json_encode( array( "error" => $is_valid_district[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         //MODEL
         $this->load->model('staff');
 
-        $this->model_staff->role_id = $this->request->post['admission_date'];
-        $this->model_staff->role_id = $this->request->post['employee_no'];
-        $this->model_staff->role_id = $this->request->post['nic_no'];
-        $this->model_staff->role_id = $this->request->post['category_id'];
-        $this->model_staff->role_id = $this->request->post['type_id'];
-        $this->model_staff->role_id = $this->request->post['class_id'];
-        $this->model_staff->role_id = $this->request->post['subject_ids'];
-        $this->model_staff->role_id = $this->request->post['fn'];
-        $this->model_staff->role_id = $this->request->post['ini'];
-        $this->model_staff->role_id = $this->request->post['sn'];
-        $this->model_staff->role_id = $this->request->post['dob'];
-        $this->model_staff->role_id = $this->request->post['rel_id'];
-        $this->model_staff->role_id = $this->request->post['gen'];
-        $this->model_staff->role_id = $this->request->post['email'];
-        $this->model_staff->role_id = $this->request->post['phone_home'];
-        $this->model_staff->role_id = $this->request->post['phone_mobile'];
-        $this->model_staff->role_id = $this->request->post['address'];
-        $this->model_staff->role_id = $this->request->post['city'];
-        $this->model_staff->role_id = $this->request->post['dist'];
+        $this->model_staff->admission_date = $this->request->post['admission_date'];
+        $this->model_staff->employee_number = $this->request->post['employee_number'];
+        $this->model_staff->nic = $this->request->post['nic_number'];
+        $this->model_staff->category_id = $this->request->post['category'];
+        $this->model_staff->type_id = $this->request->post['type'];
+        // $this->model_staff->role_id = $this->request->post['class'];
+        // $this->model_staff->role_id = $this->request->post['subjects'];
+        $this->model_staff->full_name = $this->request->post['full_name'];
+        $this->model_staff->initials = $this->request->post['initials'];
+        $this->model_staff->surname = $this->request->post['surname'];
+        $this->model_staff->dob = $this->request->post['date_of_birth'];
+        $this->model_staff->religion_id = $this->request->post['religion'];
+        $this->model_staff->gender = $this->request->post['gender'];
+        $this->model_staff->email = $this->request->post['email'];
+        $this->model_staff->phone_home = $this->request->post['telephone'];
+        $this->model_staff->phone_mobile = $this->request->post['mobile_number'];
+        $this->model_staff->address = $this->request->post['address'];
+        $this->model_staff->city = $this->request->post['city'];
+        $this->model_staff->district_id = $this->request->post['district'];
 
         // SUBMIT
         if ( $this->model_staff->save() ):

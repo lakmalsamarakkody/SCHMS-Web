@@ -14,7 +14,12 @@
                     <!-- START : CLASS MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
-                            <h5 class="card-header"> Class </h5>
+                            <div class="card-header">
+                                <h6 class="pull-left">Classes</h6>
+                                <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary">ADD</button>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
@@ -27,7 +32,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for class in class %}
+                                            {% for class in classes %}
                                             <tr>
                                                 <th scope="row"> {{ class.id }} </th>
                                                 <td> {{ class.grade.name }} </td>
@@ -47,7 +52,7 @@
                     <!-- START : GRADE MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
-                            <h5 class="card-header"> Grade </h5>
+                            <div class="card-header"> Grades </div>
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
@@ -58,10 +63,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for class in class %}
+                                            {% for grade in grades %}
                                             <tr>
-                                                <th scope="row"> {{ class.grade.id }} </th>
-                                                <td> {{ class.grade.name }} </td>
+                                                <th scope="row"> {{ grade.id }} </th>
+                                                <td> {{ grade.name }} </td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -75,32 +80,92 @@
 
                     <!-- START : RELIGION MANAGER -->
                     <div class="col mx-auto">
-                            <div class="card">
-                                <h5 class="card-header"> Religion </h5>
-                                <div class="card-body">
-                                    <div class="table-responsive-md">
-                                        <table class="table table-borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"> # </th>
-                                                    <th scope="col"> Religion </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for religion in religion %}
-                                                <tr>
-                                                    <th scope="row"> {{ religion.id }} </th>
-                                                    <td> {{ religion.name }} </td>
-                                                </tr>
-                                                {% endfor %} 
-                                            </tbody>                                        
-                                        </table>
-                                    </div>                                
-                                    <button type="button" class="btn btn-primary">Add New Religion</button>
-                                </div>
+                        <div class="card">
+                            <div class="card-header"> Religions </div>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Religion </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for religion in religions %}
+                                            <tr>
+                                                <th scope="row"> {{ religion.id }} </th>
+                                                <td> {{ religion.name }} </td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
+                                    </table>
+                                </div>                                
+                                <button type="button" class="btn btn-primary">Add New Religion</button>
                             </div>
                         </div>
-                        <!-- END : GRADE MANAGER -->
+                    </div>
+                    <!-- END : RELIGION MANAGER -->
+
+                    <!-- START : SUBJECT MANAGER -->
+                    <div class="col mx-auto">
+                        <div class="card">
+                            <div class="card-header"> Subjects </div>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Subject </th>
+                                                <th scope="col"> Sinhala Name </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for subject in subjects %}
+                                            <tr>
+                                                <th scope="row"> {{ subject.id }} </th>
+                                                <td> {{ subject.name }} </td>
+                                                <td> {{ subject.si_name }} </td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
+                                    </table>
+                                </div>                                
+                                <button type="button" class="btn btn-primary">Add New Subject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END : SUBJECT MANAGER -->
+
+                    <!-- START : RELATIONSHIP MANAGER -->
+                    <div class="col mx-auto">
+                        <div class="card">
+                            <div class="card-header"> Student Relationships </div>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Relationship Type </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for relationship in student_relations %}
+                                            <tr>
+                                                <th scope="row"> {{ relationship.id }} </th>
+                                                <td> {{ relationship.name }} </td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
+                                    </table>
+                                </div>                                
+                                <button type="button" class="btn btn-primary">Add New Relationship</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END : RELATIONSHIP MANAGER -->
 
                 </div>
 

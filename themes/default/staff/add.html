@@ -27,29 +27,24 @@
 
                                         <div class="form-row">
 
-                                            <div class="col-md-4">
+                                            <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="admission_date">Admission Date</label>
-                                                    <div class="input-group date" id="datetimepicker_admission_date" data-target-input="nearest">
-                                                        <input id="admission_date" class="form-control datetimepicker-input" data-target="#datetimepicker_admission_date" required />
-                                                        <div class="input-group-append" data-target="#datetimepicker_admission_date" data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="la la-calendar"></i></div>
-                                                        </div>
-                                                    </div>
+                                                    <input type="date" id="admission_date" class="form-control" />
                                                 </div>
                                             </div>
     
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="employee_no">Employee ID</label>
-                                                    <input type="number" class="form-control" id="employee_no" required/>
+                                                    <input type="number" class="form-control" id="employee_no"/>
                                                 </div>
                                             </div>
     
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="nic_no">NIC</label>
-                                                    <input type="text" class="form-control" id="nic_no" required/>
+                                                    <input type="text" class="form-control" id="nic_no"/>
                                                     <small id="nicno" class="form-text text-muted">ex :- 953651408V</small>
                                                 </div>
                                             </div>
@@ -57,7 +52,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="category">Category</label>
-                                                    <select class="form-control" id="category_id" required>
+                                                    <select class="form-control" id="category_id">
                                                         <option selected disabled>- Select Category -</option>
                                                         {% for category in staff_category %}
                                                         <option value="{{ category.id }}">{{ category.name }}</option>
@@ -70,7 +65,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="type">Type</label>
-                                                    <select class="form-control" id="type_id" required>
+                                                    <select class="form-control" id="type_id">
                                                         <option selected disabled>- Select Type -</option>
                                                         {% for type in staff_type %}
                                                         <option value="{{ type.id }}">{{ type.name }}</option>
@@ -80,7 +75,7 @@
                                                 </div>
                                             </div>                                            
 
-                                            <div class="col-4">
+                                            <!-- <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="class">Class in Charge</label>
                                                     <select class="form-control" id="class_id">
@@ -89,20 +84,20 @@
                                                         <option value="{{ class.id }}">{{ class.grade.name}} - {{ class.name }}</option>
                                                         {% endfor %}
                                                     </select>
-                                                    <!-- <small id="addclass" class="form-text text-muted">New Class</small> -->
+                                                    <small id="addclass" class="form-text text-muted">New Class</small>
                                                 </div>
                                             </div>
 
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="subject_ids">Subjects</label>
-                                                    <select class="form-control" id="subject_ids" required>
+                                                    <select class="form-control" id="subject_ids">
                                                         <option selected disabled> - Select Subjects - </option>
                                                         <option value="0"> Chemistry (රසායන විද්‍යාව) </option>
                                                     </select>
-                                                    <!-- <small id="addsubject" class="form-text text-muted">New Subject</small> -->
+                                                    <small id="addsubject" class="form-text text-muted">New Subject</small>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                         </div>    
                                         
@@ -125,7 +120,7 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="fn">Full Name</label>
-                                                    <input type="text" class="form-control" id="fn" required/>
+                                                    <input type="text" class="form-control" id="fn"/>
                                                     <small id="fnHelp" class="form-text text-muted">ex - SAMARAKKODY ARACHCHIGE LAKMAL SAMARAKKODY</small>
                                                 </div>
                                             </div>                                            
@@ -133,7 +128,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="ini">Initials</label>
-                                                    <input type="text" class="form-control" id="ini" required/>
+                                                    <input type="text" class="form-control" id="ini"/>
                                                     <small id="iniHelp" class="form-text text-muted">ex - S A L</small>
                                                 </div>
                                             </div>
@@ -141,7 +136,7 @@
                                             <div class="col-8">
                                                 <div class="form-group col-md-8">
                                                     <label for="sn">Surname</label>
-                                                    <input type="text" class="form-control" id="sn" required/>
+                                                    <input type="text" class="form-control" id="sn"/>
                                                     <small id="snHelp" class="form-text text-muted">ex - SAMARAKKODY</small>
                                                 </div>
                                             </div>
@@ -149,7 +144,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="dob">Date of Birth</label>
-                                                    <input type="date" class="form-control" id="dob" required/>
+                                                    <input type="date" class="form-control" id="dob"/>
                                                     <small id="dobHelp" class="form-text text-muted">ex - 30/12/1995</small>
                                                 </div>
                                             </div>
@@ -169,7 +164,7 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="gen">Gender</label>
-                                                    <select class="form-control" id="gen" required>
+                                                    <select class="form-control" id="gen">
                                                         <option selected disabled> - Select Gender - </option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
@@ -201,21 +196,21 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="address">Address</label>
-                                                    <input type="text" class="form-control" id="address" required/>
+                                                    <input type="text" class="form-control" id="address"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="city">City</label>
-                                                    <input type="text" class="form-control" id="city" required/>
+                                                    <input type="text" class="form-control" id="city"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="dist">District</label>
-                                                    <select class="form-control" id="dist" required>
+                                                    <select class="form-control" id="dist">
                                                         <option selected disabled> - Select District - </option>
                                                         {% for district in staff_district %}
                                                         <option value="{{ district.id }}">{{ district.name }}</option>
@@ -260,24 +255,24 @@
 
             // FORM DATA
             formData.append('admission_date', $("#admission_date").val())
-            formData.append('employee_no', $("#employee_no").val())
-            formData.append('nic_no', $("#nic_no").val())
-            formData.append('category_id', $("#category_id").val())
-            formData.append('type_id', $("#type_id").val())
-            formData.append('class_id', $("#class_id").val())
-            formData.append('subject_ids', $("#subject_ids").val())
-            formData.append('fn', $("#fn").val())
-            formData.append('ini', $("#ini").val())
-            formData.append('sn', $("#sn").val())
-            formData.append('dob', $("#dob").val())
-            formData.append('rel_id', $("#rel_id").val())
-            formData.append('gen', $("#gen").val())
+            formData.append('employee_number', $("#employee_no").val())
+            formData.append('nic_number', $("#nic_no").val())
+            formData.append('category', $("#category_id").val())
+            formData.append('type', $("#type_id").val())
+            // formData.append('class', $("#class_id").val())
+            // formData.append('subjects', $("#subject_ids").val())
+            formData.append('full_name', $("#fn").val())
+            formData.append('initials', $("#ini").val())
+            formData.append('surname', $("#sn").val())
+            formData.append('date_of_birth', $("#dob").val())
+            formData.append('religion', $("#rel_id").val())
+            formData.append('gender', $("#gen").val())
             formData.append('email', $("#email").val())
-            formData.append('phone_home', $("#phone_home").val())
-            formData.append('phone_mobile', $("#phone_mobile").val())
+            formData.append('telephone', $("#phone_home").val())
+            formData.append('mobile_number', $("#phone_mobile").val())
             formData.append('address', $("#address").val())
             formData.append('city', $("#city").val())
-            formData.append('district', $("#district").val())
+            formData.append('district', $("#dist").val())
             formData.append('province', $("#province").val())
 
             // CONSOLE LOG
@@ -286,8 +281,8 @@
             console.log("NIC NO : " + $("#nic_no").val())
             console.log("CATEGORY : " + $("#category").val())
             console.log("TYPE : " + $("#type").val())
-            console.log("CLASS : " + $("#class").val())
-            console.log("SUBJECT IDS : " + $("#subject_ids").val())
+            // console.log("CLASS : " + $("#class").val())
+            // console.log("SUBJECT IDS : " + $("#subject_ids").val())
             console.log("FN : " + $("#fn").val())
             console.log("INI : " + $("#ini").val())
             console.log("SN : " + $("#sn").val())
@@ -312,14 +307,12 @@
                 dataType: 'json',
                 success: (res) => {
 
-                    console.log(res);
-
                     if ( res.status == 'success' ) {
                         alertify.alert("Success", "User added successfully ... ").set('onok', function() {
                             location.reload();
                         })
                     } else {
-                        console.log(res);
+                        console.log(res.error);
                         alertify.alert(res.error);
                     }
                 },
@@ -354,14 +347,6 @@
 
         })
 
-        // DATE TIME PICKER
-        $("#datetimepicker_admission_date").datetimepicker({
-            format: 'YYYY-MM-DD',
-            icons: {
-                up: 'la la-angle-up',
-                down: 'la la-angle-down'
-            }
-        })
     </script>
 
 </body>

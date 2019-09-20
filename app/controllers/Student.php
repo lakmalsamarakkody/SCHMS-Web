@@ -32,6 +32,97 @@ class Student extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODELS
+        $this->load->model('student');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('district');
+        $this->load->model('subject');
+        $this->load->model('exam');
+        $this->load->model('sport');
+        $this->load->model('religion');
+
+        //STUDENT CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['student_class'][$key]['id'] = $element->id;
+            $data['student_class'][$key]['grade']['id'] = $element->grade_id;
+            $data['student_class'][$key]['staff']['id'] = $element->staff_id;
+            $data['student_class'][$key]['name'] = $element->name;
+
+            $data['student_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        //GRADE
+        foreach( $this->model_grade->select('id', 'name')->get() as $key => $element ):
+            $data['student_grade'][$key]['id'] = $element->id;
+            $data['student_grade'][$key]['name'] = $element->name;
+        endforeach;
+
+        //DISTRICT
+        foreach( $this->model_district->select('id', 'province_id', 'name')->get() as $key => $element ):
+            $data['student_district'][$key]['id'] = $element->id;
+            $data['student_district'][$key]['province']['id'] = $element->province_id;
+            $data['student_district'][$key]['name'] = $element->name;
+        endforeach;
+
+        //SUBJECT
+        foreach( $this->model_subject->select('id', 'name', 'si_name')->get() as $key => $element ):
+            $data['student_subject'][$key]['id'] = $element->id;
+            $data['student_subject'][$key]['name'] = $element->name;
+            $data['student_subject'][$key]['si_name'] = $element->si_name;
+        endforeach;
+
+        //EXAM
+        foreach( $this->model_exam->select('id', 'type_id','year')->get() as $key => $element ):
+            $data['student_exam'][$key]['id'] = $element->id;
+            $data['student_exam'][$key]['type_id'] = $element->type_id;
+            $data['student_exam'][$key]['year'] = $element->year;
+        endforeach;
+
+        //SPORT
+        foreach( $this->model_sport->select('id', 'name')->get() as $key => $element ):
+            $data['student_sport'][$key]['id'] = $element->id;
+            $data['student_sport'][$key]['name'] = $element->name;
+        endforeach;
+
+        //RELIGION
+        foreach( $this->model_religion->select('id', 'name')->get() as $key => $element ):
+            $data['student_religion'][$key]['id'] = $element->id;
+            $data['student_religion'][$key]['name'] = $element->name;
+        endforeach;
+
+        // CHECK SUBMIT
+        if ( isset($this->request->post['isSubmited']) ):
+
+            $student = $this->model_student->select('id', 'full_name', 'city');
+
+            // FILTER ( ADMISSION NO )
+            if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):
+                $student->where(function($query) {
+                    $query->where('admission_no', '=', $this->request->post['addno']);
+                });
+            endif;
+
+            // FILTER ( NAME )
+            if ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ):
+                $student->where(function($query) {
+                    $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
+                });
+            endif;
+
+            // APPEND DATA TO ARRAY
+            foreach( $student->get() as $key => $value ):
+                $data['students'][$key]['full_name'] = $value->full_name;
+                $data['students'][$key]['city'] = $value->city;
+            endforeach;
+
+            // DISPLAY QUERY ( TEMP )
+            echo "<pre>";
+                var_dump( $student->toSql() );
+            echo "</pre>";
+
+        endif;
+
 		// RENDER VIEW
         $this->load->view('student/search', $data);
         
@@ -158,89 +249,110 @@ class Student extends Controller {
          *    - CRUD
          *    - response ( JSON )
          */
+        //MODEL
+        $this->load->model('student');
+        $this->load->model('parent');
+        $this->load->model('student/parent');
+        $this->load->model('student/class');
 
         // SET JSON HEADER
         header('Content-Type: application/json');
 
-        // VALIDATION : addno
-        $is_valid_addno = GUMP::is_valid($this->request->post, array('addno' => 'required|integer|max_len,6'));
-        if ( $is_valid_addno !== true ):
-            echo json_encode( array( "error" => $is_valid_addno[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : STUDENT
+        // VALIDATION : admission_number
+        $is_valid_admission_number = GUMP::is_valid($this->request->post, array('admission_number' => 'numeric|max_len,6'));
+        if ( $is_valid_admission_number !== true ):
+            echo json_encode( array( "error" => $is_valid_admission_number[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : adddate
-        $is_valid_adddate = GUMP::is_valid($this->request->post, array('adddate' => 'required|date'));
-        if ( $is_valid_adddate !== true ):
-            echo json_encode( array( "error" => $is_valid_adddate[0] ), JSON_PRETTY_PRINT );
+            // CHECK ADMISSION NUMBER 
+            if ( GUMP::is_valid($this->request->post, array('admission_number' => 'required')) === true ):
+
+                // ADMISSION NUMBER IS ENTERED : CHECK FOR DUPLICATE
+                if ( $this->model_student->select('id')->where('admission_no', '=', $this->request->post['admission_number'])->first() != NULL ):
+                    echo json_encode( array( "error" => "adminission number is already present" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+            // ADMISSION NUMBER IS EMPTY : INCREMENT BY ONE TO THE LAST ADMISSION NUMBER
+            else:
+                $this->request->post['admission_number'] = $this->model_student->select('admission_no')->orderBy('admission_no', 'DESC')->take(1)->first()->admission_no;
+                $this->request->post['admission_number']++;
+            endif;
+
+        // VALIDATION : admission_date
+        $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
+        if ( $is_valid_admission_date !== true ):
+            echo json_encode( array( "error" => $is_valid_admission_date[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : class
-        $is_valid_class = GUMP::is_valid($this->request->post, array('class' => 'required|integer|max_len,3'));
+        $is_valid_class = GUMP::is_valid($this->request->post, array('class' => 'required|numeric|max_len,3'));
         if ( $is_valid_class !== true ):
             echo json_encode( array( "error" => $is_valid_class[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : subject_ids
-        $is_valid_subject_ids = GUMP::is_valid($this->request->post, array('subject_ids' => 'required|integer|max_len,3'));
-        if ( $is_valid_subject_ids !== true ):
-            echo json_encode( array( "error" => $is_valid_subject_ids[0] ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
+        // // VALIDATION : subject
+        // $is_valid_subject = GUMP::is_valid($this->request->post, array('subject' => 'required|numeric|max_len,3'));
+        // if ( $is_valid_subject !== true ):
+        //     echo json_encode( array( "error" => $is_valid_subject[0] ), JSON_PRETTY_PRINT );
+        //     exit();
+        // endif;
 
-        // VALIDATION : fn
-        $is_valid_fn = GUMP::is_valid($this->request->post, array('fn' => 'required|alpha|max_len,100'));
-        if ( $is_valid_fn !== true ):
-            echo json_encode( array( "error" => $is_valid_fn[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : full_name
+        $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
+        if ( $is_valid_full_name !== true ):
+            echo json_encode( array( "error" => $is_valid_full_name[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : initials
-        $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha|max_len,10'));
+        $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,10'));
         if ( $is_valid_initials !== true ):
             echo json_encode( array( "error" => $is_valid_initials[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : sn
-        $is_valid_sn = GUMP::is_valid($this->request->post, array('sn' => 'required|alpha|max_len,20'));
-        if ( $is_valid_sn !== true ):
-            echo json_encode( array( "error" => $is_valid_sn[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : surname
+        $is_valid_surname = GUMP::is_valid($this->request->post, array('surname' => 'required|valid_name|max_len,20'));
+        if ( $is_valid_surname !== true ):
+            echo json_encode( array( "error" => $is_valid_surname[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : dob
-        $is_valid_dob = GUMP::is_valid($this->request->post, array('dob' => 'required|date'));
-        if ( $is_valid_dob !== true ):
-            echo json_encode( array( "error" => $is_valid_dob[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : date_of_birth
+        $is_valid_date_of_birth = GUMP::is_valid($this->request->post, array('date_of_birth' => 'required|date'));
+        if ( $is_valid_date_of_birth !== true ):
+            echo json_encode( array( "error" => $is_valid_date_of_birth[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : gen
-        $is_valid_gen = GUMP::is_valid($this->request->post, array('gen' => 'required|contains_list,(Male;Female)'));
-        if ( $is_valid_gen !== true ):
-            echo json_encode( array( "error" => $is_valid_gen[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : gender
+        $is_valid_gender = GUMP::is_valid($this->request->post, array('gender' => 'required|contains_list,Male;Female'));
+        if ( $is_valid_gender !== true ):
+            echo json_encode( array( "error" => $is_valid_gender[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : email
-        $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'required|email'));
+        $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'valid_email'));
         if ( $is_valid_email !== true ):
             echo json_encode( array( "error" => $is_valid_email[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : mobno
-        $is_valid_mobno = GUMP::is_valid($this->request->post, array('mobno' => 'required|integer|max_len,10'));
-        if ( $is_valid_mobno !== true ):
-            echo json_encode( array( "error" => $is_valid_mobno[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : mobile_number
+        $is_valid_mobile_number = GUMP::is_valid($this->request->post, array('mobile_number' => 'numeric|max_len,10'));
+        if ( $is_valid_mobile_number !== true ):
+            echo json_encode( array( "error" => $is_valid_mobile_number[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : address
-        $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|alpha_numeric|max_len,50'));
+        $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|street_address|max_len,50'));
         if ( $is_valid_address !== true ):
             echo json_encode( array( "error" => $is_valid_address[0] ), JSON_PRETTY_PRINT );
             exit();
@@ -253,191 +365,270 @@ class Student extends Controller {
             exit();
         endif;
 
-        // VALIDATION : dist
-        $is_valid_dist = GUMP::is_valid($this->request->post, array('dist' => 'required|integer|max_len,2'));
-        if ( $is_valid_dist !== true ):
-            echo json_encode( array( "error" => $is_valid_dist[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : district
+        $is_valid_district = GUMP::is_valid($this->request->post, array('district' => 'numeric|max_len,2'));
+        if ( $is_valid_district !== true ):
+            echo json_encode( array( "error" => $is_valid_district[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : bp
-        $is_valid_bp = GUMP::is_valid($this->request->post, array('bp' => 'required|alpha|max_len,30'));
-        if ( $is_valid_bp !== true ):
-            echo json_encode( array( "error" => $is_valid_dist[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : birth_place
+        $is_valid_birth_place = GUMP::is_valid($this->request->post, array('birth_place' => 'valid_name|max_len,30'));
+        if ( $is_valid_birth_place !== true ):
+            echo json_encode( array( "error" => $is_valid_birth_place[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : rel
-        $is_valid_rel = GUMP::is_valid($this->request->post, array('rel' => 'required|integer|max_len,2'));
-        if ( $is_valid_rel !== true ):
-            echo json_encode( array( "error" => $is_valid_rel[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : religion
+        $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|max_len,2'));
+        if ( $is_valid_religion !== true ):
+            echo json_encode( array( "error" => $is_valid_religion[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1fn
-        $is_valid_g1fn = GUMP::is_valid($this->request->post, array('g1fn' => 'required|alpha|max_len,100'));
-        if ( $is_valid_g1fn !== true ):
-            echo json_encode( array( "error" => $is_valid_g1fn[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : FIRST GUARDIAN
+        // VALIDATION : first_guardian_full_name
+        $is_valid_first_guardian_full_name = GUMP::is_valid($this->request->post, array('first_guardian_full_name' => 'required|valid_name|max_len,100'));
+        if ( $is_valid_first_guardian_full_name !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_full_name[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1ini
-        $is_valid_g1ini = GUMP::is_valid($this->request->post, array('g1ini' => 'required|alpha|max_len,10'));
-        if ( $is_valid_g1ini !== true ):
-            echo json_encode( array( "error" => $is_valid_g1ini[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_initials
+        $is_valid_first_guardian_initials = GUMP::is_valid($this->request->post, array('first_guardian_initials' => 'required|alpha_space|max_len,10'));
+        if ( $is_valid_first_guardian_initials !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_initials[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1sn
-        $is_valid_g1sn = GUMP::is_valid($this->request->post, array('g1sn' => 'required|alpha|max_len,20'));
-        if ( $is_valid_g1sn !== true ):
-            echo json_encode( array( "error" => $is_valid_g1sn[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_surname
+        $is_valid_first_guardian_surname = GUMP::is_valid($this->request->post, array('first_guardian_surname' => 'required|valid_name|max_len,20'));
+        if ( $is_valid_first_guardian_surname !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_surname[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1dob
-        $is_valid_g1dob = GUMP::is_valid($this->request->post, array('g1dob' => 'required|date'));
-        if ( $is_valid_g1dob !== true ):
-            echo json_encode( array( "error" => $is_valid_dob[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_date_of_birth
+        $is_valid_first_guardian_date_of_birth = GUMP::is_valid($this->request->post, array('first_guardian_date_of_birth' => 'required|date'));
+        if ( $is_valid_first_guardian_date_of_birth !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_date_of_birth[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : rel
-        $is_valid_rel = GUMP::is_valid($this->request->post, array('rel' => 'required|integer|max_len,2'));
-        if ( $is_valid_rel !== true ):
-            echo json_encode( array( "error" => $is_valid_rel[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_relation
+        $is_valid_first_guardian_relation = GUMP::is_valid($this->request->post, array('first_guardian_relation' => 'required|numeric|max_len,2'));
+        if ( $is_valid_first_guardian_relation !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_relation[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1gen
-        $is_valid_g1gen = GUMP::is_valid($this->request->post, array('g1gen' => 'required|contains_list,(Male;Female)'));
-        if ( $is_valid_g1gen !== true ):
-            echo json_encode( array( "error" => $is_valid_gen[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_gender
+        $is_valid_first_guardian_gender = GUMP::is_valid($this->request->post, array('first_guardian_gender' => 'required|contains_list,Male;Female'));
+        if ( $is_valid_first_guardian_gender !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_gender[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1nic
-        $is_valid_g1nic = GUMP::is_valid($this->request->post, array('g1nic' => "required"));
-        if ( $is_valid_g1nic === true ):
-            if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['g1nic']) == false ):
+        // VALIDATION : first_guardian_nic
+        $is_valid_first_guardian_nic = GUMP::is_valid($this->request->post, array('first_guardian_nic' => "required"));
+        if ( $is_valid_first_guardian_nic === true ):
+            if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['first_guardian_nic']) == false ):
                 echo json_encode( array( "error" => "Wrong NIC Format" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
         else:
-            echo json_encode( array( "error" => $is_valid_g1nic[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => $is_valid_first_guardian_nic[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1tel
-        $is_valid_g1tel = GUMP::is_valid($this->request->post, array('g1tel' => 'required|integer|max_len,10'));
-        if ( $is_valid_g1tel !== true ):
-            echo json_encode( array( "error" => $is_valid_g1tel[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_telephone
+        $is_valid_first_guardian_telephone = GUMP::is_valid($this->request->post, array('first_guardian_telephone' => 'numeric|max_len,10'));
+        if ( $is_valid_first_guardian_telephone !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_telephone[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1mobi
-        $is_valid_g1mobi = GUMP::is_valid($this->request->post, array('g1mobi' => 'required|integer|max_len,10'));
-        if ( $is_valid_g1mobi !== true ):
-            echo json_encode( array( "error" => $is_valid_g1mobi[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_mobile_number
+        $is_valid_first_guardian_mobile_number = GUMP::is_valid($this->request->post, array('first_guardian_mobile_number' => 'numeric|max_len,10'));
+        if ( $is_valid_first_guardian_mobile_number !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_mobile_number[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1occu
-        $is_valid_g1occu = GUMP::is_valid($this->request->post, array('g1occu' => 'required|alpha|max_len,50'));
-        if ( $is_valid_g1occu !== true ):
-            echo json_encode( array( "error" => $is_valid_g1occu[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_occupation
+        $is_valid_first_guardian_occupation = GUMP::is_valid($this->request->post, array('first_guardian_occupation' => 'required|valid_name|max_len,50'));
+        if ( $is_valid_first_guardian_occupation !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_occupation[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1pos
-        $is_valid_g1sn = GUMP::is_valid($this->request->post, array('g1sn' => 'required|alpha|max_len,50'));
-        if ( $is_valid_g1sn !== true ):
-            echo json_encode( array( "error" => $is_valid_g1sn[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_position
+        $is_valid_first_guardian_position = GUMP::is_valid($this->request->post, array('first_guardian_position' => 'valid_name|max_len,50'));
+        if ( $is_valid_first_guardian_position !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_position[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1inc
-        $is_valid_g1inc = GUMP::is_valid($this->request->post, array('g1inc' => 'required|integer|max_len,10'));
-        if ( $is_valid_g1inc !== true ):
-            echo json_encode( array( "error" => $is_valid_g1inc[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_income
+        $is_valid_first_guardian_income = GUMP::is_valid($this->request->post, array('first_guardian_income' => 'numeric|max_len,10'));
+        if ( $is_valid_first_guardian_income !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_income[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1mail
-        $is_valid_g1mail = GUMP::is_valid($this->request->post, array('g1mail' => 'required|g1mail'));
-        if ( $is_valid_g1mail !== true ):
-            echo json_encode( array( "error" => $is_valid_g1mail[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_email
+        $is_valid_first_guardian_email = GUMP::is_valid($this->request->post, array('first_guardian_email' => 'valid_email'));
+        if ( $is_valid_first_guardian_email !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_email[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1address
-        $is_valid_g1address = GUMP::is_valid($this->request->post, array('g1address' => 'required|alpha_numeric|max_len,50'));
-        if ( $is_valid_g1address !== true ):
-            echo json_encode( array( "error" => $is_valid_g1address[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_address
+        $is_valid_first_guardian_address = GUMP::is_valid($this->request->post, array('first_guardian_address' => 'required|street_address|max_len,50'));
+        if ( $is_valid_first_guardian_address !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_address[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1city
-        $is_valid_g1city = GUMP::is_valid($this->request->post, array('g1city' => 'required|alpha|max_len,20'));
-        if ( $is_valid_g1city !== true ):
-            echo json_encode( array( "error" => $is_valid_g1city[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_city
+        $is_valid_first_guardian_city = GUMP::is_valid($this->request->post, array('first_guardian_city' => 'required|valid_name|max_len,20'));
+        if ( $is_valid_first_guardian_city !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_city[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : g1dist
-        $is_valid_g1dist = GUMP::is_valid($this->request->post, array('g1dist' => 'required|integer|max_len,2'));
-        if ( $is_valid_g1dist !== true ):
-            echo json_encode( array( "error" => $is_valid_g1dist[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : first_guardian_district
+        $is_valid_first_guardian_district = GUMP::is_valid($this->request->post, array('first_guardian_district' => 'numeric|max_len,2'));
+        if ( $is_valid_first_guardian_district !== true ):
+            echo json_encode( array( "error" => $is_valid_first_guardian_district[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        //MODEL
-        $this->load->model('student');
 
-        $this->model_student->role_id = $this->request->post['addno'];
-        $this->model_student->role_id = $this->request->post['emploadddateyee_no'];
-        $this->model_student->role_id = $this->request->post['class'];
-        $this->model_student->role_id = $this->request->post['subject_ids'];
-        $this->model_student->role_id = $this->request->post['fn'];
-        $this->model_student->role_id = $this->request->post['initials'];
-        $this->model_student->role_id = $this->request->post['sn'];
-        $this->model_student->role_id = $this->request->post['dob'];
-        $this->model_student->role_id = $this->request->post['gen'];
-        $this->model_student->role_id = $this->request->post['email'];
-        $this->model_student->role_id = $this->request->post['mobno'];
-        $this->model_student->role_id = $this->request->post['address'];
-        $this->model_student->role_id = $this->request->post['city'];
-        $this->model_student->role_id = $this->request->post['dist'];
-        $this->model_student->role_id = $this->request->post['province'];
-        $this->model_student->role_id = $this->request->post['bp'];
-        $this->model_student->role_id = $this->request->post['rel'];
+        $this->model_student->admission_no = $this->request->post['admission_number'];
+        $this->model_student->admission_date = $this->request->post['admission_date'];
+        $this->model_student->class_id = $this->request->post['class'];
+        // $this->model_student->subject_id = $this->request->post['subject'];
+        $this->model_student->full_name = $this->request->post['full_name'];
+        $this->model_student->initials = $this->request->post['initials'];
+        $this->model_student->surname = $this->request->post['surname'];
+        $this->model_student->dob = $this->request->post['date_of_birth'];
+        $this->model_student->gender = $this->request->post['gender'];
+        $this->model_student->email = $this->request->post['email'];
+        $this->model_student->phone_mobile = $this->request->post['mobile_number'];
+        $this->model_student->address = $this->request->post['address'];
+        $this->model_student->city = $this->request->post['city'];
+        $this->model_student->district_id = $this->request->post['district'];
+        $this->model_student->birth_place = $this->request->post['birth_place'];
+        $this->model_student->religion_id = $this->request->post['religion'];
 
-        $this->load->model('parent');
+        $parent = $this->model_parent->select('id')->where('nic', '=', $this->request->post['first_guardian_nic'])->first();
 
-        $this->model_parent->role_id = $this->request->post['g1fn'];
-        $this->model_parent->role_id = $this->request->post['g1ini'];
-        $this->model_parent->role_id = $this->request->post['g1sn'];
-        $this->model_parent->role_id = $this->request->post['g1dob'];
-        $this->model_parent->role_id = $this->request->post['g1rel'];
-        $this->model_parent->role_id = $this->request->post['g1gen'];
-        $this->model_parent->role_id = $this->request->post['g1nic'];
-        $this->model_parent->role_id = $this->request->post['g1tel'];
-        $this->model_parent->role_id = $this->request->post['g1mobi'];
-        $this->model_parent->role_id = $this->request->post['g1occu'];
-        $this->model_parent->role_id = $this->request->post['g1pos'];
-        $this->model_parent->role_id = $this->request->post['g1inc'];
-        $this->model_parent->role_id = $this->request->post['g1mail'];
-        $this->model_parent->role_id = $this->request->post['g1address'];
-        $this->model_parent->role_id = $this->request->post['g1city'];
-        $this->model_parent->role_id = $this->request->post['g1dist'];
+        if ( $parent !== null ):
 
-        // SUBMIT
-        if ( $this->model_staff->save() ):
-            echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+            // SUBMIT
+            if ( $this->model_student->save() ):    
+
+                // INITIATE : STUDENT HAS PARENT RECORD
+                $this->model_student_parent->student_id = $this->model_student->id;
+                $this->model_student_parent->parent_id = $parent->id;
+                $this->model_student_parent->relation_id = $this->request->post['first_guardian_relation'];
+
+                // CHECK : STUDENT HAS PARENT QUERY
+                if ( $this->model_student_parent->save() ):
+
+                    // INITIATE : STUDENT HAS CLASS RECORD
+                    $this->model_student_class->stu_id = $this->model_student->id;
+                    $this->model_student_class->class_id = $this->request->post['class'];
+
+                    // FETCHING INDEX NO    
+                    $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first();
+                    
+                    // ASSIGNING INDEX_NO
+                    if ( $index_no !== NULL ):
+                        $newindex_no = $index_no->index_no + 1;
+                        $this->model_student_class->index_no = $newindex_no;
+                    else:
+                        $this->model_student_class->index_no = 1;
+                    endif;
+
+                    // CHECK : STUDENT HAS CLASS QUERY
+                    if ( $this->model_student_class->save() ):
+                        echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    else:
+                        echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    endif;
+
+                else:
+                    echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                endif;
+
+                
+
+            else:
+                echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+            endif;
+            
         else:
-            echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+
+            $this->model_parent->full_name = $this->request->post['first_guardian_full_name'];
+            $this->model_parent->initials = $this->request->post['first_guardian_initials'];
+            $this->model_parent->surname = $this->request->post['first_guardian_surname'];
+            $this->model_parent->dob = $this->request->post['first_guardian_date_of_birth'];
+            $this->model_parent->gender = $this->request->post['first_guardian_gender'];
+            $this->model_parent->nic = $this->request->post['first_guardian_nic'];
+            $this->model_parent->phone_home = $this->request->post['first_guardian_telephone'];
+            $this->model_parent->phone_mobile = $this->request->post['first_guardian_mobile_number'];
+            $this->model_parent->occupation = $this->request->post['first_guardian_occupation'];
+            $this->model_parent->position = $this->request->post['first_guardian_position'];
+            $this->model_parent->income = $this->request->post['first_guardian_income'];
+            $this->model_parent->email = $this->request->post['first_guardian_email'];
+            $this->model_parent->address = $this->request->post['first_guardian_address'];
+            $this->model_parent->city = $this->request->post['first_guardian_city'];
+            $this->model_parent->district_id = $this->request->post['first_guardian_district'];
+
+            // SUBMIT
+            if ( $this->model_student->save() AND $this->model_parent->save() ):
+
+                // INITIATE : STUDENT HAS PARENT RECORD
+                $this->model_student_parent->student_id = $this->model_student->id;
+                $this->model_student_parent->parent_id = $this->model_parent->id;
+                $this->model_student_parent->relation_id = $this->request->post['first_guardian_relation'];
+
+                // CHECK : STUDENT HAS PARENT QUERY
+                if ( $this->model_student_parent->save() ):
+
+                    // INITIATE : STUDENT HAS CLASS RECORD
+                    $this->model_student_class->stu_id = $this->model_student->id;
+                    $this->model_student_class->class_id = $this->request->post['class'];
+
+                    $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first();
+                    
+                    if ( $index_no !== NULL ):
+                        $this->model_student_class->index_no = $index_no->index_no++;
+                    else:
+                        $this->model_student_class->index_no = 1;
+                    endif;
+
+                    // CHECK : STUDENT HAS CLASS QUERY
+                    if ( $this->model_student_class->save() ):
+                        echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    else:
+                        echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    endif;
+
+                else:
+                    echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                endif;
+
+            else:
+                echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+            endif;
+
         endif;
 
+        
+        
     }
     
 }

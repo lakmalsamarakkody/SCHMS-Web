@@ -4,7 +4,7 @@
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Staff_Model extends EloquentModel {
+class Student_Model extends EloquentModel {
 
 	use SoftDeletes;
 	const CREATED_AT = 'created_on';

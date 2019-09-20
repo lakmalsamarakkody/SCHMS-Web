@@ -16,6 +16,7 @@
                     <form name="admission" method="POST" action="#">
                         <div id="accordionAdmission">
                         
+                            <!-- START : STUDENT ADMISSION -->
                             <div class="card">
     
                                 <div class="card-header" id="headingAdmission" data-toggle="collapse" data-target="#collapseAdmission" aria-expanded="true" aria-controls="collapseAdmission">
@@ -30,27 +31,22 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="addno">Admission Number</label>
-                                                    <input type="number" class="form-control" id="addno" required/>
-                                                    <small id="addnolHelp" class="form-text text-muted">Automatically assigns if empty</small>
+                                                    <input type="number" class="form-control" id="addno"/>
+                                                    <small id="addnolHelp" class="form-text text-muted">Admission Number will be assigned automatically if Empty</small>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="admission_date">Admission Date</label>
-                                                    <div class="input-group date" id="datetimepicker_admission_date" data-target-input="nearest">
-                                                        <input id="adddate" class="form-control datetimepicker-input" data-target="#datetimepicker_admission_date" required />
-                                                        <div class="input-group-append" data-target="#datetimepicker_admission_date" data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="la la-calendar"></i></div>
-                                                        </div>
-                                                    </div>
+                                                    <label for="adddate">Admission Date</label>
+                                                    <input type="date" class="form-control" id="adddate"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label for="class">Class</label>
-                                                    <select class="form-control" id="class" required>
+                                                    <select class="form-control" id="class">
                                                         <option selected disabled> - Select Class - </option>
                                                         {% for class in student_class %}
                                                         <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
@@ -60,16 +56,16 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-10">
+                                            <!-- <div class="col-10">
                                                 <div class="form-group">
                                                     <label for="subject_ids">Subjects</label>
-                                                    <select class="form-control" id="subject_ids" required>
+                                                    <select class="form-control" id="subject_ids">
                                                         <option selected disabled> - Select Subject - </option>
                                                         <option value="0"> Chemistry (රසායන විද්‍යාව) </option>
                                                     </select>
-                                                    <!-- <small id="addsubject" class="form-text text-muted">New Subject</small> -->
+                                                    <small id="addsubject" class="form-text text-muted">New Subject</small> 
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                         </div>
 
@@ -78,6 +74,7 @@
     
                             </div>
     
+                            <!-- START : STUDENT PERSONAL DETAILS -->
                             <div class="card">
     
                                 <div class="card-header" id="headingPersonal" data-toggle="collapse" data-target="#collapsePersonal" aria-expanded="false" aria-controls="collapsePersonal">
@@ -92,7 +89,7 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="fn">Full Name</label>
-                                                    <input type="text" class="form-control" id="fn" required/>
+                                                    <input type="text" class="form-control" id="fn"/>
                                                     <small id="fnHelp" class="form-text text-muted">ex - SAMARAKKODY ARACHCHIGE LAKMAL SAMARAKKODY</small>
                                                 </div>
                                             </div>
@@ -100,7 +97,7 @@
                                             <div class="col-5">
                                                 <div class="form-group">
                                                     <label for="initials">Initials</label>
-                                                    <input type="text" class="form-control" id="initials" required/>
+                                                    <input type="text" class="form-control" id="initials"/>
                                                     <small id="initialsHelp" class="form-text text-muted">ex - S A L</small>
                                                 </div>
                                             </div>
@@ -108,7 +105,7 @@
                                             <div class="col-7">
                                                 <div class="form-group">
                                                     <label for="sn">Surname</label>
-                                                    <input type="text" class="form-control" id="sn" required/>
+                                                    <input type="text" class="form-control" id="sn"/>
                                                     <small id="snHelp" class="form-text text-muted">ex - SAMARAKKODY</small>
                                                 </div>
                                             </div>
@@ -116,7 +113,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="dob">Date of Birth</label>
-                                                    <input type="date" class="form-control" id="dob" required/>
+                                                    <input type="date" class="form-control" id="dob"/>
                                                     <small id="dobHelp" class="form-text text-muted">ex - 12/30/1995</small>
                                                 </div>
                                             </div>
@@ -124,7 +121,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="gen">Gender</label>
-                                                    <select class="form-control" id="gen" required>
+                                                    <select class="form-control" id="gen">
                                                         <option selected disabled> - Select Gender - </option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
@@ -150,21 +147,21 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="address">Address</label>
-                                                    <input type="text" class="form-control" id="address" required/>
+                                                    <input type="text" class="form-control" id="address"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="city">City</label>
-                                                    <input type="text" class="form-control" id="city" required/>
+                                                    <input type="text" class="form-control" id="city"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="dist">District</label>
-                                                    <select class="form-control" id="dist" required>
+                                                    <select class="form-control" id="dist">
                                                         <option selected disabled> - Select District - </option>
                                                         {% for district in student_district %}
                                                             <option value="{{ district.id }}"> {{ district.name }} </option>
@@ -208,6 +205,7 @@
     
                             </div>
     
+                            <!-- START : FIRST GUARDIAN DETAILS -->
                             <div class="card">
     
                                 <div class="card-header" id="headingGuardian" data-toggle="collapse" data-target="#collapseGuardian" aria-expanded="false" aria-controls="collapseGuardian">
@@ -324,21 +322,21 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="g1address">Address</label>
-                                                    <input type="text" class="form-control" id="g1address" required/>
+                                                    <input type="text" class="form-control" id="g1address"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="g1city">City</label>
-                                                    <input type="text" class="form-control" id="g1city" required/>
+                                                    <input type="text" class="form-control" id="g1city"/>
                                                 </div>                                                
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="g1dist">District</label>
-                                                    <select class="form-control" id="g1dist" required>
+                                                    <select class="form-control" id="g1dist">
                                                         <option selected disabled> - Select District - </option>
                                                         {% for district in student_district %}
                                                             <option value="{{ district.id }}"> {{ district.name }} </option>
@@ -388,42 +386,42 @@
             var formData = new FormData;
 
             // STUDENT DATA
-            formData.append('addno', $("#addno").val())
-            formData.append('adddate', $("#adddate").val())
+            formData.append('admission_number', $("#addno").val())
+            formData.append('admission_date', $("#adddate").val())
             formData.append('class', $("#class").val())
-            formData.append('subject', $("#subject").val())
-            formData.append('fn', $("#fn").val())
+            // formData.append('subject', $("#subject_ids").val())
+            formData.append('full_name', $("#fn").val())
             formData.append('initials', $("#initials").val())
-            formData.append('sn', $("#sn").val())
-            formData.append('dob', $("#dob").val())
-            formData.append('gen', $("#gen").val())
+            formData.append('surname', $("#sn").val())
+            formData.append('date_of_birth', $("#dob").val())
+            formData.append('gender', $("#gen").val())
             formData.append('email', $("#email").val())
-            formData.append('mobno', $("#mobno").val())
+            formData.append('mobile_number', $("#mobno").val())
             formData.append('address', $("#address").val())
             formData.append('city', $("#city").val())
-            formData.append('dist', $("#dist").val())
+            formData.append('district', $("#dist").val())
             formData.append('province', $("#province").val())
-            formData.append('bp', $("#bp").val())
-            formData.append('rel', $("#rel").val())
+            formData.append('birth_place', $("#bp").val())
+            formData.append('religion', $("#rel").val())
 
             // GUARDIAN 1ST DATA
-            formData.append('g1fn', $("#g1fn").val())
-            formData.append('g1ini', $("#g1ini").val())
-            formData.append('g1sn', $("#g1sn").val())
-            formData.append('g1dob', $("#g1dob").val())
-            formData.append('g1rel', $("#g1rel").val())
-            formData.append('g1gen', $("#g1gen").val())
-            formData.append('g1nic', $("#g1nic").val())
-            formData.append('g1tel', $("#g1tel").val())
-            formData.append('g1mobi', $("#g1mobi").val())
-            formData.append('g1occu', $("#g1occu").val())
-            formData.append('g1pos', $("#g1pos").val())
-            formData.append('g1inc', $("#g1inc").val())
-            formData.append('g1mail', $("#g1mail").val())
-            formData.append('g1address', $("#g1address").val())
-            formData.append('g1city', $("#g1city").val())
-            formData.append('g1dist', $("#g1dist").val())
-            formData.append('g1province', $("#g1province").val())
+            formData.append('first_guardian_full_name', $("#g1fn").val())
+            formData.append('first_guardian_initials', $("#g1ini").val())
+            formData.append('first_guardian_surname', $("#g1sn").val())
+            formData.append('first_guardian_date_of_birth', $("#g1dob").val())
+            formData.append('first_guardian_relation', $("#g1rel").val())
+            formData.append('first_guardian_gender', $("#g1gen").val())
+            formData.append('first_guardian_nic', $("#g1nic").val())
+            formData.append('first_guardian_telephone', $("#g1tel").val())
+            formData.append('first_guardian_mobile_number', $("#g1mobi").val())
+            formData.append('first_guardian_occupation', $("#g1occu").val())
+            formData.append('first_guardian_position', $("#g1pos").val())
+            formData.append('first_guardian_income', $("#g1inc").val())
+            formData.append('first_guardian_email', $("#g1mail").val())
+            formData.append('first_guardian_address', $("#g1address").val())
+            formData.append('first_guardian_city', $("#g1city").val())
+            formData.append('first_guardian_district', $("#g1dist").val())
+            formData.append('first_guardian_province', $("#g1province").val())
 
         
 
@@ -436,8 +434,6 @@
                 contentType: false,
                 dataType: 'json',
                 success: (res) => {
-
-                    console.log(res);
 
                     if ( res.status == 'success' ) {
                         alertify.alert("Success", "User added successfully ... ").set('onok', function() {
