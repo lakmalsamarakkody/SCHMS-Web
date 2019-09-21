@@ -277,8 +277,12 @@ class Student extends Controller {
 
             // ADMISSION NUMBER IS EMPTY : INCREMENT BY ONE TO THE LAST ADMISSION NUMBER
             else:
-                $this->request->post['admission_number'] = $this->model_student->select('admission_no')->orderBy('admission_no', 'DESC')->take(1)->first()->admission_no;
-                $this->request->post['admission_number']++;
+                $this->request->post['admission_number'] = $this->model_student->select('admission_no')->orderBy('admission_no', 'DESC')->take(1)->first();
+                if ( $this->request->post['admission_number'] ):
+                    $this->request->post['admission_number'] = 1;
+                else:
+                    $this->request->post['admission_number']++;
+                endif;                
             endif;
 
         // VALIDATION : admission_date
