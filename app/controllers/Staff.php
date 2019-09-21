@@ -187,11 +187,11 @@ class Staff extends Controller {
             exit();
         endif;
 
-        // nic_number IS ENTERED : CHECK FOR DUPLICATE
-        if ( $this->model_staff->select('id')->where('nic', '=', $this->request->post['nic_number'])->first() != NULL ):
-            echo json_encode( array( "error" => "Employee NIC is already present" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
+            // nic_number IS ENTERED : CHECK FOR DUPLICATE
+            if ( $this->model_staff->select('id')->where('nic', '=', $this->request->post['nic_number'])->first() != NULL ):
+                echo json_encode( array( "error" => "Employee NIC is already present" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
         // VALIDATION : category
         $is_valid_category = GUMP::is_valid($this->request->post, array('category' => 'required|numeric|max_len,2'));
@@ -229,7 +229,7 @@ class Staff extends Controller {
         endif;
 
         // VALIDATION : initials
-        $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,10'));
+        $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
         if ( $is_valid_initials !== true ):
             echo json_encode( array( "error" => "Please insert initials" ), JSON_PRETTY_PRINT );
             exit();
@@ -329,9 +329,9 @@ class Staff extends Controller {
         $this->model_staff->dob = $this->request->post['date_of_birth'];
         $this->model_staff->religion_id = ( $this->request->post['religion'] == "null" )  ? null : $this->request->post['religion'];
         $this->model_staff->gender = $this->request->post['gender'];
-        $this->model_staff->email = $this->request->post['email'];
-        $this->model_staff->phone_home = $this->request->post['telephone'];
-        $this->model_staff->phone_mobile = $this->request->post['mobile_number'];
+        $this->model_staff->email = ( $this->request->post['email'] == "" )  ? null : $this->request->post['email'];
+        $this->model_staff->phone_home = ( $this->request->post['telephone'] == "" )  ? null : $this->request->post['telephone'];
+        $this->model_staff->phone_mobile = ( $this->request->post['mobile_number'] == "" )  ? null : $this->request->post['mobile_number'];
         $this->model_staff->address = $this->request->post['address'];
         $this->model_staff->city = $this->request->post['city'];
         $this->model_staff->district_id = ( $this->request->post['district'] == "null" )  ? null : $this->request->post['district'];

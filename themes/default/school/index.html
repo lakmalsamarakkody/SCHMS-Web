@@ -226,8 +226,8 @@
 
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="grade">Select Grade</label>
-                                <select class="form-control" id="grade">
+                                <label for="grade_id">Select Grade</label>
+                                <select class="form-control" id="grade_id">
                                         <option selected disabled> - Select Grade - </option>
                                     {% for grade in grades %}
                                         <option value="{{ grade.id }}">{{ grade.name }}</option>
@@ -411,7 +411,7 @@
 
             // ADD CLASS DATA
             formData.append('class_name', $("#class").val())
-            formData.append('grade', $("#grade").val())
+            formData.append('grade_id', $("#grade_id").val())
             formData.append('employee_id', $("#tic").val())
 
             // REQUEST

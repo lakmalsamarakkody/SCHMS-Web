@@ -91,7 +91,11 @@ class Exam extends Controller {
 			$data['subjects'][$key]['id'] = $element->id;
 			$data['subjects'][$key]['name']= $element->name;
 			$data['subjects'][$key]['si_name']= $element->si_name;
-		endforeach;
+        endforeach;
+        
+        //  TWIG : SELECT EXAM DATE
+        $data['exam_min_date'] = Carbon::now()->format('Y-m-d');
+        $data['exam_max_date'] = Carbon::now()->addYears(1)->format('Y-m-d');
 
 		// RENDER VIEW
         $this->load->view('exam/create', $data);
@@ -122,15 +126,15 @@ class Exam extends Controller {
         // VALIDATION : exam_type_name
         $is_valid_exam_type_name = GUMP::is_valid($this->request->post, array('exam_type_name' => 'required|alpha_space'));
         if ( $is_valid_exam_type_name !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_type_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter exam type name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
         
-        // EXAM_TYPE IS ENTERED : CHECK FOR DUPLICATE
-		if ( $this->model_exam_type->select('id')->where('name', '=', $this->request->post['exam_type_name'])->first() != NULL ):
-			echo json_encode( array( "error" => "This Exam type is already exists" ), JSON_PRETTY_PRINT );
-			exit();
-        endif;
+            // EXAM_TYPE IS ENTERED : CHECK FOR DUPLICATE
+            if ( $this->model_exam_type->select('id')->where('name', '=', $this->request->post['exam_type_name'])->first() != NULL ):
+                echo json_encode( array( "error" => "This Exam type is already exists" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
         
         $this->model_exam_type->name = $this->request->post['exam_type_name'];
 		
@@ -180,13 +184,13 @@ class Exam extends Controller {
             exit();
         endif;
 
-        // VALIDATE EXAM_TYPE AND YEAR
-		$is_exist = $this->model_exam->select('id')->where('type_id', '=', $this->request->post['exam_type'])->where('year', '=', $this->request->post['exam_year'])->first() != NULL;
+            // VALIDATE EXAM_TYPE AND YEAR
+            $is_exist = $this->model_exam->select('id')->where('type_id', '=', $this->request->post['exam_type'])->where('year', '=', $this->request->post['exam_year'])->first() != NULL;
 
-		if( $is_exist != FALSE ):
-			echo json_encode( array( "error" => "This Exam is already exist" ), JSON_PRETTY_PRINT );
-			exit();
-		endif;
+            if( $is_exist != false ):
+                echo json_encode( array( "error" => "This Exam is already exist" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
         // VALIDATION : exam_venue
         $is_valid_exam_venue = GUMP::is_valid($this->request->post, array('exam_venue' => 'alpha_space|max_len,50'));
@@ -204,8 +208,8 @@ class Exam extends Controller {
 
         $this->model_exam->type_id = $this->request->post['exam_type'];
         $this->model_exam->year = $this->request->post['exam_year'];
-        $this->model_exam->venue = $this->request->post['exam_venue'];
-        $this->model_exam->instructions = $this->request->post['exam_instructions'];
+        $this->model_exam->venue = ( $this->request->post['exam_venue'] == "" )  ? null : $this->request->post['exam_venue'];
+        $this->model_exam->instructions = ( $this->request->post['exam_instructions'] == "" )  ? null : $this->request->post['exam_instructions'];
 
         // SUBMIT
 		if ( $this->model_exam->save() ):
@@ -243,7 +247,7 @@ class Exam extends Controller {
         header('Content-Type: application/json');
 
         // VALIDATION : select_exam
-        $is_valid_select_exam = GUMP::is_valid($this->request->post, array('select_exam_name' => 'required|numeric'));
+        $is_valid_select_exam = GUMP::is_valid($this->request->post, array('select_exam_name' => 'required|numeric|max_len,4'));
         if ( $is_valid_select_exam !== true ):
             echo json_encode( array( "error" => "Please select a exam" ), JSON_PRETTY_PRINT );
             exit();
@@ -266,38 +270,38 @@ class Exam extends Controller {
         // VALIDATION : exam_date
         $is_valid_exam_date = GUMP::is_valid($this->request->post, array('exam_date' => 'required|date'));
         if ( $is_valid_exam_date !== true ):
-            echo json_encode( array( "error" => "Please set a exam date" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please set a exam subject date" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_starttime
         $is_valid_exam_starttime = GUMP::is_valid($this->request->post, array('exam_starttime' => 'required'));
         if ( $is_valid_exam_starttime !== true ):
-            echo json_encode( array( "error" => "Please set exam start time" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please set exam subject start time" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_endtime
         $is_valid_exam_endtime = GUMP::is_valid($this->request->post, array('exam_endtime' => 'required'));
         if ( $is_valid_exam_endtime !== true ):
-            echo json_encode( array( "error" => "Please set exam end time" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please set exam subject end time" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        // VALIDATION : exam_instructions
-        $is_valid_exam_instructions = GUMP::is_valid($this->request->post, array('exam_instructions' => 'alpha_space|max_len,200'));
-        if ( $is_valid_exam_instructions !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_instructions[0] ), JSON_PRETTY_PRINT );
+        // VALIDATION : subject_exam_instructions
+        $is_valid_subject_exam_instructions = GUMP::is_valid($this->request->post, array('subject_exam_instructions' => 'alpha_space|max_len,200'));
+        if ( $is_valid_subject_exam_instructions !== true ):
+            echo json_encode( array( "error" => $is_valid_subject_exam_instructions[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
-        $this->model_exam_schedule->exam_id = $this->request->post['exam_name'];
+        $this->model_exam_schedule->exam_id = $this->request->post['select_exam_name'];
         $this->model_exam_schedule->grade_id = $this->request->post['exam_grade'];
         $this->model_exam_schedule->subject_id = $this->request->post['exam_subject_name'];
         $this->model_exam_schedule->date = $this->request->post['exam_date'];
         $this->model_exam_schedule->start_time = $this->request->post['exam_starttime'];
         $this->model_exam_schedule->end_time = $this->request->post['exam_endtime'];
-        $this->model_exam_schedule->instructions = $this->request->post['exam_instructions'];
+        $this->model_exam_schedule->instructions = ( $this->request->post['subject_exam_instructions'] == "" )  ? null : $this->request->post['subject_exam_instructions'];
 
         // SUBMIT
 		if ( $this->model_exam_schedule->save() ):

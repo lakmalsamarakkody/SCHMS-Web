@@ -90,26 +90,35 @@ class User extends Controller {
          *    - response ( JSON )
          */
 
+        //  Model
+        $this->load->model('user');
+
         // SET JSON HEADER
         header('Content-Type: application/json');
 
         // VALIDATION : ROLE ID
         if ( GUMP::is_valid($this->request->post, array('role_id' => 'required|integer|max_len,2')) !== true ):
-            echo json_encode( array( "error" => "We didn't got valid role id ?" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a user role" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : USERNAME
         $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'required|alpha_numeric|min_len,6|max_len,20'));
         if ( $is_valid_username !== true ):
-            echo json_encode( array( "error" => $is_valid_username[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please insert a username with minimum 6 characters" ), JSON_PRETTY_PRINT );
             exit();
         endif;
+
+            // USERNAME IS INSERTED : CHECK FOR DUPLICATE
+            if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                echo json_encode( array( "error" => "This username is taken" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
         // VALIDATION : PASS
         $is_valid_password = GUMP::is_valid($this->request->post, array('pass' => 'required|alpha_numeric|min_len,6|max_len,255'));
         if ( $is_valid_password !== true ):
-            echo json_encode( array( "error" => $is_valid_password[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please insert a password with minimum 6 characters" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -122,9 +131,17 @@ class User extends Controller {
         // VALIDATION : EMAIL
         $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'required|valid_email|max_len,50'));
         if ( $is_valid_email  !== true ):
-            echo json_encode( array( "error" => $is_valid_email[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid email" ), JSON_PRETTY_PRINT );
             exit();
         endif;
+
+            // email IS ENTERED : CHECK FOR DUPLICATE
+            if ( $this->request->post['email'] !== ""):
+                if ( $this->model_user->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
+                    echo json_encode( array( "error" => "This email is already exist" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+            endif;
 
         // MODEL
         $this->load->model('user');

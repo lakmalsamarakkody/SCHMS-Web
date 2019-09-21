@@ -314,7 +314,7 @@ class Student extends Controller {
         endif;
 
         // VALIDATION : initials
-        $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,10'));
+        $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
         if ( $is_valid_initials !== true ):
             echo json_encode( array( "error" => "Please insert student initials" ), JSON_PRETTY_PRINT );
             exit();
@@ -347,6 +347,14 @@ class Student extends Controller {
             echo json_encode( array( "error" => "Please insert a valid email" ), JSON_PRETTY_PRINT );
             exit();
         endif;
+
+            // email IS ENTERED : CHECK FOR DUPLICATE
+            if ( $this->request->post['email'] !== ""):
+                if ( $this->model_student->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
+                    echo json_encode( array( "error" => "This Email is already present" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+            endif;
 
         // VALIDATION : mobile_number
         $is_valid_mobile_number = GUMP::is_valid($this->request->post, array('mobile_number' => 'numeric|exact_len,10'));
@@ -399,7 +407,7 @@ class Student extends Controller {
         endif;
 
         // VALIDATION : first_guardian_initials
-        $is_valid_first_guardian_initials = GUMP::is_valid($this->request->post, array('first_guardian_initials' => 'required|alpha_space|max_len,10'));
+        $is_valid_first_guardian_initials = GUMP::is_valid($this->request->post, array('first_guardian_initials' => 'required|alpha_space|max_len,20'));
         if ( $is_valid_first_guardian_initials !== true ):
             echo json_encode( array( "error" => "Please insert valid initials for guardian" ), JSON_PRETTY_PRINT );
             exit();
@@ -476,7 +484,7 @@ class Student extends Controller {
         // VALIDATION : first_guardian_income
         $is_valid_first_guardian_income = GUMP::is_valid($this->request->post, array('first_guardian_income' => 'numeric|max_len,10'));
         if ( $is_valid_first_guardian_income !== true ):
-            echo json_encode( array( "error" => "Please insert a valid income value for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please insert a valid monthly income value for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -517,12 +525,12 @@ class Student extends Controller {
         $this->model_student->surname = $this->request->post['surname'];
         $this->model_student->dob = $this->request->post['date_of_birth'];
         $this->model_student->gender = $this->request->post['gender'];
-        $this->model_student->email = $this->request->post['email'];
-        $this->model_student->phone_mobile = $this->request->post['mobile_number'];
+        $this->model_student->email = ( $this->request->post['email'] == "" ) ? null : $this->request->post['email'];
+        $this->model_student->phone_mobile = ( $this->request->post['mobile_number'] == "" ) ? null : $this->request->post['mobile_number'];
         $this->model_student->address = $this->request->post['address'];
         $this->model_student->city = $this->request->post['city'];
         $this->model_student->district_id = ( $this->request->post['district'] == "null" ) ? null : $this->request->post['district'];
-        $this->model_student->birth_place = $this->request->post['birth_place'];
+        $this->model_student->birth_place = ( $this->request->post['birth_place'] == "" ) ? null : $this->request->post['birth_place'];
         $this->model_student->religion_id = ( $this->request->post['religion'] == "null" )  ? null : $this->request->post['religion'];
 
         $parent = $this->model_parent->select('id')->where('nic', '=', $this->request->post['first_guardian_nic'])->first();
@@ -580,12 +588,12 @@ class Student extends Controller {
             $this->model_parent->dob = $this->request->post['first_guardian_date_of_birth'];
             $this->model_parent->gender = $this->request->post['first_guardian_gender'];
             $this->model_parent->nic = $this->request->post['first_guardian_nic'];
-            $this->model_parent->phone_home = $this->request->post['first_guardian_telephone'];
-            $this->model_parent->phone_mobile = $this->request->post['first_guardian_mobile_number'];
+            $this->model_parent->phone_home = ( $this->request->post['first_guardian_telephone'] == "" )  ? null : $this->request->post['first_guardian_telephone'];
+            $this->model_parent->phone_mobile = ( $this->request->post['first_guardian_mobile_number'] == "" )  ? null : $this->request->post['first_guardian_mobile_number'];
             $this->model_parent->occupation = $this->request->post['first_guardian_occupation'];
-            $this->model_parent->position = $this->request->post['first_guardian_position'];
+            $this->model_parent->position = ( $this->request->post['first_guardian_position'] == "" )  ? null : $this->request->post['first_guardian_position'];
             $this->model_parent->income = ( $this->request->post['first_guardian_income'] == "" )  ? null : $this->request->post['first_guardian_income'];
-            $this->model_parent->email = $this->request->post['first_guardian_email'];
+            $this->model_parent->email = ( $this->request->post['first_guardian_email'] == "" )  ? null : $this->request->post['first_guardian_email'];
             $this->model_parent->address = $this->request->post['first_guardian_address'];
             $this->model_parent->city = $this->request->post['first_guardian_city'];
             $this->model_parent->district_id = ( $this->request->post['first_guardian_district'] == "null" ) ? null : $this->request->post['first_guardian_district'];

@@ -108,15 +108,15 @@
 
                                                 <div class="col-4">
                                                     <div class="form-group">
-                                                        <label for="g2fi">Initials</label>
-                                                        <input type="text" class="form-control" id="g2fi" required/>
+                                                        <label for="g2ini">Initials</label>
+                                                        <input type="text" class="form-control" id="g2ini" required/>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-8">
                                                     <div class="form-group">
-                                                        <label for="g2fsn">Surname</label>
-                                                        <input type="text" class="form-control" id="g2fsn" required/>
+                                                        <label for="g2sn">Surname</label>
+                                                        <input type="text" class="form-control" id="g2sn" required/>
                                                     </div>
                                                 </div>
                                                 
@@ -245,7 +245,7 @@
 
                             </div>
         
-                            <button type="button" class="btn btn-primary" onClick="register();"> Add Parent </button>
+                            <button type="button" class="btn btn-primary" onClick="addparent();"> Add Parent </button>
                             <button type="reset" class="btn btn-secondary"> Clear </button>
         
                         </form>
@@ -265,7 +265,7 @@
     <script>
 
         // FORMDATA REGISTERING
-        register = () => {
+        addparent = () => {
 
             // PAYLOAD
             var formData = new FormData;
@@ -289,11 +289,28 @@
             formData.append('second_guardian_district', $("#g2dist").val())
             formData.append('second_guardian_province', $("#g2province").val())
 
-        
+            // CONSOLE LOG
+            console.log("FN : " + $("#g2fn").val())
+            console.log("INI : " + $("#g2ini").val())
+            console.log("SN : " + $("#g2sn").val())
+            console.log("DOB : " + $("#g2dob").val())
+            console.log("RELATION : " + $("#g2rel").val())
+            console.log("GEN : " + $("#g2gen").val())
+            console.log("GEN : " + $("#g2nic").val())
+            console.log("EMAIL : " + $("#g2mail").val())
+            console.log("LANDLINE : " + $("#g2tel").val())
+            console.log("MOBILE : " + $("#g2mobi").val())
+            console.log("GEN : " + $("#g2occu").val())
+            console.log("GEN : " + $("#g2pos").val())
+            console.log("GEN : " + $("#g2inc").val())
+            console.log("ADDRESS : " + $("#g2address").val())
+            console.log("CITY : " + $("#g2city").val())
+            console.log("DISTRICT : " + $("#g2dist").val())
+            console.log("PROVINCE : " + $("#g2province").val())
 
             // REQUEST
             $.ajax({
-                url: "{{ app.url }}/parents/ajax_add",
+                url: "{{ app.url }}/parents/ajax_addparent",
                 method: 'POST',
                 data: formData,
                 processData: false,

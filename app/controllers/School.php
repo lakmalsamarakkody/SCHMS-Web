@@ -106,14 +106,14 @@ class School extends Controller {
 		// VALIDATION : class_name
         $is_valid_class_name = GUMP::is_valid($this->request->post, array('class_name' => 'required|alpha_numeric|max_len,2'));
         if ( $is_valid_class_name !== true ):
-            echo json_encode( array( "error" => $is_valid_class_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a class name" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 		
-		// VALIDATION : grade
-        $is_valid_grade = GUMP::is_valid($this->request->post, array('grade' => 'numeric|max_len,2'));
-        if ( $is_valid_grade !== true ):
-            echo json_encode( array( "error" => $is_valid_grade[0] ), JSON_PRETTY_PRINT );
+		// VALIDATION : grade_id
+        $is_valid_grade_id = GUMP::is_valid($this->request->post, array('grade_id' => 'numeric|max_len,2'));
+        if ( $is_valid_grade_id !== true ):
+            echo json_encode( array( "error" => "Please select a Grade" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 
@@ -128,7 +128,7 @@ class School extends Controller {
 		$is_exist = $this->model_class->select('id')->where('name', '=', $this->request->post['class_name'])->where('grade_id', '=', $this->request->post['grade_id'])->first() != NULL;
 
 		if( $is_exist != FALSE ):
-			echo json_encode( array( "error" => "This Class name and grade combination exists" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "error" => "This class name and grade combination exists" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
 
@@ -137,13 +137,13 @@ class School extends Controller {
 
 			// EMPLOYEE ID IS ENTERED : CHECK FOR DUPLICATE
 			if ( $this->model_class->select('id')->where('staff_id', '=', $this->request->post['employee_id'])->first() != NULL ):
-				echo json_encode( array( "error" => "This Staff member is already have a class" ), JSON_PRETTY_PRINT );
+				echo json_encode( array( "error" => "This staff member is already have a class" ), JSON_PRETTY_PRINT );
 				exit();
 			endif;
 
 			// EMPLOYEE ID IS ENTERED : CHECK FOR DUPLICATE
 			if ( $this->model_staff->select('id')->where('employee_number', '=', $this->request->post['employee_id'])->first() == NULL ):
-				echo json_encode( array( "error" => "Invalid Employee ID" ), JSON_PRETTY_PRINT );
+				echo json_encode( array( "error" => "Please enter a valid Employee ID" ), JSON_PRETTY_PRINT );
 				exit();
 			endif;
 
@@ -153,7 +153,7 @@ class School extends Controller {
 		$this->model_class->grade_id = $this->request->post['grade_id'];
 
 		if($this->request->post['employee_id'] != NULL):
-		$this->model_class->staff_id = $this->model_staff->select('id')->where('employee_number', '=', $this->request->post['employee_id'])->first()->id;
+			$this->model_class->staff_id = $this->model_staff->select('id')->where('employee_number', '=', $this->request->post['employee_id'])->first()->id;
 		endif;
 
 		// SUBMIT
@@ -189,13 +189,13 @@ class School extends Controller {
 		// VALIDATION : grade_name
         $is_valid_grade_name = GUMP::is_valid($this->request->post, array('grade_name' => 'required|numeric|max_len,2'));
         if ( $is_valid_grade_name !== true ):
-            echo json_encode( array( "error" => $is_valid_grade_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please insert a grade number" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 
 		// ADMISSION NUMBER IS ENTERED : CHECK FOR DUPLICATE
 		if ( $this->model_grade->select('id')->where('name', '=', $this->request->post['grade_name'])->first() != NULL ):
-			echo json_encode( array( "error" => "This Grade is already exists" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "error" => "This grade already exists" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
 		
@@ -234,13 +234,13 @@ class School extends Controller {
 		// VALIDATION : religion_name
         $is_valid_religion_name = GUMP::is_valid($this->request->post, array('religion_name' => 'required|alpha'));
         if ( $is_valid_religion_name !== true ):
-            echo json_encode( array( "error" => $is_valid_religion_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a religion name" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 
 		// RELIGION IS ENTERED : CHECK FOR DUPLICATE
 		if ( $this->model_religion->select('id')->where('name', '=', $this->request->post['religion_name'])->first() != NULL ):
-			echo json_encode( array( "error" => "This Religion is already exists" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "error" => "Religion already exists" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
 		
@@ -278,9 +278,9 @@ class School extends Controller {
 		header('Content-Type: application/json');
 		
 		// VALIDATION : subject_name
-        $is_valid_subject_name = GUMP::is_valid($this->request->post, array('subject_name' => 'required|alpha'));
+        $is_valid_subject_name = GUMP::is_valid($this->request->post, array('subject_name' => 'required|valid_name'));
         if ( $is_valid_subject_name !== true ):
-            echo json_encode( array( "error" => $is_valid_subject_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please insert Subject name" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 
@@ -299,7 +299,7 @@ class School extends Controller {
 		endif;        
 		
 		$this->model_subject->name = $this->request->post['subject_name'];
-		$this->model_subject->si_name = $this->request->post['subject_si_name'];
+		$this->model_subject->si_name = ( $this->request->post['subject_in_sinhala'] == "" )  ? null : $this->request->post['subject_in_sinhala'];
 		
 		// SUBMIT
 		if ( $this->model_subject->save() ):
@@ -334,7 +334,7 @@ class School extends Controller {
 		// VALIDATION : relation_name
         $is_valid_relation_name = GUMP::is_valid($this->request->post, array('relation_name' => 'required|alpha_space'));
         if ( $is_valid_relation_name !== true ):
-            echo json_encode( array( "error" => $is_valid_relation_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a relation type name" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 

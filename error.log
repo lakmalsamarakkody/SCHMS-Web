@@ -1706,3 +1706,183 @@ Stack trace:
 #2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
 #3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
 #4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('ins" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/21 20:09:59 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_second_guardian_email' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Parents.php(291): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Parents->ajax_addparent()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:10:29 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_second_guardian_email' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Parents.php(291): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Parents->ajax_addparent()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:11:07 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_email' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Parents.php(291): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Parents->ajax_addparent()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:11:16 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_email' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Parents.php(291): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Parents->ajax_addparent()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:11:36 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: email in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 298PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Parents.php:299
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Parents->ajax_addparent()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 299" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:13:12 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Parents.php:299
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Parents->ajax_addparent()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 299" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:13:17 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Parents.php:299
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Parents->ajax_addparent()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 299" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:14:25 [error] 1782#1782: *3632 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'role_id' in 'field list' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:452
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(452): PDO->prepare('insert into `pa...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `pa...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `pa...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `pa...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `pa...', Array)
+#5 /opt/dev/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:56:18 [error] 1782#1782: *3676 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '' for column `schms`.`parent`.`income` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `pa...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `pa...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `pa...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:57:27 [error] 1782#1782: *3678 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'null' for column `schms`.`parent`.`district_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `pa...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `pa...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `pa...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('in" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 20:58:08 [error] 1782#1782: *3678 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'id' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 351PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'student_id' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `st...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `st...', Array)
+#5 /opt/dev/sit" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/21 22:17:05 [error] 1782#1782: *3794 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_require' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Exam.php(199): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->ajax_create_exam()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_create_exam HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 22:31:43 [error] 1782#1782: *3872 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: exam_name in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 294PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'exam_id' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `ex...', Array)
+#5 /opt/dev/sites/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 22:32:34 [error] 1782#1782: *3872 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect time value: '10:00 AM' for column `schms`.`exam_schedule`.`start_time` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statem" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 22:49:32 [error] 1782#1782: *3974 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect time value: '10:49 PM' for column `schms`.`exam_schedule`.`end_time` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statemen" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 23:06:26 [error] 1782#1782: *4024 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function addYears() on string in /opt/dev/sites/bit-project.int/app/controllers/Exam.php:98
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 98" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /exam/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 23:13:29 [error] 1782#1782: *4028 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function addYears() on string in /opt/dev/sites/bit-project.int/app/controllers/Exam.php:99
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 99" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /exam/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 23:14:35 [error] 1782#1782: *4038 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function addYears() on string in /opt/dev/sites/bit-project.int/app/controllers/Exam.php:100
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 100" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /exam/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 23:14:36 [error] 1782#1782: *4038 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function addYears() on string in /opt/dev/sites/bit-project.int/app/controllers/Exam.php:100
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 100" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /exam/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 23:14:36 [error] 1782#1782: *4038 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function addYears() on string in /opt/dev/sites/bit-project.int/app/controllers/Exam.php:100
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 100" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /exam/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 23:15:43 [error] 1782#1782: *4046 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function addYears() on string in /opt/dev/sites/bit-project.int/app/controllers/Exam.php:100
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 100" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /exam/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/09/21 23:42:44 [error] 1782#1782: *4200 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: grade_id in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 128PHP message: PHP Notice:  Undefined index: grade_id in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 153PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'grade_id' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/dev/sites" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 23:43:09 [error] 1782#1782: *4200 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: grade_id in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 128PHP message: PHP Notice:  Undefined index: grade_id in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 153PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'grade_id' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/dev/sites" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/22 00:22:56 [error] 1782#1782: *4305 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: subject_si_name in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 302" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addsubject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/22 00:54:05 [error] 1782#1782: *4402 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/User.php:110
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): User->ajax_add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/User.php on line 110" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /user/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/user/add"
+2019/09/22 00:54:56 [error] 1782#1782: *4402 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/User.php:110
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): User->ajax_add()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/User.php on line 110" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /user/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/user/add"
