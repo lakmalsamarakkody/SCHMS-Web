@@ -169,14 +169,14 @@ class Exam extends Controller {
         // VALIDATION : exam_type
         $is_valid_exam_type = GUMP::is_valid($this->request->post, array('exam_type' => 'required|numeric|max_len,2'));
         if ( $is_valid_exam_type !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_type[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a exam type" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_year
         $is_valid_exam_year = GUMP::is_valid($this->request->post, array('exam_year' => 'required|numeric|exact_len,4'));
         if ( $is_valid_exam_year !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_year[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a exam year" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -184,7 +184,7 @@ class Exam extends Controller {
 		$is_exist = $this->model_exam->select('id')->where('type_id', '=', $this->request->post['exam_type'])->where('year', '=', $this->request->post['exam_year'])->first() != NULL;
 
 		if( $is_exist != FALSE ):
-			echo json_encode( array( "error" => "This Exam exists" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "error" => "This Exam is already exist" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
 
@@ -243,44 +243,44 @@ class Exam extends Controller {
         header('Content-Type: application/json');
 
         // VALIDATION : select_exam
-        $is_valid_select_exam = GUMP::is_valid($this->request->post, array('select_exam_name' => 'numeric'));
+        $is_valid_select_exam = GUMP::is_valid($this->request->post, array('select_exam_name' => 'required|numeric'));
         if ( $is_valid_select_exam !== true ):
-            echo json_encode( array( "error" => "Invalid exam name." ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a exam" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_grade
         $is_valid_exam_grade = GUMP::is_valid($this->request->post, array('exam_grade' => 'required|numeric|max_len,2'));
         if ( $is_valid_exam_grade !== true ):
-            echo json_encode( array( "error" => "Invalid exam name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a grade" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_subject_name
         $is_valid_exam_subject_name = GUMP::is_valid($this->request->post, array('exam_subject_name' => 'required|numeric|max_len,3'));
         if ( $is_valid_exam_subject_name !== true ):
-            echo json_encode( array( "error" => "Invalid exam name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a subject" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_date
         $is_valid_exam_date = GUMP::is_valid($this->request->post, array('exam_date' => 'required|date'));
         if ( $is_valid_exam_date !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_date[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please set a exam date" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_starttime
         $is_valid_exam_starttime = GUMP::is_valid($this->request->post, array('exam_starttime' => 'required'));
         if ( $is_valid_exam_starttime !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_starttime[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please set exam start time" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_endtime
         $is_valid_exam_endtime = GUMP::is_valid($this->request->post, array('exam_endtime' => 'required'));
         if ( $is_valid_exam_endtime !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_endtime[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please set exam end time" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 

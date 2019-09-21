@@ -220,14 +220,14 @@ class Parents extends Controller {
         // VALIDATION : second_guardian_relation
         $is_valid_second_guardian_relation = GUMP::is_valid($this->request->post, array('second_guardian_relation' => 'required|integer|max_len,2'));
         if ( $is_valid_second_guardian_relation !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_relation[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation type" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_gender
         $is_valid_second_guardian_gender = GUMP::is_valid($this->request->post, array('second_guardian_gender' => 'required|contains_list,(Male;Female)'));
         if ( $is_valid_second_guardian_gender !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_gender[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a gender" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -239,7 +239,7 @@ class Parents extends Controller {
                 exit();
             endif;
         else:
-            echo json_encode( array( "error" => $is_valid_second_guardian_nic[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a NIC number" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -300,9 +300,9 @@ class Parents extends Controller {
         endif;
 
         // VALIDATION : second_guardian_district
-        $is_valid_second_guardian_district = GUMP::is_valid($this->request->post, array('second_guardian_district' => 'required|integer|max_len,2'));
-        if ( $is_valid_second_guardian_district !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_district[0] ), JSON_PRETTY_PRINT );
+        $is_valid_second_guardian_district = GUMP::is_valid($this->request->post, array('second_guardian_district' => 'integer|max_len,2'));
+        if ( $is_valid_second_guardian_district !== true AND $this->request->post['second_guardian_district'] != NULL ):
+            echo json_encode( array( "error" => $is_valid_second_guardian_district ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
