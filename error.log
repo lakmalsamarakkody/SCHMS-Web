@@ -1692,3 +1692,17 @@ Stack trace:
 #3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
 #4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `st...', Array)
 #5 /opt/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /student/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 19:06:26 [error] 1782#1782: *3357 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'null' for column `schms`.`staff`.`religion_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `st...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('ins" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/21 19:07:13 [error] 1782#1782: *3357 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'null' for column `schms`.`staff`.`district_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `st...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('ins" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /staff/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"

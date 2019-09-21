@@ -192,28 +192,28 @@ class Parents extends Controller {
         // VALIDATION : second_guardian_full_name
         $is_valid_second_guardian_full_name = GUMP::is_valid($this->request->post, array('second_guardian_full_name' => 'required|alpha|max_len,100'));
         if ( $is_valid_second_guardian_full_name !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_full_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_initials
         $is_valid_second_guardian_initials = GUMP::is_valid($this->request->post, array('second_guardian_initials' => 'required|alpha|max_len,10'));
         if ( $is_valid_second_guardian_initials !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_initials[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_surname
         $is_valid_second_guardian_surname = GUMP::is_valid($this->request->post, array('second_guardian_surname' => 'required|alpha|max_len,20'));
         if ( $is_valid_second_guardian_surname !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_surname[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_dob
         $is_valid_second_guardian_dob = GUMP::is_valid($this->request->post, array('second_guardian_dob' => 'required|date'));
         if ( $is_valid_second_guardian_dob !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_dob[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -246,63 +246,63 @@ class Parents extends Controller {
         // VALIDATION : second_guardian_telephone
         $is_valid_second_guardian_telephone = GUMP::is_valid($this->request->post, array('second_guardian_telephone' => 'required|integer|max_len,10'));
         if ( $is_valid_second_guardian_telephone !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_telephone[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_mobile_number
         $is_valid_second_guardian_mobile_number = GUMP::is_valid($this->request->post, array('second_guardian_mobile_number' => 'required|integer|max_len,10'));
         if ( $is_valid_second_guardian_mobile_number !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_mobile_number[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_occupation
         $is_valid_second_guardian_occupation = GUMP::is_valid($this->request->post, array('second_guardian_occupation' => 'required|alpha|max_len,50'));
         if ( $is_valid_second_guardian_occupation !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_occupation[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_position
         $is_valid_second_guardian_position = GUMP::is_valid($this->request->post, array('second_guardian_position' => 'required|alpha|max_len,50'));
         if ( $is_valid_second_guardian_position !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_position[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_income
         $is_valid_second_guardian_income = GUMP::is_valid($this->request->post, array('second_guardian_income' => 'required|integer|max_len,10'));
         if ( $is_valid_second_guardian_income !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_income[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_email
         $is_valid_second_guardian_email = GUMP::is_valid($this->request->post, array('second_guardian_email' => 'required|second_guardian_email'));
         if ( $is_valid_second_guardian_email !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_email[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_address
         $is_valid_second_guardian_address = GUMP::is_valid($this->request->post, array('second_guardian_address' => 'required|alpha_numeric|max_len,50'));
         if ( $is_valid_second_guardian_address !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_address[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_city
         $is_valid_second_guardian_city = GUMP::is_valid($this->request->post, array('second_guardian_city' => 'required|alpha|max_len,20'));
         if ( $is_valid_second_guardian_city !== true ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_city[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : second_guardian_district
         $is_valid_second_guardian_district = GUMP::is_valid($this->request->post, array('second_guardian_district' => 'integer|max_len,2'));
         if ( $is_valid_second_guardian_district !== true AND $this->request->post['second_guardian_district'] != NULL ):
-            echo json_encode( array( "error" => $is_valid_second_guardian_district ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please select a relation" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
