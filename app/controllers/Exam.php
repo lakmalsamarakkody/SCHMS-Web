@@ -243,23 +243,23 @@ class Exam extends Controller {
         header('Content-Type: application/json');
 
         // VALIDATION : select_exam
-        $is_valid_select_exam = GUMP::is_valid($this->request->post, array('select_exam_name' => 'required|numeric'));
+        $is_valid_select_exam = GUMP::is_valid($this->request->post, array('select_exam_name' => 'numeric'));
         if ( $is_valid_select_exam !== true ):
-            echo json_encode( array( "error" => $is_valid_select_exam[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Invalid exam name." ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_grade
         $is_valid_exam_grade = GUMP::is_valid($this->request->post, array('exam_grade' => 'required|numeric|max_len,2'));
         if ( $is_valid_exam_grade !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_grade[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Invalid exam name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_subject_name
         $is_valid_exam_subject_name = GUMP::is_valid($this->request->post, array('exam_subject_name' => 'required|numeric|max_len,3'));
         if ( $is_valid_exam_subject_name !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_subject_name[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Invalid exam name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
