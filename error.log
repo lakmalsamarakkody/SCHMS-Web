@@ -1304,3 +1304,334 @@ Stack trace:
 #3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id`, `a...', Array, Object(Closure))
 #4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `id`, `a...', Array, true)
 #5 /opt" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/add?isSubmited=true HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add?isSubmited=true"
+2019/09/20 23:51:35 [error] 1782#1782: *151 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:41
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 41" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/20 23:54:07 [error] 1782#1782: *166 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:41
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 41" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/20 23:54:12 [error] 1782#1782: *167 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:41
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 41" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/20 23:54:30 [error] 1782#1782: *167 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:41
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 41" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/20 23:54:32 [error] 1782#1782: *167 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:41
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 41" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/20 23:54:33 [error] 1782#1782: *167 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:41
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 41" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/staff/add"
+2019/09/20 23:54:38 [error] 1782#1782: *171 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:41
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 41" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:01:04 [error] 1782#1782: *194 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:42
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 42" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:01:05 [error] 1782#1782: *194 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:42
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 42" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:01:06 [error] 1782#1782: *195 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:42
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 42" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:01:06 [error] 1782#1782: *195 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:42
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 42" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:01:06 [error] 1782#1782: *195 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:42
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 42" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:01:07 [error] 1782#1782: *195 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function toArray() on null in /opt/dev/sites/bit-project.int/app/controllers/School.php:42
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->index()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 42" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:14:43 [error] 1782#1782: *206 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'name' in 'field list' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id`, `n...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id`, `n...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id`, `n...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id`, `n...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `id`, `n...', Array, true)
+#5 /opt/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:14:45 [error] 1782#1782: *206 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'name' in 'field list' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id`, `n...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id`, `n...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id`, `n...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id`, `n...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `id`, `n...', Array, true)
+#5 /opt/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/"
+2019/09/21 00:56:03 [error] 1782#1782: *427 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 00:58:58 [error] 1782#1782: *434 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 00:59:00 [error] 1782#1782: *434 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 00:59:00 [error] 1782#1782: *434 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 00:59:00 [error] 1782#1782: *435 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 00:59:00 [error] 1782#1782: *435 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 00:59:01 [error] 1782#1782: *435 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 00:59:03 [error] 1782#1782: *435 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `initial...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `initial...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `initial...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `initial...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `initial...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /school HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 01:10:51 [error] 1782#1782: *521 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: grade in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 159PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'name' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `gr...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `gr...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `gr...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `gr...', Array)
+#5 /opt/dev/sites/bit" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addgrade HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 01:47:38 [error] 1782#1782: *673 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'employee_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id` fro...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id` fro...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id` fro...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id` fro...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `id` fro...', Array, true)" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 01:48:12 [error] 1782#1782: *673 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id` fro...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id` fro...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id` fro...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id` fro...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `id` fro...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 01:48:17 [error] 1782#1782: *673 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'staff_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id` fro...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id` fro...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id` fro...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id` fro...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `id` fro...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 01:49:47 [error] 1782#1782: *701 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '{"id":2}' for column `schms`.`class`.`staff_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('in" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 01:50:42 [error] 1782#1782: *710 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '{"id":1}' for column `schms`.`class`.`staff_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('in" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 01:52:17 [error] 1782#1782: *710 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'staff_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/dev" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 02:04:59 [error] 1782#1782: *774 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '6' for key 'name' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `gr...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `gr...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `gr...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `gr...', Array)
+#5 /opt/dev/sit" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addgrade HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 03:09:14 [error] 1782#1782: *835 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'id' of non-object in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 140PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'A' for key 'name' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/dev/sit" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 03:13:39 [error] 1782#1782: *905 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'id' of non-object in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 140" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 03:14:41 [error] 1782#1782: *905 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'id' of non-object in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 140PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '3-A' for key 'grade_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/d" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 03:19:01 [error] 1782#1782: *917 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'id' of non-object in /opt/dev/sites/bit-project.int/app/controllers/School.php on line 146PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '3-A' for key 'grade_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/d" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 03:20:53 [error] 1782#1782: *919 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '3-A' for key 'grade_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/d" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 03:45:32 [error] 1782#1782: *1020 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_require' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/School.php(107): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): School->ajax_addclass()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /school/ajax_addclass HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/school"
+2019/09/21 07:04:38 [error] 1782#1782: *1675 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Class 'Carbon' not found in /opt/dev/sites/bit-project.int/app/controllers/Exam.php:57
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 57" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /exam/create? HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 07:12:02 [error] 1782#1782: *1691 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'grade_id' in 'field list' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:452
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(452): PDO->prepare('insert into `ex...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `ex...', Array)
+#5 /opt/dev" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_create_exam HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 08:12:05 [error] 1782#1782: *2105 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: exam_type_id in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 184PHP message: PHP Notice:  Undefined index: exam_type_id in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 205PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'type_id' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `ex...', Array)
+#5 /opt/dev/sites/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_create_exam HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 08:13:34 [error] 1782#1782: *2115 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: exam_type_id in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 205PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'type_id' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `ex...', Array)
+#5 /opt/dev/sites/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_create_exam HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 14:23:56 [error] 1782#1782: *2422 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: exam in /opt/dev/sites/bit-project.int/app/controllers/Exam.php on line 294PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'exam_id' cannot be null in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `ex...', Array)
+#5 /opt/dev/sites/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 14:24:24 [error] 1782#1782: *2422 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '[object Object]' for column `schms`.`exam_schedule`.`exam_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection-" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 14:25:38 [error] 1782#1782: *2490 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '[object Object]' for column `schms`.`exam_schedule`.`exam_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection-" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 14:25:44 [error] 1782#1782: *2490 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[22007]: Invalid datetime format: 1366 Incorrect integer value: '[object Object]' for column `schms`.`exam_schedule`.`exam_id` at row 1 in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `ex...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `ex...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `ex...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection-" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 14:33:38 [error] 1782#1782: *2535 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Exception: Validator method 'validate_' does not exist. in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:456
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(270): GUMP->validate(Array, Array)
+#1 /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php(102): GUMP->run(Array)
+#2 /opt/dev/sites/bit-project.int/app/controllers/Exam.php(246): GUMP::is_valid(Array, Array)
+#3 /opt/dev/sites/bit-project.int/app/core/App.php(44): Exam->ajax_add_schedule()
+#4 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#5 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 456" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create?"
+2019/09/21 15:53:22 [error] 1782#1782: *2821 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'admission_no' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Student.php on line 280" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /student/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"
+2019/09/21 15:53:38 [error] 1782#1782: *2820 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'admission_no' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Student.php on line 280" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /student/ajax_add HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/student/add"

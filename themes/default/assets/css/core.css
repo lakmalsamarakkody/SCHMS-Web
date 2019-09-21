@@ -9,6 +9,11 @@
     --footer-bg-color: #333333; 
 } 
 
+.text-capitalize{
+    text-transform: uppercase;
+}
+
+
 body{
     cursor: default;
     font-size: 1rem;
@@ -377,7 +382,7 @@ h5.page-title{
 }
 
 .login .title h2{
-    color: var(--sub-text-color);
+    color: var(--white);
 }
 
 

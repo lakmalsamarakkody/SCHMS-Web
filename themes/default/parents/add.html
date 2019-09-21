@@ -28,7 +28,7 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="addno">Admission Number</label>
-                                            <input type="number" class="form-control" id="addno"/>
+                                            <input type="number" class="form-control" id="addno" maxlength="6"/>
                                         </div>
                                     </div>
 
@@ -245,7 +245,7 @@
 
                             </div>
         
-                            <button type="button" class="btn btn-primary pl-5 pr-5" onClick="register();"> Add </button>
+                            <button type="button" class="btn btn-primary" onClick="register();"> Add Parent </button>
                             <button type="reset" class="btn btn-secondary"> Clear </button>
         
                         </form>
@@ -270,7 +270,7 @@
             // PAYLOAD
             var formData = new FormData;
 
-            // GUARDIAN @ND DATA
+            // GUARDIAN 2ND DATA
             formData.append('second_guardian_full_name', $("#g2fn").val())
             formData.append('second_guardian_initials', $("#g2ini").val())
             formData.append('second_guardian_surname', $("#g2sn").val())
@@ -302,7 +302,7 @@
                 success: (res) => {
                     
                     if ( res.status == 'success' ) {
-                        alertify.alert("Success", "User added successfully ... ").set('onok', function() {
+                        alertify.alert("Success", "Parent added successfully ... ").set('onok', function() {
                             location.reload();
                         })
                     } else {
@@ -363,15 +363,6 @@
                 }
             })
 
-        })
-
-        // DATE TIME PICKER
-        $("#datetimepicker_admission_date").datetimepicker({
-            format: 'YYYY-MM-DD',
-            icons: {
-                up: 'la la-angle-up',
-                down: 'la la-angle-down'
-            }
         })
 
     </script>

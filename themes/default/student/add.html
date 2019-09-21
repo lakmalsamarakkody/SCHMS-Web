@@ -31,7 +31,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="addno">Admission Number</label>
-                                                    <input type="number" class="form-control" id="addno"/>
+                                                    <input type="number" class="form-control" id="addno" maxlength="6"/>
                                                     <small id="addnolHelp" class="form-text text-muted">Admission Number will be assigned automatically if Empty</small>
                                                 </div>
                                             </div>
@@ -140,7 +140,7 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="mobno">Mobile Number</label>
-                                                    <input type="text" class="form-control" id="mobno"/>
+                                                    <input type="text" class="form-control" id="mobno" maxlength="10"/>
                                                 </div>
                                             </div>
 
@@ -362,7 +362,7 @@
     
                         </div>
     
-                        <button type="button" class="btn btn-primary" onClick="register();"> Register </button>
+                        <button type="button" class="btn btn-primary" onClick="register();"> Register Student </button>
                         <button type="reset" class="btn btn-secondary"> Clear </button>
     
                     </form>
@@ -436,7 +436,7 @@
                 success: (res) => {
 
                     if ( res.status == 'success' ) {
-                        alertify.alert("Success", "User added successfully ... ").set('onok', function() {
+                        alertify.alert("Success", "Student added successfully ... ").set('onok', function() {
                             location.reload();
                         })
                     } else {

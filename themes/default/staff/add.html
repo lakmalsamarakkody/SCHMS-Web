@@ -182,14 +182,14 @@
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="phone_home">Landline Number</label>
-                                                    <input type="text" class="form-control" id="phone_home"/>
+                                                    <input type="text" class="form-control" id="phone_home" maxlength="10"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="phone_mobile">Mobile Number</label>
-                                                    <input type="text" class="form-control" id="phone_mobile"/>
+                                                    <input type="text" class="form-control" id="phone_mobile" maxlength="10"/>
                                                 </div>
                                             </div>
 
@@ -234,7 +234,7 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary" onClick="register();"> Register </button>
+                        <button type="button" class="btn btn-primary" onClick="register();"> Register Staff Member </button>
                         <button type="reset" class="btn btn-secondary"> Clear </button>
                         
                     </form>
@@ -308,7 +308,7 @@
                 success: (res) => {
 
                     if ( res.status == 'success' ) {
-                        alertify.alert("Success", "User added successfully ... ").set('onok', function() {
+                        alertify.alert("Success", "Staff added successfully ... ").set('onok', function() {
                             location.reload();
                         })
                     } else {

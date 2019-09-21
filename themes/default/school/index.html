@@ -7,21 +7,28 @@
             
             {{ template.sidenav|raw }}
 
-            <div class="col-md-10 content">               
+            <div class="col-md-10 content">
+
                 {{ template.topmenu|raw }}
 
                 <div class="row">
+
                     <!-- START : CLASS MANAGER -->
                     <div class="col mx-auto">
+
                         <div class="card">
+
                             <div class="card-header">
                                 <h6 class="pull-left">Classes</h6>
                                 <div class="button-group pull-right">
-                                        <button type="button" class="btn btn-sm btn-primary">ADD</button>
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addclass">ADD</button>
                                 </div>
                             </div>
+
                             <div class="card-body">
+
                                 <div class="table-responsive-md">
+
                                     <table class="table table-borderless">
                                         <thead>
                                             <tr>
@@ -31,6 +38,7 @@
                                                 <th scope="col"> Teacher in Charge </th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
                                             {% for class in classes %}
                                             <tr>
@@ -40,19 +48,28 @@
                                                 <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
                                             </tr>
                                             {% endfor %} 
-                                        </tbody>                                      
+                                        </tbody>  
+
                                     </table>
+
                                 </div>
-                                <button type="button" class="btn btn-primary">Add New Class</button>
+
                             </div>
+
                         </div>
+
                     </div>
                     <!-- END : CLASS MANAGER -->
 
                     <!-- START : GRADE MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
-                            <div class="card-header"> Grades </div>
+                            <div class="card-header">
+                                <h6 class="pull-left">Grades</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addgrade">ADD</button>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
@@ -72,7 +89,6 @@
                                         </tbody>                                        
                                     </table>
                                 </div>                                
-                                <button type="button" class="btn btn-primary">Add New Grade</button>
                             </div>
                         </div>
                     </div>
@@ -81,7 +97,12 @@
                     <!-- START : RELIGION MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
-                            <div class="card-header"> Religions </div>
+                            <div class="card-header">
+                                <h6 class="pull-left">Religions</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addreligion">ADD</button>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
@@ -101,7 +122,6 @@
                                         </tbody>                                        
                                     </table>
                                 </div>                                
-                                <button type="button" class="btn btn-primary">Add New Religion</button>
                             </div>
                         </div>
                     </div>
@@ -110,7 +130,12 @@
                     <!-- START : SUBJECT MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
-                            <div class="card-header"> Subjects </div>
+                            <div class="card-header">
+                                <h6 class="pull-left">Subjects</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addsubject">ADD</button>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
@@ -131,8 +156,7 @@
                                             {% endfor %} 
                                         </tbody>                                        
                                     </table>
-                                </div>                                
-                                <button type="button" class="btn btn-primary">Add New Subject</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,7 +165,12 @@
                     <!-- START : RELATIONSHIP MANAGER -->
                     <div class="col mx-auto">
                         <div class="card">
-                            <div class="card-header"> Student Relationships </div>
+                            <div class="card-header">
+                                <h6 class="pull-left">Student Relationships</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addrelation">ADD</button>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive-md">
                                     <table class="table table-borderless">
@@ -160,8 +189,7 @@
                                             {% endfor %} 
                                         </tbody>                                        
                                     </table>
-                                </div>                                
-                                <button type="button" class="btn btn-primary">Add New Relationship</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -173,5 +201,391 @@
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <!-- START : MODAL : ADD CLASS -->
+    <div class="modal fade" id="modal_addclass" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A CLASS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="class">Class Name</label>
+                                <input type="text" class="form-control text-capitalize" id="class" maxlength="2"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Select Grade</label>
+                                <select class="form-control" id="grade">
+                                        <option selected disabled> - Select Grade - </option>
+                                    {% for grade in grades %}
+                                        <option value="{{ grade.id }}">{{ grade.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="tic">Teacher in Charge</label>
+                                <input type="text" class="form-control" id="tic" maxlength="6"/>
+                                <small id="ticHelp" class="form-text text-muted">Enter Employee ID</small>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addclass();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : ADD CLASS -->
+
+    <!-- START : MODAL : ADD GRADE -->
+    <div class="modal fade" id="modal_addgrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A GRADE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Grade Name</label>
+                                <input type="number" class="form-control" id="grade_no" maxlength="2"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addgrade();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : ADD GRADE -->
+
+    <!-- START : MODAL : ADD RELIGION -->
+    <div class="modal fade" id="modal_addreligion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A RELIGION</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="religion">Religion Name</label>
+                                <input type="text" class="form-control" id="religion"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addreligion();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : ADD RELIGION -->
+
+    <!-- START : MODAL : ADD SUBJECT -->
+    <div class="modal fade" id="modal_addsubject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A SUBJECT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="subject">Subject Name</label>
+                                <input type="text" class="form-control" id="subject"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="subject_siname">Subject Name in Sinhala</label>
+                                <input type="text" class="form-control" id="subject_siname"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addsubject();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : ADD SUBJECT -->
+
+    <!-- START : MODAL : ADD RELATIONSHIP -->
+    <div class="modal fade" id="modal_addrelation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A STUDENT RELATION</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="relation">Relationship Name</label>
+                                <input type="text" class="form-control" id="relation"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addrelation();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : ADD SUBJECT -->
+
+
+    <script>
+
+        // START : SCRIPT : ADD A CLASS
+        addclass = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD CLASS DATA
+            formData.append('class_name', $("#class").val())
+            formData.append('grade', $("#grade").val())
+            formData.append('employee_id', $("#tic").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_addclass",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Class added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A CLASS
+
+        // START : SCRIPT : ADD A GRADE
+        addgrade = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD CLASS DATA
+            formData.append('grade_name', $("#grade_no").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_addgrade",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Grade added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A GRADE
+
+        // START : SCRIPT : ADD A RELIGION
+        addreligion = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD CLASS DATA
+            formData.append('religion_name', $("#religion").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_addreligion",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Religion added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A RELIGION
+
+        // START : SCRIPT : ADD A SUBJECT
+        addsubject = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD CLASS DATA
+            formData.append('subject_name', $("#subject").val())
+            formData.append('subject_in_sinhala', $("#subject_siname").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_addsubject",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Subject added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A SUBJECT
+
+        // START : SCRIPT : ADD A RELATION
+        addrelation = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD CLASS DATA
+            formData.append('relation_name', $("#relation").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_addrelation",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Relation Type added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A RELATION
+    
+    </script>
+
 </body>

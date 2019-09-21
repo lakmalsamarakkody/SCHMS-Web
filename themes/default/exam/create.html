@@ -33,12 +33,13 @@
                             <form>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="examtype" required/>
+                                        <label for="exam_type"> Exam Type Name </label>
+                                        <input type="text" class="form-control" id="exam_type"/>
                                     </div>
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary"> Save changes </button>
+                                    <button type="button" class="btn btn-primary" onclick="addexam_type();"> Save changes </button>
                                 </div>
                             </form>
                         </div>
@@ -79,35 +80,53 @@
                         <h4 class="page-title"> Create an Exam </h4>
 
                         <!-- START : EXAM CREATE FORM -->
-                        <form name="createexam">
+                        <form method="post">
 
                             <div class="form-row mt-4">
 
-                                <div class="form-group col-md-1">
-                                    <label for="examyear"> Year </label>
-                                    <select class="form-control" id="examyear" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="examtype"> Exam type </label>
+                                        <select class="form-control" id="examtype">
+                                            <option selected disabled> - Select Exam Type - </option>
+                                            {% for exam_type in exam_types %}
+                                                <option value="{{ exam_type.id }}"> {{ exam_type.name }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-2">
-                                    <label for="examtype"> Exam type </label>
-                                    <select class="form-control" id="examtype" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="examyear"> Year </label>
+                                        <select id="examyear" class="form-control">
+                                            <option selected disabled> - Select Year - </option>
+                                            {% for year in years %}
+                                                <option value="{{ year }}"> {{ year }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-2">
-                                    <label for="venue"> Venue </label>
-                                    <input type="text" class="form-control" id="venue"/>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="venue"> Venue </label>
+                                        <input type="text" class="form-control" id="venue"/>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-7">
-                                    <label for="instructions"> Instructions </label>
-                                    <textarea class="md-textarea form-control" rows="1" id="instructions" placeholder="type exam instructions here.."></textarea>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="instructions"> Instructions </label>
+                                        <textarea class="md-textarea form-control" rows="1" exam_ placeholder="type exam instructions here.."></textarea>
+                                    </div>
                                 </div>
 
                             </div>
                             
                             <div class="form-row">
                                 <div class="form-group ml-auto">
-                                    <button type="submit" class="btn btn-primary"> Create exam </button>
+                                    <button type="button" class="btn btn-primary" onclick="create_exam();"> Create exam </button>
                                 </div>
                             </div>
 
@@ -121,56 +140,87 @@
 
                         <h4 class="page-title mt-3"> Schedule an exam </h4>
 
-                        <form name="examschedule">
+                        <form method="post">
 
                             <div class="form-row mt-4">
 
-                                <div class="form-group col-md-1">
-                                    <label for="examschyear"> Year </label>
-                                    <select class="form-control" id="examschyear" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="exam"> Select Exam </label>
+                                        <select class="form-control" id="exam_name">
+                                            <option selected disabled> - Select Exam - </option>
+                                            {% for exam in exams %}
+                                                <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-2">
-                                    <label for="exam"> Select Exam </label>
-                                    <select class="form-control" id="exam" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="grade"> Grade </label>
+                                        <select class="form-control" id="grade">
+                                            <option selected disabled> - Select Grade - </option>
+                                            {% for grade in grades %}
+                                                <option value="{{ grade.id }}"> {{ grade.name }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <label for="grade"> Grade </label>
-                                    <select class="form-control" id="grade" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="subject"> Subject </label>
+                                        <select class="form-control" id="subject">
+                                            <option selected disabled> - Select Subject - </option>
+                                            {% for subject in subjects %}
+                                                <option value="{{ subject.id }}"> {{ subject.name }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <label for="subject"> Subject </label>
-                                    <select class="form-control" id="subject" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="date"> Date </label>
+                                        <input type="date" class="form-control" id="date"></select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-2">
-                                    <label for="date"> Date </label>
-                                    <input type="date" class="form-control" id="date" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="starttime"> Start time </label>
+                                        <div class="input-group date" id="starttimepicker" data-target-input="nearest">
+                                            <input type="text" id="starttime" class="form-control datetimepicker-input" data-target="#starttimepicker"/>
+                                            <div class="input-group-append" data-target="#starttimepicker" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="la la-clock-o"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <label for="starttime"> Start time </label>
-                                    <input type="time" class="form-control" id="starttime" required></select>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="endtime"> End time </label>
+                                        <div class="input-group date" id="endtimepicker" data-target-input="nearest">
+                                            <input type="text" id="endtime" class="form-control datetimepicker-input" data-target="#endtimepicker"/>
+                                            <div class="input-group-append" data-target="#endtimepicker" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="la la-clock-o"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <label for="endtime"> End time </label>
-                                    <input type="time" class="form-control" id="endtime"></select>
-                                </div>
-
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-9">
-                                    <label for="instructions"> Instructions </label>
-                                    <textarea class="md-textarea form-control" rows="5" id="instructions"></textarea>
+                                <div class="col-9">
+                                    <div class="form-group">
+                                        <label for="exam_instructions"> Instructions </label>
+                                        <textarea class="md-textarea form-control" rows="5" id="exam_instructions"></textarea>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group ml-auto">
-                                <button type="submit" class="btn btn-primary"> Add Schedule </button>
+                                <button type="button" class="btn btn-primary" onClick="add_schedule();"> Add Schedule </button>
                             </div>
 
                         </form>
@@ -187,5 +237,152 @@
     </div>
 
     {{ template.footer|raw }}
+
+    <script>
+    
+        // START : SCRIPT : ADD A EXAM_TYPE
+        addexam_type = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD CLASS DATA
+            formData.append('exam_type_name', $("#exam_type").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/exam/ajax_addexam_type",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Exam Type added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A EXAM_TYPE
+
+        // START : SCRIPT : CREATE EXAM
+        create_exam = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD EXAM DATA
+            formData.append('exam_type', $("#examtype").val())
+            formData.append('exam_year', $("#examyear").val())
+            formData.append('exam_venue', $("#venue").val())
+            formData.append('exam_instructions', $("#instructions").val())
+            
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/exam/ajax_create_exam",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Exam created successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : CREATE EXAM
+
+        // START : SCRIPT : ADD EXAM SCHEDULE
+        add_schedule = () => {
+
+            $()
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD EXAM SCHEDULE DATA
+            formData.append('select_exam_name', $("#exam_name").val())
+            formData.append('exam_grade', $("#grade").val())
+            formData.append('exam_subject_name', $("#subject").val())
+            formData.append('exam_date', $("#date").val())
+            formData.append('exam_starttime', $("#starttime").val())
+            formData.append('exam_endtime', $("#endtime").val())
+            formData.append('exam_instructions', $("#exam_instructions").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/exam/ajax_add_schedule",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Exam schedule updated successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD EXAM SCHEDULE
+
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#starttimepicker').datetimepicker({
+                format: 'LT',
+                icons: {
+                    time: "la la-clock-o",
+                    date: "la la-calendar",
+                    up: "la la-angle-up",
+                    down: "la la-angle-down"
+                }
+            });
+
+            $('#endtimepicker').datetimepicker({
+                format: 'LT',
+                icons: {
+                    time: "la la-clock-o",
+                    date: "la la-calendar",
+                    up: "la la-angle-up",
+                    down: "la la-angle-down"
+                }
+            });
+        });
+    </script>
 
 </body>
