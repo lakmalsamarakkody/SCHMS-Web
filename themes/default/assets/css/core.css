@@ -25,10 +25,10 @@ body{
     background-color: var(--main-bg-color);
 }
 
-/* OVERRIDE BUTTON LIGHT CLASS FOR SELECT PICKER */
+/* OVERRIDE BUTTON LIGHT CLASS FOR SELECT PICKER
 .btn-light {
-    /* background-color: #FFFFFF !important; */
-}
+    background-color: #FFFFFF !important;
+} */
 
 .hrsearch{
     display: block; 
