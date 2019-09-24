@@ -39,6 +39,7 @@ class Student extends Controller {
         $this->load->model('district');
         $this->load->model('subject');
         $this->load->model('exam');
+        $this->load->model('exam/type');
         $this->load->model('sport');
         $this->load->model('religion');
 
@@ -53,40 +54,42 @@ class Student extends Controller {
         endforeach;
 
         //GRADE
-        foreach( $this->model_grade->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_grade->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_grade'][$key]['id'] = $element->id;
             $data['student_grade'][$key]['name'] = $element->name;
         endforeach;
 
         //DISTRICT
-        foreach( $this->model_district->select('id', 'province_id', 'name')->get() as $key => $element ):
+        foreach( $this->model_district->select('id', 'province_id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_district'][$key]['id'] = $element->id;
             $data['student_district'][$key]['province']['id'] = $element->province_id;
             $data['student_district'][$key]['name'] = $element->name;
         endforeach;
 
         //SUBJECT
-        foreach( $this->model_subject->select('id', 'name', 'si_name')->get() as $key => $element ):
+        foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('name')->get() as $key => $element ):
             $data['student_subject'][$key]['id'] = $element->id;
             $data['student_subject'][$key]['name'] = $element->name;
             $data['student_subject'][$key]['si_name'] = $element->si_name;
         endforeach;
 
         //EXAM
-        foreach( $this->model_exam->select('id', 'type_id','year')->get() as $key => $element ):
+        foreach( $this->model_exam->select('id', 'type_id','year')->orderBy('year', 'DESC')->get() as $key => $element ):
             $data['student_exam'][$key]['id'] = $element->id;
             $data['student_exam'][$key]['type_id'] = $element->type_id;
             $data['student_exam'][$key]['year'] = $element->year;
+
+            $data['student_exam'][$key]['type']['name'] = $this->model_exam_type->select('name')->where('id', '=', $element->type_id)->first()->name;
         endforeach;
 
         //SPORT
-        foreach( $this->model_sport->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_sport->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_sport'][$key]['id'] = $element->id;
             $data['student_sport'][$key]['name'] = $element->name;
         endforeach;
 
         //RELIGION
-        foreach( $this->model_religion->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_religion'][$key]['id'] = $element->id;
             $data['student_religion'][$key]['name'] = $element->name;
         endforeach;
@@ -161,20 +164,20 @@ class Student extends Controller {
         endforeach;
 
         //RELIGION
-        foreach( $this->model_religion->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_religion'][$key]['id'] = $element->id;
             $data['student_religion'][$key]['name'] = $element->name;
         endforeach;
 
         //DISTRICT
-        foreach( $this->model_district->select('id', 'province_id', 'name')->get() as $key => $element ):
+        foreach( $this->model_district->select('id', 'province_id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_district'][$key]['id'] = $element->id;
             $data['student_district'][$key]['province']['id'] = $element->province_id;
             $data['student_district'][$key]['name'] = $element->name;
         endforeach;
 
         //RELATIONSHIP
-        foreach( $this->model_student_relation->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_student_relation->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_relation_type'][$key]['id'] = $element->id;
             $data['student_relation_type'][$key]['name'] = $element->name;
         endforeach;

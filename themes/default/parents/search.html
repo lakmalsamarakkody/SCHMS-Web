@@ -24,57 +24,81 @@
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_nic">NIC</label>
-                                            <input type="text" class="form-control" id="g_nic"/>
+                                            <label for="gnic">NIC</label>
+                                            <input type="text" class="form-control" id="gnic"/>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_rel">Relationship</label>
-                                            <select class="form-control" id="g_rel"></select>
+                                            <label for="grel">Relationship</label>
+                                            <select class="form-control" id="grel">
+                                                <option selected disabled> - Select Relationship - </option>
+                                                {% for relationship in student_relations %}
+                                                    <option value="{{ relationship.id }}">{{ relationship.name }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_gen">Gender</label>
-                                            <select class="form-control" id="g_gen"></select>
+                                            <label for="ggen">Gender</label>
+                                            <select class="form-control" id="ggen">
+                                                <option selected disabled> - Select Gender - </option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_city">City</label>
-                                            <select class="form-control" id="g_city"></select>
+                                            <label for="gcity">City</label>
+                                            <select class="form-control" id="gcity">
+                                                <option selected disabled> - Select City - </option>
+                                                {% for city in cities %}
+                                                    <option value="{{ city.name }}">{{ city.name }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_fn">Name</label>
-                                            <input type="text" class="form-control" id="g_fn"/>
+                                            <label for="gfn">Name</label>
+                                            <input type="text" class="form-control" id="gfn"/>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_occu">Occupation</label>
-                                            <select class="form-control" id="g_occu"></select>
+                                            <label for="goccu">Occupation</label>
+                                            <select class="form-control" id="goccu">
+                                                <option selected disabled> - Select Occupation - </option>
+                                                {% for occupation in occupations %}
+                                                    <option value="{{ occupation.name }}">{{ occupation.name }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_pos">Position</label>
-                                            <select class="form-control" id="g_pos"></select>
+                                            <label for="gpos">Position</label>
+                                            <select class="form-control" id="gpos">
+                                                <option selected disabled> - Select Position - </option>
+                                                {% for position in positions %}
+                                                    <option value="{{ position.name }}">{{ position.name }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="g_inc">Annual Income &gt; </label>
-                                            <input type="number" class="form-control" id="g_inc"/>
+                                            <label for="ginc">Annual Income &gt; </label>
+                                            <input type="number" class="form-control" id="ginc"/>
                                         </div>   
                                     </div>
                                 </div>
@@ -100,28 +124,48 @@
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="class">Class</label>
-                                            <select class="form-control" id="class"></select>
+                                            <select class="form-control" id="class">
+                                                    <option selected disabled> - Select Class - </option>
+                                                    {% for class in classes %}
+                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                    {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="grade">Grade</label>
-                                            <select class="form-control" id="grade"></select>
+                                            <select class="form-control" id="grade">
+                                                    <option selected disabled> - Select Grade - </option>
+                                                    {% for grade in grades %}
+                                                        <option value="{{ grade.id }}">{{ grade.name }}</option>
+                                                    {% endfor %}
+                                            </select>
                                         </div>                                        
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="sport">Sport</label>
-                                            <select class="form-control" id="sport"></select>
+                                            <select class="form-control" id="sport">
+                                                    <option selected disabled> - Select sport - </option>
+                                                    {% for sport in sports %}
+                                                        <option value="{{ sport.id }}">{{ sport.name }}</option>
+                                                    {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="religion">Religion</label>
-                                            <select class="form-control" id="religion"></select>
+                                            <select class="form-control" id="religion">
+                                                    <option selected disabled> - Select Religion - </option>
+                                                    {% for religion in religions %}
+                                                        <option value="{{ religion.id }}">{{ religion.name }}</option>
+                                                    {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 

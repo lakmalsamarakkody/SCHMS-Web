@@ -4,7 +4,7 @@
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ExamSchedule_Model extends EloquentModel {
+class ExamGrade_Model extends EloquentModel {
 
 	use SoftDeletes;
 	const CREATED_AT = 'created_on';
@@ -12,8 +12,8 @@ class ExamSchedule_Model extends EloquentModel {
 	const DELETED_AT = 'deleted_on';
 
 	// PARENT PROPERTIES
-	protected $table = 'exam_schedule';
-	protected $fillable = [ 'id', 'exam_grade_id', 'subject_id', 'date', 'start_time', 'end_time', 'venue', 'instructions' ];
+	protected $table = 'exam_has_grade';
+	protected $fillable = [ 'id', 'exam_id', 'grade_id' ];
 }
 
 ?>

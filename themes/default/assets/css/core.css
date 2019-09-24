@@ -25,16 +25,9 @@ body{
     background-color: var(--main-bg-color);
 }
 
-.btn-outline-theme-primary{
-    color: var(--sub-theme-color);
-    background-color: var(--white);
-    border-color: var(--sub-theme-color);
-}
-
-.btn-outline-theme-primary:hover{
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    border-color: var(--sub-theme-color);
+/* OVERRIDE BUTTON LIGHT CLASS FOR SELECT PICKER */
+.btn-light {
+    /* background-color: #FFFFFF !important; */
 }
 
 .hrsearch{

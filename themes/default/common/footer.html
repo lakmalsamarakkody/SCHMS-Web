@@ -3,14 +3,16 @@
 	<script type="text/javascript" src="{{ app.url }}/themes/{{ app.theme }}/assets/libs/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ app.url }}/themes/{{ app.theme }}/assets/libs/bts/js/popper.min.js"></script>
 	<script type="text/javascript" src="{{ app.url }}/themes/{{ app.theme }}/assets/libs/bts/js/bootstrap.min.js"></script>
-{% for script in scripts %}
-	<script type="text/javascript" src="{{ script }}"></script>
-{% endfor  %}
 
 	<script src="{{ app.url }}/themes/{{ app.theme }}/assets/js/moment.min.js"></script>
 	<script src="{{ app.url }}/themes/{{ app.theme }}/assets/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script src="{{ app.url }}/themes/{{ app.theme }}/assets/js/alertify.min.js"></script>
-	<script src="{{ app.url }}/themes/{{ app.theme }}/assets/js/multiple-select.js"></script>
+	<script src="{{ app.url }}/themes/{{ app.theme }}/assets/js/bootstrap-select.min.js"></script>
+	<script src="{{ app.url }}/themes/{{ app.theme }}/assets/js/core.js"></script>
+
+	{% for script in scripts %}
+		<script type="text/javascript" src="{{ script }}"></script>
+	{% endfor  %}
 
 <!-- <section class="footer">
 	<div class="container-fluid ">

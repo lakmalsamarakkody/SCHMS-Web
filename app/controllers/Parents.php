@@ -33,6 +33,77 @@ class Parents extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('student/relation');
+        $this->load->model('parent');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('staff');
+        $this->load->model('sport');
+        $this->load->model('religion');
+
+        // RELATIONSHIP
+		foreach( $this->model_student_relation->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+			$data['student_relations'][$key]['id'] = $element->id;
+			$data['student_relations'][$key]['name']= $element->name;
+        endforeach;
+
+        // CITIES
+        foreach( $this->model_parent->select('city')->distinct('city')->orderBy('city')->get() as $key => $element ):
+            if ( $element->city != NULL):
+            $data['cities'][$key]['name'] = $element->city;
+            endif;
+        endforeach;
+
+        // OCCUPATIONS
+        foreach( $this->model_parent->select('occupation')->distinct('occupation')->orderBy('occupation')->get() as $key => $element ):
+			$data['occupations'][$key]['name'] = $element->occupation;
+        endforeach;
+
+        // POSITIONS
+        foreach( $this->model_parent->select('position')->distinct('position')->orderBy('position')->get() as $key => $element ):
+            if ( $element->position != NULL):
+                $data['positions'][$key]['name'] = $element->position;
+            endif;
+        endforeach;
+
+        // CLASS
+		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->get() as $key => $element ):
+			$data['classes'][$key]['id'] = $element->id;
+			$data['classes'][$key]['grade']['id'] = $element->grade_id;
+			$data['classes'][$key]['name'] = $element->name;
+
+			// GET GRADE DETAILS
+			$data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+
+			// GET STAFF DETAILS
+			if ( $element->staff_id !== NULL):
+				$data['classes'][$key]['staff'] = $this->model_staff->select('initials', 'surname')->where('id', '=', $element->staff_id)->first()->toArray();
+			else:
+				$data['classes'][$key]['staff'] = "";
+			endif;				
+			
+		endforeach;
+
+		// GRADE
+		foreach( $this->model_grade->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['grades'][$key]['id'] = $element->id;
+			$data['grades'][$key]['name']= $element->name;
+		endforeach;
+        
+        // SPORT
+		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['sports'][$key]['id'] = $element->id;
+			$data['sports'][$key]['name']= $element->name;
+        endforeach;
+        
+		// RELIGION
+		foreach( $this->model_religion->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['religions'][$key]['id'] = $element->id;
+			$data['religions'][$key]['name']= $element->name;
+        endforeach;
+                
+        
 		// RENDER VIEW
         $this->load->view('parents/search', $data);
         
@@ -71,13 +142,13 @@ class Parents extends Controller {
         endforeach;
 
         //RELATIONSHIP
-        foreach( $this->model_student_relation->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_student_relation->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['relation_type'][$key]['id'] = $element->id;
             $data['relation_type'][$key]['name'] = $element->name;
         endforeach;
 
         //DISTRICT
-        foreach( $this->model_district->select('id', 'province_id', 'name')->get() as $key => $element ):
+        foreach( $this->model_district->select('id', 'province_id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['districts'][$key]['id'] = $element->id;
             $data['districts'][$key]['province']['id'] = $element->province_id;
             $data['districts'][$key]['name'] = $element->name;

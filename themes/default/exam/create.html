@@ -219,7 +219,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-9">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="subject_exam_venue"> Venue </label>
+                                        <input type="text" id="subject_exam_venue" class="form-control" maxlength="50"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-8">
                                     <div class="form-group">
                                         <label for="subject_exam_instructions"> Instructions </label>
                                         <textarea class="md-textarea form-control" rows="5" id="subject_exam_instructions"></textarea>
@@ -259,7 +266,7 @@
 
             // REQUEST
             $.ajax({
-                url: "{{ app.url }}/exam/ajax_addexam_type",
+                url: "{{ app.url }}/school/ajax_addexam_type",
                 method: 'POST',
                 data: formData,
                 processData: false,
@@ -336,6 +343,7 @@
             formData.append('exam_date', $("#exam_date").val())
             formData.append('exam_starttime', $("#exam_starttime").val())
             formData.append('exam_endtime', $("#exam_endtime").val())
+            formData.append('subject_exam_venue', $("#subject_exam_venue").val())
             formData.append('subject_exam_instructions', $("#subject_exam_instructions").val())
 
             // REQUEST

@@ -61,13 +61,13 @@ class Staff extends Controller {
 
 
         // STAFF CATEGORY
-        foreach( $this->model_staff_category->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_staff_category->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['staff_category'][$key]['id'] = $element->id;
             $data['staff_category'][$key]['name'] = $element->name;
         endforeach;
 
         // STAFF TYPE
-        foreach( $this->model_staff_type->select('id', 'name', 'category_id')->get() as $key => $element ):
+        foreach( $this->model_staff_type->select('id', 'name', 'category_id')->orderBy('name')->get() as $key => $element ):
             $data['staff_type'][$key]['id'] = $element->id;
             $data['staff_type'][$key]['name'] = $element->name;
             $data['staff_type'][$key]['category']['id'] = $element->category_id;
@@ -84,13 +84,13 @@ class Staff extends Controller {
         endforeach;
 
         //RELIGION
-        foreach( $this->model_religion->select('id', 'name')->get() as $key => $element ):
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['staff_religion'][$key]['id'] = $element->id;
             $data['staff_religion'][$key]['name'] = $element->name;
         endforeach;
 
         //DISTRICT
-        foreach( $this->model_district->select('id', 'province_id', 'name')->get() as $key => $element ):
+        foreach( $this->model_district->select('id', 'province_id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['staff_district'][$key]['id'] = $element->id;
             $data['staff_district'][$key]['province']['id'] = $element->province_id;
             $data['staff_district'][$key]['name'] = $element->name;

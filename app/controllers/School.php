@@ -29,6 +29,8 @@ class School extends Controller {
 		$this->load->model('religion');
 		$this->load->model('subject');
 		$this->load->model('student/relation');
+		$this->load->model('exam/type');
+		$this->load->model('sport');
 
 		// CLASS
 		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->get() as $key => $element ):
@@ -49,34 +51,45 @@ class School extends Controller {
 		endforeach;
 
 		// GRADE
-		foreach( $this->model_grade->select('id', 'name')->get() as $key => $element ):
+		foreach( $this->model_grade->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['grades'][$key]['id'] = $element->id;
 			$data['grades'][$key]['name']= $element->name;
 		endforeach;
 		
 		// RELIGION
-		foreach( $this->model_religion->select('id', 'name')->get() as $key => $element ):
+		foreach( $this->model_religion->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['religions'][$key]['id'] = $element->id;
 			$data['religions'][$key]['name']= $element->name;
 		endforeach;
 
 		// SUBJECT
-		foreach( $this->model_subject->select('id', 'name', 'si_name')->get() as $key => $element ):
+		foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('id')->get() as $key => $element ):
 			$data['subjects'][$key]['id'] = $element->id;
 			$data['subjects'][$key]['name']= $element->name;
 			$data['subjects'][$key]['si_name']= $element->si_name;
 		endforeach;
 
 		// RELATIONSHIP
-		foreach( $this->model_student_relation->select('id', 'name')->get() as $key => $element ):
+		foreach( $this->model_student_relation->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['student_relations'][$key]['id'] = $element->id;
 			$data['student_relations'][$key]['name']= $element->name;
+		endforeach;
+
+		// EXAM TYPE
+		foreach( $this->model_exam_type->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['exam_types'][$key]['id'] = $element->id;
+			$data['exam_types'][$key]['name']= $element->name;
+		endforeach;
+
+		// SPORT
+		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['sports'][$key]['id'] = $element->id;
+			$data['sports'][$key]['name']= $element->name;
 		endforeach;
 
 
 		// RENDER VIEW
 		$this->load->view('school/index', $data);
-
 	}
 
 	public function ajax_addclass() {
@@ -85,8 +98,8 @@ class School extends Controller {
          * This method will receive ajax request from
          * the front end with the payload
          * 
-         *   class_name
-         *   grade_id
+         *   - class_name
+         *   - grade_id
          * 
          * We need to validate the data and then perform
          * the following tasks.
@@ -120,7 +133,7 @@ class School extends Controller {
 		// VALIDATION : employee_id
         $is_valid_employee_id = GUMP::is_valid($this->request->post, array('employee_id' => 'numeric|max_len,6'));
         if ( $is_valid_employee_id !== true ):
-            echo json_encode( array( "error" => $is_valid_employee_id[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid Employee ID" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 
@@ -162,7 +175,6 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
-
 	}
 
 	public function ajax_addgrade() {
@@ -171,7 +183,7 @@ class School extends Controller {
          * This method will receive ajax request from
          * the front end with the payload
          * 
-         *   grade_name
+         *   - grade_name
          * 
          * We need to validate the data and then perform
          * the following tasks.
@@ -207,7 +219,6 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
-
 	}
 
 	public function ajax_addreligion() {
@@ -216,7 +227,7 @@ class School extends Controller {
          * This method will receive ajax request from
          * the front end with the payload
          * 
-         *   religion_name
+         *   - religion_name
          * 
          * We need to validate the data and then perform
          * the following tasks.
@@ -232,7 +243,7 @@ class School extends Controller {
 		header('Content-Type: application/json');
 		
 		// VALIDATION : religion_name
-        $is_valid_religion_name = GUMP::is_valid($this->request->post, array('religion_name' => 'required|alpha'));
+        $is_valid_religion_name = GUMP::is_valid($this->request->post, array('religion_name' => 'required|valid_name'));
         if ( $is_valid_religion_name !== true ):
             echo json_encode( array( "error" => "Please enter a religion name" ), JSON_PRETTY_PRINT );
             exit();
@@ -252,7 +263,6 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
-
 	}
 
 	public function ajax_addsubject() {
@@ -261,8 +271,8 @@ class School extends Controller {
          * This method will receive ajax request from
          * the front end with the payload
          * 
-         *	subject_name
-		 *	ubject_si_name
+         *	- subject_name
+		 *	- subject_si_name
          * 
          * We need to validate the data and then perform
          * the following tasks.
@@ -307,7 +317,6 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
-
 	}
 
 	public function ajax_addrelation() {
@@ -316,7 +325,7 @@ class School extends Controller {
          * This method will receive ajax request from
          * the front end with the payload
          * 
-         *	relation_name
+         *	- relation_name
          * 
          * We need to validate the data and then perform
          * the following tasks.
@@ -332,7 +341,7 @@ class School extends Controller {
 		header('Content-Type: application/json');
 		
 		// VALIDATION : relation_name
-        $is_valid_relation_name = GUMP::is_valid($this->request->post, array('relation_name' => 'required|alpha_space'));
+        $is_valid_relation_name = GUMP::is_valid($this->request->post, array('relation_name' => 'required|valid_name'));
         if ( $is_valid_relation_name !== true ):
             echo json_encode( array( "error" => "Please enter a relation type name" ), JSON_PRETTY_PRINT );
             exit();
@@ -352,8 +361,95 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
-
 	}
+
+	public function ajax_addexam_type() {
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- exam_type_name
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+		//  MODEL
+		$this->load->model('exam/type');
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+		
+		// VALIDATION : exam_type_name
+		$is_valid_exam_type_name = GUMP::is_valid($this->request->post, array('exam_type_name' => 'required|alpha_space'));
+		if ( $is_valid_exam_type_name !== true ):
+			echo json_encode( array( "error" => "Please enter exam type name" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+			// EXAM_TYPE IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_exam_type->select('id')->where('name', '=', $this->request->post['exam_type_name'])->first() != NULL ):
+				echo json_encode( array( "error" => "This Exam type is already exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		
+		$this->model_exam_type->name = $this->request->post['exam_type_name'];
+		
+		// SUBMIT
+		if ( $this->model_exam_type->save() ):
+			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+		else:
+			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	 }
+
+	 public function ajax_addsport() {
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- sport name
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+		//  MODEL
+		$this->load->model('sport');
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+		
+		// VALIDATION : sport
+		$is_valid_sport = GUMP::is_valid($this->request->post, array('sport_name' => 'required|valid_name'));
+		if ( $is_valid_sport !== true ):
+			echo json_encode( array( "error" => "Please enter a sport name" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+			// SPORT IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_sport->select('id')->where('name', '=', $this->request->post['sport_name'])->first() != NULL ):
+				echo json_encode( array( "error" => "This Sport is already exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		
+		$this->model_sport->name = $this->request->post['sport_name'];
+		
+		// SUBMIT
+		if ( $this->model_sport->save() ):
+			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+		else:
+			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	 }
 }
 
 ?>

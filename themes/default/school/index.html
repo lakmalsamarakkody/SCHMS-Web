@@ -14,12 +14,12 @@
                 <div class="row">
 
                     <!-- START : CLASS MANAGER -->
-                    <div class="col mx-auto">
+                    <div class="col-4 mx-auto">
 
                         <div class="card">
 
                             <div class="card-header">
-                                <h6 class="pull-left">Classes</h6>
+                                <h6 class="pull-left">CLASSES</h6>
                                 <div class="button-group pull-right">
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addclass">ADD</button>
                                 </div>
@@ -62,10 +62,10 @@
                     <!-- END : CLASS MANAGER -->
 
                     <!-- START : GRADE MANAGER -->
-                    <div class="col mx-auto">
+                    <div class="col-4 mx-auto">
                         <div class="card">
                             <div class="card-header">
-                                <h6 class="pull-left">Grades</h6>
+                                <h6 class="pull-left">GRADES</h6>
                                 <div class="button-group pull-right">
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addgrade">ADD</button>
                                 </div>
@@ -95,10 +95,10 @@
                     <!-- END : GRADE MANAGER -->
 
                     <!-- START : RELIGION MANAGER -->
-                    <div class="col mx-auto">
+                    <div class="col-4 mx-auto">
                         <div class="card">
                             <div class="card-header">
-                                <h6 class="pull-left">Religions</h6>
+                                <h6 class="pull-left">RELIGIONS</h6>
                                 <div class="button-group pull-right">
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addreligion">ADD</button>
                                 </div>
@@ -128,10 +128,10 @@
                     <!-- END : RELIGION MANAGER -->
 
                     <!-- START : SUBJECT MANAGER -->
-                    <div class="col mx-auto">
+                    <div class="col-4 mx-auto">
                         <div class="card">
                             <div class="card-header">
-                                <h6 class="pull-left">Subjects</h6>
+                                <h6 class="pull-left">SUBJECTS</h6>
                                 <div class="button-group pull-right">
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addsubject">ADD</button>
                                 </div>
@@ -163,10 +163,10 @@
                     <!-- END : SUBJECT MANAGER -->
 
                     <!-- START : RELATIONSHIP MANAGER -->
-                    <div class="col mx-auto">
+                    <div class="col-4 mx-auto">
                         <div class="card">
                             <div class="card-header">
-                                <h6 class="pull-left">Student Relationships</h6>
+                                <h6 class="pull-left">STUDENT RELATIONSHIPS</h6>
                                 <div class="button-group pull-right">
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addrelation">ADD</button>
                                 </div>
@@ -195,6 +195,72 @@
                     </div>
                     <!-- END : RELATIONSHIP MANAGER -->
 
+                    <!-- START : EXAM TYPE MANAGER -->
+                    <div class="col-4 mx-auto">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="pull-left">EXAM TYPES</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_addexamtype">ADD</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Exam Type </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for exam_type in exam_types %}
+                                            <tr>
+                                                <th scope="row"> {{ exam_type.id }} </th>
+                                                <td> {{ exam_type.name }} </td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END : EXAM TYPE MANAGER -->
+
+                    <!-- START : EXAM TYPE MANAGER -->
+                    <div class="col-4 mx-auto">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="pull-left">SPORTS</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_addsport">ADD</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Sport </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for sport in sports %}
+                                            <tr>
+                                                <th scope="row"> {{ sport.id }} </th>
+                                                <td> {{ sport.name }} </td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END : EXAM TYPE MANAGER -->
+
                 </div>
 
             </div>
@@ -209,7 +275,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A CLASS</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW CLASS</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -263,7 +329,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A GRADE</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW GRADE</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -297,7 +363,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A RELIGION</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW RELIGION</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -331,7 +397,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A SUBJECT</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW SUBJECT</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -372,7 +438,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A STUDENT RELATION</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW STUDENT RELATIONSHIP</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -399,6 +465,62 @@
         </div>
     </div>
     <!-- END : MODAL : ADD SUBJECT -->
+
+    <!-- START : MODAL CREATE EXAM-TYPE -->
+    <div class="modal fade" id="model_addexamtype" tabindex="-1" role="dialog" aria-labelledby="model_addexamtype-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="model_addexamtype-title"> ADD A NEW EXAM TYPE </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exam_type"> Exam Type Name </label>
+                            <input type="text" class="form-control" id="exam_type"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="addexam_type();"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE EXAM-TYPE -->
+
+    <!-- START : MODAL CREATE SPORT -->
+    <div class="modal fade" id="model_addsport" tabindex="-1" role="dialog" aria-labelledby="model_addsport-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="model_addsport-title"> ADD A NEW SPORT </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="sport_name"> Sport Name </label>
+                            <input type="text" class="form-control" id="sport_name"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="addsport();"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE SPORT -->
 
 
     <script>
@@ -447,7 +569,7 @@
             // PAYLOAD
             var formData = new FormData;
 
-            // ADD CLASS DATA
+            // ADD GRADE DATA
             formData.append('grade_name', $("#grade_no").val())
 
             // REQUEST
@@ -483,7 +605,7 @@
             // PAYLOAD
             var formData = new FormData;
 
-            // ADD CLASS DATA
+            // ADD RELIGION DATA
             formData.append('religion_name', $("#religion").val())
 
             // REQUEST
@@ -519,7 +641,7 @@
             // PAYLOAD
             var formData = new FormData;
 
-            // ADD CLASS DATA
+            // ADD SUBJECT DATA
             formData.append('subject_name', $("#subject").val())
             formData.append('subject_in_sinhala', $("#subject_siname").val())
 
@@ -556,7 +678,7 @@
             // PAYLOAD
             var formData = new FormData;
 
-            // ADD CLASS DATA
+            // ADD RELATION DATA
             formData.append('relation_name', $("#relation").val())
 
             // REQUEST
@@ -585,6 +707,78 @@
             })
         }
         // END : SCRIPT : ADD A RELATION
+
+        // START : SCRIPT : ADD A EXAM_TYPE
+        addexam_type = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD EXAM_TYPE DATA
+            formData.append('exam_type_name', $("#exam_type").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_addexam_type",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Exam Type added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A EXAM_TYPE
+
+        // START : SCRIPT : ADD A SPORT
+        addsport = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD EXAM_TYPE DATA
+            formData.append('sport_name', $("#sport_name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_addsport",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Sport added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A SPORT
     
     </script>
 

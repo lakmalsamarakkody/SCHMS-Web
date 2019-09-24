@@ -20,18 +20,23 @@
                             <div class="form-row">
 
                                 <div class="form-group col-md-1 ml-auto">
-                                    <label for="class"> Select Class </label>
-                                    <select class="form-control" id="class"></select>
+                                    <label for="timetable_class"> Select Class </label>
+                                    <select class="form-control" id="timetable_class">
+                                        <option selected disabled> - Select - </option>
+                                        {% for staff_class in classes %}
+                                        <option value="{{ staff_class.id }}"> {{ staff_class.grade.name }} - {{ staff_class.name }} </option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
 
                                 <div class="form-group col-md-1 mr-1">
-                                    <label for="empid">Employee ID</label>
-                                    <input type="number" class="form-control" id="empid"/>
+                                    <label for="timetable_empid">Employee ID</label>
+                                    <input type="number" class="form-control" id="timetable_empid"/>
                                 </div>
 
                                 <div class="form-group col-md-3 p-0">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name"/>
+                                    <label for="timetable_name">Name</label>
+                                    <input type="text" class="form-control" id="timetable_name"/>
                                 </div>
 
                             </div>

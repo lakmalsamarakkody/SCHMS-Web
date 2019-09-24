@@ -61,7 +61,7 @@ class User extends Controller {
         // RETRIVE USER_ROLE
         $this->load->model('user/role');
 
-        foreach( $this->model_user_role->select('id', 'role')->get() as $key => $element ):
+        foreach( $this->model_user_role->select('id', 'role')->orderBy('role')->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
             $data['user']['roles'][$key]['name'] = $element->role;
         endforeach;

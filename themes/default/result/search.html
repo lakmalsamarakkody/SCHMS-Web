@@ -23,27 +23,32 @@
     
                                 <div class="form-group col-md-2">
                                     <label for="exam"> Select Exam </label>
-                                    <select class="form-control" id="exam" required></select>
+                                    <select class="form-control" id="exam_name">
+                                        <option selected disabled> - Select Exam - </option>
+                                        {% for exam in exams %}
+                                            <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    <label for="examyear"> Year </label>
-                                    <select class="form-control" id="examyear" required></select>
+                                    <label for="exam_grade"> Grade </label>
+                                    <select class="form-control" id="exam_grade"></select>
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    <label for="class"> Class </label>
-                                    <select class="form-control" id="class" required></select>
+                                    <label for="exam_class"> Class </label>
+                                    <select class="form-control" id="exam_class"></select>
                                 </div>
 
                                 <div class="form-group col-md-1 ml-auto">
-                                    <label for="addno">Admission No</label>
-                                    <input type="number" class="form-control" id="addno"/>
+                                    <label for="stu_addno">Admission No</label>
+                                    <input type="number" class="form-control" id="stu_addno"/>
                                 </div>
 
                                 <div class="form-group col-md-3">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name"/>
+                                    <label for="stu_name">Name</label>
+                                    <input type="text" class="form-control" id="stu_name"/>
                                 </div>
 
                             </div>

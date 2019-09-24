@@ -123,7 +123,7 @@
                                             <select class="form-control" id="exam">
                                                 <option selected disabled> - Select Exam - </option>
                                                 {% for exam in student_exam%}
-                                                <option value="{{ exam.id }}"> SHIT - {{ exam.year }} </option>
+                                                <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
                                                 {% endfor %}
                                             </select>
                                         </div>
