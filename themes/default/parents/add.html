@@ -15,7 +15,6 @@
 
                     <h4 class="page-title"> Add Parent Details </h4>
 
-
                     <!-- START : SEARCH STUDENT -->
                     <div class="card mt-4">
                         <div class="card-header">Search relevant student</div>
@@ -28,14 +27,22 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="addno">Admission Number</label>
-                                            <input type="number" class="form-control" id="addno" maxlength="6"/>
+                                            {% if search.query.addno %}
+                                            <input type="number" value="{{ search.query.addno }}" class="form-control" name="addno" maxlength="6"/>
+                                            {% else %}
+                                            <input type="number" class="form-control" name="addno" maxlength="6"/>
+                                            {% endif %}
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="admission_date">Admission Date</label>
-                                            <input type="date" id="adddate" class="form-control"/>
+                                            {% if search.query.admission_date %}
+                                            <input type="date" value="{{ search.query.admission_date }}" class="form-control" name="admission_date" maxlength="6"/>
+                                            {% else %}
+                                            <input type="date" name="admission_date" class="form-control"/>
+                                            {% endif %}
                                             <small id="dobHelp" class="form-text text-muted">ex : 2019/09/18</small>
                                         </div>
                                     </div>
@@ -43,17 +50,25 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input type="text" class="form-control" id="name"/>
+                                            {% if search.query.name %}
+                                            <input type="text" value="{{ search.query.name }}" class="form-control" name="name"/>
+                                            {% else %}
+                                            <input type="text" class="form-control" name="name" maxlength="6"/>
+                                            {% endif %}
                                         </div>
                                     </div>
         
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="class">Class</label>
-                                            <select class="form-control" id="class">
-                                                <option selected disabled> - Select Class - </option>
+                                            <select class="form-control" name="class">
+                                                <option>- Select Class -</option>
                                                 {% for class in student_class %}
-                                                <option value="{{ class.id }}"> {{ class.grade.name}} - {{ class.name }}</option>
+                                                    {% if search.query.class == class.id %}
+                                                    <option value="{{ class.id }}" selected> {{ class.grade.name}} - {{ class.name }}</option>
+                                                    {% else %}
+                                                    <option value="{{ class.id }}"> {{ class.grade.name}} - {{ class.name }}</option>
+                                                    {% endif %}
                                                 {% endfor%}
                                             </select>
                                         </div>
@@ -74,185 +89,56 @@
                     </div>
                     <!-- END : SEARCH STUDENT -->
 
-                    <div class="row mt-4">
-                        <pre>
-                            {{ dump(students) }}
-                        </pre>
-                    </div>
+                    <!-- START : SEARCH STUDENT RESULT TABLE -->
+                    <div class="student-result-table">
+                        <table class="table table-hover table-responsive-md">
 
-                    <!-- START : ADD PARENT -->
-                    <div class="parentaddform">
-
-                        <form name="parentadd" method="POST" action="#">
-                            <div id="accordionparentadd">
-
-                                <!-- START : GUARDIAN 2 DETAILS -->
-                                <div class="card">
-        
-                                    <div class="card-header" id="headingGuardian2" data-toggle="collapse" data-target="#collapseGuardian2" aria-expanded="false" aria-controls="collapseGuardian2">
-                                        Father / Mother or 2nd Guardian 's Details
-                                    </div>
-            
-                                    <div id="collapseGuardian2" class="collapse" aria-labelledby="headingGuardian2" data-parent="#accordionparentadd">
-
-                                        <div class="card-body">
-
-                                            <div class="form-row">
-
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="g2fn">Full Name</label>
-                                                        <input type="text" class="form-control" id="g2fn" required/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2ini">Initials</label>
-                                                        <input type="text" class="form-control" id="g2ini" required/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-8">
-                                                    <div class="form-group">
-                                                        <label for="g2sn">Surname</label>
-                                                        <input type="text" class="form-control" id="g2sn" required/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2dob">Date of Birth</label>
-                                                        <input type="date" class="form-control" id="g2dob" required/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2rel">Relationship</label>
-                                                        <select class="form-control" id="g2rel" required>
-                                                            <option selected disabled> - Select Relation - </option>
-                                                            {% for relation in relation_type %}
-                                                            <option value="{{ relation.id }}"> {{ relation.name }} </option>
-                                                            {% endfor%}
-                                                        </select>
-                                                        <!-- <small id="addrelation" class="form-text text-muted">New Relationship</small> -->
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2gen">Gender</label>
-                                                        <select class="form-control" id="g2gen" required>
-                                                                <option selected disabled> - Select Gender - </option>
-                                                                <option value="Male"> Male </option>
-                                                                <option value="Female"> Female </option>
-                                                            </select>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2nic">National Identity Card (NIC)</label>
-                                                        <input type="text" class="form-control" id="g2nic" required/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2tel">Landline Number</label>
-                                                        <input type="number" class="form-control" id="g2tel" required/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2mobi">Mobile Number</label>
-                                                        <input type="number" class="form-control" id="g2mobi"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2occu">Occupation</label>
-                                                        <input type="text" class="form-control" id="g2occu"/>
-                                                        <small id="helpg2occu" class="form-text text-muted">Insert 'None' if Occupation isn't available</small>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2pos">Position</label>
-                                                        <input type="text" class="form-control" id="g2pos"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2inc">Annual Income</label>
-                                                        <input type="number" class="form-control" id="g2inc"/>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="g2mail">Email</label>
-                                                        <input type="text" class="form-control" id="g2mail"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="g2address">Address</label>
-                                                        <input type="text" class="form-control" id="g2address" required/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2city">City</label>
-                                                        <input type="text" class="form-control" id="g2city" required/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2dist">District</label>
-                                                        <select class="form-control" id="g2dist" required>
-                                                            <option selected disabled> - Select District - </option>
-                                                            {% for district in districts %}
-                                                            <option value="{{ district.id }}"> {{ district.name }} </option>
-                                                            {% endfor%}
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="g2province">Province</label>
-                                                        <select class="form-control" id="g2province" disabled></select>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                                
-                                        </div>
-            
-                                    </div>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Admission</th>
+                                    <th scope="col">Class</th>
+                                    <th scope="col">Index</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">DOB</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">City</th>
+                                    <th> &nbsp; </th>
                                     
-                                </div>
-                                <!-- END : GUARDIAN 2 DETAILS -->
+                                </tr>
+                            </thead>
 
-                            </div>
-        
-                            <button type="button" class="btn btn-primary" onClick="addparent();"> Add Parent </button>
-                            <button type="reset" class="btn btn-secondary"> Clear </button>
-        
-                        </form>
+                            <tbody>
+                                {% if search.students %}
+                                    {% for student in search.students %}
+                                    <tr>
+                                        <th scope="row">{{ student.admission_no }}</th>
+                                        <td>{{ student.class }}</td>
+                                        <td class="text-center">{{ student.index }}</td>
+                                        <td>{{ student.name }}</td>
+                                        <td>{{ student.gender }}</td>
+                                        <td>{{ student.dob }}</td>
+                                        <td>{{ student.address }}</td>
+                                        <td>{{ student.city }}</td>
+                                        <td width="8%">
+                                            {% if student.disabled %}
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_addparent" disabled>Add</button>
+                                            {% else %}
+                                            <button onclick="selectStudent({{ student.id }});" type="button" class="btn btn-primary">Add</button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="8" class="text-center"> No records to display </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
 
+                        </table>
                     </div>
-                    <!-- END : ADD PARENT -->
+                    <!-- END : SEARCH STUDENT RESULT TABLE -->
 
                 </div>
                 
@@ -263,6 +149,194 @@
 
 {{ template.footer|raw }}
 
+    <!-- START : MODAL : ADD PARENT -->
+    <div class="modal fade" id="modal_addparent" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW PARENT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- START : ADD PARENT -->
+                    <div class="parentaddform">
+
+                        <form name="parentadd" method="POST" action="#">
+                            <div id="accordionparentadd">
+
+                                <!-- START : GUARDIAN 2 DETAILS -->
+                                <div class="card">
+
+                                    <div class="card-body">
+
+                                        <div class="form-row">
+
+                                            <input type="hidden" id="student_id"/>
+
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="g2fn">Full Name</label>
+                                                    <input type="text" class="form-control" id="g2fn"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2ini">Initials</label>
+                                                    <input type="text" class="form-control" id="g2ini"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <label for="g2sn">Surname</label>
+                                                    <input type="text" class="form-control" id="g2sn"/>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2dob">Date of Birth</label>
+                                                    <input type="date" class="form-control" id="g2dob"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2rel">Relationship</label>
+                                                    <select class="form-control" id="g2rel">
+                                                        <option selected disabled> - Select Relation - </option>
+                                                        {% for relation in relation_type %}
+                                                        <option value="{{ relation.id }}"> {{ relation.name }} </option>
+                                                        {% endfor%}
+                                                    </select>
+                                                    <!-- <small id="addrelation" class="form-text text-muted">New Relationship</small> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2gen">Gender</label>
+                                                    <select class="form-control" id="g2gen">
+                                                            <option selected disabled> - Select Gender - </option>
+                                                            <option value="Male"> Male </option>
+                                                            <option value="Female"> Female </option>
+                                                        </select>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2nic">National Identity Card (NIC)</label>
+                                                    <input type="text" class="form-control" id="g2nic"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2tel">Landline Number</label>
+                                                    <input type="number" class="form-control" id="g2tel"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2mobi">Mobile Number</label>
+                                                    <input type="number" class="form-control" id="g2mobi"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2occu">Occupation</label>
+                                                    <input type="text" class="form-control" id="g2occu"/>
+                                                    <small id="helpg2occu" class="form-text text-muted">Insert 'None' if Occupation isn't available</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2pos">Position</label>
+                                                    <input type="text" class="form-control" id="g2pos"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2inc">Annual Income</label>
+                                                    <input type="number" class="form-control" id="g2inc"/>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="g2mail">Email</label>
+                                                    <input type="text" class="form-control" id="g2mail"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="g2address">Address</label>
+                                                    <input type="text" class="form-control" id="g2address"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2city">City</label>
+                                                    <input type="text" class="form-control" id="g2city"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2dist">District</label>
+                                                    <select class="form-control" id="g2dist">
+                                                        <option selected disabled> - Select District - </option>
+                                                        {% for district in districts %}
+                                                        <option value="{{ district.id }}"> {{ district.name }} </option>
+                                                        {% endfor%}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="g2province">Province</label>
+                                                    <select class="form-control" id="g2province" disabled></select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                            
+                                    </div>
+                                    
+                                </div>
+                                <!-- END : GUARDIAN 2 DETAILS -->
+
+                            </div>
+        
+                        </form>
+
+                    </div>
+                    <!-- END : ADD PARENT -->
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addparent();"> Add Parent </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : ADD PARENT -->
+
     <script>
 
         // FORMDATA REGISTERING
@@ -272,6 +346,7 @@
             var formData = new FormData;
 
             // GUARDIAN 2ND DATA
+            formData.append('student_id', $("#student_id").val())
             formData.append('second_guardian_full_name', $("#g2fn").val())
             formData.append('second_guardian_initials', $("#g2ini").val())
             formData.append('second_guardian_surname', $("#g2sn").val())
@@ -291,6 +366,7 @@
             formData.append('second_guardian_province', $("#g2province").val())
 
             // CONSOLE LOG
+            console.log("STUDENT_ID : " + $("#student_id").val())
             console.log("FN : " + $("#g2fn").val())
             console.log("INI : " + $("#g2ini").val())
             console.log("SN : " + $("#g2sn").val())
@@ -383,6 +459,12 @@
 
         })
 
+
+        selectStudent = (studentId) => {
+            console.log(studentId)
+            $("#student_id").val(studentId);
+            $("#modal_addparent").modal("show");
+        }
     </script>
 </body>
 

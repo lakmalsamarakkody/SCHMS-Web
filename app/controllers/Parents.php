@@ -124,9 +124,12 @@ class Parents extends Controller {
 
         //  MODEL
         $this->load->model('student');
-        $this->load->model('class');
-        $this->load->model('grade');
         $this->load->model('student/relation');
+        $this->load->model('student/class');
+        $this->load->model('student/parent');
+
+        $this->load->model('class');
+        $this->load->model('grade');       
         $this->load->model('district');
         $this->load->model('province');
 
@@ -154,16 +157,17 @@ class Parents extends Controller {
             $data['districts'][$key]['name'] = $element->name;
         endforeach;
 
-        // CHECK SUBMIT
+        // CHECK SUBMIT ( STUDENT SEARCH )
         if ( isset($this->request->post['isSubmited']) ):
 
-            $student = $this->model_student->select('id', 'admission_no', 'admission_date', 'full_name', 'class_id');
+            $student = $this->model_student->select('id', 'admission_no', 'admission_date', 'full_name', 'class_id', 'gender', 'dob', 'address', 'city');
 
             // FILTER ( ADMISSION NO )
             if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):
                 $student->where(function($query) {
                     $query->where('admission_no', '=', $this->request->post['addno']);
                 });
+                $data['search']['query']['addno'] = $this->request->post['addno'];
             endif;
 
             // FILTER ( ADMISSION DATE )
@@ -171,6 +175,7 @@ class Parents extends Controller {
                 $student->where(function($query) {
                     $query->where('admission_date', '=', $this->request->post['admission_date']);
                 });
+                $data['search']['query']['admission_date'] = $this->request->post['admission_date'];
             endif;
 
             // FILTER ( NAME )
@@ -178,34 +183,56 @@ class Parents extends Controller {
                 $student->where(function($query) {
                     $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
                 });
+                $data['search']['query']['name'] = $this->request->post['name'];
             endif;
 
-            // FILTER ( NAME )
-            if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ):
+            // FILTER ( CLASS ID )
+            if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) AND $this->request->post['class'] != '- Select Class -' ):
+                echo "test";
                 $student->where(function($query) {
-                    $query->where('class-id', '=', $this->request->post['class']);
+                    $query->where('class_id', '=', $this->request->post['class']);
                 });
+                $data['search']['query']['class'] = $this->request->post['class'];
             endif;
 
             // APPEND DATA TO ARRAY
             foreach( $student->get() as $key => $value ):
-                $data['students'][$key]['id'] = $value->id;
-                $data['students'][$key]['admission_no'] = $value->admission_no;
-                $data['students'][$key]['admission_date'] = $value->admission_date;
-                $data['students'][$key]['name'] = $value->name;
-                $data['students'][$key]['class_id'] = $value->class_id;
-            endforeach;
+                $data['search']['students'][$key]['id'] = $value->id;
+                $data['search']['students'][$key]['admission_no'] = $value->admission_no;
+                $data['search']['students'][$key]['admission_date'] = $value->admission_date;
+                $data['search']['students'][$key]['name'] = $value->full_name;
 
-            // DISPLAY QUERY ( TEMP )
-            echo "<pre>";
-                var_dump( $student->toSql() );
-            echo "</pre>";
+                // GET CLASS NAME
+                $grade_id = $this->model_class->select('grade_id')->where('id', '=', $value->class_id)->first();
+                $grade_name = $this->model_grade->select('name')->where('id', '=', $grade_id->grade_id)->first();
+                $class_name = $this->model_class->select('name')->where('id', '=', $value->class_id)->first();
+
+                $data['search']['students'][$key]['class'] = $grade_name->name." - ".$class_name->name;
+
+                // GET INDEX
+                $data['search']['students'][$key]['index'] = $this->model_student_class->select('index_no')->where('stu_id', '=', $value->id)->where('class_id', '=', $value->class_id)->first()->index_no;
+
+
+                $data['search']['students'][$key]['gender'] = $value->gender;
+                $data['search']['students'][$key]['dob'] = $value->dob;
+                $data['search']['students'][$key]['address'] = $value->address;
+                $data['search']['students'][$key]['city'] = $value->city;
+                
+                // CHECK FOR 2 PARENTS
+                $is_available = $this->model_student_parent->select('id')->where('student_id', '=', $value->id)->count();
+
+                if ($is_available >= 2):
+                    $data['search']['students'][$key]['disabled'] = true;
+                else:
+                    $data['search']['students'][$key]['disabled'] = false;
+                endif;
+
+            endforeach;
 
         endif;
 
 		// RENDER VIEW
-        $this->load->view('parents/add', $data);
-        
+        $this->load->view('parents/add', $data);        
     }
 
     public function ajax_retrive_province_by_district($id) {
@@ -258,6 +285,8 @@ class Parents extends Controller {
 
         // MODEL
         $this->load->model('parent');
+        $this->load->model('student/parent');
+
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -299,8 +328,8 @@ class Parents extends Controller {
         endif;
 
             // CHECK : RELATION TYPE EXISTS
-            $is_duplicate_student_parent = $$this->model_student_parent->select('id')->where('relation_id', '=' , $this->request->post['second_guardian_relation'])->where('student_id', '=' , $this->request->post['student_id'])->first() != NULL;
-            if ( $is_duplicate_student_parent = TRUE ):
+            $is_duplicate_student_parent = $this->model_student_parent->select('id')->where('relation_id', '=' , $this->request->post['second_guardian_relation'])->where('student_id', '=' , $this->request->post['student_id'])->first();
+            if ( $is_duplicate_student_parent != NULL ):
                 echo json_encode( array( "error" => "This relation type exists" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
@@ -324,12 +353,6 @@ class Parents extends Controller {
             exit();
         endif;
 
-            // nic_number IS ENTERED : CHECK FOR DUPLICATE
-            if ( $this->model_parent->select('id')->where('nic', '=', $this->request->post['second_guardian_nic'])->first() != NULL ):
-                echo json_encode( array( "error" => "This NIC is already present" ), JSON_PRETTY_PRINT );
-                exit();
-            endif;
-
         // VALIDATION : second_guardian_telephone
         $is_valid_second_guardian_telephone = GUMP::is_valid($this->request->post, array('second_guardian_telephone' => 'required|numeric|max_len,10'));
         if ( $is_valid_second_guardian_telephone !== true AND $this->request->post['second_guardian_telephone'] !== "" ):
@@ -345,7 +368,7 @@ class Parents extends Controller {
         endif;
 
         // VALIDATION : second_guardian_occupation
-        $is_valid_second_guardian_occupation = GUMP::is_valid($this->request->post, array('second_guardian_occupation' => 'required|alpha|max_len,50'));
+        $is_valid_second_guardian_occupation = GUMP::is_valid($this->request->post, array('second_guardian_occupation' => 'required|alpha_space|max_len,50'));
         if ( $is_valid_second_guardian_occupation !== true ):
             echo json_encode( array( "error" => "Please insert a occupation" ), JSON_PRETTY_PRINT );
             exit();
@@ -372,14 +395,6 @@ class Parents extends Controller {
             exit();
         endif;
 
-            // email IS ENTERED : CHECK FOR DUPLICATE
-            if ( $this->request->post['second_guardian_email'] !== ""):
-                if ( $this->model_parent->select('id')->where('email', '=', $this->request->post['second_guardian_email'])->first() != NULL ):
-                    echo json_encode( array( "error" => "This Email is already present" ), JSON_PRETTY_PRINT );
-                    exit();
-                endif;
-            endif;
-
         // VALIDATION : second_guardian_address
         $is_valid_second_guardian_address = GUMP::is_valid($this->request->post, array('second_guardian_address' => 'required|street_address|max_len,50'));
         if ( $is_valid_second_guardian_address !== true ):
@@ -405,30 +420,14 @@ class Parents extends Controller {
         $this->load->model('parent');
         $this->load->model('student/parent');
 
-        // G2 POST DATA
-        $this->model_parent->full_name = $this->request->post['second_guardian_full_name'];
-        $this->model_parent->initials = $this->request->post['second_guardian_initials'];
-        $this->model_parent->surname = $this->request->post['second_guardian_surname'];
-        $this->model_parent->dob = $this->request->post['second_guardian_date_of_birth'];
-        $this->model_parent->gender = $this->request->post['second_guardian_gender'];
-        $this->model_parent->nic = $this->request->post['second_guardian_nic'];
-        $this->model_parent->phone_home = ( $this->request->post['second_guardian_telephone'] == "" )  ? null : $this->request->post['second_guardian_telephone'];
-        $this->model_parent->phone_mobile = ( $this->request->post['second_guardian_mobile_number'] == "" )  ? null : $this->request->post['second_guardian_mobile_number'];
-        $this->model_parent->occupation = $this->request->post['second_guardian_occupation'];
-        $this->model_parent->position = ( $this->request->post['second_guardian_position'] == "" )  ? null : $this->request->post['second_guardian_position'];
-        $this->model_parent->income = ( $this->request->post['second_guardian_income'] == "" )  ? null : $this->request->post['second_guardian_income'];
-        $this->model_parent->email = ( $this->request->post['second_guardian_email'] == "" )  ? null : $this->request->post['second_guardian_email'];
-        $this->model_parent->address = $this->request->post['second_guardian_address'];
-        $this->model_parent->city = $this->request->post['second_guardian_city'];
-        $this->model_parent->district_id = ( $this->request->post['second_guardian_district'] == "null" ) ? null : $this->request->post['second_guardian_district'];
-
+        $parent = $this->model_parent->select('id')->where('nic', '=', $this->request->post['second_guardian_nic'])->first();
+            
         // SUBMIT
-
-        if ( $this->model_parent->save() ):
+        if ( $parent !== null ):
 
             // INITIATE : STUDENT HAS PARENT RECORD
             $this->model_student_parent->student_id = $this->request->post['student_id'];
-            $this->model_student_parent->parent_id = $this->model_parent->id;
+            $this->model_student_parent->parent_id = $parent->id;
             $this->model_student_parent->relation_id = $this->request->post['second_guardian_relation'];
 
             // CHECK : STUDENT HAS PARENT QUERY
@@ -437,8 +436,43 @@ class Parents extends Controller {
             else:
                 echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
             endif;
+
         else:
-            echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+            // G2 POST DATA
+            $this->model_parent->full_name = $this->request->post['second_guardian_full_name'];
+            $this->model_parent->initials = $this->request->post['second_guardian_initials'];
+            $this->model_parent->surname = $this->request->post['second_guardian_surname'];
+            $this->model_parent->dob = $this->request->post['second_guardian_date_of_birth'];
+            $this->model_parent->gender = $this->request->post['second_guardian_gender'];
+            $this->model_parent->nic = $this->request->post['second_guardian_nic'];
+            $this->model_parent->phone_home = ( $this->request->post['second_guardian_telephone'] == "" )  ? null : $this->request->post['second_guardian_telephone'];
+            $this->model_parent->phone_mobile = ( $this->request->post['second_guardian_mobile_number'] == "" )  ? null : $this->request->post['second_guardian_mobile_number'];
+            $this->model_parent->occupation = $this->request->post['second_guardian_occupation'];
+            $this->model_parent->position = ( $this->request->post['second_guardian_position'] == "" )  ? null : $this->request->post['second_guardian_position'];
+            $this->model_parent->income = ( $this->request->post['second_guardian_income'] == "" )  ? null : $this->request->post['second_guardian_income'];
+            $this->model_parent->email = ( $this->request->post['second_guardian_email'] == "" )  ? null : $this->request->post['second_guardian_email'];
+            $this->model_parent->address = $this->request->post['second_guardian_address'];
+            $this->model_parent->city = $this->request->post['second_guardian_city'];
+            $this->model_parent->district_id = ( $this->request->post['second_guardian_district'] == "null" ) ? null : $this->request->post['second_guardian_district'];
+
+            if ( $this->model_parent->save() ):
+
+                // INITIATE : STUDENT HAS PARENT RECORD
+                $this->model_student_parent->student_id = $this->request->post['student_id'];
+                $this->model_student_parent->parent_id = $this->model_parent->id;
+                $this->model_student_parent->relation_id = $this->request->post['second_guardian_relation'];
+
+                // CHECK : STUDENT HAS PARENT QUERY
+                if ( $this->model_student_parent->save() ):
+                    echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                else:
+                    echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                endif;
+
+            else:
+                echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+            endif;
+
         endif;
     }
 }
