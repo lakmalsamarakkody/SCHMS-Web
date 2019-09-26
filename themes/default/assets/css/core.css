@@ -17,12 +17,16 @@
 body{
     cursor: default;
     font-size: 1rem;
+    font-family: 'Ubuntu';
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .content{
     overflow-y: auto;
     color: var(--main-text-color);
     background-color: var(--main-bg-color);
+    margin-left: 16.666667%;
 }
 
 /* OVERRIDE BUTTON LIGHT CLASS FOR SELECT PICKER
@@ -177,6 +181,9 @@ h5.page-title{
     padding: 0rem;
     overflow-y: auto;
     overflow-x: hidden;
+    background: #171a23;
+    position: fixed;
+    z-index: 1000;
 }
 
 .left-pane .logo{
@@ -209,14 +216,26 @@ h5.page-title{
 }
 
 .sidenav li.main-menu{
-    font-size: 1.1rem;
-    color: var(--sidenav-sub-text-color);
+    font-size: 15px;
+    /*color: var(--sidenav-sub-text-color);*/
+    color: var(--white);
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 15px;
 }
 
-.sidenav .main-menu :hover{
+.sidenar li.main-menu.active {
+    background: #262a35;
+}
+
+.sidenav .main-menu .la {
+    margin-right: 15px;
+}
+
+.sidenav .main-menu:hover{
     color: var(--white);
+    background: #262a35;
 }
 
 .sidenav li.main-menu .col-md-9{
@@ -239,7 +258,7 @@ h5.page-title{
 }
 
 .sidenav .main-menu .la{
-    font-size: 1.8rem;
+    font-size: 20px;
 }
 
 .sidenav .main-menu .la-angle-down{
@@ -248,15 +267,25 @@ h5.page-title{
     padding-right: 1rem;
 }
 
-.sidenav #dashboard{
-    padding: 1rem 0rem 1rem 1rem;
-    background-color: rgba(255,255,255,0.1);
+.sidenav ul {
+    padding-left: 0;
 }
 
 .sidenav li.sub-menu{
-    padding: 0.7rem 0rem 0.7rem 1rem;
-    font-size: 1rem;
-    color: var(--sidenav-sub-text-color);
+    padding: 10px;
+    padding-left: 50px;
+    font-size: 15px;
+    color: var(--white);
+    background: #131419;
+}
+
+.sidenav li.sub-menu .la {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.sidenav li.sub-menu:hover{
+    background: #1d1f29;
 }
 
 .sidenav li.sub-menu a{

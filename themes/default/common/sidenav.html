@@ -11,15 +11,15 @@
             <ul class="sidenav">
 
                 <!-- START : DASHBOARD MENU -->
-                <li class="main-menu mt-3" id="dashboard">
+                <li class="main-menu mt-3 active" id="dashboard">
                     <a href="{{ app.url }}"><i class="la la-dashboard"></i><span>&nbsp;Dashboard</span></a>
                 </li>
                 <!-- END : DASHBOARD MENU -->
 
                 <!-- START : ATTENDANCE MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/attendance/"><i class="la la-calendar"></i><span>&nbsp;Attendance</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#attendance"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/attendance/"><i class="la la-calendar"></i><span>&nbsp;Attendance</span></a></div>
+                    <div data-toggle="collapse" data-target="#attendance"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="attendance">
@@ -37,8 +37,8 @@
             
                 <!-- START : STUDENT MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/student/"> <i class="la la-graduation-cap"></i><span>&nbsp;Student</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#student"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/student/"> <i class="la la-graduation-cap"></i><span>&nbsp;Student</span></a></div>
+                    <div data-toggle="collapse" data-target="#student"><i class="la la-angle-down"></i></div>
                 </li>
                 
                     <ul class="collapse" id="student">
@@ -56,8 +56,8 @@
 
                 <!-- START : EXAM MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/exam/"><i class="la la-newspaper-o"></i><span>&nbsp;Exam Schedule</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#exam"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/exam/"><i class="la la-newspaper-o"></i><span>&nbsp;Exam Schedule</span></a></div>
+                    <div data-toggle="collapse" data-target="#exam"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="exam">
@@ -75,8 +75,8 @@
 
                 <!-- START : TIME TABLE MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/timetable/"><i class="la la-clock-o"></i><span>&nbsp;Time table</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#timetable"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/timetable/"><i class="la la-clock-o"></i><span>&nbsp;Time table</span></a></div>
+                    <div data-toggle="collapse" data-target="#timetable"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="timetable">
@@ -94,8 +94,8 @@
 
                 <!-- START :RESULT MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/result/"><i class="la la-certificate"></i><span>&nbsp;Result</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#result"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/result/"><i class="la la-certificate"></i><span>&nbsp;Result</span></a></div>
+                    <div data-toggle="collapse" data-target="#result"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="result">
@@ -113,8 +113,8 @@
 
                 <!-- START : PROGRESS MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}"><i class="la la-area-chart"></i><span>&nbsp;Progress Report</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#progress"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}"><i class="la la-area-chart"></i><span>&nbsp;Progress Report</span></a></div>
+                    <div data-toggle="collapse" data-target="#progress"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="progress">
@@ -132,8 +132,8 @@
 
                 <!-- START : SPORT MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/sport"><i class="la la-futbol-o"></i><span>&nbsp;Sport</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#sport"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/sport"><i class="la la-futbol-o"></i><span>&nbsp;Sport</span></a></div>
+                    <div data-toggle="collapse" data-target="#sport"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="sport">
@@ -151,8 +151,8 @@
 
                 <!-- START : HEALTH MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}"><i class="la la-heartbeat"></i><span>&nbsp;Health Record</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#health"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}"><i class="la la-heartbeat"></i><span>&nbsp;Health Record</span></a></div>
+                    <div data-toggle="collapse" data-target="#health"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="health">
@@ -170,8 +170,8 @@
 
                 <!-- START : PARENT MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/parents"><i class="la la-female"></i><span>&nbsp;Parent</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#parent"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/parents"><i class="la la-female"></i><span>&nbsp;Parent</span></a></div>
+                    <div data-toggle="collapse" data-target="#parent"><i class="la la-angle-down"></i></div>
                 </li>
 
                     <ul class="collapse" id="parent">
@@ -189,8 +189,8 @@
 
                 <!-- START : STAFF MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/staff/"><i class="la la-users"></i><span>&nbsp;Staff</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#staff"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/staff/"><i class="la la-users"></i><span>&nbsp;Staff</span></a></div>
+                    <div data-toggle="collapse" data-target="#staff"><i class="la la-angle-down"></i></div>
                 </li>
                 
                     <ul class="collapse" id="staff">
@@ -208,8 +208,8 @@
             
                  <!-- START : USER MENU -->
                 <li class="main-menu">
-                    <div class="col-md-9"><a href="{{ app.url }}/user/"><i class="la la-user-plus"></i><span>&nbsp;User</span></a></div>
-                    <div class="col-md-3" data-toggle="collapse" data-target="#user"><i class="la la-angle-down"></i></div>
+                    <div><a href="{{ app.url }}/user/"><i class="la la-user-plus"></i><span>&nbsp;User</span></a></div>
+                    <div data-toggle="collapse" data-target="#user"><i class="la la-angle-down"></i></div>
                 </li>
                 
                     <ul class="collapse" id="user">
@@ -226,11 +226,11 @@
                 <!-- END : USER MENU -->
 
                 <li class="main-menu" id="school">
-                    <div class="col-md-9"><a href="{{ app.url }}/school"><i class="la la-institution"></i><span>&nbsp;School</span></a></div>
+                    <div><a href="{{ app.url }}/school"><i class="la la-institution"></i><span>&nbsp;School</span></a></div>
                 </li>
 
                 <li class="main-menu" id="backup">
-                    <div class="col-md-9"><a href="{{ app.url }}"><i class="la la-cloud-upload"></i><span>&nbsp;Backup</span></a></div>
+                    <div><a href="{{ app.url }}"><i class="la la-cloud-upload"></i><span>&nbsp;Backup</span></a></div>
                 </li>
 
             </ul>
