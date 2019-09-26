@@ -10,54 +10,69 @@
             <div class="col-md-10 content">               
                 {{ template.topmenu|raw }}
 
-                <div class="resultadd">
+                <div class="container resultadd">
 
                     <h4 class="page-title"> Add / Edit Exam Result </h4>
 
                     <!-- START : SEARCH EXAM -->
-                    <section class="addresult-filter mt-4">
+                    <div class="card mt-4">
+                        <div class="card-header">Search relevant student</div>
+                        <div class="card-body">
+                            <section class="addresult-filter mt-4">
 
-                        <form name="addresult-form">
+                                <form name="addresult-form">
 
-                            <div class="form-row">
-    
-                                <div class="form-group col-md-2">
-                                    <label for="exam"> Select Exam </label>
-                                    <select class="form-control" id="exam" required></select>
-                                </div>
+                                    <div class="form-row">
+                                        
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="exam"> Select Exam </label>
+                                                <select class="form-control" id="exam" required></select>
+                                            </div>
+                                        </div>
 
-                                <div class="form-group col-md-1">
-                                    <label for="examyear"> Year </label>
-                                    <select class="form-control" id="examyear" required></select>
-                                </div>
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="examyear"> Year </label>
+                                                <select class="form-control" id="examyear" required></select>
+                                            </div>
+                                        </div>
 
-                                <div class="form-group col-md-1">
-                                    <label for="class"> Class </label>
-                                    <select class="form-control" id="class" required></select>
-                                </div>
+                                        <div class="col-1">
+                                            <div class="form-group">
+                                                <label for="class"> Class </label>
+                                                <select class="form-control" id="class" required></select>
+                                            </div>
+                                        </div>
 
-                                <div class="form-group col-md-1 ml-auto">
-                                    <label for="addno">Admission No</label>
-                                    <input type="number" class="form-control" id="addno"/>
-                                </div>
+                                        <div class="offset-2 col-2">
+                                            <div class="form-group">
+                                                <label for="addno">Admission No</label>
+                                                <input type="number" class="form-control" id="addno"/>
+                                            </div>
+                                        </div>
 
-                                <div class="form-group col-md-3">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name"/>
-                                </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" id="name"/>
+                                            </div>
+                                        </div>
 
-                            </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary"> Search </button>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
 
-                            <div class="form-row">
-                                <div class="form-group ml-auto mr-1">
-                                    <button type="submit" class="btn btn-primary"> Search </button>
-                                </div>
-                            </div>
+                                </form>
 
-                        </form>
-
-                    </section>
-                    <!-- END : SEARCH EXAM -->
+                            </section>
+                            <!-- END : SEARCH EXAM -->
+                        </div>
+                    </div>
 
                     <section class="SEARCH EXAM RESULT">
 

@@ -395,7 +395,20 @@ h5.page-title{
 
 /* result/add */
 .resultadd{
-    padding: 1rem;
+    /*padding: 1rem;*/
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.resultadd .card{
+    margin-bottom: 1rem;
+}
+ 
+.resultadd .card .card-header{
+    cursor: pointer;
+    color: var(--white);
+    background-color: var(--sub-theme-color);
+    border-radius: .25rem;
 }
 
 
