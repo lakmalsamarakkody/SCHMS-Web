@@ -15,18 +15,19 @@
 
                     <h4 class="page-title">Mark Attendance</h4>
 
+                    <!-- START : ATTENDANCE FILTER -->
                     <div class="attendancefilter">
                     
                         <form name="form-mark-attendance">
 
                             <div class="form-row">
 
-                                <div class="form-group col-md-1">
-                                    <label for="addno">ID</label>
+                                <div class="form-group col-md-2">
+                                    <label for="addno">ID Number</label>
                                     <input type="number" class="form-control" id="addno"/>
                                 </div>
 
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-3">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control" id="name"/>
                                 </div>
@@ -34,8 +35,8 @@
                                 <div class="form-group col-md-1 ml-auto">
                                     <label for="view">Select View</label>
                                     <select class="form-control" id="view">
-                                        <option selected disabled> - Select - </option>
-                                        <option value="staff"> Staff </option>
+                                        <option> - Select - </option>
+                                        <option value="Staff"> Staff </option>
                                             {% for class in student_class %}
                                             <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
                                             {% endfor %}
@@ -51,12 +52,42 @@
                             
                             <div class="form-row">
                                 <div class="form-group ml-auto mr-1">
+                                    <input type="hidden" name="isSubmited" value="true" />
                                     <button class="btn btn-primary" type="submit"> Go </button>
                                 </div>
                             </div>
                         </form>
 
                     </div>
+                    <!-- END : ATTENDANCE FILTER -->
+
+                    <!-- START : ATTENDANCE ADD TABLE -->
+                    <div class="attendance-add-table">
+                        <table class="table table-hover table-responsive-md">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Index No</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <th class="text-center" scope="row">1 </th>
+                                    <td class="text-center"> S A L SAMARAKKODY</td>
+                                    <td class="text-center"> 01 12 2018</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" data-toggle="toggle"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- END : ATTENDANCE ADD TABLE -->
 
                 </div>
             </div>
@@ -65,4 +96,6 @@
     </div>
 
 {{ template.footer|raw }}
+
+
 </body>

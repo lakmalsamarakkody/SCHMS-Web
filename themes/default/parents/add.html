@@ -112,15 +112,15 @@
                                 {% if search.students %}
                                     {% for student in search.students %}
                                     <tr>
-                                        <th scope="row">{{ student.admission_no }}</th>
-                                        <td>{{ student.class }}</td>
+                                        <th class="text-center" scope="row">{{ student.admission_no }}</th>
+                                        <td class="text-center">{{ student.class }}</td>
                                         <td class="text-center">{{ student.index }}</td>
                                         <td>{{ student.name }}</td>
-                                        <td>{{ student.gender }}</td>
+                                        <td  class="text-center">{{ student.gender }}</td>
                                         <td>{{ student.dob }}</td>
                                         <td>{{ student.address }}</td>
-                                        <td>{{ student.city }}</td>
-                                        <td width="8%">
+                                        <td class="text-center">{{ student.city }}</td>
+                                        <td class="text-center" width="8%">
                                             {% if student.disabled %}
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_addparent" disabled>Add</button>
                                             {% else %}

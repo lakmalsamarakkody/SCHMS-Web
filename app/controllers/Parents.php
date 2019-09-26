@@ -188,7 +188,6 @@ class Parents extends Controller {
 
             // FILTER ( CLASS ID )
             if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) AND $this->request->post['class'] != '- Select Class -' ):
-                echo "test";
                 $student->where(function($query) {
                     $query->where('class_id', '=', $this->request->post['class']);
                 });
