@@ -76,6 +76,11 @@ class Attendance extends Controller {
         // MODEL
         $this->load->model('class');
         $this->load->model('grade');
+        $this->load->model('student');
+        $this->load->model('staff');
+        $this->load->model('student/attendance');
+        $this->load->model('student/class');
+        $this->load->model('staff/attendance');
 
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -90,93 +95,69 @@ class Attendance extends Controller {
         // CHECK SUBMIT ( STUDENT SEARCH )
         if ( isset($this->request->post['isSubmited']) ):
 
-            $student = $this->model_student->select('id', 'admission_no', 'full_name', 'initials', 'surname', 'gender');
-            $staff = $this->model_staff->select('id', 'employee_number', 'full_name', 'initials', 'surname', 'gender');
-            $student_attendance = $this->model_student_attendance->select('id', 'student_id', 'date', 'time' );
-            $staff_attendance = $this->model_student_attendance->select('id', 'staff_id', 'date', 'time' );
+            // PRESERVE SUBMITED DATA
+            $data['form']['field']['addno'] = ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ) ? $this->request->post['addno'] : "";
+            $data['form']['field']['name'] = ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ) ? $this->request->post['name'] : "";
+            $data['form']['field']['isStaff'] = ( isset($this->request->post['isStaff']) AND !empty($this->request->post['isStaff']) ) ? $this->request->post['isStaff'] : "";
+            $data['form']['field']['class'] = ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ) ? $this->request->post['class'] : "";
+            $data['form']['field']['date'] = ( isset($this->request->post['date']) AND !empty($this->request->post['date']) ) ? $this->request->post['date'] : "";
 
-            // FILTER ( ADMISSION NO )
-            if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):
+            /**
+             * First of all to we have to check if we need
+             * to query staff attendance or student attendance.
+             * This can be done using the staff toggle switch
+             * input data passed from the front end.
+             */
+            if ( isset($this->request->post['isStaff']) ):
 
-                if ( $this->request->post['class'] != 'Staff' ):
+                /**
+                 * Front end user is asking for attendance data for
+                 * the staff members. We have to pull data from the
+                 * database according to the form inputs and push them
+                 * into the twig to render.
+                 */
 
-                    $student->where(function($query) {
-                        $query->where('admission_no', '=', $this->request->post['addno']);
-                    });
-                    $data['search']['query']['addno'] = $this->request->post['addno'];
+                $staff = $this->model_staff->select('id', 'employee_number', 'full_name', 'initials', 'surname', 'gender');
 
-                else:
-
-                    $staff->where(function($query) {
-                        $query->where('employee_number', '=', $this->request->post['addno']);
-                    });
-                    $data['search']['query']['addno'] = $this->request->post['addno'];
-
-                endif;
-            endif;
-
-            // FILTER ( NAME )
-            if ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ):
-
-                if ( $this->request->post['class'] != 'Staff' ):
-
-                    $student->where(function($query) {
-                        $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
-                    });
-                    $data['search']['query']['name'] = $this->request->post['name'];
-
-                else:
-
-                    $staff->where(function($query) {
-                        $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
-                    });
-                    $data['search']['query']['name'] = $this->request->post['name'];    
-
-                endif;
-            endif;
-
-            // FILTER ( CLASS ID )
-            if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) AND $this->request->post['class'] != '- Select -' ):
-
-                if ( $this->request->post['class'] != 'Staff' ):
-
-                    $student->where(function($query) {
-                        $query->where('class_id', '=', $this->request->post['class']);
-                    });
-                    $data['search']['query']['class'] = $this->request->post['class'];
-
-                else:
-                    $data['search']['query']['class'] = $this->request->post['class'];
-
-                endif;
-            endif;
-
-            // APPEND DATA TO ARRAY
-
-            if ( $this->request->post['class'] != 'Staff' ):
-
-                foreach( $student->get() as $key => $value ):
-                    $data['search']['students'][$key]['id'] = $value->id;
-                    $data['search']['students'][$key]['admission_no'] = $value->admission_no;
-                    $data['search']['students'][$key]['full_name'] = $value->full_name;
-                    $data['search']['students'][$key]['initials'] = $value->initials;
-                    $data['search']['students'][$key]['surname'] = $value->surname;
-                    $data['search']['students'][$key]['gender'] = $value->gender;
-                    $data['search']['students'][$key]['class_id'] = $value->class_id;
-
-                    // GET INDEX
-                    $data['search']['students'][$key]['index'] = $this->model_student_class->select('index_no')->where('stu_id', '=', $value->id)->where('class_id', '=', $value->class_id)->first()->index_no;
+                // RETURN
+                foreach( $staff->get() as $key => $element ):
+                    $data['search']['staff'][$key]['id']  = $element->id;
+                    $data['search']['staff'][$key]['employee_number'] = $element->employee_number;
+                    $data['search']['staff'][$key]['full_name'] = $element->full_name;
+                    $data['search']['staff'][$key]['initials'] = $element->initials;
+                    $data['search']['staff'][$key]['surname'] = $element->surname;
+                    $data['search']['staff'][$key]['gender'] = $element->gender;
                 endforeach;
 
             else:
 
-                foreach( $staff->get() as $key => $value ):
-                    $data['search']['staff'][$key]['id'] = $value->id;
-                    $data['search']['staff'][$key]['employee_number'] = $value->employee_name;
-                    $data['search']['staff'][$key]['full_name'] = $value->full_name;
-                    $data['search']['staff'][$key]['initials'] = $value->initials;
-                    $data['search']['staff'][$key]['surname'] = $value->surname;
-                    $data['search']['staff'][$key]['gender'] = $value->gender;
+                /**
+                 * User is asking for student attendance records.
+                 * We have to query data according to the form inputs
+                 * and push them to the twig to render.
+                 */
+
+                $student = $this->model_student::select('id', 'admission_no', 'class_id', 'full_name', 'initials', 'surname', 'gender');
+
+                // FILTER ( ADMISSION NO )
+                if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):
+                    $student->where('admission_no', '=', $this->request->post['addno']);
+                endif;
+
+                // FILTER ( NAME )
+                if ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ):
+                    $student->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
+                endif;
+
+                // RETURN
+                foreach( $student->get() as $key => $element ):
+                    $data['search']['students'][$key]['id']  = $element->id;
+                    $data['search']['students'][$key]['admission_no'] = $element->admission_no;
+                    $data['search']['students'][$key]['full_name'] = $element->full_name;
+                    $data['search']['students'][$key]['initials'] = $element->initials;
+                    $data['search']['students'][$key]['surname'] = $element->surname;
+                    $data['search']['students'][$key]['gender'] = $element->gender;
+                    $data['search']['students'][$key]['class_id'] = $element->class_id;
                 endforeach;
 
             endif;
