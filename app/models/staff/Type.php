@@ -4,6 +4,9 @@
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * relational model
+ */
 class StaffType_Model extends EloquentModel {
 
 	use SoftDeletes;

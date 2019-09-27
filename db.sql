@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 27, 2019 at 01:08 AM
+-- Generation Time: Sep 28, 2019 at 12:09 AM
 -- Server version: 10.4.7-MariaDB
 -- PHP Version: 7.3.9
 
@@ -21,22 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `schms`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `attendance`
---
-
-CREATE TABLE `attendance` (
-  `id` bigint(20) NOT NULL,
-  `stu_emp_id` int(6) NOT NULL,
-  `type` enum('Student','Staff') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_time` datetime NOT NULL,
-  `created_on` datetime NOT NULL,
-  `updated_on` datetime NOT NULL,
-  `deleted_on` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -620,6 +604,32 @@ INSERT INTO `staff` (`id`, `employee_number`, `category_id`, `type_id`, `admissi
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `staff_attendance`
+--
+
+CREATE TABLE `staff_attendance` (
+  `id` bigint(20) NOT NULL,
+  `staff_id` int(6) NOT NULL,
+  `date` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `staff_attendance`
+--
+
+INSERT INTO `staff_attendance` (`id`, `staff_id`, `date`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(1, 1, '2019-09-27', '2019-09-27 00:00:00', '2019-09-27 00:00:00', NULL),
+(2, 1, '2019-09-26', '2019-09-27 22:43:48', '2019-09-27 22:43:48', NULL),
+(3, 3, '2019-09-26', '2019-09-27 22:44:08', '2019-09-27 22:44:08', NULL),
+(6, 3, '2019-09-27', '2019-09-27 23:24:06', '2019-09-27 23:24:06', NULL),
+(9, 3, '2019-09-20', '2019-09-27 23:26:47', '2019-09-27 23:26:47', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `staff_category`
 --
 
@@ -751,6 +761,29 @@ CREATE TABLE `student_achievement` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_attendance`
+--
+
+CREATE TABLE `student_attendance` (
+  `id` bigint(20) NOT NULL,
+  `student_id` int(6) NOT NULL,
+  `date` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `student_attendance`
+--
+
+INSERT INTO `student_attendance` (`id`, `student_id`, `date`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(1, 52, '2019-09-26', '2019-09-27 00:00:00', '2019-09-27 00:00:00', NULL),
+(2, 52, '2019-09-27', '2019-09-27 00:00:00', '2019-09-27 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -972,14 +1005,6 @@ CREATE TABLE `user_role_has_permission` (
 --
 
 --
--- Indexes for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `stu_emp_id_2` (`stu_emp_id`,`type`),
-  ADD KEY `stu_emp_id` (`stu_emp_id`);
-
---
 -- Indexes for table `backup`
 --
 ALTER TABLE `backup`
@@ -1165,6 +1190,13 @@ ALTER TABLE `staff`
   ADD KEY `category_id` (`category_id`);
 
 --
+-- Indexes for table `staff_attendance`
+--
+ALTER TABLE `staff_attendance`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_id` (`staff_id`,`date`);
+
+--
 -- Indexes for table `staff_category`
 --
 ALTER TABLE `staff_category`
@@ -1211,6 +1243,13 @@ ALTER TABLE `student`
 ALTER TABLE `student_achievement`
   ADD PRIMARY KEY (`id`),
   ADD KEY `student_achievement_student_id_fk` (`stu_id`);
+
+--
+-- Indexes for table `student_attendance`
+--
+ALTER TABLE `student_attendance`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_id` (`student_id`,`date`);
 
 --
 -- Indexes for table `student_has_class`
@@ -1298,12 +1337,6 @@ ALTER TABLE `user_role_has_permission`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `attendance`
---
-ALTER TABLE `attendance`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `backup`
@@ -1456,6 +1489,12 @@ ALTER TABLE `staff`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `staff_attendance`
+--
+ALTER TABLE `staff_attendance`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `staff_category`
 --
 ALTER TABLE `staff_category`
@@ -1490,6 +1529,12 @@ ALTER TABLE `student`
 --
 ALTER TABLE `student_achievement`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `student_attendance`
+--
+ALTER TABLE `student_attendance`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `student_has_class`
@@ -1560,13 +1605,6 @@ ALTER TABLE `user_role_has_permission`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`stu_emp_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`stu_emp_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `class`
@@ -1657,6 +1695,12 @@ ALTER TABLE `staff`
   ADD CONSTRAINT `staff_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `staff_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `staff_attendance`
+--
+ALTER TABLE `staff_attendance`
+  ADD CONSTRAINT `staff_attendance_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `staff_has_subject`
 --
 ALTER TABLE `staff_has_subject`
@@ -1688,6 +1732,12 @@ ALTER TABLE `student`
 --
 ALTER TABLE `student_achievement`
   ADD CONSTRAINT `student_achievement_student_id_fk` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_attendance`
+--
+ALTER TABLE `student_attendance`
+  ADD CONSTRAINT `student_attendance_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_has_class`

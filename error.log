@@ -2252,3 +2252,207 @@ Stack trace:
 2019/09/26 22:48:41 [error] 2314#2314: *827 FastCGI sent in stderr: "PHP message: PHP Recoverable fatal error:  Object of class Parents could not be converted to string in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 331" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
 2019/09/26 22:57:06 [error] 2314#2314: *873 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: student_id in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 331" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
 2019/09/26 22:59:33 [error] 2314#2314: *875 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: student_id in /opt/dev/sites/bit-project.int/app/controllers/Parents.php on line 331" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /parents/ajax_addparent HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/parents/add"
+2019/09/27 08:15:08 [error] 2314#2314: *2317 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: class in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 162PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:174
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 174" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark?addno=&name=&view=Staff&date=2019-09-26&isSubmited=true HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark?addno=&name=&view=Staff&date=2019-09-26&isSubmited=true"
+2019/09/27 08:16:01 [error] 2314#2314: *2317 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:172
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 172" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark?addno=&name=&view=Staff&date=2019-09-26&isSubmited=true HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark?addno=&name=&view=Staff&date=2019-09-26&isSubmited=true"
+2019/09/27 08:16:12 [error] 2314#2314: *2317 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:172
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 172" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark?addno=&name=&view=Staff&date=2019-09-26&isSubmited=true HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark?addno=&name=&view=Staff&date=2019-09-26&isSubmited=true"
+2019/09/27 08:16:33 [error] 2314#2314: *2317 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:172
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 172" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 08:17:03 [error] 2314#2314: *2317 FastCGI sent in stderr: "PHP message: PHP Notice:  Trying to get property 'index_no' of non-object in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 173" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 08:18:06 [error] 2314#2314: *2317 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:198
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 198" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 08:22:11 [error] 2314#2314: *2365 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:198
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 198" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 08:26:04 [error] 2314#2314: *2384 FastCGI sent in stderr: "PHP message: PHP Parse error:  syntax error, unexpected 'use' (T_USE) in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 173" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 10:39:26 [error] 2314#2314: *2707 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected token "operator" of value "<". in /opt/dev/sites/bit-project.int/themes/default/attendance/mark.html:27
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/ExpressionParser.php(92): Twig_ExpressionParser->parsePrimaryExpression()
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/ExpressionParser.php(45): Twig_ExpressionParser->getPrimary()
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/ExpressionParser.php(99): Twig_ExpressionParser->parseExpression()
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/ExpressionParser.php(67): Twig_ExpressionParser->parseConditionalExpression(Object(Twig_Node_Expression_GetAttr))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(125): Twig_ExpressionParser->parseExpression()
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/li" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 11:13:23 [error] 2314#2314: *2957 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index:  in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 113" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 11:13:41 [error] 2314#2314: *2957 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: isStaff in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 113" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 11:13:53 [error] 2314#2314: *2962 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: isStaff in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 113" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 11:21:29 [error] 2314#2314: *3010 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Using $this when not in object context in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Builder.php:460
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/controllers/Attendance.php(130): Illuminate\Database\Eloquent\Builder::get()
+#1 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#2 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Builder.php on line 460" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 11:21:48 [error] 2314#2314: *3010 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Using $this when not in object context in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Builder.php:460
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/controllers/Attendance.php(130): Illuminate\Database\Eloquent\Builder::get()
+#1 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->mark()
+#2 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Builder.php on line 460" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 17:41:29 [error] 1577#1577: *20 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: isStaff in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 111" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 17:58:55 [error] 1577#1577: *39 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected token "name" of value "search" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/attendance/mark.html:103
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/If.php(42): Twig_TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_If->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 17:59:43 [error] 1577#1577: *39 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected token "name" of value "search" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/attendance/mark.html:103
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/If.php(42): Twig_TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_If->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 17:59:46 [error] 1577#1577: *39 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected token "name" of value "search" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/attendance/mark.html:103
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/If.php(42): Twig_TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_If->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 18:01:08 [error] 1577#1577: *48 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected token "name" of value "search" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/attendance/mark.html:103
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/If.php(42): Twig_TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_If->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 18:01:14 [error] 1577#1577: *48 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig_Error_Syntax: Unexpected token "name" of value "search" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/attendance/mark.html:103
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/TokenParser/If.php(42): Twig_TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(168): Twig_TokenParser_If->parse(Object(Twig_Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Parser.php(81): Twig_Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(533): Twig_Parser->parse(Object(Twig_TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(565): Twig_Environment->parse(Object(Twig_TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/Environment.php(368): Twig_Environment->compileSource(Object(Twig_Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/lib/Twig/" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance"
+2019/09/27 18:30:13 [error] 1577#1577: *112 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'grade_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `name` f...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name` f...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `name` f...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `name` f...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `name` f...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 18:36:21 [error] 1577#1577: *120 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'grade_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `name` f...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `name` f...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `name` f...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `name` f...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `name` f...', Array, true)
+#5" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 20:13:58 [error] 1577#1577: *980 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: date in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 218" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 20:58:10 [error] 1577#1577: *1155 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined index: student_id in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 221" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:35:10 [error] 1577#1577: *1355 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Illuminate\Database\Eloquent\Model::destroy(), 0 passed in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 238 and exactly 1 expected in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Model.php:798
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/controllers/Attendance.php(238): Illuminate\Database\Eloquent\Model::destroy()
+#1 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->ajax_mark()
+#2 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Model.php on line 798" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:36:41 [error] 1577#1577: *1360 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function destroy() on int in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:238
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->ajax_mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 238" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:37:49 [error] 1577#1577: *1411 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function destroy() on int in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:239
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->ajax_mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 239" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:39:11 [error] 1577#1577: *1421 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'student_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id` fro...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id` fro...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id` fro...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id` fro...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(1963): Illuminate\Database\Connection->select('select `id` fro...', Array, true)" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:44:20 [error] 1577#1577: *1448 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function destroy() on int in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:266
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->ajax_mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 266" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:46:37 [error] 1577#1577: *1469 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function destroy() on int in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php:239
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->ajax_mark()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 239" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:49:27 [error] 1577#1577: *1491 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\Database\Query\Builder::destroy does not exist. in /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php:2816
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Builder.php(1286): Illuminate\Database\Query\Builder->__call('destroy', Array)
+#1 /opt/dev/sites/bit-project.int/app/controllers/Attendance.php(235): Illuminate\Database\Eloquent\Builder->__call('destroy', Array)
+#2 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->ajax_mark()
+#3 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#4 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php on line 2816" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:50:17 [error] 1577#1577: *1494 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught BadMethodCallException: Method Illuminate\Database\Query\Builder::destroy does not exist. in /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php:2816
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Builder.php(1286): Illuminate\Database\Query\Builder->__call('destroy', Array)
+#1 /opt/dev/sites/bit-project.int/app/controllers/Attendance.php(235): Illuminate\Database\Eloquent\Builder->__call('destroy', Array)
+#2 /opt/dev/sites/bit-project.int/app/core/App.php(44): Attendance->ajax_mark()
+#3 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#4 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php on line 2816" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:57:28 [error] 1577#1577: *1541 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '53-2019-09-26' for key 'student_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `st...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `st...', Arra" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 22:58:52 [error] 1577#1577: *1547 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '53-2019-09-27' for key 'student_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `st...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `st...', Arra" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 23:00:17 [error] 1577#1577: *1619 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '53-2019-09-27' for key 'student_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `st...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `st...', Arra" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"
+2019/09/27 23:18:47 [error] 1577#1577: *1763 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined variable: is_valid_student_id in /opt/dev/sites/bit-project.int/app/controllers/Attendance.php on line 280" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /attendance/ajax_mark HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/attendance/mark"

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class StudentAttendance_Model extends EloquentModel {
 
-	use SoftDeletes;
+	// use SoftDeletes;
 	const CREATED_AT = 'created_on';
 	const UPDATED_AT = 'updated_on';
 	const DELETED_AT = 'deleted_on';

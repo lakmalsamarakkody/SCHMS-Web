@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * relational model
  */
-class StaffCategory_Model extends EloquentModel {
+class StaffAttendance_Model extends EloquentModel {
 
-	use SoftDeletes;
+	// use SoftDeletes;
 	const CREATED_AT = 'created_on';
 	const UPDATED_AT = 'updated_on';
 	const DELETED_AT = 'deleted_on';
 
 	// PARENT PROPERTIES
-	protected $table = 'staff_category';
-	protected $fillable = [ 'id', 'name' ];
+	protected $table = 'staff_attendance';
+	protected $fillable = [ 'id', 'staff_id', 'date', 'time' ];
 }
 
 ?>
