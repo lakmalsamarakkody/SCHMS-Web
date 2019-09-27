@@ -51,7 +51,7 @@
                                         
                                         <div class="form-group col-sm-3">
                                             <label for="view-type">Select Type</label>
-                                            <input id="inpt-toggle-staff" type="checkbox" name="isStaff" data-toggle="toggle" data-on="Staff" data-off="Student" data-onstyle="dark" data-offstyle="dark" {{ (form.field.isStaff) ? 'checked' : '' }} />
+                                            <input id="input-toggle-staff" type="checkbox" name="isStaff" data-toggle="toggle" data-on="Staff" data-off="Student" data-onstyle="dark" data-offstyle="dark" {{ (form.field.isStaff) ? 'checked' : '' }} />
                                         </div>
 
                                         <div class="form-group col-sm-3">
@@ -83,7 +83,7 @@
                             
                             <div class="form-row">
                                 <div class="form-group ml-auto mr-1">
-                                    <input type="hidden" name="isSubmited" value="true" />
+                                    <input type="hidden" name="isSubmited" value="true"/>
                                     <button class="btn btn-primary" type="submit"> Go </button>
                                 </div>
                             </div>
@@ -218,7 +218,7 @@
         }
     })
 
-    $("input:checkbox#inpt-toggle-staff").change(function () {
+    $("input:checkbox#input-toggle-staff").change(function () {
         if ( $(this).prop('checked') ) {
             $("#input-select-class").prop('disabled', true);
         } else {

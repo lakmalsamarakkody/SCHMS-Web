@@ -38,7 +38,7 @@ class Attendance extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
 
-        //STUDENT CLASS
+        // TWIG : STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['student_class'][$key]['id'] = $element->id;
             $data['student_class'][$key]['grade']['id'] = $element->grade_id;
@@ -48,12 +48,50 @@ class Attendance extends Controller {
             $data['student_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
         endforeach;
 
-        // YEAR
-        $exam_year = Carbon::now()->format('Y');
-        for ( $i=1; $i<=10; $i++ ):
-            $data['years'][$i] = $exam_year;
-            $exam_year--;
+        // YWIG : YEAR
+        $current_year = Carbon::now()->format('Y');
+        for ( $i=1; $i<=2; $i++ ):
+            $data['years'][$i] = $current_year;
+            $current_year--;
         endfor;
+
+        // CHECK SUBMIT ( STUDENT SEARCH )
+        if ( isset($this->request->post['isSubmited']) ):
+
+            // PRESERVE SUBMITED DATA
+            $data['form']['field']['isStaff'] = ( isset($this->request->post['isStaff']) AND !empty($this->request->post['isStaff']) ) ? $this->request->post['isStaff'] : "";
+            $data['form']['field']['class'] = ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ) ? $this->request->post['class'] : "";
+            $data['form']['field']['month'] = ( isset($this->request->post['month']) AND !empty($this->request->post['month']) ) ? $this->request->post['month'] : "";
+            $data['form']['field']['year'] = ( isset($this->request->post['year']) AND !empty($this->request->post['year']) ) ? $this->request->post['year'] : "";
+        
+            /**
+             * First of all to we have to check if we need
+             * to query staff attendance or student attendance.
+             * This can be done using the staff toggle switch
+             * input data passed from the front end.
+             */
+            if ( isset($this->request->post['isStaff']) ):
+
+                /**
+                 * Front end user is asking for attendance data for
+                 * the staff members. We have to pull data from the
+                 * database according to the form inputs and push them
+                 * into the twig to render.
+                 */
+
+                $staff = $this->model_staff->select('id', 'employee_number', 'full_name', 'initials', 'surname', 'gender');
+                $staff_attendance = $this->model_staff_attendance->select('id', 'staff_id', 'date');
+        
+                // FILTER ( STAFF ID )
+                if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):
+                    $staff->where('employee_number', '=', $this->request->post['addno']);
+                endif;
+                
+            endif;
+
+        else:
+        
+        endif;
 
 		// RENDER VIEW
         $this->load->view('attendance/search', $data);

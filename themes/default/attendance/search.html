@@ -22,42 +22,57 @@
                             <form name="formviewattendance">
 
                                 <div class="form-row">
-                                    <div class="form-group col-md-1 mr-auto">
-                                        <label for="view">Select View</label>
-                                        <select class="form-control" id="view">
-                                            <option selected disabled> - Select - </option>
-                                            <option value="staff"> Staff </option>
+
+                                    <div class="form-group col-sm-1">
+                                        <label for="view-type">Select Type</label>
+                                        <input class="form-control" id="input-toggle-staff" type="checkbox" name="isStaff" data-toggle="toggle" data-on="Staff" data-off="Student" data-onstyle="dark" data-offstyle="dark" {{ (form.field.isStaff) ? 'checked' : '' }} />
+                                    </div>
+
+                                    <div class="form-group col-sm-2 mr-auto">
+                                        <label for="class">Class</label>
+                                        <select class="form-control" id="input-select-class" name="class" {{ (form.field.isStaff) ? 'disabled' : '' }}>
                                             {% for class in student_class %}
-                                            <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                {% if class.id == form.field.class %}
+                                                    <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                {% else %}
+                                                    <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-2 ml-auto">
+                                    <div class="form-group col-sm-2 ml-auto">
                                         <label for="month">Select Month</label>
-                                        <select class="form-control" id="month">
-                                            <option value="1"> January </option>
-                                            <option value="2"> February </option>
-                                            <option value="3"> March </option>
-                                            <option value="4"> April </option>
-                                            <option value="5"> May </option>
-                                            <option value="6"> June </option>
-                                            <option value="7"> July </option>
-                                            <option value="8"> August </option>
-                                            <option value="9"> September </option>
-                                            <option value="10"> October </option>
-                                            <option value="11"> November </option>
-                                            <option value="12"> December </option>
+                                        <select class="form-control" name="month">
+                                            {% if month.id == form.field.month %}
+                                                <option value="1"> January </option>
+                                                <option value="2"> February </option>
+                                                <option value="3"> March </option>
+                                                <option value="4"> April </option>
+                                                <option value="5"> May </option>
+                                                <option value="6"> June </option>
+                                                <option value="7"> July </option>
+                                                <option value="8"> August </option>
+                                                <option value="9"> September </option>
+                                                <option value="10"> October </option>
+                                                <option value="11"> November </option>
+                                                <option value="12"> December </option>
+                                            {% else %}
+                                            {% endif %}
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-md-1">
+                                    <div class="form-group col-sm-1">
                                         <label for="year">Select Year</label>
-                                        <select class="form-control" id="year">
+                                        <select class="form-control" name="year">
                                             <option selected disabled> - Select - </option>
-                                            <!-- {% for year in years %}
-                                                <option value="{{ year }}"> {{ year }} </option>
-                                            {% endfor %} -->
+                                            {% for year in years %}
+                                                {% if year.id == form.field.year %}
+                                                    <option selected value="{{ year }}"> {{ year }} </option>
+                                                {% else %}
+                                                    <option value="{{ year }}"> {{ year }} </option>
+                                                {% endif %}
+                                            {% endfor %}
                                         </select>
                                     </div>
 
@@ -65,6 +80,7 @@
                                 
                                 <div class="form-row">
                                     <div class="form-group ml-auto mr-1">
+                                        <input type="hidden" name="isSubmited" value="true"/>
                                         <button class="btn btn-primary" type="submit"> Go </button>
                                     </div>
                                 </div>
@@ -160,5 +176,21 @@
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+
+    $("input:checkbox#input-toggle-staff").change(function () {
+        if ( $(this).prop('checked') ) {
+            $("#input-select-class").prop('disabled', true);
+        } else {
+            $("#input-select-class").prop('disabled', false);
+        }
+    })
+    
+    </script>
+
+
+
 </body>
+</html>
