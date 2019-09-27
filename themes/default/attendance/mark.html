@@ -57,16 +57,9 @@
                                         <div class="form-group mr-3">
                                             <label for="class">Class</label>
                                             <select class="form-control" id="input-select-class" name="class" required {{ (form.field.isStaff) ? 'disabled' : '' }}>
-                                                {% if search.query.class %}
-                                                    {% for class in student_class %}
-                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                                    {% endfor %}
-                                                {% else %}
-                                                    {% for class in student_class %}
-                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                                    {% endfor %}
-                                                {% endif %}
-                                                
+                                                {% for class in student_class %}
+                                                    <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                {% endfor %}
                                             </select>
                                         </div>
 
