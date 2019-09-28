@@ -102,7 +102,7 @@
                                             <th class="text-center align-middle" width="7%" rowspan="2" scope="col">Staff ID</th>
                                             <th class="text-left align-middle" width="15%" rowspan="2" scope="col">Name</th>
                                             <th class="text-center" colspan="{{ days_in_month|length }}" scope="col">Date</th>
-                                        {% elseif search.student %}
+                                        {% elseif search.students %}
                                             <th class="text-center align-middle" width="7%" rowspan="2" scope="col">Index No</th>
                                             <th class="text-left align-middle" width="15%" rowspan="2" scope="col">Name</th>
                                             <th class="text-center" colspan="{{ days_in_month|length }}" scope="col">Date</th>
@@ -129,10 +129,10 @@
                                                 {% endfor %}
                                             </tr>
                                         {% endfor %}
-                                    {% elseif search.student  %}
-                                        {% for student in search.student %}
+                                    {% elseif search.students  %}
+                                        {% for student in search.students %}
                                             <tr>
-                                                <th class="text-center" scope="row">{{ student.id }}</th>
+                                                <th class="text-center" scope="row">{{ student.index }}</th>
                                                 <td class="text-left">{{ student.initials }} {{ student.surname }}</td>
                                                 {% for day in days_in_month %}
                                                     <td class="text-center">{{ (student.status[day]) ? '<i style="color: green;" class="la la-check"></i>' : '<i style="font-size: 10px; color: red;" class="la la-circle"></i>' }}</td>

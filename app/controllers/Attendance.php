@@ -40,6 +40,7 @@ class Attendance extends Controller {
         $this->load->model('staff');
         $this->load->model('staff/attendance');
         $this->load->model('student');
+        $this->load->model('student/class');
         $this->load->model('student/attendance');
 
         // TWIG : STUDENT CLASS
@@ -126,7 +127,7 @@ class Attendance extends Controller {
                  * into the twig to render.
                  */
 
-                $student = $this->model_student->select('id', 'admission_no', 'full_name', 'initials', 'surname');
+                $student = $this->model_student->select('id', 'class_id', 'admission_no', 'full_name', 'initials', 'surname');
                 $student_attendance = $this->model_student_attendance->select('id', 'student_id', 'date');
 
                 // FILTER ( STUDENT ID )
@@ -139,21 +140,31 @@ class Attendance extends Controller {
                     $student->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
                 endif;
 
+                // FILTER ( CLASS )
+                if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ):
+                    $student->where('class_id', '=', $this->request->post['class']);
+                endif;
+
                 // RETURN
                 foreach( $student->get() as $key => $element ):
-                    $data['search']['student'][$key]['id']  = $element->id;
-                    $data['search']['student'][$key]['admission_no'] = $element->admission_no;
-                    $data['search']['student'][$key]['full_name'] = $element->full_name;
-                    $data['search']['student'][$key]['initials'] = $element->initials;
-                    $data['search']['student'][$key]['surname'] = $element->surname;
+                    $data['search']['students'][$key]['id']  = $element->id;
+                    $data['search']['students'][$key]['admission_no'] = $element->admission_no;
+                    $data['search']['students'][$key]['full_name'] = $element->full_name;
+                    $data['search']['students'][$key]['initials'] = $element->initials;
+                    $data['search']['students'][$key]['surname'] = $element->surname;
+                    $data['search']['students'][$key]['class_id'] = $element->class_id;
+
+                    // GET INDEX
+                    $index_no = $this->model_student_class->select('index_no')->where('stu_id', '=', $element->id)->where('class_id', '=', $element->class_id)->first()->index_no;
+                    $data['search']['students'][$key]['index'] = $index_no;
 
                     // STUDENT STATUS FOR MONTH
                     for ( $i=1; $i<= $days_in_month; $i++ ):
                         $attendance = $this->model_student_attendance->select('id', 'date')->where('student_id', '=', $element->id)->where('date', '=', $month_year."-".$i)->first();
                         if ( $attendance != NULL):
-                            $data['search']['student'][$key]['status'][$i] = true;
+                            $data['search']['students'][$key]['status'][$i] = true;
                         else:
-                            $data['search']['student'][$key]['status'][$i] = false;
+                            $data['search']['students'][$key]['status'][$i] = false;
                         endif;
 
                         $data['days_in_month'][$i] = $i;
@@ -192,7 +203,7 @@ class Attendance extends Controller {
         $this->load->model('student/class');
         $this->load->model('staff/attendance');
 
-        //STUDENT CLASS
+        // TWIG : STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['student_class'][$key]['id'] = $element->id;
             $data['student_class'][$key]['grade']['id'] = $element->grade_id;
