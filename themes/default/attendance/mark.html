@@ -103,7 +103,7 @@
                                         <th width="10%" class="text-center" scope="col">Admission No</th>
                                         <th width="10%" class="text-center" scope="col">Index No</th>
                                         <th width="10%" class="text-center" scope="col">Gender</th>
-                                        <th class="text-center" scope="col">Name</th>
+                                        <th scope="col">Name</th>
                                         <th width="20%" class="text-center" scope="col">Status</th>
 
                                     {% elseif search.staff %}
@@ -111,7 +111,7 @@
                                         <th width="10%" class="text-center" scope="col">Staff ID</th>
                                         <th width="10%" class="text-center" scope="col">Gender</th>
                                         <th width="20%" class="text-center" scope="col">Class in Charge</th>
-                                        <th class="text-center" scope="col">Name</th>
+                                        <th scope="col">Name</th>
                                         <th width="20%" class="text-center" scope="col">Status</th>
 
                                     {% else %}
@@ -127,7 +127,7 @@
                                             <th class="text-center" scope="row">{{ student.admission_no }}</th>
                                             <td class="text-center">{{ student.index }}</td>
                                             <td class="text-center">{{ student.gender }}</td>
-                                            <td class="text-center">{{ student.initials }} {{ student.surname }}</td>
+                                            <td>{{ student.initials }} {{ student.surname }}</td>
                                             <td class="text-center">
                                                 <input type="checkbox" class="status" name="status" data-stuid="{{ student.id }}" data-date="{{ student.date }}" data-toggle="toggle" data-style="ios" data-on="Present" data-off="Absent" data-onstyle="success" data-offstyle="warning" {{ (student.status == 'Present') ? 'checked' : '' }}/>
                                             </td>
@@ -139,7 +139,7 @@
                                             <th class="text-center" scope="row">{{ staff.employee_number }}</th>
                                             <td class="text-center">{{ staff.gender }}</td>
                                             <td class="text-center">{{ staff.cic }}</td>
-                                            <td class="text-center">{{ staff.initials }} {{ staff.surname }}</td>
+                                            <td>{{ staff.initials }} {{ staff.surname }}</td>
                                             <td class="text-center">
                                                 <input type="checkbox" class="status" name="status" data-staffid="{{ staff.id }}" data-date="{{ staff.date }}" data-toggle="toggle" data-style="ios" data-on="Present" data-off="Absent" data-onstyle="success" data-offstyle="warning" {{ (staff.status == 'Present') ? 'checked' : '' }}/>
                                             </td>

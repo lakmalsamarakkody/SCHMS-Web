@@ -19,61 +19,66 @@
                         <h4 class="page-title"> View Attendance</h4>
 
                         <div class="select view mt-4">
-                            <form name="formviewattendance">
+
+                            <form name="formviewattendance" method="post">
 
                                 <div class="form-row">
 
-                                    <div class="form-group col-sm-1">
-                                        <label for="view-type">Select Type</label>
-                                        <input class="form-control" id="input-toggle-staff" type="checkbox" name="isStaff" data-toggle="toggle" data-on="Staff" data-off="Student" data-onstyle="dark" data-offstyle="dark" {{ (form.field.isStaff) ? 'checked' : '' }} />
-                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-row">
 
-                                    <div class="form-group col-sm-2 mr-auto">
-                                        <label for="class">Class</label>
-                                        <select class="form-control" id="input-select-class" name="class" {{ (form.field.isStaff) ? 'disabled' : '' }}>
-                                            {% for class in student_class %}
-                                                {% if class.id == form.field.class %}
-                                                    <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                            <div class="form-group col-sm-3">
+                                                <label for="addno">ID Number</label>
+                                                {% if form.field.addno %}
+                                                    <input type="number" class="form-control" name="addno" value="{{ form.field.addno }}"/>
                                                 {% else %}
-                                                    <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                    <input type="number" class="form-control" name="addno"/>
                                                 {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                    </div>
+                                            </div>
 
-                                    <div class="form-group col-sm-2 ml-auto">
-                                        <label for="month">Select Month</label>
-                                        <select class="form-control" name="month">
-                                            {% if month.id == form.field.month %}
-                                                <option value="1"> January </option>
-                                                <option value="2"> February </option>
-                                                <option value="3"> March </option>
-                                                <option value="4"> April </option>
-                                                <option value="5"> May </option>
-                                                <option value="6"> June </option>
-                                                <option value="7"> July </option>
-                                                <option value="8"> August </option>
-                                                <option value="9"> September </option>
-                                                <option value="10"> October </option>
-                                                <option value="11"> November </option>
-                                                <option value="12"> December </option>
-                                            {% else %}
-                                            {% endif %}
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-sm-1">
-                                        <label for="year">Select Year</label>
-                                        <select class="form-control" name="year">
-                                            <option selected disabled> - Select - </option>
-                                            {% for year in years %}
-                                                {% if year.id == form.field.year %}
-                                                    <option selected value="{{ year }}"> {{ year }} </option>
+                                            <div class="form-group col-sm-6">
+                                                <label for="name">Name</label>
+                                                {% if form.field.name %}
+                                                    <input type="text" class="form-control" name="name" value="{{ form.field.name }}"/>
                                                 {% else %}
-                                                    <option value="{{ year }}"> {{ year }} </option>
+                                                    <input type="text" class="form-control" name="name"/>
                                                 {% endif %}
-                                            {% endfor %}
-                                        </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-row">
+
+                                            <div class="form-group col-sm-2 ml-auto mr-1">
+                                                <label for="view-type">Select Type</label>
+                                                <input class="form-control" id="input-toggle-staff" type="checkbox" name="isStaff" data-toggle="toggle" data-on="Staff" data-off="Student" data-onstyle="dark" data-offstyle="dark" {{ (form.field.isStaff) ? 'checked' : '' }} />
+                                            </div>
+
+                                            <div class="form-group col-sm-3">
+                                                <label for="class">Class</label>
+                                                <select class="form-control" id="input-select-class" name="class" {{ (form.field.isStaff) ? 'disabled' : '' }}>
+                                                    {% for class in student_class %}
+                                                        {% if class.id == form.field.class %}
+                                                            <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                        {% else %}
+                                                            <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="form-group col-sm-4">
+                                                <label for="month-date">Select Month</label>
+                                                <div class="input-group date" id="datetimepicker-month" data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker-month" name="month" value="{{ (form.field.month) }}" required/>
+                                                    <div class="input-group-append" data-target="#datetimepicker-month" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="la la-calendar"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
 
                                 </div>
@@ -84,26 +89,61 @@
                                         <button class="btn btn-primary" type="submit"> Go </button>
                                     </div>
                                 </div>
+
                             </form>
                         </div>
 
                         <div class="view-table">
-                            <table class="table table-hover table-responsive-md">
+                            <table class="table table-hover table-bordered table-responsive-md">
 
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col"> Index No </th>
-                                        <th scope="col"> Name </th>
-                                        <th scope="col"> Date</th>
+                                        {% if search.staff %}
+                                            <th class="text-center align-middle" width="7%" rowspan="2" scope="col">Staff ID</th>
+                                            <th class="text-left align-middle" width="15%" rowspan="2" scope="col">Name</th>
+                                            <th class="text-center" colspan="{{ days_in_month|length }}" scope="col">Date</th>
+                                        {% elseif search.student %}
+                                            <th class="text-center align-middle" width="7%" rowspan="2" scope="col">Index No</th>
+                                            <th class="text-left align-middle" width="15%" rowspan="2" scope="col">Name</th>
+                                            <th class="text-center" colspan="{{ days_in_month|length }}" scope="col">Date</th>
+                                        {% else %}
+                                            <th class="text-center" scope="col">Select a View mode and a Month to view attendance</th>
+                                        {% endif %}
+                                        
+                                    </tr>
+                                    <tr>
+                                        {% for day in days_in_month %}
+                                        <th class="text-center" scope="col">{{ day }}</th>
+                                        {% endfor %}
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1 </th>
-                                        <td> S A L SAMARAKKODY</td>
-                                        <td> 01 12 2018</td>
-                                    </tr>
+                                    {% if search.staff %}
+                                        {% for staff in search.staff %}
+                                            <tr>
+                                                <th class="text-center" scope="row">{{ staff.id }}</th>
+                                                <td class="text-left">{{ staff.initials }} {{ staff.surname }}</td>
+                                                {% for day in days_in_month %}
+                                                    <td class="text-center">{{ (staff.status[day]) ? '<i style="color: green;" class="la la-check"></i>' : '<i style="font-size: 10px; color: red;" class="la la-circle"></i>' }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    {% elseif search.student  %}
+                                        {% for student in search.student %}
+                                            <tr>
+                                                <th class="text-center" scope="row">{{ student.id }}</th>
+                                                <td class="text-left">{{ student.initials }} {{ student.surname }}</td>
+                                                {% for day in days_in_month %}
+                                                    <td class="text-center">{{ (student.status[day]) ? '<i style="color: green;" class="la la-check"></i>' : '<i style="font-size: 10px; color: red;" class="la la-circle"></i>' }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="{{ days_in_month|length+3 }}" class="text-center" scope="row">No records to display </td>
+                                        </tr>
+                                    {% endif %}
                                 </tbody>
 
                             </table>
@@ -113,7 +153,7 @@
                     <!-- END : VIEW ATTENDANCE -->
 
                     <!-- START : SEARCH ATTENDANCE -->
-                    <section class="searchattendance mt-5">
+                    <!-- <section class="searchattendance mt-5">
 
                         <h4 class="page-title">Search Attendance</h4>
 
@@ -168,7 +208,7 @@
 
                         </div>
 
-                    </section>
+                    </section> -->
                     <!-- END : SEARCH ATTENDANCE -->
                 </div>
             </div>
@@ -190,7 +230,14 @@
     
     </script>
 
-
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker-month').datetimepicker({
+                viewMode: 'years',
+                format: 'MM/YYYY'
+            });
+        });
+    </script>
 
 </body>
 </html>
