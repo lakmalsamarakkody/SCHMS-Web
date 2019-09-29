@@ -43,6 +43,14 @@ body{
     width: 100%!important;
 }
 
+
+/* COMPONENT STYLES : START */
+.card .card-header {
+    background: #262a35;
+    border-radius: 0;
+    color: white;
+}
+
 /* OVERRIDE BUTTON LIGHT CLASS FOR SELECT PICKER
 .btn-light {
     background-color: #FFFFFF !important;
@@ -460,14 +468,6 @@ h5.page-title{
 .resultadd .card{
     margin-bottom: 1rem;
 }
- 
-.resultadd .card .card-header{
-    cursor: pointer;
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    border-radius: .25rem;
-}
-
 
 
 /* staff */
@@ -482,10 +482,6 @@ h5.page-title{
     padding: 4rem;
 }
 
-.staffsearch .card .card-header {
-    background-color: var(--sub-theme-color);
-    color: var(--white);
-}
 
 .staffsearch .staffsearchfilter input{
     text-align: center;
@@ -504,14 +500,6 @@ h5.page-title{
 .staffadd .card{
     margin-bottom: 1rem;
 }
- 
-.staffadd .card .card-header{
-    cursor: pointer;
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    border-radius: .25rem;
-}
-
 
 
 /* student */
@@ -524,13 +512,6 @@ h5.page-title{
     border: 0rem;
 }
 
-.stuindex .card-header{
-    color: var(--sub-theme-color);
-    background-color: var(--white);
-    border: 0rem;
-    font-weight: bold;
-}
-
 
 /* student/search */
 .stusearch{
@@ -538,10 +519,6 @@ h5.page-title{
     padding: 4rem;
 }
 
-.stusearch .card-header {
-    background-color: var(--sub-theme-color);
-    color: var(--white)
-}
 
 .stusearch .stusearchfilter input{
     text-align: center;
@@ -561,13 +538,6 @@ h5.page-title{
     margin-bottom: 1rem;
 }
  
-.stuadd .card .card-header{
-    cursor: pointer;
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    border-radius: .25rem;
-}
-
 /* timetable */
 /* timetable/index */
 .timetableindex{
