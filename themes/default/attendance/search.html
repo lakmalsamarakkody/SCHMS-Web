@@ -18,16 +18,14 @@
 
                         <h4 class="page-title"> View Attendance</h4>
 
-                        <div class="select view mt-4">
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <form name="formviewattendance" method="post">
 
-                            <form name="formviewattendance" method="post">
+                                    <div class="form-row">
 
-                                <div class="form-row">
-
-                                    <div class="col-md-6">
-                                        <div class="form-row">
-
-                                            <div class="form-group col-sm-3">
+                                        <div class="col-4">
+                                            <div class="form-group">
                                                 <label for="addno">ID Number</label>
                                                 {% if form.field.addno %}
                                                     <input type="number" class="form-control" name="addno" value="{{ form.field.addno }}"/>
@@ -35,8 +33,10 @@
                                                     <input type="number" class="form-control" name="addno"/>
                                                 {% endif %}
                                             </div>
+                                        </div>
 
-                                            <div class="form-group col-sm-6">
+                                        <div class="col-6">
+                                            <div class="form-group">
                                                 <label for="name">Name</label>
                                                 {% if form.field.name %}
                                                     <input type="text" class="form-control" name="name" value="{{ form.field.name }}"/>
@@ -45,17 +45,16 @@
                                                 {% endif %}
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-row">
-
-                                            <div class="form-group col-sm-2 ml-auto mr-1">
+                                        <div class="col-2">
+                                            <div class="form-group">
                                                 <label for="view-type">Select Type</label>
                                                 <input class="form-control" id="input-toggle-staff" type="checkbox" name="isStaff" data-toggle="toggle" data-on="Staff" data-off="Student" data-onstyle="dark" data-offstyle="dark" {{ (form.field.isStaff) ? 'checked' : '' }} />
                                             </div>
+                                        </div>
 
-                                            <div class="form-group col-sm-3">
+                                        <div class="col-6">
+                                            <div class="form-group">
                                                 <label for="class">Class</label>
                                                 <select class="form-control" id="input-select-class" name="class" {{ (form.field.isStaff) ? 'disabled' : '' }}>
                                                     {% for class in student_class %}
@@ -67,8 +66,10 @@
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            
-                                            <div class="form-group col-sm-4">
+                                        </div>
+
+                                        <div class="col-6">
+                                            <div class="form-group">
                                                 <label for="month-date">Select Month</label>
                                                 <div class="input-group date" id="datetimepicker-month" data-target-input="nearest">
                                                     <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker-month" name="month" value="{{ (form.field.month) }}" required/>
@@ -77,23 +78,21 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </div>
 
-                                </div>
-                                
-                                <div class="form-row">
-                                    <div class="form-group ml-auto mr-1">
-                                        <input type="hidden" name="isSubmited" value="true"/>
-                                        <button class="btn btn-primary" type="submit"> Go </button>
-                                    </div>
-                                </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="hidden" name="isSubmited" value="true"/>
+                                                <button class="btn btn-primary" type="submit"> Go </button>
+                                            </div>
+                                        </div>
 
-                            </form>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
-                        <div class="view-table">
+                        <div class="view-table mt-3">
                             <table class="table table-hover table-bordered table-responsive-md">
 
                                 <thead class="thead-dark">
