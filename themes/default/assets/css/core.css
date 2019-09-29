@@ -352,7 +352,9 @@ h5.page-title{
 
 /* exam/create */
 .examcreate{
-    padding: 1rem;
+    /*padding: 1rem;*/
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 

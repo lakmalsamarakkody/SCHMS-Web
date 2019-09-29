@@ -12,73 +12,80 @@
                 {{ template.topmenu|raw }}
 
                 <!-- START : BUTTON TRIGGER MODAL -->
-                <div class="form-row mt-5 mr-3">
-                    <button type="button" class="btn btn-sm btn-warning ml-auto" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
-                    <button type="button" class="btn btn-sm btn-warning ml-2" data-toggle="modal" data-target="#view-exam-type"> Edit / Remove exam type </button>
-                    <button type="button" class="btn btn-sm btn-primary ml-2"  data-toggle="modal" data-target="#create-exam-type"> Add new exam type </button>
-                </div>
                 <!-- END : BUTTON TRIGGER MODAL -->
 
                 <!-- START : EXAM CREATE PAGE -->
-                <div class="examcreate">
+                <div class="container examcreate">
 
                     <!-- START : ADD EXAM -->
                     <div class="addexam">
 
-                        <h4 class="page-title"> Create an Exam </h4>
+                        <div class="d-flex align-middle" style="justify-content: space-between;margin-top: 1rem;">
+                            <h4 class="page-title mt-0"> Create an Exam </h4>
 
-                        <!-- START : EXAM CREATE FORM -->
-                        <form method="post">
-
-                            <div class="form-row mt-4">
-
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <label for="examyear"> Year </label>
-                                        <select id="examyear" class="form-control">
-                                            <option selected disabled> - Select - </option>
-                                            {% for year in years %}
-                                                <option value="{{ year }}"> {{ year }} </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="examtype"> Exam type </label>
-                                        <select class="form-control" id="examtype">
-                                            <option selected disabled> - Select Exam Type - </option>
-                                            {% for exam_type in exam_types %}
-                                                <option value="{{ exam_type.id }}"> {{ exam_type.name }} </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="venue"> Venue </label>
-                                        <input type="text" class="form-control" id="venue"/>
-                                    </div>
-                                </div>
-
-                                <div class="col-7">
-                                    <div class="form-group">
-                                        <label for="exam_instructions"> Instructions </label>
-                                        <textarea class="md-textarea form-control" id="exam_instructions" rows="1" placeholder="type exam instructions here.."></textarea>
-                                    </div>
-                                </div>
-
+                            <div class="">
+                                <button type="button" class="btn btn-sm btn-warning ml-auto" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
+                                <button type="button" class="btn btn-sm btn-warning ml-2" data-toggle="modal" data-target="#view-exam-type"> Edit / Remove exam type </button>
+                                <button type="button" class="btn btn-sm btn-primary ml-2"  data-toggle="modal" data-target="#create-exam-type"> Add new exam type </button>
                             </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group ml-auto">
-                                    <button type="button" class="btn btn-primary" onclick="create_exam();"> Create exam </button>
-                                </div>
-                            </div>
+                        </div>
 
-                        </form>
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <!-- START : EXAM CREATE FORM -->
+                                <form method="post">
+
+                                    <div class="form-row">
+
+                                        <div class="col-1">
+                                            <div class="form-group">
+                                                <label for="examyear"> Year </label>
+                                                <select id="examyear" class="form-control">
+                                                    <option selected disabled> - Select - </option>
+                                                    {% for year in years %}
+                                                        <option value="{{ year }}"> {{ year }} </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="examtype"> Exam type </label>
+                                                <select class="form-control" id="examtype">
+                                                    <option selected disabled> - Select Exam Type - </option>
+                                                    {% for exam_type in exam_types %}
+                                                        <option value="{{ exam_type.id }}"> {{ exam_type.name }} </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="venue"> Venue </label>
+                                                <input type="text" class="form-control" id="venue"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-7">
+                                            <div class="form-group">
+                                                <label for="exam_instructions"> Instructions </label>
+                                                <textarea class="md-textarea form-control" id="exam_instructions" rows="1" placeholder="type exam instructions here.."></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 mt-2">
+                                            <div class="form-group ml-auto">
+                                                <button type="button" class="btn btn-primary" onclick="create_exam();"> Create exam </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div> 
                         <!-- END : EXAM CREATE FORM -->
                     </div>
                     <!-- END : ADD EXAM -->
@@ -86,105 +93,110 @@
                     <!-- START : SCHEDULE EXAM -->
                     <div class="scheduleexam">
 
-                        <h4 class="page-title mt-3"> Schedule an exam </h4>
+                        <h4 class="page-title mt-5"> Schedule an exam </h4>
 
-                        <form method="post">
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <form method="post">
 
-                            <div class="form-row mt-4">
+                                    <div class="form-row mt-4">
 
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="exam"> Select Exam </label>
-                                        <select class="form-control" id="exam_name">
-                                            <option selected disabled> - Select Exam - </option>
-                                            {% for exam in exams %}
-                                                <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="grade"> Grade </label>
-                                        <select class="form-control" id="exam_grade">
-                                            <option selected disabled> - Select Grade - </option>
-                                            {% for grade in grades %}
-                                                <option value="{{ grade.id }}"> {{ grade.name }} </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="subject"> Subject </label>
-                                        <select class="form-control" id="exam_subject">
-                                            <option selected disabled> - Select Subject - </option>
-                                            {% for subject in subjects %}
-                                                <option value="{{ subject.id }}"> {{ subject.name }} </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="date"> Date </label>
-                                        <input type="date" class="form-control" id="exam_date" min="{{ exam_min_date }}" max="{{ exam_max_date }}"></select>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="starttime"> Start time </label>
-                                        <input type="time" id="exam_starttime" class="form-control"/>
-                                        <!-- <div class="input-group date" id="starttimepicker" data-target-input="nearest">
-                                            <input type="time" id="starttime" name="time" placeholder="hrs:mins" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" class="form-control"/>
-                                            <input type="text" id="starttime" class="form-control datetimepicker-input" data-target="#starttimepicker"/>
-                                            <div class="input-group-append" data-target="#starttimepicker" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="la la-clock-o"></i></div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="exam"> Select Exam </label>
+                                                <select class="form-control" id="exam_name">
+                                                    <option selected disabled> - Select Exam - </option>
+                                                    {% for exam in exams %}
+                                                        <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
-                                        </div> -->
-                                    </div>
-                                </div>
+                                        </div>
 
-                                <div class="col-2">
-                                    <div class="form-group">
-                                        <label for="endtime"> End time </label>
-                                        <input type="time" id="exam_endtime" class="form-control"/>
-                                        <!-- <div class="input-group date" id="endtimepicker" data-target-input="nearest">
-                                            <input type="text" id="endtime" class="form-control datetimepicker-input" data-target="#endtimepicker"/>
-                                            <div class="input-group-append" data-target="#endtimepicker" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="la la-clock-o"></i></div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="grade"> Grade </label>
+                                                <select class="form-control" id="exam_grade">
+                                                    <option selected disabled> - Select Grade - </option>
+                                                    {% for grade in grades %}
+                                                        <option value="{{ grade.id }}"> {{ grade.name }} </option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
-                                        </div> -->
-                                    </div>
-                                </div>
+                                        </div>
 
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label for="subject_exam_venue"> Venue </label>
-                                        <input type="text" id="subject_exam_venue" class="form-control" maxlength="50"/>
-                                    </div>
-                                </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label for="subject"> Subject </label>
+                                                <select class="form-control" id="exam_subject">
+                                                    <option selected disabled> - Select Subject - </option>
+                                                    {% for subject in subjects %}
+                                                        <option value="{{ subject.id }}"> {{ subject.name }} </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                <div class="col-8">
-                                    <div class="form-group">
-                                        <label for="subject_exam_instructions"> Instructions </label>
-                                        <textarea class="md-textarea form-control" rows="5" id="subject_exam_instructions"></textarea>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="date"> Date </label>
+                                                <input type="date" class="form-control" id="exam_date" min="{{ exam_min_date }}" max="{{ exam_max_date }}"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="starttime"> Start time </label>
+                                                <input type="time" id="exam_starttime" class="form-control"/>
+                                                <!-- <div class="input-group date" id="starttimepicker" data-target-input="nearest">
+                                                    <input type="time" id="starttime" name="time" placeholder="hrs:mins" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" class="form-control"/>
+                                                    <input type="text" id="starttime" class="form-control datetimepicker-input" data-target="#starttimepicker"/>
+                                                    <div class="input-group-append" data-target="#starttimepicker" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="la la-clock-o"></i></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="endtime"> End time </label>
+                                                <input type="time" id="exam_endtime" class="form-control"/>
+                                                <!-- <div class="input-group date" id="endtimepicker" data-target-input="nearest">
+                                                    <input type="text" id="endtime" class="form-control datetimepicker-input" data-target="#endtimepicker"/>
+                                                    <div class="input-group-append" data-target="#endtimepicker" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="la la-clock-o"></i></div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="subject_exam_venue"> Venue </label>
+                                                <input type="text" id="subject_exam_venue" class="form-control" maxlength="50"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="subject_exam_instructions"> Instructions </label>
+                                                <textarea class="md-textarea form-control" rows="5" id="subject_exam_instructions"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group ml-auto">
+                                                <button type="button" class="btn btn-primary" onClick="add_schedule();"> Add Schedule </button>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
+                                   
+
+                                </form>
                             </div>
-
-                            <div class="form-row">
-                                <div class="form-group ml-auto">
-                                    <button type="button" class="btn btn-primary" onClick="add_schedule();"> Add Schedule </button>
-                                </div>
-                            </div>
-                           
-
-                        </form>
+                        </div>
 
                     </div>
                     <!-- END : SCHEDULE EXAM -->
