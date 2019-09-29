@@ -38,6 +38,11 @@ body{
     margin-left: 16.666667%;
 }
 
+/* TOGGLE OVERRIDE */
+.toggle.btn {
+    width: 100%!important;
+}
+
 /* OVERRIDE BUTTON LIGHT CLASS FOR SELECT PICKER
 .btn-light {
     background-color: #FFFFFF !important;
@@ -112,8 +117,7 @@ h5.page-title{
 /* attendance/mark */
 .attendancemark{
     /*padding: 1rem;*/
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .attendancemark .attendancefilter{
@@ -122,7 +126,8 @@ h5.page-title{
 
 /* attendance/search */
 .attendancesearch{
-    padding: 1rem;
+    /*padding: 1rem;*/
+    padding: 4rem;
 }
 
 .attendancesearch .attendancefilter{
@@ -353,8 +358,7 @@ h5.page-title{
 /* exam/create */
 .examcreate{
     /*padding: 1rem;*/
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 
@@ -376,8 +380,7 @@ h5.page-title{
 
 /* parent/search */
 .parentsearch{
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .parentsearch .card-header {
@@ -388,8 +391,7 @@ h5.page-title{
 /* parent/add */
 .parentadd{
     /*padding: 1rem;*/
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .parentadd .card{
@@ -452,8 +454,7 @@ h5.page-title{
 /* result/add */
 .resultadd{
     /*padding: 1rem;*/
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .resultadd .card{
@@ -478,8 +479,7 @@ h5.page-title{
 
 /* staff/search */
 .staffsearch{
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .staffsearch .card .card-header {
@@ -494,8 +494,7 @@ h5.page-title{
 
 /* staff/add */
 .staffadd{
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .staffadd form{
@@ -536,8 +535,7 @@ h5.page-title{
 /* student/search */
 .stusearch{
     /*padding: 1rem;*/
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .stusearch .card-header {
@@ -552,8 +550,7 @@ h5.page-title{
 
 /* student/add */
 .stuadd{
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding: 4rem;
 }
 
 .stuadd form{
