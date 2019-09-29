@@ -355,11 +355,13 @@ h5.page-title{
 
 /* exam/search */
 .examsearch{
-    padding: 1rem;
+    padding: 4rem;
+    padding-bottom: 0;
 }
 
 .examschedule{
-    padding: 1rem;
+    padding: 4rem;
+    padding-top: 0;
 }
 
 

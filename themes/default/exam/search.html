@@ -13,82 +13,97 @@
 
                 <div class="examsearch">
                     
-                    <h4 class="page-title mt-0"> Search an exam schedule</h4>
+                    <h4 class="page-title">View exam schedule</h4>
 
-                    <form name="examsearch" method="post">
+                    <div class="card mt-4">
+                        <div class="card-header">Search Exam</div>
+                        <div class="card-body">
 
-                        <div class="form-row mt-4">
+                            <form name="examsearch" method="post">
 
-                            <div class="form-group col-md-2">
-                                <label for="exam_name"> Select Exam </label>
-                                <select class="form-control" name="exam_name">
-                                    <option selected disabled>- Select Exam -</option>
-                                    {% for exam in exams %}
-                                        {% if exam.id == form.field.exam_name %}
-                                        <option value="{{ exam.id }}" selected> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
-                                        {% else %}
-                                        <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
-                                        {% endif %}                                        
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                <div class="form-row">
 
-                            <div class="form-group col-md-1 ml-auto">
-                                <label for="exam_grade"> Grade </label>
-                                <select class="form-control" name="exam_grade">
-                                    <option selected disabled>- Select -</option>
-                                    {% for grade in grades %}
-                                        {% if grade.id == form.field.exam_grade %}
-                                        <option value="{{ grade.id }}" selected> {{ grade.name }} </option>
-                                        {% else %}
-                                        <option value="{{ grade.id }}"> {{ grade.name }} </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="exam_name"> Select Exam </label>
+                                            <select class="form-control" name="exam_name">
+                                                <option selected disabled>- Select Exam -</option>
+                                                {% for exam in exams %}
+                                                    {% if exam.id == form.field.exam_name %}
+                                                    <option value="{{ exam.id }}" selected> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
+                                                    {% else %}
+                                                    <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
+                                                    {% endif %}                                        
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
 
-                            <div class="form-group col-md-1">
-                                <label for="exam_subject"> Subject </label>
-                                <select class="form-control" name="exam_subject">
-                                    <option selected disabled>- Select -</option>
-                                    {% for subject in subjects %}
-                                        {% if subject.id == form.field.exam_subject %}
-                                        <option value="{{ subject.id }}" selected> {{ subject.name }} </option>
-                                        {% else %}
-                                        <option value="{{ subject.id }}"> {{ subject.name }} </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="exam_grade"> Grade </label>
+                                            <select class="form-control" name="exam_grade">
+                                                <option selected disabled>- Select -</option>
+                                                {% for grade in grades %}
+                                                    {% if grade.id == form.field.exam_grade %}
+                                                    <option value="{{ grade.id }}" selected> {{ grade.name }} </option>
+                                                    {% else %}
+                                                    <option value="{{ grade.id }}"> {{ grade.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="exam_date"> Date </label>
-                                <input type="date" class="form-control" name="exam_date" value={{ form.field.exam_date }}></select>
-                            </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="exam_subject"> Subject </label>
+                                            <select class="form-control" name="exam_subject">
+                                                <option selected disabled>- Select -</option>
+                                                {% for subject in subjects %}
+                                                    {% if subject.id == form.field.exam_subject %}
+                                                    <option value="{{ subject.id }}" selected> {{ subject.name }} </option>
+                                                    {% else %}
+                                                    <option value="{{ subject.id }}"> {{ subject.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="exam_date"> Date </label>
+                                            <input type="date" class="form-control" name="exam_date" value={{ form.field.exam_date }}></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-3 d-flex" style="align-items: center;justify-content: space-between;">
+
+                                        <div class="form-group">
+                                            <input type="hidden" name="isSubmited" value="true"/>
+                                            <button type="submit" class="btn btn-primary"> Search Exam Schedule </button>
+                                        </div>
+
+
+                                        <!-- START : BUTTON TRIGGER MODAL -->
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
+                                        </div>
+                                        <!-- END : BUTTON TRIGGER MODAL -->
+                                        
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        
                         </div>
-
-                        <div class="form-row">
-
-                            <!-- START : BUTTON TRIGGER MODAL -->
-                            <div class="form-group ml-1">
-                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
-                            </div>
-                            <!-- END : BUTTON TRIGGER MODAL -->
-
-                            <div class="form-group ml-auto mr-1">
-                                <input type="hidden" name="isSubmited" value="true"/>
-                                <button type="submit" class="btn btn-primary"> Search Exam Schedule </button>
-                            </div>
-                        </div>
-
-                    </form>
+                    </div>
 
                 </div>
 
-                <div class="examschedule">
-
-                    <h4 class="page-title"> Exam Schedule</h4>
+                <div class="examschedule mt-3">
 
                     <table class="table table-hover table-responsive-md">
 
