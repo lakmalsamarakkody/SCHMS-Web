@@ -111,7 +111,9 @@ h5.page-title{
 
 /* attendance/mark */
 .attendancemark{
-    padding: 1rem;
+    /*padding: 1rem;*/
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 .attendancemark .attendancefilter{
