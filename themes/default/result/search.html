@@ -12,54 +12,65 @@
 
                 <div class="resultsearch">
 
-                    <h4 class="page-title"> View Exam Result </h4>
+                    <h4 class="page-title">View Exam Result</h4>
 
                     <!-- START : SEARCH EXAM -->
-                    <section class="searchresult-filter mt-4">
+                    <section class="card mt-4">
+                        <div class="card-header">Search Exam</div>
+                        <div class="card-body">
+                            <form name="searchresult-form">
 
-                        <form name="searchresult-form">
+                                <div class="form-row">
 
-                            <div class="form-row">
-    
-                                <div class="form-group col-md-2">
-                                    <label for="exam"> Select Exam </label>
-                                    <select class="form-control" id="exam_name">
-                                        <option selected disabled> - Select Exam - </option>
-                                        {% for exam in exams %}
-                                            <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
-                                        {% endfor %}
-                                    </select>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="exam"> Select Exam </label>
+                                            <select class="form-control" id="exam_name">
+                                                <option selected disabled> - Select Exam - </option>
+                                                {% for exam in exams %}
+                                                    <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="exam_grade"> Grade </label>
+                                            <select class="form-control" id="exam_grade"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="exam_class"> Class </label>
+                                            <select class="form-control" id="exam_class"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="stu_addno">Admission No</label>
+                                            <input type="number" class="form-control" id="stu_addno"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="stu_name">Name</label>
+                                            <input type="text" class="form-control" id="stu_name"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary"> Search </button>
+                                        </div>
+                                    </div>
+
                                 </div>
-
-                                <div class="form-group col-md-1">
-                                    <label for="exam_grade"> Grade </label>
-                                    <select class="form-control" id="exam_grade"></select>
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    <label for="exam_class"> Class </label>
-                                    <select class="form-control" id="exam_class"></select>
-                                </div>
-
-                                <div class="form-group col-md-1 ml-auto">
-                                    <label for="stu_addno">Admission No</label>
-                                    <input type="number" class="form-control" id="stu_addno"/>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="stu_name">Name</label>
-                                    <input type="text" class="form-control" id="stu_name"/>
-                                </div>
-
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group ml-auto mr-1">
-                                    <button type="submit" class="btn btn-primary"> Search </button>
-                                </div>
-                            </div>
-
-                        </form>
+                            </form>
+                        </div>
 
                     </section>
                     <!-- END : SEARCH EXAM -->
