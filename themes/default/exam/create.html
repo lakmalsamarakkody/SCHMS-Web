@@ -13,68 +13,11 @@
 
                 <!-- START : BUTTON TRIGGER MODAL -->
                 <div class="form-row mt-5 mr-3">
-                    <button type="button" class="btn btn-warning ml-auto" data-toggle="modal" data-target="#view-exam-type"> Edit / Remove exam type </button>
-                    <button type="button" class="btn btn-primary ml-3"  data-toggle="modal" data-target="#create-exam-type"> Add new exam type </button>
+                    <button type="button" class="btn btn-sm btn-warning ml-auto" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
+                    <button type="button" class="btn btn-sm btn-warning ml-2" data-toggle="modal" data-target="#view-exam-type"> Edit / Remove exam type </button>
+                    <button type="button" class="btn btn-sm btn-primary ml-2"  data-toggle="modal" data-target="#create-exam-type"> Add new exam type </button>
                 </div>
                 <!-- END : BUTTON TRIGGER MODAL -->
-                    
-                    
-                <!-- START : MODAL CREATE EXAM-TYPE -->
-                <div class="modal fade" id="create-exam-type" tabindex="-1" role="dialog" aria-labelledby="create-exam-type-title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="create-exam-type-title"> Enter new exam type </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="exam_type"> Exam Type Name </label>
-                                        <input type="text" class="form-control" id="exam_type"/>
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" onclick="addexam_type();"> Save changes </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- END : MODAL CREATE EXAM-TYPE -->
-
-                <!-- START : MODAL EDIT/REMOVE EXAM-TYPE -->
-                <div class="modal fade" id="view-exam-type" tabindex="-1" role="dialog" aria-labelledby="view-exam-type-title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable" role="document">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="view-exam-type-title"> Edit exam types </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body">
-                                <ul class="list-group">
-                                    {% for exam_type in exam_types %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div class="col-8">  {{ exam_type.name }} </div>
-                                        <div class="col-2"> <span class="badge badge-warning">edit</span> </div>
-                                        <div class="col-2"> <span class="badge badge-danger">delete</span> </div>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- END : MODAL EDIT/REMOVE EXAM-TYPE -->
 
                 <!-- START : EXAM CREATE PAGE -->
                 <div class="examcreate">
@@ -256,7 +199,197 @@
 
     {{ template.footer|raw }}
 
+    <!-- START : MODAL CREATE EXAM-TYPE -->
+    <div class="modal fade" id="create-exam-type" tabindex="-1" role="dialog" aria-labelledby="create-exam-type-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="create-exam-type-title"> Enter new exam type </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exam_type"> Exam Type Name </label>
+                            <input type="text" class="form-control" id="exam_type"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="addexam_type();"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE EXAM-TYPE -->
+
+    <!-- START : MODAL EDIT/REMOVE EXAM-TYPE -->
+    <div class="modal fade" id="view-exam-type" tabindex="-1" role="dialog" aria-labelledby="view-exam-type-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="view-exam-type-title"> Edit exam types </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <table class="table table-hover table-responsive-md">
+
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="5%" class="text-center" scope="col">ID</th>
+                                <th scope="col">Exam Type Name</th>
+                                <th width="20%" class="text-center" scope="col">&nbsp;</th>                                            
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for exam_type in exam_types %}
+                                <tr>
+                                    <th class="text-center" scope="row">{{ exam_type.id }}</th>
+                                    <td>{{ exam_type.name }}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-xs btn-warning">edit</button> 
+                                        <button type="button" class="btn btn-xs btn-danger">remove</button> 
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL EDIT/REMOVE EXAM-TYPE -->
+
+    <!-- START : MODAL EDIT/REMOVE EXAM -->
+    <div class="modal fade" id="edit-exam" tabindex="-1" role="dialog" aria-labelledby="edit-exam-title" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-exam-title"> Edit / Remove Exams </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+
+                        <table class="table table-hover table-responsive-md">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th width="1%" class="text-center" scope="col">ID</th>
+                                    <th width="20%" scope="col">Exam Name</th>
+                                    <th width="30%" scope="col">Venue</th>
+                                    <th scope="col">Instructions</th>
+                                    <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for exam in exams %}
+                                    <tr>
+                                        <th class="text-center" scope="row">{{ exam.id }}</th>
+                                        <td>{{ exam.type.name }} - {{ exam.year }}</td>
+                                        <td>{{ exam.venue }}</td>
+                                        <td>{{ exam.instructions }}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-xs btn-warning" onclick="exam.edit({{ exam.id }});" >edit</button> 
+                                            <button type="button" class="btn btn-xs btn-danger" onclick="exam.remove({{ exam.id }});">remove</button> 
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL EDIT/REMOVE EXAM -->
+
     <script>
+
+        // START : SCRIPT FOR REMOVE EXAM
+        var exam = {
+
+            edit: (examId) => {
+
+                var formData = new FormData;
+                formData.append("exam_id", examId)
+
+                $.ajax({
+                    url: "{{ app.url }}/exam/ajax_edit_exam",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Exam data edited successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert(res.error);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+            },
+
+            remove: (examId) => {
+
+                var formData = new FormData;
+                formData.append("exam_id", examId)
+
+                $.ajax({
+                    url: "{{ app.url }}/exam/ajax_remove_exam",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Exam removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert(res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+                
+            }
+        }
+        // END : SCRIPT FOR REMOVE EXAM
     
         // START : SCRIPT : ADD A EXAM_TYPE
         addexam_type = () => {

@@ -13,51 +13,71 @@
 
                 <div class="examsearch">
                     
-                    <h4 class="page-title"> Search an exam</h4>
+                    <h4 class="page-title mt-0"> Search an exam schedule</h4>
 
-                    <form name="examsearch">
+                    <form name="examsearch" method="post">
 
                         <div class="form-row mt-4">
 
                             <div class="form-group col-md-2">
                                 <label for="exam_name"> Select Exam </label>
-                                <select class="form-control" id="exam_name">
-                                    <option selected disabled> - Select Exam - </option>
+                                <select class="form-control" name="exam_name">
+                                    <option selected disabled>- Select Exam -</option>
                                     {% for exam in exams %}
-                                        <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
+                                        {% if exam.id == form.field.exam_name %}
+                                        <option value="{{ exam.id }}" selected> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
+                                        {% else %}
+                                        <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
+                                        {% endif %}                                        
                                     {% endfor %}
                                 </select>
                             </div>
 
                             <div class="form-group col-md-1 ml-auto">
                                 <label for="exam_grade"> Grade </label>
-                                <select class="form-control" id="exam_grade">
-                                    <option selected disabled> - Select - </option>
+                                <select class="form-control" name="exam_grade">
+                                    <option selected disabled>- Select -</option>
                                     {% for grade in grades %}
+                                        {% if grade.id == form.field.exam_grade %}
+                                        <option value="{{ grade.id }}" selected> {{ grade.name }} </option>
+                                        {% else %}
                                         <option value="{{ grade.id }}"> {{ grade.name }} </option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
 
                             <div class="form-group col-md-1">
                                 <label for="exam_subject"> Subject </label>
-                                <select class="form-control" id="exam_subject">
-                                    <option selected disabled> - Select - </option>
+                                <select class="form-control" name="exam_subject">
+                                    <option selected disabled>- Select -</option>
                                     {% for subject in subjects %}
+                                        {% if subject.id == form.field.exam_subject %}
+                                        <option value="{{ subject.id }}" selected> {{ subject.name }} </option>
+                                        {% else %}
                                         <option value="{{ subject.id }}"> {{ subject.name }} </option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="exam_date"> Date </label>
-                                <input type="date" class="form-control" id="exam_date"></select>
+                                <input type="date" class="form-control" name="exam_date" value={{ form.field.exam_date }}></select>
                             </div>
 
                         </div>
 
                         <div class="form-row">
+
+                            <!-- START : BUTTON TRIGGER MODAL -->
+                            <div class="form-group ml-1">
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
+                            </div>
+                            <!-- END : BUTTON TRIGGER MODAL -->
+
                             <div class="form-group ml-auto mr-1">
+                                <input type="hidden" name="isSubmited" value="true"/>
                                 <button type="submit" class="btn btn-primary"> Search Exam Schedule </button>
                             </div>
                         </div>
@@ -74,16 +94,16 @@
 
                         <thead class="thead-dark">
                             <tr>
-                                {% if exam.schedule%}
-                                <th width="10%" class="text-center" scope="col">ID</th>
-                                <th width="10%" class="text-center" scope="col">Name</th>
-                                <th width="10%" class="text-center" scope="col">Grade</th>
-                                <th width="10%" class="text-center" scope="col">Subject</th>
-                                <th width="10%" class="text-center" scope="col">Date</th>
-                                <th width="10%" class="text-center" scope="col">Starts at</th>
-                                <th width="10%" class="text-center" scope="col">Ends at</th>
-                                <th width="10%" class="text-center" scope="col">Venue</th>
-                                <th width="10%" class="text-center" scope="col">Instructions</th>
+                                {% if exam.schedule %}
+                                    <th width="10%" class="text-center" scope="col">ID</th>
+                                    <th width="10%" class="text-center" scope="col">Exam Name</th>
+                                    <th width="10%" class="text-center" scope="col">Grade</th>
+                                    <th width="10%" class="text-center" scope="col">Subject</th>
+                                    <th width="10%" class="text-center" scope="col">Date</th>
+                                    <th width="10%" class="text-center" scope="col">Starts at</th>
+                                    <th width="10%" class="text-center" scope="col">Ends at</th>
+                                    <th width="10%" class="text-center" scope="col">Venue</th>
+                                    <th class="text-center" scope="col">Instructions</th>
                                 {% else %}
                                     <th class="text-center" scope="col">Select a exam to view schedule</th>
                                 {% endif %}
@@ -91,8 +111,23 @@
                         </thead>
 
                         <tbody>
-                            <td></td>
-
+                            <tr>
+                            {% if exam.schedule %}
+                                {% for exam_schedule in exam.schedules %}
+                                    <th class="text-center" scope="row">{{ exam_schedule.id }}</th>
+                                    <td class="text-center">Exam Name</td>
+                                    <td class="text-center">Grade</td>
+                                    <td class="text-center">Subject</td>
+                                    <td class="text-center">Date</td>
+                                    <td class="text-center">Starts at</td>
+                                    <td class="text-center">Ends at</td>
+                                    <td class="text-center">Venue</td>
+                                    <td class="text-center">Instructions</td>
+                                 {% endfor %}
+                            {% else %}
+                                <td class="text-center" scope="row">No records to display</td>
+                            {% endif %}
+                            </tr>
                         </tbody>
 
                     </table>
@@ -104,5 +139,125 @@
         </div>
     </div>
 
+    <!-- START : MODAL CREATE EXAM-TYPE -->
+    <div class="modal fade" id="edit-exam" tabindex="-1" role="dialog" aria-labelledby="edit-exam-title" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-exam-title"> Edit / Remove Exams </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+
+                        <table class="table table-hover table-responsive-md">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th width="1%" class="text-center" scope="col">ID</th>
+                                    <th width="20%" scope="col">Exam Name</th>
+                                    <th width="30%" scope="col">Venue</th>
+                                    <th scope="col">Instructions</th>
+                                    <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for exam in exams %}
+                                    <tr>
+                                        <th class="text-center" scope="row">{{ exam.id }}</th>
+                                        <td>{{ exam.type.name }} - {{ exam.year }}</td>
+                                        <td>{{ exam.venue }}</td>
+                                        <td>{{ exam.instructions }}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-xs btn-warning" onclick="exam.edit({{ exam.id }});" >edit</button> 
+                                            <button type="button" class="btn btn-xs btn-danger" onclick="exam.remove({{ exam.id }});">remove</button> 
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                       
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE EXAM-TYPE -->
+
 {{ template.footer|raw }}
+
+    <script>
+
+        // START : SCRIPT FOR REMOVE EXAM
+        var exam = {
+
+            edit: (examId) => {
+
+                var formData = new FormData;
+                formData.append("exam_id", examId)
+
+                $.ajax({
+                    url: "{{ app.url }}/exam/ajax_edit_exam",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Exam data edited successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert(res.error);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+            },
+
+            remove: (examId) => {
+
+                var formData = new FormData;
+                formData.append("exam_id", examId)
+
+                $.ajax({
+                    url: "{{ app.url }}/exam/ajax_remove_exam",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Exam removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert(res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+                
+            }
+        }
+        // END : SCRIPT FOR REMOVE EXAM 
+    
+    </script>
 </body>
