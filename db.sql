@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 29, 2019 at 06:04 AM
+-- Generation Time: Sep 29, 2019 at 08:55 AM
 -- Server version: 10.4.7-MariaDB
 -- PHP Version: 7.3.9
 
@@ -1316,7 +1316,7 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT for table `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `exam_grade_has_schedule`
