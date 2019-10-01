@@ -332,8 +332,12 @@ class Exam extends Controller {
          */
 
         // MODEL
+        $this->load->model('class');
         $this->load->model('exam/schedule');
         $this->load->model('exam/grade');
+        $this->load->model('student/exam');
+        $this->load->model('student/class');
+
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -351,6 +355,20 @@ class Exam extends Controller {
             echo json_encode( array( "error" => "Please select a grade" ), JSON_PRETTY_PRINT );
             exit();
         endif;
+
+            // CHECK GRADE HAS CLASSES
+            if ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->first() == NULL ):
+                echo json_encode( array( "error" => "This grade has no classes" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // CHECK CLASSES HAVE STUDENTS
+            foreach ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $element):
+                if ( $this->model_student_class->select('id')->where('class_id', '=', $element->id)->first() == NULL ):
+                    echo json_encode( array( "error" => "This grade has classes with no students" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+            endforeach;
 
         // VALIDATION : exam_subject_name
         $is_valid_exam_subject_name = GUMP::is_valid($this->request->post, array('exam_subject_name' => 'required|numeric|max_len,3'));
@@ -456,8 +474,27 @@ class Exam extends Controller {
 
             endforeach;
 
+            // insert schedule without creating a exam_grade
+            $this->model_exam_schedule->exam_grade_id = $this->model_exam_grade->id;
+            $this->model_exam_schedule->subject_id = $this->request->post['exam_subject_name'];
+            $this->model_exam_schedule->date = $this->request->post['exam_date'];
+            $this->model_exam_schedule->start_time = $this->request->post['exam_starttime'];
+            $this->model_exam_schedule->end_time = $this->request->post['exam_endtime'];
+            $this->model_exam_schedule->venue = ( $this->request->post['subject_exam_venue']  == "" )  ? null : $this->request->post['subject_exam_venue'];
+            $this->model_exam_schedule->instructions = ( $this->request->post['subject_exam_instructions'] == "" )  ? null : $this->request->post['subject_exam_instructions'];
+
+            // SUBMIT
+            if ( $this->model_exam_schedule->save() ):
+                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                exit();                
+            else:
+                echo json_encode( array( "status" => "failed", "id" => $this->model_exam_grade->id ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
         else:
 
+            // creating a new exam_grade
             $this->model_exam_grade->exam_id = $this->request->post['select_exam_name'];
             $this->model_exam_grade->grade_id = $this->request->post['exam_grade'];
 
@@ -465,6 +502,7 @@ class Exam extends Controller {
                 echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
                 exit();
             else:
+                // creating exam schedule
                 $this->model_exam_schedule->exam_grade_id = $this->model_exam_grade->id;
                 $this->model_exam_schedule->subject_id = $this->request->post['exam_subject_name'];
                 $this->model_exam_schedule->date = $this->request->post['exam_date'];
@@ -475,8 +513,34 @@ class Exam extends Controller {
 
                 // SUBMIT
                 if ( $this->model_exam_schedule->save() ):
-                    echo json_encode( array( "status" => "success", "id" => $this->model_exam_grade->id ), JSON_PRETTY_PRINT );
-                    exit();
+
+                    // Create Student has Exam Schedule
+                    foreach ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $element ):
+                        
+                        if( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->first() !== NULL ):
+
+                            foreach ( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
+
+                                $this->model_student_exam->student_id = $element2->stu_id;
+                                $this->model_student_exam->exam_schedule_id = $this->model_exam_schedule->id;
+
+                                if ( $this->model_student_exam->save() ):
+                                    echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                                    exit();
+                                else:
+                                    echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                                    exit();
+                                endif;
+                                       
+                            endforeach;
+
+                        else:
+                            echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+
+                    endforeach;
+
                 else:
                     $this->model_exam_grade->destroy();
                     echo json_encode( array( "status" => "failed", "id" => $this->model_exam_grade->id ), JSON_PRETTY_PRINT );
@@ -484,23 +548,6 @@ class Exam extends Controller {
                 endif;
             endif;
 
-        endif;
-        
-        $this->model_exam_schedule->exam_grade_id = $this->model_exam_grade->id;
-        $this->model_exam_schedule->subject_id = $this->request->post['exam_subject_name'];
-        $this->model_exam_schedule->date = $this->request->post['exam_date'];
-        $this->model_exam_schedule->start_time = $this->request->post['exam_starttime'];
-        $this->model_exam_schedule->end_time = $this->request->post['exam_endtime'];
-        $this->model_exam_schedule->venue = ( $this->request->post['subject_exam_venue']  == "" )  ? null : $this->request->post['subject_exam_venue'];
-        $this->model_exam_schedule->instructions = ( $this->request->post['subject_exam_instructions'] == "" )  ? null : $this->request->post['subject_exam_instructions'];
-
-        // SUBMIT
-        if ( $this->model_exam_schedule->save() ):
-            echo json_encode( array( "status" => "success", "id" => $this->model_exam_grade->id ), JSON_PRETTY_PRINT );
-            exit();
-        else:
-            echo json_encode( array( "status" => "failed", "id" => $this->model_exam_grade->id ), JSON_PRETTY_PRINT );
-            exit();
         endif;
     }
     
