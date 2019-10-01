@@ -23,27 +23,17 @@
                                     <label for="timetable_class"> Select Class </label>
                                     <select class="form-control" id="timetable_class">
                                         <option selected disabled> - Select - </option>
-                                        {% for staff_class in classes %}
-                                        <option value="{{ staff_class.id }}"> {{ staff_class.grade.name }} - {{ staff_class.name }} </option>
+                                        {% for class in classes %}
+                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
                                         {% endfor %}
                                     </select>
-                                </div>
-
-                                <div class="form-group col-md-1 mr-1">
-                                    <label for="timetable_empid">Employee ID</label>
-                                    <input type="number" class="form-control" id="timetable_empid"/>
-                                </div>
-
-                                <div class="form-group col-md-3 p-0">
-                                    <label for="timetable_name">Name</label>
-                                    <input type="text" class="form-control" id="timetable_name"/>
                                 </div>
 
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group ml-auto">
-                                    <button type="submit" class="form-control btn btn-primary"> Search </button>
+                                    <button type="submit" class="form-control btn btn-primary">Search</button>
                                 </div>
                             </div>
 
@@ -53,7 +43,7 @@
                     </section>
 
                     <!-- START : CLASS TIME TABLE -->
-                    <section class="timetable mt-4">
+                    <section class="timetable">
 
                         <h4 class="page-title"> Create Time Table </h4>
 
@@ -62,39 +52,54 @@
                             <thead class="thead-dark">
 
                                 <tr>
-                                    <th scope="col">Period</th>
-                                    <th scope="col">Monday</th>
-                                    <th scope="col">Tuesday</th>
-                                    <th scope="col">Wednesday</th>
-                                    <th scope="col">Thursday</th>
-                                    <th scope="col">Friday</th>
+                                    <th class="text-center" scope="col">#</th>
+                                    <th class="text-center" scope="col">Monday</th>
+                                    <th class="text-center" scope="col">Tuesday</th>
+                                    <th class="text-center" scope="col">Wednesday</th>
+                                    <th class="text-center" scope="col">Thursday</th>
+                                    <th class="text-center" scope="col">Friday</th>
                                 </tr>
 
                             </thead>
 
                             <tbody>
 
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>6A</td>
-                                    <td>6A</td>
-                                    <td>6A</td>
-                                    <td>6A</td>
-                                    <td>6A</td>
-                                </tr>
+                                {% set period = 1 %}
 
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>6A</td>
-                                    <td>6B</td>
-                                    <td>7A</td>
-                                    <td>7B</td>
-                                    <td>8A</td>
-                                </tr>
+                                {% for row in 1..9 %}
+                                    {% if row != 5 %}
+                                    <tr>
+                                        <th scope="row" class="text-center">{{ period }}</th>
+                                        {% for cols in 1..5 %}
+                                        <td class="text-center">
+                                            <select class="selectpicker subject-picker" data-live-search="true">
+                                                <option selected disabled>- Select Subject -</option>
+                                                {% for subject in subject %}
+                                                    <option data-subject="{{ subject.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ subject.id }}"> {{ subject.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker staff-picker" data-live-search="true">
+                                                <option selected disabled> - Select Teacher - </option>
+                                                {% for staff in staffs %}
+                                                    <option data-staff="{{ staff.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ staff.id }}"> {{ staff.initials }} {{ staff.surname }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% set period = period + 1 %}
+                                    {% else %}
+                                    <tr>
+                                        <th class="text-center" colspan="6">INTERVAL</th>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                
                             
                             </tbody>
-
                         </table>
+
+                        <input id="classId" type="hidden" value="15" />
 
                     </section>
                     <!-- END : CLASS TIME TABLE -->
@@ -107,4 +112,70 @@
     </div>
 
 {{ template.footer|raw }}
+
+    <script>
+        $(".subject-picker").on('change', (event) => {
+            
+            var formData = new FormData
+            formData.append("class", $("#classId").val())
+            formData.append("day", $(event.target.selectedOptions[0]).data('day'))
+            formData.append("period", $(event.target.selectedOptions[0]).data('period'))
+            formData.append("subject", $(event.target.selectedOptions[0]).data('subject'))
+
+            $.ajax({
+                url: "{{ app.url }}/timetable/ajax_assign_subject",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (Response) => {
+                    if ( Response.status == 'success' ) {
+                        $(event.target.selectedOptions[0]).parent().parent().addClass("valid")
+                    } else {
+                        alertify.alert("Error", Response.error);
+                        $(event.target.selectedOptions[0]).parent().parent().addClass("invalid")
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        })
+
+        $(".staff-picker").on('change', (event) => {
+            console.log("DAY : " + $(event.target.selectedOptions[0]).data('day'))
+            console.log("PERIOD : " + $(event.target.selectedOptions[0]).data('period'))
+            console.log("STAFF : " + $(event.target.selectedOptions[0]).data('staff'))
+
+            var formData = new FormData
+            formData.append("class", $("#classId").val())
+            formData.append("day", $(event.target.selectedOptions[0]).data('day'))
+            formData.append("period", $(event.target.selectedOptions[0]).data('period'))
+            formData.append("staff", $(event.target.selectedOptions[0]).data('staff'))
+
+            $.ajax({
+                url: "{{ app.url }}/timetable/ajax_assign_staff",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (Response) => {
+                    if ( Response.status == 'success' ) {
+                        $(event.target.selectedOptions[0]).parent().parent().addClass("valid")
+                    } else {
+                        alertify.alert("Error", Response.error);
+                        $(event.target.selectedOptions[0]).parent().parent().addClass("invalid")
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        })
+    </script>
+
 </body>

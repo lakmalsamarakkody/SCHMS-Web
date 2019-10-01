@@ -485,8 +485,37 @@ class Exam extends Controller {
 
             // SUBMIT
             if ( $this->model_exam_schedule->save() ):
-                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
-                exit();                
+                
+                // Create Student has Exam Schedule
+                foreach ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $element ):
+                        
+                    if( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->first() !== NULL ):
+                        
+                        foreach ( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
+
+                            try {
+
+                                $this->model_student_exam->create([
+                                    'student_id'        => $element2->stu_id,
+                                    'exam_schedule_id'  => $this->model_exam_schedule->id
+                                ]);
+
+                                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                                exit();
+
+                            } catch (Exception $e) {
+                                echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                                exit();
+                            }
+                                   
+                        endforeach;
+
+                    else:
+                        echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+
+                endforeach;            
             else:
                 echo json_encode( array( "status" => "failed", "id" => $this->model_exam_grade->id ), JSON_PRETTY_PRINT );
                 exit();
@@ -521,16 +550,20 @@ class Exam extends Controller {
 
                             foreach ( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
 
-                                $this->model_student_exam->student_id = $element2->stu_id;
-                                $this->model_student_exam->exam_schedule_id = $this->model_exam_schedule->id;
+                                try {
 
-                                if ( $this->model_student_exam->save() ):
+                                    $this->model_student_exam->create([
+                                        'student_id'        => $element2->stu_id,
+                                        'exam_schedule_id'  => $this->model_exam_schedule->id
+                                    ]);
+    
                                     echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
                                     exit();
-                                else:
+    
+                                } catch (Exception $e) {
                                     echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
                                     exit();
-                                endif;
+                                }
                                        
                             endforeach;
 

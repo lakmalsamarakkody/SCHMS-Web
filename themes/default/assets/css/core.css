@@ -83,6 +83,19 @@ h5.page-title{
     border: 0rem;
 }
 
+/* BOOTSTRAP SELECT VALIDATION */
+.bootstrap-select.valid .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle {
+    border: 0px;
+    background-color: rgb(111, 201, 111);
+    color: #FFFFFF;
+}
+
+.bootstrap-select.invalid .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle {
+    border: 0px;
+    background-color: rgb(216, 117, 117);
+    color: #FFFFFF;
+}
+
 /* Bootstrap Checkbox */
 .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; }
 .toggle.ios .toggle-handle { border-radius: 20rem; }

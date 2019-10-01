@@ -2805,3 +2805,150 @@ Stack trace:
 #2 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
 #3 {main}
   thrown in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Builder.php on line 1316" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /exam/ajax_add_schedule HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/exam/create"
+2019/10/01 21:43:39 [error] 1856#1856: *1265 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php:91
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Timetable->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 91" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 21:43:56 [error] 1856#1856: *1265 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'name' in 'order clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id`, `i...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id`, `i...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id`, `i...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id`, `i...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(2130): Illuminate\Database\Connection->select('select `id`, `i...', Array, true)
+#5 /op" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 21:46:16 [error] 1856#1856: *1289 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php:92
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Timetable->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 92" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 21:47:24 [error] 1856#1856: *1293 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php:92
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Timetable->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 92" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 21:49:04 [error] 1856#1856: *1293 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php:91
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Timetable->create()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 91" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 22:01:00 [error] 1856#1856: *1386 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig\Error\SyntaxError: Unexpected token "punctuation" of value "," ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/timetable/create.html:67
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/ForTokenParser.php(51): Twig\TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\ForTokenParser->parse(Object(Twig\Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(98): Twig\Parser->subparse(NULL, false)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php(563): Twig\Parser->parse(Object(Twig\TokenStream))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php(595): Twig\Environment->parse(Object(Twig\TokenStream))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php(408): Twig\Environment->compileSource(Object(Twig\Source))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Envi" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 22:04:28 [error] 1856#1856: *1437 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig\Error\SyntaxError: Unexpected token "operator" of value "=" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/timetable/create.html:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/IfTokenParser.php(38): Twig\TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\IfTokenParser->parse(Object(Twig\Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/ForTokenParser.php(52): Twig\Parser->subparse(Array)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\ForTokenParser->parse(Object(Twig\Token))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(98): Twig\Parser->subparse(NULL, false)
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php(563): Twig\Parser->parse(Object(Twig\TokenStream))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 22:04:41 [error] 1856#1856: *1437 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig\Error\SyntaxError: Unexpected token "operator" of value "=" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/timetable/create.html:68
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/IfTokenParser.php(38): Twig\TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\IfTokenParser->parse(Object(Twig\Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/ForTokenParser.php(52): Twig\Parser->subparse(Array)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\ForTokenParser->parse(Object(Twig\Token))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(98): Twig\Parser->subparse(NULL, false)
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php(563): Twig\Parser->parse(Object(Twig\TokenStream))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 22:05:13 [error] 1856#1856: *1451 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig\Error\SyntaxError: Unexpected token "operator" of value "=" ("end of statement block" expected). in /opt/dev/sites/bit-project.int/themes/default/timetable/create.html:69
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/IfTokenParser.php(38): Twig\TokenStream->expect(3)
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\IfTokenParser->parse(Object(Twig\Token))
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/ForTokenParser.php(52): Twig\Parser->subparse(Array)
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\ForTokenParser->parse(Object(Twig\Token))
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(98): Twig\Parser->subparse(NULL, false)
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php(563): Twig\Parser->parse(Object(Twig\TokenStream))
+#6 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Environment.php" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/01 22:13:16 [error] 1856#1856: *1577 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Twig\Error\SyntaxError: Only variables can be assigned to. Unexpected token "operator" of value "=" ("name" expected). in /opt/dev/sites/bit-project.int/themes/default/timetable/create.html:79
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/twig/twig/src/ExpressionParser.php(643): Twig\TokenStream->expect(5, NULL, 'Only variables ...')
+#1 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/SetTokenParser.php(34): Twig\ExpressionParser->parseAssignmentExpression()
+#2 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\SetTokenParser->parse(Object(Twig\Token))
+#3 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/IfTokenParser.php(39): Twig\Parser->subparse(Array)
+#4 /opt/dev/sites/bit-project.int/libs/twig/twig/src/Parser.php(185): Twig\TokenParser\IfTokenParser->parse(Object(Twig\Token))
+#5 /opt/dev/sites/bit-project.int/libs/twig/twig/src/TokenParser/ForTokenParser.php(52): Twig\Parser->subparse(Array" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
+2019/10/02 00:42:01 [error] 1856#1856: *2320 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught TypeError: Argument 1 passed to GUMP::run() must be of the type array, object given, called in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 122 and defined in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php:265
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/controllers/Timetable.php(122): GUMP->run(Object(stdClass))
+#1 /opt/dev/sites/bit-project.int/app/core/App.php(44): Timetable->ajax_assign_subject()
+#2 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/wixel/gump/gump.class.php on line 265" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 00:45:25 [error] 1856#1856: *2370 FastCGI sent in stderr: "PHP message: PHP Notice:  Undefined variable: validation_result in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 129" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 01:46:29 [error] 1856#1856: *2823 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000]: General error: 1364 Field 'id' doesn't have a default value in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/dev/sites/bit-proje" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 02:24:43 [error] 1856#1856: *2968 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught Error: Call to a member function select() on null in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php:164
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/core/App.php(44): Timetable->ajax_assign_subject()
+#1 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#2 {main}
+  thrown in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 164" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 02:43:26 [error] 1856#1856: *3086 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '52-1' for key 'stu_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `st...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `st...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `st...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `st...', Array)
+#5 /opt/de" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 02:48:47 [error] 1856#1856: *3105 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'subject_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id` fro...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id` fro...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id` fro...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id` fro...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(2130): Illuminate\Database\Connection->select('select `id` fro...', Array, true)" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 02:50:14 [error] 1856#1856: *3105 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'stu_id' in 'where clause' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:326
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(326): PDO->prepare('select `id` fro...')
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('select `id` fro...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('select `id` fro...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(333): Illuminate\Database\Connection->run('select `id` fro...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Query/Builder.php(2130): Illuminate\Database\Connection->select('select `id` fro...', Array, true)
+#5 /" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 03:03:35 [error] 1856#1856: *3226 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '3-x' for key 'grade_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/d" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/10/02 03:08:55 [error] 1856#1856: *3262 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '3-d' for key 'grade_id' in /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php:458
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(458): PDOStatement->execute()
+#1 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(657): Illuminate\Database\Connection->Illuminate\Database\{closure}('insert into `cl...', Array)
+#2 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(624): Illuminate\Database\Connection->runQueryCallback('insert into `cl...', Array, Object(Closure))
+#3 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(459): Illuminate\Database\Connection->run('insert into `cl...', Array, Object(Closure))
+#4 /opt/dev/sites/bit-project.int/libs/illuminate/database/Connection.php(411): Illuminate\Database\Connection->statement('insert into `cl...', Array)
+#5 /opt/d" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/10/02 03:21:07 [error] 1856#1856: *3360 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Illuminate\Database\Eloquent\Model::destroy(), 0 passed in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 119 and exactly 1 expected in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Model.php:850
+Stack trace:
+#0 /opt/dev/sites/bit-project.int/app/controllers/Timetable.php(119): Illuminate\Database\Eloquent\Model::destroy()
+#1 /opt/dev/sites/bit-project.int/app/core/App.php(44): Timetable->ajax_assign_subject()
+#2 /opt/dev/sites/bit-project.int/index.php(37): App->__construct(Object(Registry))
+#3 {main}
+  thrown in /opt/dev/sites/bit-project.int/libs/illuminate/database/Eloquent/Model.php on line 850" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/10/02 03:24:01 [error] 1856#1856: *3364 FastCGI sent in stderr: "PHP message: PHP Parse error:  syntax error, unexpected ''name'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 121" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int"
+2019/10/02 03:37:26 [error] 1856#1856: *3444 FastCGI sent in stderr: "PHP message: PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 168" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "POST /timetable/ajax_assign_subject HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/create"
+2019/10/02 03:37:31 [error] 1856#1856: *3444 FastCGI sent in stderr: "PHP message: PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /opt/dev/sites/bit-project.int/app/controllers/Timetable.php on line 168" while reading response header from upstream, client: 127.0.0.1, server: bit-project.int, request: "GET /timetable/create HTTP/1.1", upstream: "fastcgi://unix:/run/php-fpm/php-fpm.sock:", host: "bit-project.int", referrer: "http://bit-project.int/timetable/search"
