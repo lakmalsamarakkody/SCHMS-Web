@@ -12,7 +12,7 @@ class ClassTimetable_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'class_timetable';
-	protected $fillable = [ 'id', 'class_id', 'day', 'subject_id', 'staff_id' ];
+	protected $fillable = [ 'id', 'class_id', 'day', 'period', 'subject_id', 'staff_id' ];
 }
 
 ?>

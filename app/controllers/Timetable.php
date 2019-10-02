@@ -66,11 +66,10 @@ class Timetable extends Controller {
 
         // MODEL
         $this->load->model('class');
+        $this->load->model('class/timetable');
         $this->load->model('grade');
         $this->load->model('subject');
         $this->load->model('staff');
-
-
         
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBy('grade_id')->get() as $key => $element ):
@@ -96,15 +95,64 @@ class Timetable extends Controller {
             $data['staffs'][$key]['surname'] = $element->surname;
             
         endforeach;
+
+        if ( isset($this->request->post['isSubmited']) ):
+
+            // PRESERVE SUBMITED DATA
+            $data['form']['field']['timetable_class'] = ( isset($this->request->post['timetable_class']) AND !empty($this->request->post['timetable_class']) ) ? $this->request->post['timetable_class'] : "";
+
+            // VALIDATE CLASS
+            // GUMP VALIDATION
+            $gump = new GUMP();
+            $gump->validation_rules(array(
+                'timetable_class'     => 'required|numeric|min_len,1|max_len,3'
+            ));
+
+            if ( $gump->run($this->request->post) === false ):
+                $data['error']['status'] = true;
+                $data['error']['msg'] = "Invalid class selected. Refresh your Browser and try again";
+            else:
+                // DB VALIDATION : CLASS
+                if ( $this->model_class->select('id')->where('id', '=', $this->request->post['timetable_class'])->first() != NULL ):
+
+                    $data['class']['id'] = $this->request->post['timetable_class'];
+
+                    $class_timetable = $this->model_class_timetable->select('id', 'class_id', 'day', 'period', 'subject_id', 'staff_id')->where('class_id', '=', $this->request->post['timetable_class']);
+                    if ( $class_timetable =! NULL ):
+
+                        foreach ( $this->model_class_timetable->select('id', 'class_id', 'day', 'period', 'subject_id', 'staff_id')->where('class_id', '=', $this->request->post['timetable_class'])->get() as $key => $element ):
+                            $data['timetables'][$element->day][$element->period] = array(
+                                'subject_id' => $element->subject_id,
+                                'staff_id' => $element->staff_id
+                            );
+                        endforeach;
+
+                    else:
+                        $data['error']['status'] = true;
+                        $data['error']['msg'] = "No schedule to selected class";
+                    endif;
+
+                else:
+                    $data['error']['status'] = true;
+                    $data['error']['msg'] = "No class found. Please try again";
+                endif;
+
+            endif;
+
+            
+    
+        endif;
         
 		// RENDER VIEW
         $this->load->view('timetable/create', $data);
         
     }
 
-
     // THIS METHOD WILL MANIPULATE SUBJECT PER EACH CLASS
     public function ajax_assign_subject() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
 
         // MODEL
         $this->load->model('class');
@@ -112,9 +160,6 @@ class Timetable extends Controller {
         $this->load->model('class/timetable');
         $this->load->model('student/class');
         $this->load->model('student/subject');
-
-        // SET JSON HEADER
-        header('Content-Type: application/json');
 
         // GUMP VALIDATION
         $gump = new GUMP();
@@ -176,13 +221,11 @@ class Timetable extends Controller {
                         if ( $this->model_student_subject->select('id')->where('student_id', '=', $element->stu_id)->where('subject_id', '=', $this->request->post['subject'])->first() == NULL  ):
 
                             try {
+
                                 $this->model_student_subject->create([
                                     'student_id' => $element->stu_id,
                                     'subject_id' => $this->request->post['subject']
                                 ]);
-
-                                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
-                                exit();
 
                             } catch(Exception $e){
                                 echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
@@ -193,6 +236,12 @@ class Timetable extends Controller {
 
                     endforeach;
 
+                    echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    exit();
+                
+                else:
+                    echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    exit();
                 endif;
 
             else:
@@ -211,6 +260,80 @@ class Timetable extends Controller {
         $this->load->model('staff');
         $this->load->model('staff/subject');
         $this->load->model('class/timetable');
+
+        // GUMP VALIDATION
+        $gump = new GUMP();
+        $gump->validation_rules(array(
+            'class'     => 'required|numeric|min_len,1|max_len,3',
+            'day'       => 'required|numeric|max_len,1|min_numeric,1|max_numeric,5',
+            'period'    => 'required|numeric|max_len,1|min_numeric,1|max_numeric,8',
+            'staff'     => 'required|numeric|min_len,1|max_len,6'
+        ));
+        if ( $gump->run($this->request->post) === false ):
+            echo json_encode(array("status" => "failed", "error" => "Invalid data supplied. Please reload and try again."), JSON_PRETTY_PRINT);
+            exit();
+        endif;
+
+        // CLASS VALIDATION
+        if ( $this->model_class->select('id')->where('id', '=', $this->request->post['class'])->first() == NULL ):
+            echo json_encode(array("status" => "failed", "error" => "Invalid class is selected."), JSON_PRETTY_PRINT);
+            exit();
+        endif;
+
+        // STAFF VALIDATION
+        if ( $this->model_staff->select('id')->where('id', '=', $this->request->post['staff'])->first() == NULL ):
+            echo json_encode(array("status" => "failed", "error" => "Invalid staff is selected."), JSON_PRETTY_PRINT);
+            exit();
+        endif;
+
+        // SUBJECT VALIDATION
+        if ( $this->model_class_timetable->select('subject_id')->where('class_id', '=', $this->request->post['class'])->where('day', '=', $this->request->post['day'])->where('period', '=', $this->request->post['period'])->first() == NULL  ):
+            echo json_encode(array("status" => "failed", "error" => "Schedule a subject before assigning a staff"), JSON_PRETTY_PRINT);
+            exit();
+        endif;
+
+        // TIME SLOT VALIDATION
+        if ( $this->model_class_timetable->select('id')->where('staff_id', '=', $this->request->post['staff'])->where('day', '=', $this->request->post['day'])->where('period', '=', $this->request->post['period'])->first() != NULL  ):
+            echo json_encode(array("status" => "failed", "error" => "Staff has already a class in this period"), JSON_PRETTY_PRINT);
+            exit();
+        endif;
+
+        // UPDATE CURRENT STAFF
+        $is_update = $this->model_class_timetable->where('class_id', '=', $this->request->post['class'])->where('day', '=', $this->request->post['day'])->where('period', '=', $this->request->post['period'])->update(['staff_id' => $this->request->post['staff']]);
+        
+        if ( $is_update ):
+            $subject_id = $this->model_class_timetable->select('subject_id')->where('class_id', '=', $this->request->post['class'])->where('day', '=', $this->request->post['day'])->where('period', '=', $this->request->post['period'])->first();
+            
+            // Create STAFF has SUBJECT
+            if ( $this->model_staff_subject->select('staff_id')->where('staff_id', '=', $this->request->post['staff'])->where('subject_id', '=', $subject_id->subject_id)->first() == NULL ):
+
+                try {
+                    $this->model_staff_subject->create([
+                        'staff_id' => $this->request->post['staff'],
+                        'subject_id' => $subject_id->subject_id
+                    ]);
+
+                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                exit();
+
+                } catch(Exception $e){
+                    echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+            
+            else:
+                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+        else:
+            echo json_encode(array("status" => "failed"), JSON_PRETTY_PRINT);
+            exit();
+        endif;
+
+                
+
+                    
     }
 }
 ?>

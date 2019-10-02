@@ -551,7 +551,6 @@ class Exam extends Controller {
                             foreach ( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
 
                                 try {
-
                                     $this->model_student_exam->create([
                                         'student_id'        => $element2->stu_id,
                                         'exam_schedule_id'  => $this->model_exam_schedule->id

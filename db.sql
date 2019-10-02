@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 29, 2019 at 08:55 AM
+-- Generation Time: Oct 02, 2019 at 08:46 PM
 -- Server version: 10.4.7-MariaDB
 -- PHP Version: 7.3.9
 
@@ -63,7 +63,8 @@ INSERT INTO `class` (`id`, `grade_id`, `staff_id`, `name`, `created_on`, `update
 (16, 3, 1, 'A', '2019-09-23 01:40:39', '2019-09-23 01:40:39', NULL),
 (17, 5, NULL, 'A', '2019-09-23 05:12:49', '2019-09-23 05:12:49', NULL),
 (18, 4, NULL, 'A', '2019-09-23 05:15:05', '2019-09-23 05:15:05', NULL),
-(19, 1, 3, 'B', '2019-09-28 16:10:23', '2019-09-28 16:10:23', NULL);
+(21, 6, NULL, 'A', '2019-10-01 19:17:17', '2019-10-01 19:17:17', NULL),
+(22, 6, NULL, 'B', '2019-10-01 19:51:15', '2019-10-01 19:51:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -72,21 +73,29 @@ INSERT INTO `class` (`id`, `grade_id`, `staff_id`, `name`, `created_on`, `update
 --
 
 CREATE TABLE `class_timetable` (
-  `id` int(6) NOT NULL,
+  `id` int(11) NOT NULL,
   `class_id` int(3) NOT NULL,
-  `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `period_1` int(3) NOT NULL,
-  `period_2` int(3) NOT NULL,
-  `period_3` int(3) NOT NULL,
-  `period_4` int(3) NOT NULL,
-  `period_5` int(3) NOT NULL,
-  `period_6` int(3) NOT NULL,
-  `period_7` int(3) NOT NULL,
-  `period_8` int(3) NOT NULL,
+  `day` int(1) NOT NULL,
+  `period` int(1) NOT NULL,
+  `subject_id` int(3) NOT NULL,
+  `staff_id` int(6) DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `class_timetable`
+--
+
+INSERT INTO `class_timetable` (`id`, `class_id`, `day`, `period`, `subject_id`, `staff_id`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(83, 15, 1, 1, 5, 1, '2019-10-02 19:27:09', '2019-10-02 20:04:45', NULL),
+(84, 16, 1, 1, 1, 3, '2019-10-02 19:27:26', '2019-10-02 19:27:32', NULL),
+(85, 15, 2, 1, 5, 3, '2019-10-02 19:28:29', '2019-10-02 19:28:34', NULL),
+(86, 16, 2, 1, 5, 4, '2019-10-02 19:28:43', '2019-10-02 19:28:47', NULL),
+(87, 15, 3, 1, 2, NULL, '2019-10-02 20:06:18', '2019-10-02 20:06:18', NULL),
+(88, 15, 4, 1, 4, NULL, '2019-10-02 20:06:20', '2019-10-02 20:06:20', NULL),
+(89, 15, 5, 1, 1, NULL, '2019-10-02 20:06:21', '2019-10-02 20:06:21', NULL);
 
 -- --------------------------------------------------------
 
@@ -217,12 +226,9 @@ CREATE TABLE `exam_grade_has_schedule` (
 --
 
 INSERT INTO `exam_grade_has_schedule` (`id`, `exam_grade_id`, `subject_id`, `date`, `start_time`, `end_time`, `venue`, `instructions`, `created_on`, `updated_on`, `deleted_on`) VALUES
-(15, 14, 1, '2019-09-25', '08:00:00', '10:00:00', NULL, NULL, '2019-09-24 22:34:20', '2019-09-24 22:34:20', NULL),
-(20, 14, 5, '2019-09-25', '11:00:00', '13:00:00', NULL, NULL, '2019-09-25 02:13:13', '2019-09-25 02:13:13', NULL),
-(21, 15, 1, '2019-09-25', '08:00:00', '10:00:00', NULL, NULL, '2019-09-25 02:14:51', '2019-09-25 02:14:51', NULL),
-(22, 15, 5, '2019-09-25', '11:00:00', '13:00:00', NULL, NULL, '2019-09-25 02:15:53', '2019-09-25 02:15:53', NULL),
-(23, 16, 1, '2019-09-28', '09:00:00', '12:00:00', NULL, NULL, '2019-09-28 21:27:35', '2019-09-28 21:27:35', NULL),
-(24, 17, 1, '2019-09-29', '08:00:00', '10:00:00', NULL, NULL, '2019-09-29 04:46:33', '2019-09-29 04:46:33', NULL);
+(56, 39, 1, '2019-10-01', '08:00:00', '10:00:00', NULL, NULL, '2019-10-01 20:15:16', '2019-10-01 20:15:16', NULL),
+(57, 40, 1, '2019-10-01', '01:00:00', '03:00:00', NULL, NULL, '2019-10-01 20:15:47', '2019-10-01 20:15:47', NULL),
+(58, 41, 4, '2019-10-17', '10:10:00', '11:11:00', NULL, NULL, '2019-10-02 03:15:35', '2019-10-02 03:15:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -244,10 +250,9 @@ CREATE TABLE `exam_has_grade` (
 --
 
 INSERT INTO `exam_has_grade` (`id`, `exam_id`, `grade_id`, `created_on`, `updated_on`, `deleted_on`) VALUES
-(14, 6, 1, '2019-09-24 22:34:20', '2019-09-24 22:34:20', NULL),
-(15, 6, 3, '2019-09-25 02:14:51', '2019-09-25 02:14:51', NULL),
-(16, 7, 1, '2019-09-28 21:27:35', '2019-09-28 21:27:35', NULL),
-(17, 10, 1, '2019-09-29 04:46:33', '2019-09-29 04:46:33', NULL);
+(39, 10, 1, '2019-10-01 20:15:16', '2019-10-01 20:15:16', NULL),
+(40, 10, 6, '2019-10-01 20:15:47', '2019-10-01 20:15:47', NULL),
+(41, 6, 1, '2019-10-02 03:15:34', '2019-10-02 03:15:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -293,11 +298,11 @@ CREATE TABLE `grade` (
 --
 
 INSERT INTO `grade` (`id`, `name`, `created_on`, `updated_on`, `deleted_on`) VALUES
-(1, 6, '2019-09-16 00:00:00', '2019-09-16 00:00:00', NULL),
-(3, 7, '2019-09-21 02:07:46', '2019-09-21 02:07:46', NULL),
-(4, 8, '2019-09-21 03:53:16', '2019-09-21 03:53:16', NULL),
-(5, 1, '2019-09-21 23:49:46', '2019-09-21 23:49:46', NULL),
-(6, 9, '2019-09-28 16:11:22', '2019-09-28 16:11:22', NULL);
+(1, 1, '2019-09-16 00:00:00', '2019-09-16 00:00:00', NULL),
+(3, 3, '2019-09-21 02:07:46', '2019-09-21 02:07:46', NULL),
+(4, 4, '2019-09-21 03:53:16', '2019-09-21 03:53:16', NULL),
+(5, 5, '2019-09-21 23:49:46', '2019-09-21 23:49:46', NULL),
+(6, 6, '2019-09-28 16:11:22', '2019-09-28 16:11:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -530,33 +535,6 @@ INSERT INTO `staff` (`id`, `employee_number`, `category_id`, `type_id`, `admissi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `staff_attendance`
---
-
-CREATE TABLE `staff_attendance` (
-  `id` bigint(20) NOT NULL,
-  `staff_id` int(6) NOT NULL,
-  `date` date NOT NULL,
-  `created_on` datetime NOT NULL,
-  `updated_on` datetime NOT NULL,
-  `deleted_on` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `staff_attendance`
---
-
-INSERT INTO `staff_attendance` (`id`, `staff_id`, `date`, `created_on`, `updated_on`, `deleted_on`) VALUES
-(1, 1, '2019-09-27', '2019-09-27 00:00:00', '2019-09-27 00:00:00', NULL),
-(2, 1, '2019-09-26', '2019-09-27 22:43:48', '2019-09-27 22:43:48', NULL),
-(3, 3, '2019-09-26', '2019-09-27 22:44:08', '2019-09-27 22:44:08', NULL),
-(6, 3, '2019-09-27', '2019-09-27 23:24:06', '2019-09-27 23:24:06', NULL),
-(9, 3, '2019-09-20', '2019-09-27 23:26:47', '2019-09-27 23:26:47', NULL),
-(10, 4, '2019-09-26', '2019-09-28 14:58:44', '2019-09-28 14:58:44', NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `staff_category`
 --
 
@@ -591,6 +569,16 @@ CREATE TABLE `staff_has_subject` (
   `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `staff_has_subject`
+--
+
+INSERT INTO `staff_has_subject` (`id`, `staff_id`, `subject_id`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(9, 1, 1, '2019-10-02 19:27:11', '2019-10-02 19:27:11', NULL),
+(10, 3, 1, '2019-10-02 19:27:32', '2019-10-02 19:27:32', NULL),
+(11, 3, 5, '2019-10-02 19:28:34', '2019-10-02 19:28:34', NULL),
+(12, 4, 5, '2019-10-02 19:28:47', '2019-10-02 19:28:47', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -599,16 +587,11 @@ CREATE TABLE `staff_has_subject` (
 
 CREATE TABLE `staff_timetable` (
   `id` int(6) NOT NULL,
-  `staff_id` int(6) NOT NULL,
+  `class_id` int(3) NOT NULL,
   `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `period_1` int(3) NOT NULL,
-  `period_2` int(3) NOT NULL,
-  `period_3` int(3) NOT NULL,
-  `period_4` int(3) NOT NULL,
-  `period_5` int(3) NOT NULL,
-  `period_6` int(3) NOT NULL,
-  `period_7` int(3) NOT NULL,
-  `period_8` int(3) NOT NULL,
+  `period_id` int(1) NOT NULL,
+  `staff_id` int(6) NOT NULL,
+  `subject_id` int(3) NOT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL
@@ -713,22 +696,8 @@ INSERT INTO `student_attendance` (`id`, `student_id`, `date`, `created_on`, `upd
 (2, 52, '2019-09-27', '2019-09-27 00:00:00', '2019-09-27 00:00:00', NULL),
 (8, 52, '2019-09-28', '2019-09-28 20:49:50', '2019-09-28 20:49:50', NULL),
 (9, 53, '2019-09-28', '2019-09-28 20:51:52', '2019-09-28 20:51:52', NULL),
-(10, 53, '2019-09-29', '2019-09-29 04:43:55', '2019-09-29 04:43:55', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `student_exam_results`
---
-
-CREATE TABLE `student_exam_results` (
-  `id` int(8) NOT NULL,
-  `student_exam_schedule_id` int(8) NOT NULL,
-  `marks` decimal(5,2) NOT NULL,
-  `created_on` datetime NOT NULL,
-  `updated_on` datetime NOT NULL,
-  `deleted_on` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(10, 53, '2019-09-29', '2019-09-29 04:43:55', '2019-09-29 04:43:55', NULL),
+(11, 52, '2019-09-30', '2019-09-30 19:55:22', '2019-09-30 19:55:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -757,17 +726,26 @@ INSERT INTO `student_has_class` (`id`, `stu_id`, `class_id`, `index_no`, `create
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_has_exam_schedule`
+-- Table structure for table `student_has_exam`
 --
 
-CREATE TABLE `student_has_exam_schedule` (
+CREATE TABLE `student_has_exam` (
   `id` int(8) NOT NULL,
   `student_id` int(6) NOT NULL,
   `exam_schedule_id` int(4) NOT NULL,
+  `marks` int(3) DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `student_has_exam`
+--
+
+INSERT INTO `student_has_exam` (`id`, `student_id`, `exam_schedule_id`, `marks`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(3, 52, 56, NULL, '2019-10-01 20:15:17', '2019-10-01 20:15:17', NULL),
+(4, 52, 58, NULL, '2019-10-02 03:15:35', '2019-10-02 03:15:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -834,12 +812,25 @@ CREATE TABLE `student_has_sport_achievement` (
 
 CREATE TABLE `student_has_subject` (
   `id` int(8) NOT NULL,
-  `stu_id` int(6) NOT NULL,
+  `student_id` int(6) NOT NULL,
   `subject_id` int(3) NOT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `student_has_subject`
+--
+
+INSERT INTO `student_has_subject` (`id`, `student_id`, `subject_id`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(18, 52, 1, '2019-10-02 15:57:50', '2019-10-02 15:57:50', NULL),
+(19, 52, 5, '2019-10-02 15:57:52', '2019-10-02 15:57:52', NULL),
+(20, 53, 1, '2019-10-02 17:10:14', '2019-10-02 17:10:14', NULL),
+(21, 53, 2, '2019-10-02 17:10:27', '2019-10-02 17:10:27', NULL),
+(22, 53, 5, '2019-10-02 17:10:29', '2019-10-02 17:10:29', NULL),
+(23, 52, 2, '2019-10-02 18:27:51', '2019-10-02 18:27:51', NULL),
+(24, 52, 4, '2019-10-02 20:06:20', '2019-10-02 20:06:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -934,6 +925,7 @@ CREATE TABLE `user_permission` (
 CREATE TABLE `user_role` (
   `id` int(2) NOT NULL,
   `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL
@@ -943,8 +935,8 @@ CREATE TABLE `user_role` (
 -- Dumping data for table `user_role`
 --
 
-INSERT INTO `user_role` (`id`, `role`, `created_on`, `updated_on`, `deleted_on`) VALUES
-(1, 'System Administrator', '2019-09-02 00:00:00', '2019-09-02 00:00:00', NULL);
+INSERT INTO `user_role` (`id`, `role`, `description`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(1, 'System Administrator', NULL, '2019-09-02 00:00:00', '2019-09-02 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -984,8 +976,9 @@ ALTER TABLE `class`
 --
 ALTER TABLE `class_timetable`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `class_id` (`class_id`,`day`),
-  ADD KEY `day_id` (`day`);
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `staff_id` (`staff_id`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- Indexes for table `coach`
@@ -1113,13 +1106,6 @@ ALTER TABLE `staff`
   ADD KEY `staff_ibfk_3` (`category_id`);
 
 --
--- Indexes for table `staff_attendance`
---
-ALTER TABLE `staff_attendance`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `student_id` (`staff_id`,`date`);
-
---
 -- Indexes for table `staff_category`
 --
 ALTER TABLE `staff_category`
@@ -1140,7 +1126,9 @@ ALTER TABLE `staff_has_subject`
 ALTER TABLE `staff_timetable`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `staff_id` (`staff_id`,`day`),
-  ADD KEY `day_id` (`day`);
+  ADD KEY `day_id` (`day`),
+  ADD KEY `class_id` (`class_id`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- Indexes for table `staff_type`
@@ -1175,13 +1163,6 @@ ALTER TABLE `student_attendance`
   ADD UNIQUE KEY `student_id` (`student_id`,`date`);
 
 --
--- Indexes for table `student_exam_results`
---
-ALTER TABLE `student_exam_results`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `student_exam_schedule_id` (`student_exam_schedule_id`);
-
---
 -- Indexes for table `student_has_class`
 --
 ALTER TABLE `student_has_class`
@@ -1190,9 +1171,9 @@ ALTER TABLE `student_has_class`
   ADD UNIQUE KEY `class_id` (`class_id`,`index_no`);
 
 --
--- Indexes for table `student_has_exam_schedule`
+-- Indexes for table `student_has_exam`
 --
-ALTER TABLE `student_has_exam_schedule`
+ALTER TABLE `student_has_exam`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `student_id` (`student_id`,`exam_schedule_id`),
   ADD KEY `exam_schedule_id` (`exam_schedule_id`);
@@ -1226,7 +1207,7 @@ ALTER TABLE `student_has_sport_achievement`
 --
 ALTER TABLE `student_has_subject`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `stu_id` (`stu_id`,`subject_id`),
+  ADD UNIQUE KEY `stu_id` (`student_id`,`subject_id`),
   ADD KEY `student_has_subject_ibfk_2` (`subject_id`);
 
 --
@@ -1286,13 +1267,13 @@ ALTER TABLE `backup`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `class_timetable`
 --
 ALTER TABLE `class_timetable`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `coach`
@@ -1322,13 +1303,13 @@ ALTER TABLE `exam`
 -- AUTO_INCREMENT for table `exam_grade_has_schedule`
 --
 ALTER TABLE `exam_grade_has_schedule`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `exam_has_grade`
 --
 ALTER TABLE `exam_has_grade`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `exam_type`
@@ -1397,12 +1378,6 @@ ALTER TABLE `staff`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `staff_attendance`
---
-ALTER TABLE `staff_attendance`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
 -- AUTO_INCREMENT for table `staff_category`
 --
 ALTER TABLE `staff_category`
@@ -1412,7 +1387,7 @@ ALTER TABLE `staff_category`
 -- AUTO_INCREMENT for table `staff_has_subject`
 --
 ALTER TABLE `staff_has_subject`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `staff_timetable`
@@ -1442,13 +1417,7 @@ ALTER TABLE `student_achievement`
 -- AUTO_INCREMENT for table `student_attendance`
 --
 ALTER TABLE `student_attendance`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `student_exam_results`
---
-ALTER TABLE `student_exam_results`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `student_has_class`
@@ -1457,10 +1426,10 @@ ALTER TABLE `student_has_class`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `student_has_exam_schedule`
+-- AUTO_INCREMENT for table `student_has_exam`
 --
-ALTER TABLE `student_has_exam_schedule`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `student_has_exam`
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `student_has_parent`
@@ -1484,7 +1453,7 @@ ALTER TABLE `student_has_sport_achievement`
 -- AUTO_INCREMENT for table `student_has_subject`
 --
 ALTER TABLE `student_has_subject`
-  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `student_health`
@@ -1537,7 +1506,9 @@ ALTER TABLE `class`
 -- Constraints for table `class_timetable`
 --
 ALTER TABLE `class_timetable`
-  ADD CONSTRAINT `class_timetable_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `class_timetable_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `class_timetable_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `class_timetable_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `coach_has_sport`
@@ -1594,12 +1565,6 @@ ALTER TABLE `staff`
   ADD CONSTRAINT `staff_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `staff_category` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `staff_attendance`
---
-ALTER TABLE `staff_attendance`
-  ADD CONSTRAINT `staff_attendance_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON UPDATE CASCADE;
-
---
 -- Constraints for table `staff_has_subject`
 --
 ALTER TABLE `staff_has_subject`
@@ -1610,6 +1575,8 @@ ALTER TABLE `staff_has_subject`
 -- Constraints for table `staff_timetable`
 --
 ALTER TABLE `staff_timetable`
+  ADD CONSTRAINT `staff_timetable_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `staff_timetable_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `staff_timetable_staff_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -1639,12 +1606,6 @@ ALTER TABLE `student_attendance`
   ADD CONSTRAINT `student_attendance_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `student_exam_results`
---
-ALTER TABLE `student_exam_results`
-  ADD CONSTRAINT `student_exam_results_ibfk_1` FOREIGN KEY (`student_exam_schedule_id`) REFERENCES `student_has_exam_schedule` (`id`) ON UPDATE CASCADE;
-
---
 -- Constraints for table `student_has_class`
 --
 ALTER TABLE `student_has_class`
@@ -1652,11 +1613,11 @@ ALTER TABLE `student_has_class`
   ADD CONSTRAINT `student_has_class_ibfk_2` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `student_has_exam_schedule`
+-- Constraints for table `student_has_exam`
 --
-ALTER TABLE `student_has_exam_schedule`
-  ADD CONSTRAINT `student_has_exam_schedule_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_has_exam_schedule_ibfk_2` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exam_grade_has_schedule` (`id`) ON UPDATE CASCADE;
+ALTER TABLE `student_has_exam`
+  ADD CONSTRAINT `student_has_exam_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_has_exam_ibfk_2` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exam_grade_has_schedule` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_has_parent`
@@ -1683,7 +1644,7 @@ ALTER TABLE `student_has_sport_achievement`
 -- Constraints for table `student_has_subject`
 --
 ALTER TABLE `student_has_subject`
-  ADD CONSTRAINT `student_has_subject_ibfk_1` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_has_subject_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_has_subject_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE;
 
 --

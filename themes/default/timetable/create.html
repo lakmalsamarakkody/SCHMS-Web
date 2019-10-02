@@ -13,95 +13,121 @@
 
                 <div class="timetablecreate">
 
-                    <section class="selectowner mt-5">
+                    <h4 class="page-title"> Create Time Table </h4>
 
-                        <form name="selectownerform"></form>
+                    <section class="selectowner">
+
+                        <form method="post">
 
                             <div class="form-row">
 
                                 <div class="form-group col-md-1 ml-auto">
                                     <label for="timetable_class"> Select Class </label>
-                                    <select class="form-control" id="timetable_class">
-                                        <option selected disabled> - Select - </option>
-                                        {% for class in classes %}
-                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                        {% endfor %}
+                                    <select class="form-control" name="timetable_class">                                    
+                                    {% for class in classes %}
+                                        {% if class.id == form.field.timetable_class %}
+                                            <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                        {% else %}
+                                            <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                        {% endif %}
+                                    {% endfor %}
                                     </select>
                                 </div>
 
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group ml-auto">
-                                    <button type="submit" class="form-control btn btn-primary">Search</button>
+                            
+                                <div class="form-group">
+                                    <label for="timetable_class"> &nbsp; </label>
+                                    <input type="hidden" name="isSubmited" value="true"/>
+                                    <button type="submit" class="form-control btn btn-primary">Select</button>
                                 </div>
                             </div>
 
                         </form>
 
-
                     </section>
 
                     <!-- START : CLASS TIME TABLE -->
-                    <section class="timetable">
-
-                        <h4 class="page-title"> Create Time Table </h4>
-
-                        <table class="table table-hover table-responsive-md">
-
-                            <thead class="thead-dark">
-
-                                <tr>
-                                    <th class="text-center" scope="col">#</th>
-                                    <th class="text-center" scope="col">Monday</th>
-                                    <th class="text-center" scope="col">Tuesday</th>
-                                    <th class="text-center" scope="col">Wednesday</th>
-                                    <th class="text-center" scope="col">Thursday</th>
-                                    <th class="text-center" scope="col">Friday</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                {% set period = 1 %}
-
-                                {% for row in 1..9 %}
-                                    {% if row != 5 %}
-                                    <tr>
-                                        <th scope="row" class="text-center">{{ period }}</th>
-                                        {% for cols in 1..5 %}
-                                        <td class="text-center">
-                                            <select class="selectpicker subject-picker" data-live-search="true">
-                                                <option selected disabled>- Select Subject -</option>
-                                                {% for subject in subject %}
-                                                    <option data-subject="{{ subject.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ subject.id }}"> {{ subject.name }} </option>
-                                                {% endfor %}
-                                            </select>
-                                            <select class="selectpicker staff-picker" data-live-search="true">
-                                                <option selected disabled> - Select Teacher - </option>
-                                                {% for staff in staffs %}
-                                                    <option data-staff="{{ staff.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ staff.id }}"> {{ staff.initials }} {{ staff.surname }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </td>
-                                        {% endfor %}
-                                    </tr>
-                                    {% set period = period + 1 %}
-                                    {% else %}
-                                    <tr>
-                                        <th class="text-center" colspan="6">INTERVAL</th>
-                                    </tr>
-                                    {% endif %}
-                                {% endfor %}
-                                
+                    {% if class.id %}
+                        <section class="timetable">
                             
+                            <table class="table table-bordered table-responsive-md">
+    
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">Period</th>
+                                        <th class="text-center" scope="col">Monday</th>
+                                        <th class="text-center" scope="col">Tuesday</th>
+                                        <th class="text-center" scope="col">Wednesday</th>
+                                        <th class="text-center" scope="col">Thursday</th>
+                                        <th class="text-center" scope="col">Friday</th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+    
+                                    {% set period = 1 %}
+    
+                                    {% for row in 1..9 %}
+                                        {% if row != 5 %}
+    
+                                        <pre class="d-none">
+                                        {{ dump(timetables[period]) }}
+                                        </pre>
+    
+                                        <tr>
+                                            <th scope="row" class="text-center">{{ period }}</th>
+                                            {% for cols in 1..5 %}
+                                            <td class="text-center">
+                                                <select class="selectpicker subject-picker" data-live-search="true">
+                                                        <option selected disabled>- Subject -</option>
+                                                    {% for subject in subject %}
+                                                        {% if timetables[cols][period].subject_id == subject.id %}
+                                                        <option data-subject="{{ subject.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ subject.id }}" class="checked-subject" selected>{{ subject.name }}</option>
+                                                        {% else %}
+                                                        <option data-subject="{{ subject.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ subject.id }}">{{ subject.name }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                                <select class="selectpicker staff-picker" data-live-search="true">
+                                                        <option selected disabled> - Teacher - </option>
+                                                    {% for staff in staffs %}
+                                                        {% if timetables[cols][period].staff_id == staff.id %}
+                                                        <option data-staff="{{ staff.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ staff.id }}" class="checked-staff" selected> {{ staff.initials }} {{ staff.surname }}</option>
+                                                        {% else %}
+                                                        <option data-staff="{{ staff.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ staff.id }}"> {{ staff.initials }} {{ staff.surname }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% set period = period + 1 %}
+                                        {% else %}
+                                        <tr class="thead-dark">
+                                            <th class="text-center" colspan="6">I N T E R V A L</th>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    
+                                
+                                </tbody>
+                            </table>
+    
+                            <input id="classId" type="hidden" value="{{ class.id }}" />
+    
+                        </section>
+                    {% else %}
+
+                        <table class="table table-responsive-md">
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">No records to Display. Please select a class to Add / Edit Timetable</td>
+                                </tr>
                             </tbody>
                         </table>
 
-                        <input id="classId" type="hidden" value="15" />
-
-                    </section>
+                    {% endif %}
+                    
                     <!-- END : CLASS TIME TABLE -->
 
                 </div>
@@ -114,6 +140,12 @@
 {{ template.footer|raw }}
 
     <script>
+
+        $(document).ready(() => {
+            console.log( $(".checked-subject").parent().addClass("checked-subject") );
+            console.log( $(".checked-staff").parent().addClass("checked-staff") );
+        });
+
         $(".subject-picker").on('change', (event) => {
             
             var formData = new FormData
@@ -131,9 +163,13 @@
                 dataType: 'json',
                 success: (Response) => {
                     if ( Response.status == 'success' ) {
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("selectedopt")
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("invalid")
                         $(event.target.selectedOptions[0]).parent().parent().addClass("valid")
                     } else {
                         alertify.alert("Error", Response.error);
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("selectedopt")
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("valid")
                         $(event.target.selectedOptions[0]).parent().parent().addClass("invalid")
                     }
                 },
@@ -145,9 +181,6 @@
         })
 
         $(".staff-picker").on('change', (event) => {
-            console.log("DAY : " + $(event.target.selectedOptions[0]).data('day'))
-            console.log("PERIOD : " + $(event.target.selectedOptions[0]).data('period'))
-            console.log("STAFF : " + $(event.target.selectedOptions[0]).data('staff'))
 
             var formData = new FormData
             formData.append("class", $("#classId").val())
@@ -164,9 +197,13 @@
                 dataType: 'json',
                 success: (Response) => {
                     if ( Response.status == 'success' ) {
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("selectedopt")
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("invalid")
                         $(event.target.selectedOptions[0]).parent().parent().addClass("valid")
                     } else {
                         alertify.alert("Error", Response.error);
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("selectedopt")
+                        $(event.target.selectedOptions[0]).parent().parent().removeClass("valid")
                         $(event.target.selectedOptions[0]).parent().parent().addClass("invalid")
                     }
                 },

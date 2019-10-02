@@ -84,6 +84,18 @@ h5.page-title{
 }
 
 /* BOOTSTRAP SELECT VALIDATION */
+.bootstrap-select.checked-subject .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle{
+    border: 0px;
+    background-color: #838383;
+    color: #FFFFFF;
+}
+
+.bootstrap-select.checked-staff .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle{
+    border: 0px;
+    background-color: #a3a3a3;
+    color: #FFFFFF;
+}
+
 .bootstrap-select.valid .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle {
     border: 0px;
     background-color: rgb(111, 201, 111);
