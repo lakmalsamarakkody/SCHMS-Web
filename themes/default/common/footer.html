@@ -15,6 +15,15 @@
 		<script type="text/javascript" src="{{ script }}"></script>
 	{% endfor  %}
 
+	<!-- CLOCK TIME SCRIPT -->
+	<script>
+		$(document).ready(function() {
+			setInterval(() => {
+				$('.digital-clock').text( new Date().toLocaleTimeString() )
+			}, 1000)
+		})
+	</script>
+
 <!-- <section class="footer">
 	<div class="container-fluid ">
 		<div class="row">

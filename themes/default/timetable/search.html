@@ -14,27 +14,32 @@
                 <div class="timetablesearch">
 
                     <!-- START : CLASS TIMETABLE SECTION -->
-                    <section class="classtimetable">
-
-                        <h4 class="page-title"> Class Time Table </h4>
+                    <section class="classtimetable mt-4">
 
                         <!-- START : SELECT CLASS -->
-                        <form name="selectclasstimetable">
+                        <form method="post">
 
                             <div class="form-row mr-2">
+
+                                <h4 class="page-title mb-0 pb-0"> Class Time Table </h4>
+
                                 <div class="form-group col-md-1 ml-auto p-0">
                                     <label for="timetable_class"> Select Class </label>
-                                    <select class="form-control" id="timetable_class">
-                                        <option selected disabled> - Select - </option>
+                                    <select class="form-control" name="timetable_class">
+                                        <option selected disabled>- Select -</option>
                                         {% for class in classes %}
-                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                            {% if class.id == form.field.timetable_class %}
+                                                <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                            {% else %}
+                                                <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
                                 </div>
-                            </div>
 
-                            <div class="form-row mr-2">
-                                <div class="form-group ml-auto">
+                                <div class="form-group ml-1">
+                                    <label> &nbsp; </label>
+                                    <input type="hidden" name="isSubmitedClassTimeTable" value="true"/>
                                     <button type="submit" class="form-control btn btn-primary"> View </button>
                                 </div>
                             </div>
@@ -43,48 +48,66 @@
                         <!-- END : SELECT CLASS -->
 
                         <!-- START : CLASS TIME TABLE -->
-                        <div class="timetable">
-
-                            <table class="table table-hover">
-
-                                <thead class="thead-dark">
-
-                                    <tr>
-                                        <th scope="col">Period</th>
-                                        <th scope="col">Monday</th>
-                                        <th scope="col">Tuesday</th>
-                                        <th scope="col">Wednesday</th>
-                                        <th scope="col">Thursday</th>
-                                        <th scope="col">Friday</th>
-                                    </tr>
-
-                                </thead>
-
-                                <tbody>
-
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Maths</td>
-                                        <td>Science</td>
-                                        <td>Physics</td>
-                                        <td>ICT</td>
-                                        <td>Health</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Maths</td>
-                                        <td>Science</td>
-                                        <td>Physics</td>
-                                        <td>ICT</td>
-                                        <td>Health</td>
-                                    </tr>
+                        {% if class.id %}
+                            <section class="timetable">
                                 
-                                </tbody>
+                                <table class="table table-bordered table-responsive-md">
 
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th width="1%" class="text-center" scope="col">Period</th>
+                                            <th width="20%" class="text-center" scope="col">Monday</th>
+                                            <th width="20%" class="text-center" scope="col">Tuesday</th>
+                                            <th width="20%" class="text-center" scope="col">Wednesday</th>
+                                            <th width="20%" class="text-center" scope="col">Thursday</th>
+                                            <th width="20%" class="text-center" scope="col">Friday</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        {% set period = 1 %}
+
+                                        {% for row in 1..9 %}
+                                            {% if row != 5 %}
+
+                                            <tr>
+                                                <th scope="row" class="text-center">{{ period }}</th>
+                                                {% for cols in 1..5 %}
+                                                <td class="text-center">
+                                                    {% if timetables[cols].period.id == period %}
+                                                    <span>{{ timetables[cols].period.subject_name }}</span>
+                                                    <br>
+                                                    <span>{{ timetables[cols].period.staff_name }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% set period = period + 1 %}
+                                            {% else %}
+                                            <tr class="thead-dark">
+                                                <th class="text-center" colspan="6">I N T E R V A L</th>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+                                <input id="classId" type="hidden" value="{{ class.id }}" />
+
+                            </section>
+                        {% else %}
+
+                            <table class="table table-responsive-md">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">No records to Display. Please select a class to View Class Timetable</td>
+                                    </tr>
+                                </tbody>
                             </table>
 
-                        </div>
+                        {% endif %}
                         <!-- END : CLASS TIME TABLE -->
 
                     </section>
@@ -93,56 +116,28 @@
                     <!-- START : STAFF TIME TABLE SECTION -->
                     <section class="stafftimetable mt-5">
 
-                        <h4 class="page-title"> Staff Time Table </h4>
-
                         <!-- START : SELECT STAFF -->
-                        <form name="selectclasstimetable">
+                        <form method="post">
 
-                            <div class="form-row mt-4 mr-2">
+                            <div class="form-row mr-2">
 
-                                <div class="form-group col-md-1">
-                                    <label for="staffclass">Class</label>
-                                    <select class="form-control" id="staffclass">
-                                        <option selected disabled> - Select - </option>
-                                        {% for staff_class in classes %}
-                                        <option value="{{ staff_class.id }}"> {{ staff_class.grade.name }} - {{ staff_class.name }} </option>
+                                <h4 class="page-title"> Staff Time Table </h4>
+
+                                <div class="form-group ml-auto col-md-3">
+                                    <select class="selectpicker form-control" data-live-search="true" name="timetable_staff">
+                                        <option selected disabled>- Select staff name -</option>
+                                        {% for staff in staffs %}
+                                            {% if staff.id == form.field.timetable_staff %}
+                                                <option selected value="{{ staff.id }}"> {{ staff.initials }} - {{ staff.surname }} </option>
+                                            {% else %}
+                                                <option value="{{ staff.id }}"> {{ staff.initials }} - {{ staff.surname }} </option>
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <label for="empid">Employee ID</label>
-                                    <input type="number" class="form-control" id="empid"/>
-                                </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name"/>
-                                </div>
-
-                                <div class="form-group col-md-1 mr-1 ml-auto">
-                                    <label for="day"> Day </label>
-                                    <select class="form-control" id="day">
-                                        <option selected disabled> - Select - </option>
-                                        <option value="Monday">Monday</option>
-                                        <option value="Tuesday">Tuesday</option>
-                                        <option value="Wednesday">Wednesday</option>
-                                        <option value="Thursday">Thursday</option>
-                                        <option value="Friday">Friday</option>
-                                        <option value="Saturday">Saturday</option>
-                                        <option value="Sunday">Sunday</option>
-                                    </select>
-                                </div>
-
                                 <div class="form-group">
-                                    <label for="date"> Date </label>
-                                    <input type="date" class="form-control" id="date"></select>
-                                </div>
-
-                            </div>
-
-                            <div class="form-row mr-2">
-                                <div class="form-group ml-auto">
+                                    <input type="hidden" name="isSubmitedStaffTimeTable" value="true"/>
                                     <button type="submit" class="form-control btn btn-primary"> Search </button>
                                 </div>
                             </div>
@@ -151,48 +146,66 @@
                         <!-- END : SELECT STAFF -->
 
                         <!-- START : CLASS TIME TABLE -->
-                        <div class="timetable">
-
-                            <table class="table table-hover">
-
-                                <thead class="thead-dark">
-
-                                    <tr>
-                                        <th scope="col">Period</th>
-                                        <th scope="col">Monday</th>
-                                        <th scope="col">Tuesday</th>
-                                        <th scope="col">Wednesday</th>
-                                        <th scope="col">Thursday</th>
-                                        <th scope="col">Friday</th>
-                                    </tr>
-
-                                </thead>
-
-                                <tbody>
-
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>6A</td>
-                                        <td>6A</td>
-                                        <td>6A</td>
-                                        <td>6A</td>
-                                        <td>6A</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>6A</td>
-                                        <td>6B</td>
-                                        <td>7A</td>
-                                        <td>7B</td>
-                                        <td>8A</td>
-                                    </tr>
+                        {% if staff.id %}
+                            <section class="timetable">
                                 
-                                </tbody>
+                                <table class="table table-bordered table-responsive-md">
 
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th width="1%" class="text-center" scope="col">Period</th>
+                                            <th width="20%" class="text-center" scope="col">Monday</th>
+                                            <th width="20%" class="text-center" scope="col">Tuesday</th>
+                                            <th width="20%" class="text-center" scope="col">Wednesday</th>
+                                            <th width="20%" class="text-center" scope="col">Thursday</th>
+                                            <th width="20%" class="text-center" scope="col">Friday</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        {% set period = 1 %}
+
+                                        {% for row in 1..9 %}
+                                            {% if row != 5 %}
+
+                                            <tr>
+                                                <th scope="row" class="text-center">{{ period }}</th>
+                                                {% for cols in 1..5 %}
+                                                <td class="text-center">
+                                                    {% if timetables[cols].period.id == period %}
+                                                    <span>{{ timetables[cols].period.class_name }}</span>
+                                                    <br>
+                                                    <span>{{ timetables[cols].period.subject_name }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% set period = period + 1 %}
+                                            {% else %}
+                                            <tr class="thead-dark">
+                                                <th class="text-center" colspan="6">I N T E R V A L</th>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+                                <input id="classId" type="hidden" value="{{ class.id }}" />
+
+                            </section>
+                        {% else %}
+
+                            <table class="table table-responsive-md">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">No records to Display. Please select a staff to View Staff Timetable</td>
+                                    </tr>
+                                </tbody>
                             </table>
 
-                        </div>
+                        {% endif %}
                         <!-- END : CLASS TIME TABLE -->
 
                     </section>
@@ -202,7 +215,7 @@
                     <!-- START : SELECT SCHEDULE DATE -->
                     <section class="dateschedule mt-5">
 
-                        <h4 class="page-title"> Date Schedule </h4>
+                        <h4 class="page-title">REPORT DATE SCHEDULE</h4>
 
                         <!-- START : SELECT SCHEDULE DATE -->
                         <form name="selectperiodtimetable">

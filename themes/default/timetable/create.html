@@ -54,12 +54,12 @@
     
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th class="text-center" scope="col">Period</th>
-                                        <th class="text-center" scope="col">Monday</th>
-                                        <th class="text-center" scope="col">Tuesday</th>
-                                        <th class="text-center" scope="col">Wednesday</th>
-                                        <th class="text-center" scope="col">Thursday</th>
-                                        <th class="text-center" scope="col">Friday</th>
+                                        <th width="1%" class="text-center" scope="col">Period</th>
+                                        <th width="20%" class="text-center" scope="col">Monday</th>
+                                        <th width="20%" class="text-center" scope="col">Tuesday</th>
+                                        <th width="20%" class="text-center" scope="col">Wednesday</th>
+                                        <th width="20%" class="text-center" scope="col">Thursday</th>
+                                        <th width="20%" class="text-center" scope="col">Friday</th>
                                     </tr>
                                 </thead>
     
@@ -69,10 +69,6 @@
     
                                     {% for row in 1..9 %}
                                         {% if row != 5 %}
-    
-                                        <pre class="d-none">
-                                        {{ dump(timetables[period]) }}
-                                        </pre>
     
                                         <tr>
                                             <th scope="row" class="text-center">{{ period }}</th>
