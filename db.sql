@@ -807,7 +807,7 @@ CREATE TABLE `student` (
   `initials` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `surname` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
-  `gender` enum('Male','Female') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` enum('male','female') COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_mobile` char(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -823,10 +823,12 @@ CREATE TABLE `student` (
   KEY `student_district_id_fk` (`district_id`),
   KEY `student_religion_id_fk` (`religion_id`),
   KEY `student_ibfk_2` (`class_id`),
+  KEY `phone_mobile` (`phone_mobile`),
+  KEY `city` (`city`),
   CONSTRAINT `student_district_id_fk` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`religion_id`) REFERENCES `religion` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -835,7 +837,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (52,1,'2019-09-19',15,'Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','Male',NULL,NULL,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,NULL,NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(53,13,'2019-09-19',16,'Shyamin Ayesh Fernando','S A','Fernando','1995-01-09','Male',NULL,NULL,'no 10 gorakadeniya','Attanagalla',NULL,NULL,NULL,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL);
+INSERT INTO `student` VALUES (52,1,'2019-09-19',15,'Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','male',NULL,NULL,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,NULL,NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(53,13,'2019-09-19',16,'Shyamin Ayesh Fernando','S A','Fernando','1995-12-30','male',NULL,NULL,'no 10 gorakadeniya','Attanagalla',NULL,NULL,NULL,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(59,14,'2019-10-03',21,'Heshan nayanajith','M A H N','Mallawarachchi','1995-11-11','male','heshan.nayanajith@gmail.com','0719864563','144/5A, Kalagedihena','Nittambuwa',NULL,7,3,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -909,18 +911,18 @@ DROP TABLE IF EXISTS `student_has_class`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student_has_class` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
-  `stu_id` int(6) NOT NULL,
+  `student_id` int(6) NOT NULL,
   `class_id` int(3) NOT NULL,
   `index_no` int(2) NOT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_id` (`stu_id`,`class_id`),
+  UNIQUE KEY `stu_id` (`student_id`,`class_id`),
   UNIQUE KEY `class_id` (`class_id`,`index_no`),
   CONSTRAINT `student_has_class_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `student_has_class_ibfk_2` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `student_has_class_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -929,7 +931,7 @@ CREATE TABLE `student_has_class` (
 
 LOCK TABLES `student_has_class` WRITE;
 /*!40000 ALTER TABLE `student_has_class` DISABLE KEYS */;
-INSERT INTO `student_has_class` VALUES (12,52,15,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(13,53,16,1,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL);
+INSERT INTO `student_has_class` VALUES (12,52,15,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(13,53,16,1,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(14,59,21,1,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL);
 /*!40000 ALTER TABLE `student_has_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -975,20 +977,20 @@ DROP TABLE IF EXISTS `student_has_parent`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student_has_parent` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
-  `stu_id` int(6) NOT NULL,
+  `student_id` int(6) NOT NULL,
   `parent_id` int(7) NOT NULL,
   `relation_id` int(2) NOT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_id` (`stu_id`,`parent_id`),
+  UNIQUE KEY `stu_id` (`student_id`,`parent_id`),
   KEY `parent_id` (`parent_id`),
   KEY `relation_id` (`relation_id`),
   CONSTRAINT `student_has_parent_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `student_has_parent_ibfk_2` FOREIGN KEY (`stu_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `student_has_parent_ibfk_3` FOREIGN KEY (`relation_id`) REFERENCES `relation_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `student_has_parent_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `student_has_parent_ibfk_3` FOREIGN KEY (`relation_id`) REFERENCES `relation_type` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -997,7 +999,7 @@ CREATE TABLE `student_has_parent` (
 
 LOCK TABLES `student_has_parent` WRITE;
 /*!40000 ALTER TABLE `student_has_parent` DISABLE KEYS */;
-INSERT INTO `student_has_parent` VALUES (47,52,4,2,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(48,53,4,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(49,52,5,1,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL);
+INSERT INTO `student_has_parent` VALUES (47,52,4,2,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(48,53,4,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(49,52,5,1,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(51,59,4,2,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL);
 /*!40000 ALTER TABLE `student_has_parent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1010,8 +1012,8 @@ DROP TABLE IF EXISTS `student_has_sport`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student_has_sport` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
-  `sport_id` int(3) NOT NULL,
   `student_id` int(6) NOT NULL,
+  `sport_id` int(3) NOT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
@@ -1286,4 +1288,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-03  2:00:40
+-- Dump completed on 2019-10-03  5:40:29
