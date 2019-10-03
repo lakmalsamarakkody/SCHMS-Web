@@ -88,13 +88,13 @@ h5.page-title{
 .bootstrap-select.checked-subject .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle{
     border: 0px;
     background-color: #838383;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .bootstrap-select.checked-staff .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle{
     border: 0px;
     background-color: #a3a3a3;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .bootstrap-select.valid .dropdown-toggle, .was-validated .bootstrap-select .selectpicker:valid+.dropdown-toggle {
@@ -111,7 +111,7 @@ h5.page-title{
 
 /* BOOTSTRAP SELECT STYLE */
 .btn-light {
-    color: #495057;
+    color: #495057 !important;
     background-color: #FFFFFF;
     border: 1px solid #ced4da !important;
 }

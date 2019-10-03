@@ -12,7 +12,7 @@ class Student_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'student';
-	protected $fillable = [ 'id', 'admission_no', 'admission_date', 'class_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_mobile', 'address', 'street', 'city', 'district_id', 'health_id', 'religion_id'];
+	protected $fillable = [ 'id', 'admission_no', 'admission_date', 'class_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_mobile', 'address', 'city', 'birth_place', 'district_id', 'religion_id'];
 
 }
 

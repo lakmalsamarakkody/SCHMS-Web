@@ -119,7 +119,7 @@ class Student extends Controller {
             $data['form']['field']['religion'] = ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ) ? $this->request->post['religion'] : "";
 
             // Eloquent OBJECT
-            $student = $this->model_student->select('id', 'full_name', 'city');
+            $student = $this->model_student->select('id', 'admission_no', 'admission_date', 'class_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_mobile', 'address', 'city', 'district_id', 'religion_id');
 
             // FILTER ( ADMISSION NO )
             if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):
@@ -228,15 +228,20 @@ class Student extends Controller {
 
             // APPEND DATA TO ARRAY
             foreach( $student->get() as $key => $value ):
-                $data['students'][$key]['full_name'] = $value->full_name;
+                $data['students'][$key]['id'] = $value->id;
+                $data['students'][$key]['admission_no'] = $value->admission_no;
+                $data['students'][$key]['name'] = $value->full_name;
+                $data['students'][$key]['gender'] = $value->gender;
+                $data['students'][$key]['dob'] = $value->dob;
+                $data['students'][$key]['class'] = $value->class_id;
                 $data['students'][$key]['city'] = $value->city;
             endforeach;
 
-            // DISPLAY QUERY ( TEMP )
-            echo "<pre>";
-                var_dump( $student->toSql() );
-                var_dump( $student->getBindings() );
-            echo "</pre>";
+            // // DISPLAY QUERY ( TEMP )
+            // echo "<pre>";
+            //     var_dump( $student->toSql() );
+            //     var_dump( $student->getBindings() );
+            // echo "</pre>";
 
         endif;
 

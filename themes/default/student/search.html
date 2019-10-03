@@ -57,7 +57,7 @@
                                         <div class="form-group">
                                             <label for="class">Class</label>
                                             <select class="form-control" name="class">
-                                                <option selected disabled> - Select Class - </option>
+                                                <option value="" selected>- Select Class -</option>
                                                 {% for class in student_class %}
                                                     {% if form.field.class == class.id %}
                                                         <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
@@ -73,7 +73,7 @@
                                         <div class="form-group">
                                             <label for="grade">Grade</label>
                                             <select class="form-control" name="grade">
-                                                <option selected disabled> - Select Grade - </option>
+                                                <option value="" selected>- Select Grade -</option>
                                                 {% for grade in student_grade %}
                                                     {% if form.field.grade == grade.id %}
                                                         <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
@@ -89,7 +89,7 @@
                                         <div class="form-group">
                                             <label for="gender">Gender</label>
                                             <select class="form-control" name="gender">
-                                                <option selected disabled> - Select Gender - </option>
+                                                <option value="" selected>- Select Gender -</option>
                                                 {% if form.field.gender == 'male' %}
                                                     <option value="male" selected>Male</option>
                                                     <option value="female">Female</option>
@@ -108,7 +108,7 @@
                                         <div class="form-group">
                                             <label for="city">City</label>
                                             <select class="form-control selectpicker" data-live-search="true" name="city">
-                                                <option selected disabled> - Select City - </option>
+                                                <option value="" selected>- Select City -</option>
                                                 {% for city in student_city %}
                                                     {% if form.field.city == city.name %}
                                                         <option value="{{ city.name }}" selected>{{ city.name }}</option>
@@ -124,9 +124,13 @@
                                         <div class="form-group">
                                             <label for="district">District</label>
                                             <select class="form-control" name="district">
-                                                <option selected disabled> - Select District - </option>
+                                                <option value="" selected>- Select District -</option>
                                                 {% for district in student_district %}
-                                                    <option value="{{ district.id }}"> {{ district.name }} </option>
+                                                    {% if form.field.district == district.id %}
+                                                        <option value="{{ district.id }}" selected> {{ district.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ district.id }}"> {{ district.name }} </option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -136,9 +140,13 @@
                                         <div class="form-group">
                                             <label for="subject">Subject</label>
                                             <select class="form-control" name="subject">
-                                                <option selected disabled> - Select Subject - </option>
+                                                <option value="" selected>- Select Subject -</option>
                                                 {% for subject in student_subject%}
-                                                <option value="{{ subject.id }}"> {{ subject.name }} </option>
+                                                    {% if form.field.subject == subject.id %}
+                                                        <option value="{{ subject.id }}" selected> {{ subject.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ subject.id }}"> {{ subject.name }} </option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -148,9 +156,13 @@
                                         <div class="form-group">
                                             <label for="sport">Sport</label>
                                             <select class="form-control" name="sport">
-                                                <option selected disabled> - Select Sport - </option>
+                                                <option value="" selected>- Select Sport -</option>
                                                 {% for sport in student_sport%}
-                                                <option value="{{ sport.id }}"> {{ sport.name }} </option>
+                                                    {% if form.field.sport == sport.id %}
+                                                        <option value="{{ sport.id }}" selected> {{ sport.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ sport.id }}"> {{ sport.name }} </option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -160,18 +172,22 @@
                                         <div class="form-group">
                                             <label for="religion">Religion</label>
                                             <select class="form-control" name="religion">
-                                                <option selected disabled> - Select Religion - </option>
+                                                <option value="" selected>- Select Religion -</option>
                                                 {% for religion in student_religion%}
-                                                <option value="{{ religion.id }}"> {{ religion.name }} </option>
+                                                    {% if form.field.religion == religion.id %}
+                                                        <option value="{{ religion.id }}" selected> {{ religion.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ religion.id }}"> {{ religion.name }} </option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-12 mt-3">
-                                        <input type="hidden" name="isSubmited" value="true" />
+                                        <input type="hidden" name="isSubmited" value="true"/>
                                         <button class="btn btn-primary px-5" type="submit"> Search </button>
-                                        <button class="btn btn-secondary " type="reset"> Clear </button>
+                                        <button class="btn btn-secondary" type="reset" onclick="clear();">Clear</button>
                                     </div>
 
                                 </div>
@@ -179,11 +195,46 @@
                         </div>
                     </div>
 
-                    <div class="row mt-4">
+                    <!-- <div class="row mt-4">
                         <pre>
                             {{ dump(students) }}
                         </pre>
-                    </div>
+                    </div> -->
+                    <section class="mt-5">
+                        <!-- SEARCH RESULT TABLE -->
+                        {% if students %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Students </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th width="10%" class="text-center" scope="col">Admission No</th>
+                                        <th width="1%" class="text-center" scope="col">Class</th>
+                                        <th width="10%" class="text-center" scope="col">DoB</th>
+                                        <th width="5%" class="text-center" scope="col">Gender</th>
+                                        <th width="10%" class="text-center" scope="col">City</th>
+                                        <th scope="col">Name</th>                                    
+                                        <th width="10%" class="text-center" scope="col">&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for student in students %}
+                                        <tr>
+                                            <th class="text-center" scope="row">{{ student.id }}</th>
+                                            <td class="text-center">{{ student.admission_no }}</td>
+                                            <td class="text-center">{{ student.class }}</td>
+                                            <td class="text-center">{{ student.dob }}</td>
+                                            <td class="text-center">{{ student.gender }}</td>
+                                            <td class="text-center">{{ student.city }}</td>
+                                            <td> {{ student.name }}</td>                                        
+                                            <td class="text-center"><i class="la la-user"></i> View Profile</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </section>
 
 
                 </div>
@@ -192,5 +243,11 @@
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+        clear = () => {
+
+        }
+    </script>
 </body>
