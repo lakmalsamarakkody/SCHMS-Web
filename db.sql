@@ -100,7 +100,7 @@ CREATE TABLE `class_timetable` (
   CONSTRAINT `class_timetable_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `class_timetable_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `class_timetable_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +109,7 @@ CREATE TABLE `class_timetable` (
 
 LOCK TABLES `class_timetable` WRITE;
 /*!40000 ALTER TABLE `class_timetable` DISABLE KEYS */;
-INSERT INTO `class_timetable` VALUES (83,15,1,1,5,1,'2019-10-02 19:27:09','2019-10-02 20:04:45',NULL),(84,16,1,1,1,3,'2019-10-02 19:27:26','2019-10-02 19:27:32',NULL),(85,15,2,1,5,3,'2019-10-02 19:28:29','2019-10-02 19:28:34',NULL),(86,16,2,1,5,4,'2019-10-02 19:28:43','2019-10-02 19:28:47',NULL),(87,15,3,1,2,NULL,'2019-10-02 20:06:18','2019-10-02 20:06:18',NULL),(88,15,4,1,4,NULL,'2019-10-02 20:06:20','2019-10-02 20:06:20',NULL),(89,15,5,1,1,NULL,'2019-10-02 20:06:21','2019-10-02 20:06:21',NULL);
+INSERT INTO `class_timetable` VALUES (83,15,1,1,1,1,'2019-10-02 19:27:09','2019-10-03 06:43:29',NULL),(84,16,1,1,1,3,'2019-10-02 19:27:26','2019-10-02 19:27:32',NULL),(85,15,2,1,5,3,'2019-10-02 19:28:29','2019-10-02 19:28:34',NULL),(86,16,2,1,5,4,'2019-10-02 19:28:43','2019-10-02 19:28:47',NULL),(87,15,3,1,2,1,'2019-10-02 20:06:18','2019-10-03 06:53:58',NULL),(88,15,4,1,4,NULL,'2019-10-02 20:06:20','2019-10-02 20:06:20',NULL),(89,15,5,1,1,NULL,'2019-10-02 20:06:21','2019-10-02 20:06:21',NULL),(90,15,2,2,1,3,'2019-10-03 06:54:30','2019-10-03 06:54:36',NULL),(91,15,4,2,4,3,'2019-10-03 06:58:21','2019-10-03 06:58:23',NULL);
 /*!40000 ALTER TABLE `class_timetable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +224,7 @@ CREATE TABLE `exam` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type_id`,`year`),
   CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `exam_type` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +233,7 @@ CREATE TABLE `exam` (
 
 LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-INSERT INTO `exam` VALUES (6,1,2019,NULL,NULL,'2019-09-24 22:33:03','2019-09-24 22:33:03',NULL),(7,3,2019,NULL,NULL,'2019-09-28 21:27:06','2019-09-28 21:27:06',NULL),(10,1,2020,NULL,NULL,'2019-09-29 03:35:16','2019-09-29 03:35:16',NULL);
+INSERT INTO `exam` VALUES (6,1,2019,NULL,NULL,'2019-09-24 22:33:03','2019-09-24 22:33:03',NULL),(7,3,2019,NULL,NULL,'2019-09-28 21:27:06','2019-09-28 21:27:06',NULL),(10,1,2020,NULL,NULL,'2019-09-29 03:35:16','2019-09-29 03:35:16',NULL),(13,4,2019,'test','test','2019-10-03 05:51:55','2019-10-03 05:51:55',NULL),(14,5,2020,'test','test','2019-10-03 06:02:04','2019-10-03 06:02:04',NULL),(15,5,2019,NULL,NULL,'2019-10-03 06:03:22','2019-10-03 06:03:22',NULL);
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +261,7 @@ CREATE TABLE `exam_grade_has_schedule` (
   KEY `exam_schedule_ibfk_2` (`subject_id`),
   CONSTRAINT `exam_grade_has_schedule_ibfk_1` FOREIGN KEY (`exam_grade_id`) REFERENCES `exam_has_grade` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `exam_grade_has_schedule_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +270,7 @@ CREATE TABLE `exam_grade_has_schedule` (
 
 LOCK TABLES `exam_grade_has_schedule` WRITE;
 /*!40000 ALTER TABLE `exam_grade_has_schedule` DISABLE KEYS */;
-INSERT INTO `exam_grade_has_schedule` VALUES (56,39,1,'2019-10-01','08:00:00','10:00:00',NULL,NULL,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(57,40,1,'2019-10-01','01:00:00','03:00:00',NULL,NULL,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(58,41,4,'2019-10-17','10:10:00','11:11:00',NULL,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL);
+INSERT INTO `exam_grade_has_schedule` VALUES (56,39,1,'2019-10-01','08:00:00','10:00:00',NULL,NULL,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(57,40,1,'2019-10-01','01:00:00','03:00:00',NULL,NULL,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(58,41,4,'2019-10-17','10:10:00','11:11:00',NULL,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(59,42,1,'2019-10-03','08:00:00','10:00:00',NULL,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL);
 /*!40000 ALTER TABLE `exam_grade_has_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +293,7 @@ CREATE TABLE `exam_has_grade` (
   KEY `exam_has_grade_ibfk_2` (`grade_id`),
   CONSTRAINT `exam_has_grade_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `exam_has_grade_ibfk_2` FOREIGN KEY (`grade_id`) REFERENCES `grade` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +302,7 @@ CREATE TABLE `exam_has_grade` (
 
 LOCK TABLES `exam_has_grade` WRITE;
 /*!40000 ALTER TABLE `exam_has_grade` DISABLE KEYS */;
-INSERT INTO `exam_has_grade` VALUES (39,10,1,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(40,10,6,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(41,6,1,'2019-10-02 03:15:34','2019-10-02 03:15:34',NULL);
+INSERT INTO `exam_has_grade` VALUES (39,10,1,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(40,10,6,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(41,6,1,'2019-10-02 03:15:34','2019-10-02 03:15:34',NULL),(42,14,3,'2019-10-03 06:09:18','2019-10-03 06:09:18',NULL);
 /*!40000 ALTER TABLE `exam_has_grade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,7 +486,7 @@ CREATE TABLE `parent` (
   UNIQUE KEY `nic` (`nic`),
   KEY `parent_district_id_fk` (`district_id`),
   CONSTRAINT `parent_district_id_fk` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -495,7 +495,7 @@ CREATE TABLE `parent` (
 
 LOCK TABLES `parent` WRITE;
 /*!40000 ALTER TABLE `parent` DISABLE KEYS */;
-INSERT INTO `parent` VALUES (4,'677660198V','Warnakulasooriya Mahawaduge Mallika Peiris','W M M','Peiris','1967-09-22','Female',NULL,NULL,NULL,'None',NULL,NULL,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(5,'591231408V','Samarakkodi Arachchige lakshman samarakkodi','S A L','Samarakkodi','1959-02-28','Male',NULL,NULL,NULL,'karate instructor',NULL,NULL,'144/5A 3rd lane','Veyangoda',7,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL);
+INSERT INTO `parent` VALUES (4,'677660198V','Warnakulasooriya Mahawaduge Mallika Peiris','W M M','Peiris','1967-09-22','Female',NULL,NULL,NULL,'None',NULL,NULL,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(5,'591231408V','Samarakkodi Arachchige lakshman samarakkodi','S A L','Samarakkodi','1959-02-28','Male',NULL,NULL,NULL,'karate instructor',NULL,NULL,'144/5A 3rd lane','Veyangoda',7,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(6,'647845211V','Sanath Mallawarachchi','W S','Mallawarachchi','1964-02-25','Male',NULL,NULL,NULL,'AirLanka officer',NULL,NULL,'no 30 malkelum, kalagedihena.','Nittambuwa',NULL,'2019-10-03 06:28:05','2019-10-03 06:28:05',NULL);
 /*!40000 ALTER TABLE `parent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -664,6 +664,36 @@ INSERT INTO `staff` VALUES (1,1,1,1,'2019-09-16','953651408V','Samarakkody Arach
 UNLOCK TABLES;
 
 --
+-- Table structure for table `staff_attendance`
+--
+
+DROP TABLE IF EXISTS `staff_attendance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `staff_attendance` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `staff_id` int(6) NOT NULL,
+  `date` date NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `deleted_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `staff_id` (`staff_id`,`date`),
+  CONSTRAINT `staff_attendance_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `staff_attendance`
+--
+
+LOCK TABLES `staff_attendance` WRITE;
+/*!40000 ALTER TABLE `staff_attendance` DISABLE KEYS */;
+INSERT INTO `staff_attendance` VALUES (2,3,'2019-10-03','2019-10-03 06:23:30','2019-10-03 06:23:30',NULL),(3,4,'2019-10-03','2019-10-03 06:23:32','2019-10-03 06:23:32',NULL);
+/*!40000 ALTER TABLE `staff_attendance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `staff_category`
 --
 
@@ -710,7 +740,7 @@ CREATE TABLE `staff_has_subject` (
   KEY `staff_has_subject_ibfk_2` (`subject_id`),
   CONSTRAINT `staff_has_subject_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `staff_has_subject_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -719,45 +749,8 @@ CREATE TABLE `staff_has_subject` (
 
 LOCK TABLES `staff_has_subject` WRITE;
 /*!40000 ALTER TABLE `staff_has_subject` DISABLE KEYS */;
-INSERT INTO `staff_has_subject` VALUES (9,1,1,'2019-10-02 19:27:11','2019-10-02 19:27:11',NULL),(10,3,1,'2019-10-02 19:27:32','2019-10-02 19:27:32',NULL),(11,3,5,'2019-10-02 19:28:34','2019-10-02 19:28:34',NULL),(12,4,5,'2019-10-02 19:28:47','2019-10-02 19:28:47',NULL);
+INSERT INTO `staff_has_subject` VALUES (9,1,1,'2019-10-02 19:27:11','2019-10-02 19:27:11',NULL),(10,3,1,'2019-10-02 19:27:32','2019-10-02 19:27:32',NULL),(11,3,5,'2019-10-02 19:28:34','2019-10-02 19:28:34',NULL),(12,4,5,'2019-10-02 19:28:47','2019-10-02 19:28:47',NULL),(13,1,2,'2019-10-03 06:53:58','2019-10-03 06:53:58',NULL),(14,3,4,'2019-10-03 06:58:23','2019-10-03 06:58:23',NULL);
 /*!40000 ALTER TABLE `staff_has_subject` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `staff_timetable`
---
-
-DROP TABLE IF EXISTS `staff_timetable`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `staff_timetable` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `class_id` int(3) NOT NULL,
-  `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `period_id` int(1) NOT NULL,
-  `staff_id` int(6) NOT NULL,
-  `subject_id` int(3) NOT NULL,
-  `created_on` datetime NOT NULL,
-  `updated_on` datetime NOT NULL,
-  `deleted_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `staff_id` (`staff_id`,`day`),
-  KEY `day_id` (`day`),
-  KEY `class_id` (`class_id`),
-  KEY `subject_id` (`subject_id`),
-  CONSTRAINT `staff_timetable_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `staff_timetable_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `staff_timetable_staff_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `staff_timetable`
---
-
-LOCK TABLES `staff_timetable` WRITE;
-/*!40000 ALTER TABLE `staff_timetable` DISABLE KEYS */;
-/*!40000 ALTER TABLE `staff_timetable` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -889,7 +882,7 @@ CREATE TABLE `student_attendance` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `student_id` (`student_id`,`date`),
   CONSTRAINT `student_attendance_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -898,7 +891,7 @@ CREATE TABLE `student_attendance` (
 
 LOCK TABLES `student_attendance` WRITE;
 /*!40000 ALTER TABLE `student_attendance` DISABLE KEYS */;
-INSERT INTO `student_attendance` VALUES (1,52,'2019-09-26','2019-09-27 00:00:00','2019-09-27 00:00:00',NULL),(2,52,'2019-09-27','2019-09-27 00:00:00','2019-09-27 00:00:00',NULL),(8,52,'2019-09-28','2019-09-28 20:49:50','2019-09-28 20:49:50',NULL),(9,53,'2019-09-28','2019-09-28 20:51:52','2019-09-28 20:51:52',NULL),(10,53,'2019-09-29','2019-09-29 04:43:55','2019-09-29 04:43:55',NULL),(11,52,'2019-09-30','2019-09-30 19:55:22','2019-09-30 19:55:22',NULL);
+INSERT INTO `student_attendance` VALUES (1,52,'2019-09-26','2019-09-27 00:00:00','2019-09-27 00:00:00',NULL),(2,52,'2019-09-27','2019-09-27 00:00:00','2019-09-27 00:00:00',NULL),(8,52,'2019-09-28','2019-09-28 20:49:50','2019-09-28 20:49:50',NULL),(9,53,'2019-09-28','2019-09-28 20:51:52','2019-09-28 20:51:52',NULL),(10,53,'2019-09-29','2019-09-29 04:43:55','2019-09-29 04:43:55',NULL),(11,52,'2019-09-30','2019-09-30 19:55:22','2019-09-30 19:55:22',NULL),(12,52,'2019-10-03','2019-10-03 06:21:54','2019-10-03 06:21:54',NULL);
 /*!40000 ALTER TABLE `student_attendance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -955,7 +948,7 @@ CREATE TABLE `student_has_exam` (
   KEY `exam_schedule_id` (`exam_schedule_id`),
   CONSTRAINT `student_has_exam_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_exam_ibfk_2` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exam_grade_has_schedule` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -964,7 +957,7 @@ CREATE TABLE `student_has_exam` (
 
 LOCK TABLES `student_has_exam` WRITE;
 /*!40000 ALTER TABLE `student_has_exam` DISABLE KEYS */;
-INSERT INTO `student_has_exam` VALUES (3,52,56,NULL,'2019-10-01 20:15:17','2019-10-01 20:15:17',NULL),(4,52,58,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL);
+INSERT INTO `student_has_exam` VALUES (3,52,56,NULL,'2019-10-01 20:15:17','2019-10-01 20:15:17',NULL),(4,52,58,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(5,53,59,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL);
 /*!40000 ALTER TABLE `student_has_exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -990,7 +983,7 @@ CREATE TABLE `student_has_parent` (
   CONSTRAINT `student_has_parent_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_parent_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_parent_ibfk_3` FOREIGN KEY (`relation_id`) REFERENCES `relation_type` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -999,7 +992,7 @@ CREATE TABLE `student_has_parent` (
 
 LOCK TABLES `student_has_parent` WRITE;
 /*!40000 ALTER TABLE `student_has_parent` DISABLE KEYS */;
-INSERT INTO `student_has_parent` VALUES (47,52,4,2,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(48,53,4,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(49,52,5,1,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(51,59,4,2,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL);
+INSERT INTO `student_has_parent` VALUES (47,52,4,2,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(48,53,4,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(49,52,5,1,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(51,59,4,2,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL),(52,59,6,1,'2019-10-03 06:28:06','2019-10-03 06:28:06',NULL);
 /*!40000 ALTER TABLE `student_has_parent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1288,4 +1281,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-03  5:45:28
+-- Dump completed on 2019-10-03  8:02:11
