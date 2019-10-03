@@ -261,17 +261,17 @@ class Exam extends Controller {
         // SET JSON HEADER
         header('Content-Type: application/json');
 
-        // VALIDATION : exam_type
-        $is_valid_exam_type = GUMP::is_valid($this->request->post, array('exam_type' => 'required|numeric|max_len,2'));
-        if ( $is_valid_exam_type !== true ):
-            echo json_encode( array( "error" => "Please select a exam type" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
-
         // VALIDATION : exam_year
         $is_valid_exam_year = GUMP::is_valid($this->request->post, array('exam_year' => 'required|numeric|exact_len,4'));
         if ( $is_valid_exam_year !== true ):
-            echo json_encode( array( "error" => "Please select a exam year" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "error" => "Please select a exam year" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : exam_type
+        $is_valid_exam_type = GUMP::is_valid($this->request->post, array('exam_type' => 'required|numeric|max_len,2'));
+        if ( $is_valid_exam_type !== true ):
+            echo json_encode( array( "status" => "failed", "error" => "Please select a exam type" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -279,21 +279,21 @@ class Exam extends Controller {
             $is_exist = $this->model_exam->select('id')->where('type_id', '=', $this->request->post['exam_type'])->where('year', '=', $this->request->post['exam_year'])->first() != NULL;
 
             if( $is_exist != false ):
-                echo json_encode( array( "error" => "This Exam is already exist" ), JSON_PRETTY_PRINT );
+                echo json_encode( array( "status" => "failed", "error" => "This Exam is already exist" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
 
         // VALIDATION : exam_venue
         $is_valid_exam_venue = GUMP::is_valid($this->request->post, array('exam_venue' => 'alpha_space|max_len,50'));
         if ( $is_valid_exam_venue !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_venue[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "error" => $is_valid_exam_venue[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : exam_instructions
         $is_valid_exam_instructions = GUMP::is_valid($this->request->post, array('exam_instructions' => 'alpha_space|max_len,200'));
         if ( $is_valid_exam_instructions !== true ):
-            echo json_encode( array( "error" => $is_valid_exam_instructions[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "error" => $is_valid_exam_instructions[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -306,7 +306,7 @@ class Exam extends Controller {
 		if ( $this->model_exam->save() ):
 			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 		else:
-			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "status" => "failed", "error" => "Exam creation failed. Please try again." ), JSON_PRETTY_PRINT );
 		endif;
     }
 
@@ -489,14 +489,14 @@ class Exam extends Controller {
                 // Create Student has Exam Schedule
                 foreach ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $element ):
                         
-                    if( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->first() !== NULL ):
+                    if( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->first() !== NULL ):
                         
-                        foreach ( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
+                        foreach ( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
 
                             try {
 
                                 $this->model_student_exam->create([
-                                    'student_id'        => $element2->stu_id,
+                                    'student_id'        => $element2->student_id,
                                     'exam_schedule_id'  => $this->model_exam_schedule->id
                                 ]);
 
@@ -546,13 +546,13 @@ class Exam extends Controller {
                     // Create Student has Exam Schedule
                     foreach ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $element ):
                         
-                        if( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->first() !== NULL ):
+                        if( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->first() !== NULL ):
 
-                            foreach ( $this->model_student_class->select('stu_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
+                            foreach ( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
 
                                 try {
                                     $this->model_student_exam->create([
-                                        'student_id'        => $element2->stu_id,
+                                        'student_id'        => $element2->student_id,
                                         'exam_schedule_id'  => $this->model_exam_schedule->id
                                     ]);
     

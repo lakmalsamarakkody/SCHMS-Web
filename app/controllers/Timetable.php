@@ -336,18 +336,18 @@ class Timetable extends Controller {
 
                 // Create STUDENT has SUBJECT
                 // select students in the relevant class
-                if ( $this->model_student_class->select('stu_id')->where('class_id', '=', $this->request->post['class'])->first() !== NULL ):
+                if ( $this->model_student_class->select('student_id')->where('class_id', '=', $this->request->post['class'])->first() !== NULL ):
 
                     // loop all students in the student has class
-                    foreach( $this->model_student_class->select('stu_id')->where('class_id', '=', $this->request->post['class'])->get() as $key => $element ):
+                    foreach( $this->model_student_class->select('student_id')->where('class_id', '=', $this->request->post['class'])->get() as $key => $element ):
 
                         // check already student does not have this subject
-                        if ( $this->model_student_subject->select('id')->where('student_id', '=', $element->stu_id)->where('subject_id', '=', $this->request->post['subject'])->first() == NULL  ):
+                        if ( $this->model_student_subject->select('id')->where('student_id', '=', $element->student_id)->where('subject_id', '=', $this->request->post['subject'])->first() == NULL  ):
 
                             try {
 
                                 $this->model_student_subject->create([
-                                    'student_id' => $element->stu_id,
+                                    'student_id' => $element->student_id,
                                     'subject_id' => $this->request->post['subject']
                                 ]);
 

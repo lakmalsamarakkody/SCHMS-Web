@@ -459,15 +459,15 @@
                 processData: false,
                 contentType: false,
                 dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Exam created successfully ... ").set('onok', function() {
+                success: (Response) => {
+                    if ( Response.status == "success" ) {
+                        alertify.alert("Success", "Exam created successfully.").set('onok', function() {
                             location.reload();
                         })
+                    } else if ( Response.status = "failed" ) {
+                        alertify.alert("Error", Response.error);
                     } else {
-                        console.log(res);
-                        alertify.alert(res.message);
+                        alertify.alert("Error", "Something went wrong. Please contact system administrator.");
                     }
                 },
                 error: (e) => {

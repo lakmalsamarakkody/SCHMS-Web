@@ -15,7 +15,7 @@ class StudentClass_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'student_has_class';
-	protected $fillable = [ 'id', 'stu_id', 'class_id', 'index_no' ];
+	protected $fillable = [ 'id', 'student_id', 'class_id', 'index_no' ];
 }
 
 ?>

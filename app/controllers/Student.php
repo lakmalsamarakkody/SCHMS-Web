@@ -34,6 +34,8 @@ class Student extends Controller {
 
         // MODELS
         $this->load->model('student');
+        $this->load->model('student/subject');
+        $this->load->model('student/sport');
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('district');
@@ -57,6 +59,11 @@ class Student extends Controller {
         foreach( $this->model_grade->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['student_grade'][$key]['id'] = $element->id;
             $data['student_grade'][$key]['name'] = $element->name;
+        endforeach;
+
+        // CITY
+        foreach( $this->model_student->select('city')->orderBy('city')->distinct()->get() as $key => $element ):
+            $data['student_city'][$key]['name'] = $element->city;
         endforeach;
 
         //DISTRICT
@@ -97,6 +104,21 @@ class Student extends Controller {
         // CHECK SUBMIT
         if ( isset($this->request->post['isSubmited']) ):
 
+            // PERSIST DATA
+            $data['form']['field']['addno'] = ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ) ? $this->request->post['addno'] : "";
+            $data['form']['field']['adddate'] = ( isset($this->request->post['adddate']) AND !empty($this->request->post['adddate']) ) ? $this->request->post['adddate'] : "";
+            $data['form']['field']['dob'] = ( isset($this->request->post['dob']) AND !empty($this->request->post['dob']) ) ? $this->request->post['dob'] : "";
+            $data['form']['field']['name'] = ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ) ? $this->request->post['name'] : "";
+            $data['form']['field']['class'] = ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ) ? $this->request->post['class'] : "";
+            $data['form']['field']['grade'] = ( isset($this->request->post['grade']) AND !empty($this->request->post['grade']) ) ? $this->request->post['grade'] : "";
+            $data['form']['field']['gender'] = ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ) ? $this->request->post['gender'] : "";
+            $data['form']['field']['city'] = ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ) ? $this->request->post['city'] : "";
+            $data['form']['field']['district'] = ( isset($this->request->post['district']) AND !empty($this->request->post['district']) ) ? $this->request->post['district'] : "";
+            $data['form']['field']['subject'] = ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ) ? $this->request->post['subject'] : "";
+            $data['form']['field']['sport'] = ( isset($this->request->post['sport']) AND !empty($this->request->post['sport']) ) ? $this->request->post['sport'] : "";
+            $data['form']['field']['religion'] = ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ) ? $this->request->post['religion'] : "";
+
+            // Eloquent OBJECT
             $student = $this->model_student->select('id', 'full_name', 'city');
 
             // FILTER ( ADMISSION NO )
@@ -106,10 +128,101 @@ class Student extends Controller {
                 });
             endif;
 
+            // FILTER ( ADMISSION DATE )
+            if ( isset($this->request->post['adddate']) AND !empty($this->request->post['adddate']) ):
+                $student->where(function($query) {
+                    $query->where('admission_date', '=', $this->request->post['adddate']);
+                });
+            endif;
+
+            // FILTER ( BIRTHDAY )
+            if ( isset($this->request->post['dob']) AND !empty($this->request->post['dob']) ):
+                $student->where(function($query) {
+                    $query->where('dob', '=', $this->request->post['dob']);
+                });
+            endif;
+
             // FILTER ( NAME )
             if ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ):
                 $student->where(function($query) {
                     $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
+                });
+            endif;
+
+            // FILTER ( CLASS )
+            if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ):
+                $student->where(function($query) {
+                    $query->where('class_id', '=', $this->request->post['class']);
+                });
+            endif;
+
+            // FILTER ( GRADE )
+            if ( isset($this->request->post['grade']) AND !empty($this->request->post['grade']) ):
+                $class = $this->model_class->select('id')->where('grade_id', '=', $this->request->post['grade'])->get();
+                if ( $class != NULL ):
+                    $classes = array();
+                    foreach ( $class as $key => $element ):
+                        array_push($classes, $element->id);
+                    endforeach;
+                    $student->where(function($query) use ($classes) {
+                        $query->whereIn('class_id', $classes);
+                    });
+                endif; 
+            endif;
+
+            // FILTER ( GENDER )
+            if ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ):
+                $student->where(function($query) {
+                    $query->where('gender', '=', $this->request->post['gender']);
+                });
+            endif;
+
+            // FILTER (CITY)
+            if ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ):
+                $student->where(function($query) {
+                    $query->where('city', 'LIKE', '%'.$this->request->post['city'].'%');
+                });
+            endif;
+
+            // FILTER (DISTRICT)
+            if ( isset($this->request->post['district']) AND !empty($this->request->post['district']) ):
+                $student->where(function($query) {
+                    $query->where('district_id', '=', $this->request->post['district']);
+                });
+            endif;
+
+            // FILTER (SUBJECT)
+            if ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ):
+                $subject = $this->model_student_subject->select('student_id')->where('subject_id','=', $this->request->post['subject'])->get();
+                if ( $subject != NULL):
+                    $subjects = array();
+                    foreach ( $subject as $key => $element ):
+                        array_push($subjects,$element->student_id);
+                    endforeach;
+                    $student->where(function($query) use ($subjects) {
+                        $query->whereIn('id', $subjects);
+                    });
+                endif;
+            endif;
+
+            // FILTER (SPORT)
+            if ( isset($this->request->post['sport']) AND !empty($this->request->post['sport']) ):
+                $sport = $this->model_student_sport->select('student_id')->where('sport_id','=', $this->request->post['sport'])->get();
+                if ( $sport != NULL):
+                    $sports = array();
+                    foreach ( $sport as $key => $element ):
+                        array_push($sports,$element->student_id);
+                    endforeach;
+                    $student->where(function($query) use ($sports) {
+                        $query->whereIn('id', $sports);
+                    });
+                endif;
+            endif;
+
+            // FILTER (RELIGION)
+            if ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ):
+                $student->where(function($query) {
+                    $query->where('religion_id', '=', $this->request->post['religion']);
                 });
             endif;
 
@@ -122,6 +235,7 @@ class Student extends Controller {
             // DISPLAY QUERY ( TEMP )
             echo "<pre>";
                 var_dump( $student->toSql() );
+                var_dump( $student->getBindings() );
             echo "</pre>";
 
         endif;
@@ -280,8 +394,8 @@ class Student extends Controller {
 
             // ADMISSION NUMBER IS EMPTY : INCREMENT BY ONE TO THE LAST ADMISSION NUMBER
             else:
-                $this->request->post['admission_number'] = $this->model_student->select('admission_no')->orderBy('admission_no', 'DESC')->take(1)->first();
-                if ( $this->request->post['admission_number'] ):
+                $this->request->post['admission_number'] = $this->model_student->select('admission_no')->orderBy('admission_no', 'DESC')->take(1)->first()->admission_no;
+                if ( $this->request->post['admission_number'] == NULL ):
                     $this->request->post['admission_number'] = 1;
                 else:
                     $this->request->post['admission_number']++;
@@ -552,7 +666,7 @@ class Student extends Controller {
                 if ( $this->model_student_parent->save() ):
 
                     // INITIATE : STUDENT HAS CLASS RECORD
-                    $this->model_student_class->stu_id = $this->model_student->id;
+                    $this->model_student_class->student_id = $this->model_student->id;
                     $this->model_student_class->class_id = $this->request->post['class'];
 
                     // FETCHING INDEX NO    
@@ -613,10 +727,10 @@ class Student extends Controller {
                 if ( $this->model_student_parent->save() ):
 
                     // INITIATE : STUDENT HAS CLASS RECORD
-                    $this->model_student_class->stu_id = $this->model_student->id;
+                    $this->model_student_class->student_id = $this->model_student->id;
                     $this->model_student_class->class_id = $this->request->post['class'];
 
-                    $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first();
+                    $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first()->index_no;
                     
                     if ( $index_no !== NULL ):
                         $this->model_student_class->index_no = $index_no->index_no++;

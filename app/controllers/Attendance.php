@@ -155,7 +155,7 @@ class Attendance extends Controller {
                     $data['search']['students'][$key]['class_id'] = $element->class_id;
 
                     // GET INDEX
-                    $index_no = $this->model_student_class->select('index_no')->where('stu_id', '=', $element->id)->where('class_id', '=', $element->class_id)->first()->index_no;
+                    $index_no = $this->model_student_class->select('index_no')->where('student_id', '=', $element->id)->where('class_id', '=', $element->class_id)->first()->index_no;
                     $data['search']['students'][$key]['index'] = $index_no;
 
                     // STUDENT STATUS FOR MONTH
@@ -320,7 +320,7 @@ class Attendance extends Controller {
                     $data['search']['students'][$key]['date'] = $this->request->post['date'];
 
                     // GET INDEX
-                    $index_no = $this->model_student_class->select('index_no')->where('stu_id', '=', $element->id)->where('class_id', '=', $element->class_id)->first()->index_no;
+                    $index_no = $this->model_student_class->select('index_no')->where('student_id', '=', $element->id)->where('class_id', '=', $element->class_id)->first()->index_no;
                     $data['search']['students'][$key]['index'] = $index_no;
 
                     // ATTENDANCE STATUS

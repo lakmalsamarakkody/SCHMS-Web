@@ -209,7 +209,7 @@ class Parents extends Controller {
                 $data['search']['students'][$key]['class'] = $grade_name->name." - ".$class_name->name;
 
                 // GET INDEX
-                $data['search']['students'][$key]['index'] = $this->model_student_class->select('index_no')->where('stu_id', '=', $value->id)->where('class_id', '=', $value->class_id)->first()->index_no;
+                $data['search']['students'][$key]['index'] = $this->model_student_class->select('index_no')->where('student_id', '=', $value->id)->where('class_id', '=', $value->class_id)->first()->index_no;
 
 
                 $data['search']['students'][$key]['gender'] = $value->gender;
