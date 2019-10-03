@@ -918,8 +918,8 @@ CREATE TABLE `student_has_class` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_id` (`student_id`,`class_id`),
   UNIQUE KEY `class_id` (`class_id`,`index_no`),
+  UNIQUE KEY `student_id` (`student_id`,`class_id`),
   CONSTRAINT `student_has_class_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_class_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -984,7 +984,7 @@ CREATE TABLE `student_has_parent` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_id` (`student_id`,`parent_id`),
+  UNIQUE KEY `student_id` (`student_id`,`parent_id`),
   KEY `parent_id` (`parent_id`),
   KEY `relation_id` (`relation_id`),
   CONSTRAINT `student_has_parent_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1080,7 +1080,7 @@ CREATE TABLE `student_has_subject` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_id` (`student_id`,`subject_id`),
+  UNIQUE KEY `student_id` (`student_id`,`subject_id`),
   KEY `student_has_subject_ibfk_2` (`subject_id`),
   CONSTRAINT `student_has_subject_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_subject_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE
@@ -1114,7 +1114,7 @@ CREATE TABLE `student_health` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_id` (`student_id`,`date`),
+  UNIQUE KEY `student_id` (`student_id`,`date`),
   CONSTRAINT `student_health_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1288,4 +1288,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-03  5:40:29
+-- Dump completed on 2019-10-03  5:45:28
