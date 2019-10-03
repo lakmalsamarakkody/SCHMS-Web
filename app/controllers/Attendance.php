@@ -217,7 +217,7 @@ class Attendance extends Controller {
         $data['exam_max_date'] = Carbon::now()->format('Y-m-d');
         $data['exam_min_date'] = Carbon::now()->subWeek()->format('Y-m-d');
 
-        // CHECK SUBMIT ( STUDENT SEARCH )
+        // CHECK SUBMIT ( ATTENDANCE MARK )
         if ( isset($this->request->post['isSubmited']) ):
 
             // PRESERVE SUBMITED DATA

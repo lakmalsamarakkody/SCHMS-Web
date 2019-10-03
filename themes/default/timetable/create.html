@@ -85,7 +85,7 @@
                                                     {% endfor %}
                                                 </select>
                                                 <select class="selectpicker staff-picker" data-live-search="true">
-                                                        <option selected disabled> - Teacher - </option>
+                                                        <option selected disabled>- Teacher -</option>
                                                     {% for staff in staffs %}
                                                         {% if timetables[cols][period].staff_id == staff.id %}
                                                         <option data-staff="{{ staff.id }}" data-period="{{ period }}" data-day="{{ cols }}" value="{{ staff.id }}" class="checked-staff" selected> {{ staff.initials }} {{ staff.surname }}</option>

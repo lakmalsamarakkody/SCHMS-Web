@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * relational model
  */
-class StaffAttendance_Model extends EloquentModel {
+class StudentSport_Model extends EloquentModel {
 
 	const CREATED_AT = 'created_on';
 	const UPDATED_AT = 'updated_on';
 	const DELETED_AT = 'deleted_on';
 
 	// PARENT PROPERTIES
-	protected $table = 'staff_attendance';
-	protected $fillable = [ 'id', 'staff_id', 'date' ];
+	protected $table = 'student_has_sport';
+	protected $fillable = [ 'id', 'student_id', 'sport_id' ];
 }
 
 ?>
