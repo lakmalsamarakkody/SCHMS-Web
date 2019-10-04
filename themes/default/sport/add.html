@@ -12,12 +12,251 @@
 
                 <div class="sportadd">
 
-                    <h4 class="page-title"> Sport add </h4>
+                    <div class="d-flex align-middle" style="justify-content: space-between;margin-top: 1rem;">
+                        <h4 class="page-title"> Add a Sport Coach </h4>
 
+                        <div>
+                            <button type="button" class="btn btn-sm btn-warning ml-2" data-toggle="modal" data-target="#view-sport"> Edit / Remove Sport </button>
+                            <button type="button" class="btn btn-sm btn-secondary ml-2"  data-toggle="modal" data-target="#model_addsport"> Add new Sport </button>
+                        </div>
+                    </div>
+
+                    <form name="admission" method="POST" action="#">
+                        <div class="mt-4" id="accordionAdmission">
+
+                            <!-- START : COACH PERSONAL DETAILS -->
+                            <div class="card">
+            
+                                <div class="card-header" id="headingPersonal" data-toggle="collapse" data-target="#collapsePersonal" aria-expanded="false" aria-controls="collapsePersonal">
+                                    Personal Details
+                                </div>
+
+                                <div id="collapsePersonal" class="collapse show" aria-labelledby="headingPersonal" data-parent="#accordionAdmission">
+                                    <div class="card-body">
+
+                                        <div class="form-row">
+                                            
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <label for="fn">Full Name</label>
+                                                    <input type="text" class="form-control" id="fn"/>
+                                                    <small id="fnHelp" class="form-text text-muted">ex - SAMARAKKODY ARACHCHIGE LAKMAL SAMARAKKODY</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="coach_sports">Sports</label>
+                                                        <select class="form-control selectpicker show-tick" id="coach_sports" multiple>
+                                                            {% for sport in sports %}
+                                                                <option value="{{ sport.id }}">{{ sport.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            <div class="col-5">
+                                                <div class="form-group">
+                                                    <label for="initials">Initials</label>
+                                                    <input type="text" class="form-control" id="initials"/>
+                                                    <small id="initialsHelp" class="form-text text-muted">ex - S A L</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-7">
+                                                <div class="form-group">
+                                                    <label for="sn">Surname</label>
+                                                    <input type="text" class="form-control" id="sn"/>
+                                                    <small id="snHelp" class="form-text text-muted">ex - SAMARAKKODY</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="dob">Date of Birth</label>
+                                                    <input type="date" class="form-control" id="dob"/>
+                                                    <small id="dobHelp" class="form-text text-muted">ex - 12/30/1995</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="gen">Gender</label>
+                                                    <select class="form-control selectpicker show-tick" id="gen">
+                                                        <option selected disabled> - Select Gender - </option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                    <!-- <small id="addgen" class="form-text text-muted">New Gender</small> -->
+                                                </div>                                                
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" class="form-control" id="email"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="mobno">Mobile Number</label>
+                                                    <input type="text" class="form-control" id="mobno" maxlength="10"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="address">Address</label>
+                                                    <input type="text" class="form-control" id="address"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="city">City</label>
+                                                    <input type="text" class="form-control" id="city"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="dist">District</label>
+                                                    <select class="form-control selectpicker show-tick" id="dist">
+                                                        <option selected disabled> - Select District - </option>
+                                                        {% for district in student_district %}
+                                                            <option value="{{ district.id }}"> {{ district.name }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!-- <small id="adddistrict" class="form-text text-muted">New District</small> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="province">Province</label>
+                                                    <select class="form-control" id="province" disabled></select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : COACH PERSONAL DETAILS -->
+                        </div>
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-primary" onClick="register();"> Register Coach </button>
+                            <button type="reset" class="btn btn-secondary"> Clear </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <!-- START : MODAL CREATE SPORT -->
+    <div class="modal fade" id="model_addsport" tabindex="-1" role="dialog" aria-labelledby="model_addsport-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="model_addsport-title"> Add a new Sport </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="sport_name"> Sport Name </label>
+                            <input type="text" class="form-control" id="sport_name"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="addsport();"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE SPORT -->
+
+    <!-- START : MODAL EDIT/REMOVE SPORT -->
+    <div class="modal fade" id="view-sport" tabindex="-1" role="dialog" aria-labelledby="view-sport-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="view-sport-title"> Edit Sports </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <table class="table table-hover table-responsive-md">
+
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="5%" class="text-center" scope="col">ID</th>
+                                <th scope="col">Sport Name</th>
+                                <th width="20%" class="text-center" scope="col">&nbsp;</th>                                            
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for sport in sports %}
+                                <tr>
+                                    <th class="text-center" scope="row">{{ sport.id }}</th>
+                                    <td>{{ sport.name }}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-xs btn-warning">edit</button> 
+                                        <button type="button" class="btn btn-xs btn-danger">remove</button> 
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL EDIT/REMOVE SPORT -->
 </body>
+
+<script>
+
+    //VIEW PROVINCE BY DISTRICT
+    $("#dist").on('change', function () {
+
+        var id = $("#dist").val()
+
+        $.ajax({
+            url: '{{ app.url }}/student/ajax_retrive_province_by_district/' + id,
+            processData: false,
+            contentType: false,
+            success: (res) => {
+                $("#province").find('option')
+                .remove()
+                .end()
+                .append('<option value='+ res.data.id +'>' + res.data.name + '</option>')
+                .val(res.data.id)
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ")
+                console.log(e.responseText)
+            }
+        })
+
+    })
+
+</script>
