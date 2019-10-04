@@ -50,7 +50,7 @@ class Exam extends Controller {
         endfor;
 
         // TWIG : EXAMS
-        foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year')->get() as $key => $element ):
+        foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year', 'DESC')->get() as $key => $element ):
 			$data['exams'][$key]['id'] = $element->id;
             $data['exams'][$key]['type_id']= $element->type_id;
             $data['exams'][$key]['year'] = $element->year;
@@ -80,24 +80,45 @@ class Exam extends Controller {
             $data['form']['field']['exam_grade'] = ( isset($this->request->post['exam_grade']) AND !empty($this->request->post['exam_grade']) ) ? $this->request->post['exam_grade'] : "";
             $data['form']['field']['exam_subject'] = ( isset($this->request->post['exam_subject']) AND !empty($this->request->post['exam_subject']) ) ? $this->request->post['exam_subject'] : "";
             $data['form']['field']['exam_date'] = ( isset($this->request->post['exam_date']) AND !empty($this->request->post['exam_date']) ) ? $this->request->post['exam_date'] : "";
+            
             $exam_schedule = $this->model_exam_schedule->select('id', 'exam_grade_id', 'subject_id', 'date', 'start_time', 'end_time', 'venue', 'instructions');
 
             // FILTER ( EXAM )
             if ( isset($this->request->post['exam_name']) AND !empty($this->request->post['exam_name']) ):
-                $exam_grades = array();
-                foreach ( $this->model_exam_grade->select('id')->where('exam_id', '=', $this->request->post['exam_name'])->get() as $key => $element ):
-                    $exam_grades[$key] = $element->id;
-                endforeach;
-                $exam_schedule->whereIn('exam_grade_id', $exam_grades);
+                $exam_grades = $this->model_exam_grade->select('id')->where('exam_id', '=', $this->request->post['exam_name'])->get();
+                if ( $exam_grades != NULL ):
+                    $exam_schedule_ids = array();
+                    foreach ( $exam_grades as $key => $element):
+                        $exam_schedule = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
+                        if ( $exam_schedule != NULL ):
+                            foreach ( $exam_schedule as $key2 => $element2 ):
+                                array_push($exam_schedule_ids, $element2->id);
+                            endforeach;
+                        endif;
+                    endforeach;
+                    $exam_schedule->where(function($query) use ($exam_schedule_ids) {
+                        $query->whereIn('id', $exam_schedule_ids);
+                    });
+                endif;
             endif;
 
             // FILTER ( GRADE )
             if ( isset($this->request->post['exam_grade']) AND !empty($this->request->post['exam_grade']) ):
-                $exam_grades = array();
-                foreach ( $this->model_exam_grade->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $el ):
-                    $exam_grades[$key] = $el->id;
-                endforeach;
-                $exam_schedule->whereIn('exam_grade_id', $exam_grades);
+                $exam_grades = $this->model_exam_grade->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get();
+                if ( $exam_grades != NULL ):
+                    $exam_schedule_ids = array();
+                    foreach ( $exam_grades as $key => $element ):
+                        $exam_grade_schedule = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
+                        if ( $exam_grade_schedule != NULL ):
+                            foreach ( $exam_grade_schedule as $key2 => $element2 ):
+                                array_push($exam_schedule_ids, $element2->id);
+                            endforeach;
+                        endif;
+                    endforeach;
+                    $exam_schedule->where(function($query) use ($exam_schedule_ids) {
+                        $query->whereIn('id', $exam_schedule_ids);
+                    });
+                endif;
             endif;
 
             // FILTER ( SUBJECT )
@@ -114,19 +135,31 @@ class Exam extends Controller {
 
                 $data['exam']['schedules'][$key]['id'] = $element->id;
 
-                    $exam_grade = $this->model_exam_grade->select('exam_id', 'grade_id')->where('id', '=', $element->id)->first();
-                    var_dump($exam_grade->grade_id);
-                    return;
-                    $grade = $this->model_grade->select('name')->where('id', '=', $exam_grade->grade_id)->first();
-                    $exam_name = $this->model_exam->select('type_id', 'year')->where('id', '=', $exam_grade->exam_id)->first();
-                    $exam_type = $this->model_exam_type->select('name')->where('id', '=', $exam_name->type_id)->first();
+                    // EXAM GRADE 
+                    $exam_grade_id = $this->model_exam_schedule->select('id', 'exam_grade_id')->where('id', '=', $element->id)->first()->exam_grade_id;
+                    $exam_grade = $this->model_exam_grade->select('exam_id', 'grade_id')->where('id', '=', $exam_grade_id)->first();
+                    $grade_id = $exam_grade->grade_id;
+                    $exam_id = $exam_grade->exam_id;
+                    $grade_name = $this->model_grade->select('name')->where('id', '=', $grade_id)->first()->name;
 
-                $data['exam']['schedules'][$key]['exam_name'] = $exam_type->name.$exam_name->year ;
-                $data['exam']['schedules'][$key]['grade'] = $grade->name;
-                $data['exam']['schedules'][$key]['subject'] = $element->subject_id;
-                $data['exam']['schedules'][$key]['date'] = $element->exam_date;
-                $data['exam']['schedules'][$key]['starts'] = $element->start_time;
-                $data['exam']['schedules'][$key]['ends'] = $element->end_time;
+                    // EXAM TYPE AND YEAR
+                    $exam = $this->model_exam->select('id', 'type_id', 'year')->where('id', '=', $exam_id)->first();
+                    $exam_type_name = $this->model_exam_type->select('name')->where('id', '=', $exam->type_id)->first()->name;
+
+                    // SUBJECT NAME
+                    $subject_name = $this->model_subject->select('name')->where('id', '=', $element->subject_id)->first()->name;
+
+                    // START AND END TIME
+                    $start_time = Carbon::createFromFormat("H:i:s", $element->start_time);
+                    $end_time = Carbon::createFromFormat("H:i:s", $element->end_time);
+
+                $data['exam']['schedules'][$key]['exam_type_name'] = $exam_type_name;
+                $data['exam']['schedules'][$key]['exam_year'] = $exam->year;
+                $data['exam']['schedules'][$key]['grade'] = $grade_name;
+                $data['exam']['schedules'][$key]['subject'] = $subject_name;
+                $data['exam']['schedules'][$key]['date'] = $element->date;
+                $data['exam']['schedules'][$key]['starts'] = $start_time->isoFormat('h:mm A');
+                $data['exam']['schedules'][$key]['ends'] = $end_time->isoFormat('h:mm A');
                 $data['exam']['schedules'][$key]['venue'] = $element->venue;
                 $data['exam']['schedules'][$key]['instructions'] = $element->instructions;
 
@@ -207,10 +240,12 @@ class Exam extends Controller {
         endfor;
 
         // TWIG : EXAMS
-        foreach( $this->model_exam->select('id', 'type_id', 'year')->orderBy('year')->get() as $key => $element ):
+        foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year', 'DESC')->get() as $key => $element ):
 			$data['exams'][$key]['id'] = $element->id;
             $data['exams'][$key]['type_id']= $element->type_id;
             $data['exams'][$key]['year'] = $element->year;
+            $data['exams'][$key]['venue'] = $element->venue;
+            $data['exams'][$key]['instructions'] = $element->instructions;
 
             $data['exams'][$key]['type']['name'] = $this->model_exam_type->select('name')->where('id', '=', $element->type_id)->first()->name;
         endforeach;

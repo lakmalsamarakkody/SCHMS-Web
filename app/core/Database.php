@@ -32,6 +32,7 @@ class Database {
 
 
 			// BOOT ELOQUENT
+			$Capsule->setAsGlobal();
 			$Capsule->bootEloquent();
 
 		endif;

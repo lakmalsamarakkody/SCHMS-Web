@@ -19,7 +19,7 @@
                         <div class="card-header">Search Exam</div>
                         <div class="card-body">
 
-                            <form name="examsearch" method="post">
+                            <form method="post">
 
                                 <div class="form-row">
 
@@ -27,12 +27,12 @@
                                         <div class="form-group">
                                             <label for="exam_name"> Select Exam </label>
                                             <select class="form-control" name="exam_name">
-                                                <option selected disabled>- Select Exam -</option>
+                                                <option value="" selected>- Select Exam -</option>
                                                 {% for exam in exams %}
                                                     {% if exam.id == form.field.exam_name %}
-                                                    <option value="{{ exam.id }}" selected> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
+                                                    <option value="{{ exam.id }}" selected> {{ exam.type.name }} - {{ exam.year }}</option>
                                                     {% else %}
-                                                    <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} - {{ exam.id }}</option>
+                                                    <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }}</option>
                                                     {% endif %}                                        
                                                 {% endfor %}
                                             </select>
@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                             <label for="exam_grade"> Grade </label>
                                             <select class="form-control" name="exam_grade">
-                                                <option selected disabled>- Select -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for grade in grades %}
                                                     {% if grade.id == form.field.exam_grade %}
                                                     <option value="{{ grade.id }}" selected> {{ grade.name }} </option>
@@ -59,7 +59,7 @@
                                         <div class="form-group">
                                             <label for="exam_subject"> Subject </label>
                                             <select class="form-control" name="exam_subject">
-                                                <option selected disabled>- Select -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for subject in subjects %}
                                                     {% if subject.id == form.field.exam_subject %}
                                                     <option value="{{ subject.id }}" selected> {{ subject.name }} </option>
@@ -85,7 +85,6 @@
                                             <button type="submit" class="btn btn-primary"> Search Exam Schedule </button>
                                         </div>
 
-
                                         <!-- START : BUTTON TRIGGER MODAL -->
                                         <div class="form-group">
                                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
@@ -103,58 +102,72 @@
 
                 </div>
 
-                <div class="examschedule mt-3">
+                <!-- START : EXAM SCHEDULE SEARCH RESULT -->
+                <section class="examschedule mt-3">
 
-                    <table class="table table-hover table-responsive-md">
+                    <table class="table table-hover table-bordered table-responsive-md">
 
                         <thead class="thead-dark">
-                            <tr>
-                                {% if exam.schedule %}
-                                    <th width="10%" class="text-center" scope="col">ID</th>
-                                    <th width="10%" class="text-center" scope="col">Exam Name</th>
-                                    <th width="10%" class="text-center" scope="col">Grade</th>
-                                    <th width="10%" class="text-center" scope="col">Subject</th>
-                                    <th width="10%" class="text-center" scope="col">Date</th>
-                                    <th width="10%" class="text-center" scope="col">Starts at</th>
-                                    <th width="10%" class="text-center" scope="col">Ends at</th>
-                                    <th width="10%" class="text-center" scope="col">Venue</th>
+                            {% if exam.schedules %}
+                                <tr>
+                                    <th width="20%" class="text-center" scope="col">Exam Name</th>
+                                    <th width="8%" class="text-center" scope="col">Grade</th>
+                                    <th class="text-center" scope="col">Subject</th>
+                                    <th width="9%" class="text-center" scope="col">Date</th>
+                                    <th width="8%" class="text-center" scope="col">Starts at</th>
+                                    <th width="8%" class="text-center" scope="col">Ends at</th>
+                                    <th class="text-center" scope="col">Venue</th>
                                     <th class="text-center" scope="col">Instructions</th>
-                                {% else %}
+                                    <th class="text-center" scope="col">&nbsp;</th>
+
+                                </tr>
+                            {% else %}
+                                <tr>
                                     <th class="text-center" scope="col">Select a exam to view schedule</th>
-                                {% endif %}
-                            </tr>
+                                </tr>
+                            {% endif %}
                         </thead>
 
                         <tbody>
-                            <tr>
-                            {% if exam.schedule %}
+                            {% if exam.schedules %}
                                 {% for exam_schedule in exam.schedules %}
-                                    <th class="text-center" scope="row">{{ exam_schedule.id }}</th>
-                                    <td class="text-center">Exam Name</td>
-                                    <td class="text-center">Grade</td>
-                                    <td class="text-center">Subject</td>
-                                    <td class="text-center">Date</td>
-                                    <td class="text-center">Starts at</td>
-                                    <td class="text-center">Ends at</td>
-                                    <td class="text-center">Venue</td>
-                                    <td class="text-center">Instructions</td>
+                                    <tr>
+                                        <td class="text-center">{{ exam_schedule.exam_type_name }} - {{ exam_schedule.exam_year }}</td>
+                                        <td class="text-center">Grade - {{ exam_schedule.grade }}</td>
+                                        <td class="text-center">{{ exam_schedule.subject }}</td>
+                                        <td class="text-center">{{ exam_schedule.date }}</td>
+                                        <td class="text-center">{{ exam_schedule.starts }}</td>
+                                        <td class="text-center">{{ exam_schedule.ends }}</td>
+                                        <td class="text-center">{{ exam_schedule.venue }}</td>
+                                        <td class="text-center">{{ exam_schedule.instructions }}</td>
+                                        <td class="text-center">
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <span class="text-muted">Edit</span> | 
+                                                    <span class="text-muted">Remove</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                  {% endfor %}
                             {% else %}
-                                <td class="text-center" scope="row">No records to display</td>
+                                <tr>
+                                    <td class="text-center" scope="row">No records to display</td>
+                                </tr>
                             {% endif %}
-                            </tr>
                         </tbody>
 
                     </table>
 
-                </div>
+                </section>
+                 <!-- END : EXAM SCHEDULE SEARCH RESULT -->
 
             </div>
             
         </div>
     </div>
 
-    <!-- START : MODAL CREATE EXAM-TYPE -->
+    <!-- START : MODAL Edit / Remove Exams -->
     <div class="modal fade" id="edit-exam" tabindex="-1" role="dialog" aria-labelledby="edit-exam-title" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -202,7 +215,7 @@
             </div>
         </div>
     </div>
-    <!-- END : MODAL CREATE EXAM-TYPE -->
+    <!-- END : MODAL Edit / Remove Exams -->
 
 {{ template.footer|raw }}
 

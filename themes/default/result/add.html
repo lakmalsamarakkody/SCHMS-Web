@@ -20,48 +20,85 @@
                         <div class="card-body">
                             <section class="addresult-filter mt-4">
 
-                                <form name="addresult-form">
+                                <form method="post">
 
                                     <div class="form-row">
                                         
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="exam"> Select Exam </label>
-                                                <select class="form-control" id="exam" required></select>
+                                                <select class="form-control selectpicker show-tick" data-size="5" name="exam_name">
+                                                    <option value="" selected> - Select - </option>
+                                                    {% for exam in exams %}
+                                                        {% if form.field.exam_name == exam.id %}
+                                                        <option value="{{ exam.id }}" selected>{{ exam.type.name }} - {{ exam.year }}</option>
+                                                        {% else %}
+                                                        <option value="{{ exam.id }}">{{ exam.type.name }} - {{ exam.year }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label for="examyear"> Year </label>
-                                                <select class="form-control" id="examyear" required></select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-1">
-                                            <div class="form-group">
                                                 <label for="class"> Class </label>
-                                                <select class="form-control" id="class" required></select>
+                                                <select class="form-control selectpicker show-tick" data-size="5" name="exam_class">
+                                                    <option value="" selected> - Select - </option>
+                                                    {% for class in classes %}
+                                                        {% if form.field.exam_class == class.id %}
+                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                        {% else %}
+                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
 
-                                        <div class="offset-2 col-2">
+                                        <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="subject"> subject </label>
+                                                    <select class="form-control selectpicker show-tick" data-size="5" name="exam_subject">
+                                                        <option value="" selected> - Select - </option>
+                                                        {% for subject in subjects %}
+                                                            {% if form.field.exam_subject == subject.id %}
+                                                            <option value="{{ subject.id }}" selected>{{ subject.name }}</option>
+                                                            {% else %}
+                                                            <option value="{{ subject.id }}">{{ subject.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        <div class="col-2">
                                             <div class="form-group">
                                                 <label for="addno">Admission No</label>
-                                                <input type="number" class="form-control" id="addno"/>
+                                                <input type="number" class="form-control" name="student_addno" value="{{form.field.student_addno}}"/>
                                             </div>
                                         </div>
 
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="name">Name</label>
-                                                <input type="text" class="form-control" id="name"/>
+                                                <select class="form-control selectpicker show-tick" data-size="5" data-live-search="true" name="student_name">
+                                                    <option value="" selected> - Select - </option>
+                                                    {% for student in students %}
+                                                        {% if form.field.student_name == student.id %}
+                                                        <option value="{{ student.id }}" selected>{{ student.full_name }}</option>
+                                                        {% else %}
+                                                        <option value="{{ student.id }}">{{ student.full_name }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary"> Search </button>
+                                                <input type="hidden" name="isSubmited" value="true"/>
+                                                <button type="submit" class="btn btn-primary">Search Exam</button>
                                             </div>
                                         </div>
                                     
@@ -74,6 +111,7 @@
                         </div>
                     </div>
 
+                    <!-- START : EXAM SCHEDULE SEARCH RESULT -->
                     <section class="SEARCH EXAM RESULT">
 
                         <div class="examresult-table mt-4">
@@ -81,21 +119,38 @@
                             <table class="table table-hover table-responsive-md">
                                 
                                 <thead class="thead-dark">
-                                    <th scope="col"> Admission ID </th>
-                                    <th scope="col"> Name </th>
-                                    <th scope="col"> Class </th>
-                                    <th scope="col"> Exam Name </th>
-                                    <th scope="col"> Year </th>
-                                    <th scope="col"> Result Status </th>
+                                    <th width="1%" class="text-center" scope="col">ID</th>
+                                    <th width="1%" class="text-center" scope="col">Admission</th>
+                                    <th width="1%" class="text-center" scope="col">Class</th>
+                                    <th width="1%" class="text-center" scope="col">Index</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Exam Name</th>
+                                    <th scope="col">Subject</th>
+                                    <th width="1%" class="text-center" scope="col">Marks</th>
+                                    <th width="15%" class="text-center" scope="col">&nbsp;</th>
                                 </thead>
 
                                 <tbody>
-                                    <th scope="col"> 1 </th>
-                                    <td> Mr.ABC </td>
-                                    <td> 6A </td>
-                                    <td> 1 Term Test </td>
-                                    <td> 2019 </td>
-                                    <td> Submitted <small id="task" class="form-text text-muted">Edit</small> </td>
+                                    {% for exam_schedule in exam.schedules %}
+                                    <tr>
+                                        <th class="text-center" scope="row"> 1 </th>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"></td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <span class="text-muted">Edit</span> | 
+                                                    <span class="text-muted">Remove</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
                                 </tbody>
 
                             </table>
@@ -103,6 +158,7 @@
                         </div>
 
                     </section>
+                    <!-- END : EXAM SCHEDULE SEARCH RESULT -->
 
                 </div>
             </div>

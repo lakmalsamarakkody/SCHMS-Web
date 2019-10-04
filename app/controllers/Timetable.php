@@ -19,7 +19,7 @@ class Timetable extends Controller {
         
     }
     
-    public function search() {
+    public function class_timetable() {
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -117,6 +117,56 @@ class Timetable extends Controller {
 
         endif;
 
+		// RENDER VIEW
+        $this->load->view('timetable/class_timetable', $data);
+        
+    }
+    
+    public function staff_timetable() {
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODEL
+        $this->load->model('grade');
+        $this->load->model('subject');
+        $this->load->model('staff');
+        $this->load->model('class');
+        $this->load->model('class/timetable');
+        
+        //STUDENT CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        // SUBJECTS
+        foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('name')->get() as $key => $element ):
+            $data['subject'][$key]['id'] = $element->id;
+            $data['subject'][$key]['name'] = $element->name;
+            $data['subject'][$key]['si_name'] = $element->si_name;
+        endforeach;
+
+        // STAFF
+        foreach( $this->model_staff->select('id', 'initials', 'surname')->orderBy('surname')->get() as $key => $element ):
+            $data['staffs'][$key]['id'] = $element->id;
+            $data['staffs'][$key]['initials'] = $element->initials;
+            $data['staffs'][$key]['surname'] = $element->surname;
+            
+        endforeach;
+
         // STAFF TIMETABLE
         if ( isset($this->request->post['isSubmitedStaffTimeTable']) ):
 
@@ -171,9 +221,9 @@ class Timetable extends Controller {
         endif;
 
 		// RENDER VIEW
-        $this->load->view('timetable/search', $data);
+        $this->load->view('timetable/staff_timetable', $data);
         
-    } 
+    }
 
     public function create() {
     

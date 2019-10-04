@@ -1,0 +1,122 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">
+                
+                {{ template.topmenu|raw }}
+
+                <div class="timetablesearch">
+                    
+                    <!-- START : STAFF TIME TABLE SECTION -->
+                    <section class="stafftimetable mt-5">
+
+                        <!-- START : SELECT STAFF -->
+                        <form method="post">
+
+                            <div class="form-row mr-2">
+
+                                <h4 class="page-title"> Staff Time Table </h4>
+
+                                <div class="form-group ml-auto col-md-3">
+                                    <select class="selectpicker form-control" data-live-search="true" name="timetable_staff">
+                                        <option selected disabled>- Select staff name -</option>
+                                        {% for staff in staffs %}
+                                            {% if staff.id == form.field.timetable_staff %}
+                                                <option selected value="{{ staff.id }}"> {{ staff.initials }} - {{ staff.surname }} </option>
+                                            {% else %}
+                                                <option value="{{ staff.id }}"> {{ staff.initials }} - {{ staff.surname }} </option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="hidden" name="isSubmitedStaffTimeTable" value="true"/>
+                                    <button type="submit" class="form-control btn btn-primary"> Search </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <!-- END : SELECT STAFF -->
+
+                        <!-- START : STAFF TIME TABLE -->
+                        {% if staff.id %}
+                            <section class="timetable">
+                                
+                                <table class="table table-bordered table-responsive-md">
+
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th width="1%" class="text-center" scope="col">Period</th>
+                                            <th width="20%" class="text-center" scope="col">Monday</th>
+                                            <th width="20%" class="text-center" scope="col">Tuesday</th>
+                                            <th width="20%" class="text-center" scope="col">Wednesday</th>
+                                            <th width="20%" class="text-center" scope="col">Thursday</th>
+                                            <th width="20%" class="text-center" scope="col">Friday</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        {% set period = 1 %}
+
+                                        {% for row in 1..9 %}
+                                            {% if row != 5 %}
+
+                                            <tr>
+                                                <th scope="row" class="text-center">{{ period }}</th>
+                                                {% for cols in 1..5 %}
+                                                <td class="text-center">
+                                                    {% if timetables[cols].period.id == period %}
+                                                    <span>{{ timetables[cols].period.class_name }}</span>
+                                                    <br>
+                                                    <span>{{ timetables[cols].period.subject_name }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% set period = period + 1 %}
+                                            {% else %}
+                                            <tr class="thead-dark">
+                                                <th class="text-center" colspan="6">I N T E R V A L</th>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+                                <input id="classId" type="hidden" value="{{ class.id }}" />
+
+                            </section>
+                        {% else %}
+
+                            <table class="table table-responsive-md">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">No records to Display. Please select a staff to View Staff Timetable</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        {% endif %}
+                        <!-- END : STAFF TIME TABLE -->
+
+                    </section>
+                    <!-- START : STAFF TIME TABLE SECTION -->                    
+
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>
