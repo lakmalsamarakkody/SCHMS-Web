@@ -261,7 +261,7 @@ CREATE TABLE `exam_grade_has_schedule` (
   KEY `exam_schedule_ibfk_2` (`subject_id`),
   CONSTRAINT `exam_grade_has_schedule_ibfk_1` FOREIGN KEY (`exam_grade_id`) REFERENCES `exam_has_grade` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `exam_grade_has_schedule_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +270,7 @@ CREATE TABLE `exam_grade_has_schedule` (
 
 LOCK TABLES `exam_grade_has_schedule` WRITE;
 /*!40000 ALTER TABLE `exam_grade_has_schedule` DISABLE KEYS */;
-INSERT INTO `exam_grade_has_schedule` VALUES (56,39,1,'2019-10-01','08:00:00','10:00:00',NULL,NULL,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(57,40,1,'2019-10-01','01:00:00','03:00:00',NULL,NULL,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(58,41,4,'2019-10-17','10:10:00','11:11:00',NULL,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(59,42,1,'2019-10-03','08:00:00','10:00:00',NULL,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL);
+INSERT INTO `exam_grade_has_schedule` VALUES (56,39,1,'2019-10-01','08:00:00','10:00:00',NULL,NULL,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(57,40,1,'2019-10-01','01:00:00','03:00:00',NULL,NULL,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(58,41,4,'2019-10-17','10:10:00','11:11:00',NULL,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(59,42,1,'2019-10-03','08:00:00','10:00:00',NULL,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL),(61,41,5,'2019-10-18','10:00:00','23:00:00','test','test','2019-10-04 02:53:27','2019-10-04 02:53:27',NULL),(62,43,1,'2019-10-11','08:00:00','10:00:00','tet','test','2019-10-04 04:22:38','2019-10-04 04:22:38',NULL),(63,43,5,'2019-10-04','09:00:00','12:00:00',NULL,NULL,'2019-10-04 04:24:01','2019-10-04 04:24:01',NULL);
 /*!40000 ALTER TABLE `exam_grade_has_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +293,7 @@ CREATE TABLE `exam_has_grade` (
   KEY `exam_has_grade_ibfk_2` (`grade_id`),
   CONSTRAINT `exam_has_grade_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `exam_has_grade_ibfk_2` FOREIGN KEY (`grade_id`) REFERENCES `grade` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +302,7 @@ CREATE TABLE `exam_has_grade` (
 
 LOCK TABLES `exam_has_grade` WRITE;
 /*!40000 ALTER TABLE `exam_has_grade` DISABLE KEYS */;
-INSERT INTO `exam_has_grade` VALUES (39,10,1,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(40,10,6,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(41,6,1,'2019-10-02 03:15:34','2019-10-02 03:15:34',NULL),(42,14,3,'2019-10-03 06:09:18','2019-10-03 06:09:18',NULL);
+INSERT INTO `exam_has_grade` VALUES (39,10,1,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(40,10,6,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(41,6,1,'2019-10-02 03:15:34','2019-10-02 03:15:34',NULL),(42,14,3,'2019-10-03 06:09:18','2019-10-03 06:09:18',NULL),(43,6,3,'2019-10-04 04:22:38','2019-10-04 04:22:38',NULL);
 /*!40000 ALTER TABLE `exam_has_grade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -929,36 +929,36 @@ INSERT INTO `student_has_class` VALUES (12,52,15,1,'2019-09-23 09:33:17','2019-0
 UNLOCK TABLES;
 
 --
--- Table structure for table `student_has_exam`
+-- Table structure for table `student_has_exam_schedule`
 --
 
-DROP TABLE IF EXISTS `student_has_exam`;
+DROP TABLE IF EXISTS `student_has_exam_schedule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `student_has_exam` (
+CREATE TABLE `student_has_exam_schedule` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
   `student_id` int(6) NOT NULL,
   `exam_schedule_id` int(4) NOT NULL,
-  `marks` int(3) DEFAULT NULL,
+  `marks` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `student_id` (`student_id`,`exam_schedule_id`),
   KEY `exam_schedule_id` (`exam_schedule_id`),
-  CONSTRAINT `student_has_exam_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `student_has_exam_ibfk_2` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exam_grade_has_schedule` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `student_has_exam_schedule_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `student_has_exam_schedule_ibfk_2` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exam_grade_has_schedule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `student_has_exam`
+-- Dumping data for table `student_has_exam_schedule`
 --
 
-LOCK TABLES `student_has_exam` WRITE;
-/*!40000 ALTER TABLE `student_has_exam` DISABLE KEYS */;
-INSERT INTO `student_has_exam` VALUES (3,52,56,NULL,'2019-10-01 20:15:17','2019-10-01 20:15:17',NULL),(4,52,58,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(5,53,59,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL);
-/*!40000 ALTER TABLE `student_has_exam` ENABLE KEYS */;
+LOCK TABLES `student_has_exam_schedule` WRITE;
+/*!40000 ALTER TABLE `student_has_exam_schedule` DISABLE KEYS */;
+INSERT INTO `student_has_exam_schedule` VALUES (3,52,56,NULL,'2019-10-01 20:15:17','2019-10-01 20:15:17',NULL),(4,52,58,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(5,53,59,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL),(6,52,61,NULL,'2019-10-04 02:53:27','2019-10-04 02:53:27',NULL),(7,53,62,NULL,'2019-10-04 04:22:38','2019-10-04 04:22:38',NULL),(8,53,63,NULL,'2019-10-04 04:24:01','2019-10-04 04:24:01',NULL);
+/*!40000 ALTER TABLE `student_has_exam_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1281,4 +1281,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-03  8:02:11
+-- Dump completed on 2019-10-04 10:00:58
