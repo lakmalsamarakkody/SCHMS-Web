@@ -12,69 +12,106 @@
 
                 <div class="resultsearch">
 
-                    <h4 class="page-title">View Exam Result</h4>
+                    <h4 class="page-title"> Search Exam Result </h4>
 
                     <!-- START : SEARCH EXAM -->
-                    <section class="card mt-4">
-                        <div class="card-header">Search Exam</div>
+                    <div class="card mt-4">
+                        <div class="card-header">Search relevant student</div>
                         <div class="card-body">
-                            <form name="searchresult-form">
+                            <section class="addresult-filter mt-4">
 
-                                <div class="form-row">
+                                <form method="post">
 
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="exam"> Select Exam </label>
-                                            <select class="form-control" id="exam_name">
-                                                <option selected disabled> - Select Exam - </option>
-                                                {% for exam in exams %}
-                                                    <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
-                                                {% endfor %}
-                                            </select>
+                                    <div class="form-row">
+                                        
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="exam"> Select Exam </label>
+                                                <select class="form-control selectpicker show-tick" data-size="5" name="exam_name">
+                                                    <option value="" selected> - Select - </option>
+                                                    {% for exam in exams %}
+                                                        {% if form.field.exam_name == exam.id %}
+                                                        <option value="{{ exam.id }}" selected>{{ exam.type.name }} - {{ exam.year }}</option>
+                                                        {% else %}
+                                                        <option value="{{ exam.id }}">{{ exam.type.name }} - {{ exam.year }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
                                         </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="class"> Class </label>
+                                                <select class="form-control selectpicker show-tick" data-size="5" name="exam_class">
+                                                    <option value="" selected> - Select - </option>
+                                                    {% for class in classes %}
+                                                        {% if form.field.exam_class == class.id %}
+                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                        {% else %}
+                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="subject"> subject </label>
+                                                    <select class="form-control selectpicker show-tick" data-size="5" name="exam_subject">
+                                                        <option value="" selected> - Select - </option>
+                                                        {% for subject in subjects %}
+                                                            {% if form.field.exam_subject == subject.id %}
+                                                            <option value="{{ subject.id }}" selected>{{ subject.name }}</option>
+                                                            {% else %}
+                                                            <option value="{{ subject.id }}">{{ subject.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label for="addno">Admission No</label>
+                                                <input type="number" class="form-control" name="student_addno" value="{{form.field.student_addno}}"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <select class="form-control selectpicker show-tick" data-size="5" data-live-search="true" name="student_name">
+                                                    <option value="" selected> - Select - </option>
+                                                    {% for student in students %}
+                                                        {% if form.field.student_name == student.id %}
+                                                        <option value="{{ student.id }}" selected>{{ student.full_name }}</option>
+                                                        {% else %}
+                                                        <option value="{{ student.id }}">{{ student.full_name }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="hidden" name="isSubmited" value="true"/>
+                                                <button type="submit" class="btn btn-primary">Search Exam</button>
+                                            </div>
+                                        </div>
+                                    
                                     </div>
 
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="exam_grade"> Grade </label>
-                                            <select class="form-control" id="exam_grade"></select>
-                                        </div>
-                                    </div>
+                                </form>
 
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="exam_class"> Class </label>
-                                            <select class="form-control" id="exam_class"></select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="stu_addno">Admission No</label>
-                                            <input type="number" class="form-control" id="stu_addno"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="stu_name">Name</label>
-                                            <input type="text" class="form-control" id="stu_name"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mt-3">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary"> Search </button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </form>
+                            </section>
+                            <!-- END : SEARCH EXAM -->
                         </div>
+                    </div>
 
-                    </section>
-                    <!-- END : SEARCH EXAM -->
-
+                    <!-- START : EXAM SCHEDULE SEARCH RESULT -->
                     <section class="SEARCH EXAM RESULT">
 
                         <div class="examresult-table mt-4">
@@ -82,21 +119,38 @@
                             <table class="table table-hover table-responsive-md">
                                 
                                 <thead class="thead-dark">
-                                    <th scope="col"> Admission ID </th>
-                                    <th scope="col"> Name </th>
-                                    <th scope="col"> Class </th>
-                                    <th scope="col"> Exam Name </th>
-                                    <th scope="col"> Year </th>
-                                    <th scope="col"> Subject name </th>
+                                    <th width="1%" class="text-center" scope="col">ID</th>
+                                    <th width="1%" class="text-center" scope="col">Admission</th>
+                                    <th width="1%" class="text-center" scope="col">Class</th>
+                                    <th width="1%" class="text-center" scope="col">Index</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Exam Name</th>
+                                    <th scope="col">Subject</th>
+                                    <th width="1%" class="text-center" scope="col">Marks</th>
+                                    <th width="12%" class="text-center" scope="col">&nbsp;</th>
                                 </thead>
 
                                 <tbody>
-                                    <th scope="col"> 1 </th>
-                                    <td> Mr.ABC </td>
-                                    <td> 6A </td>
-                                    <td> 1 Term Test </td>
-                                    <td> 2019 </td>
-                                    <td> Submitted <small id="task" class="form-text text-muted">Edit</small> </td>
+                                    {% for exam_schedule in exam.schedules %}
+                                    <tr>
+                                        <th class="text-center" scope="row">{{ exam_schedule.id }}</th>
+                                        <td class="text-center">{{ exam_schedule.admission_no }}</td>
+                                        <td class="text-center">{{ exam_schedule.class }}</td>
+                                        <td class="text-center">{{ exam_schedule.index }}</td>
+                                        <td>{{ exam_schedule.name }}</td>
+                                        <td>{{ exam_schedule.exam_name }}</td>
+                                        <td>{{ exam_schedule.subject }}</td>
+                                        <td class="text-center">{{ exam_schedule.marks }}</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button class="btn btn-xs btn-warning">Edit</button>
+                                                    <button class="btn btn-xs btn-danger">Remove</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
                                 </tbody>
 
                             </table>
@@ -104,6 +158,7 @@
                         </div>
 
                     </section>
+                    <!-- END : EXAM SCHEDULE SEARCH RESULT -->
 
                 </div>
             </div>

@@ -12,7 +12,7 @@
 
                 <div class="resultadd">
 
-                    <h4 class="page-title"> Add / Edit Exam Result </h4>
+                    <h4 class="page-title"> Add Exam Result </h4>
 
                     <!-- START : SEARCH EXAM -->
                     <div class="card mt-4">
@@ -126,8 +126,8 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Exam Name</th>
                                     <th scope="col">Subject</th>
-                                    <th width="1%" class="text-center" scope="col">Marks</th>
-                                    <th width="15%" class="text-center" scope="col">&nbsp;</th>
+                                    <th width="1%" class="text-center" scope="col" colspan="2">Marks</th>
+                                    <!-- <th width="1%" class="text-center" scope="col">&nbsp;</th> -->
                                 </thead>
 
                                 <tbody>
@@ -141,14 +141,7 @@
                                         <td>{{ exam_schedule.exam_name }}</td>
                                         <td>{{ exam_schedule.subject }}</td>
                                         <td class="text-center">{{ exam_schedule.marks }}</td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-12 text-center">
-                                                    <span class="text-muted">Edit</span> | 
-                                                    <span class="text-muted">Remove</span>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td><button type="button" class="btn btn-xs btn-warning">Insert</button></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

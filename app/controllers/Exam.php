@@ -89,9 +89,9 @@ class Exam extends Controller {
                 if ( $exam_grades != NULL ):
                     $exam_schedule_ids = array();
                     foreach ( $exam_grades as $key => $element):
-                        $exam_schedule = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
-                        if ( $exam_schedule != NULL ):
-                            foreach ( $exam_schedule as $key2 => $element2 ):
+                        $exam_schedule_id = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
+                        if ( $exam_schedule_id != NULL ):
+                            foreach ( $exam_schedule_id as $key2 => $element2 ):
                                 array_push($exam_schedule_ids, $element2->id);
                             endforeach;
                         endif;
