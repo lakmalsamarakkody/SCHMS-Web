@@ -133,14 +133,14 @@
                                 <tbody>
                                     {% for exam_schedule in exam.schedules %}
                                     <tr>
-                                        <th class="text-center" scope="row"> 1 </th>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
+                                        <th class="text-center" scope="row">{{ exam_schedule.id }}</th>
+                                        <td class="text-center">{{ exam_schedule.admission_no }}</td>
+                                        <td class="text-center">{{ exam_schedule.class }}</td>
+                                        <td class="text-center">{{ exam_schedule.index }}</td>
+                                        <td>{{ exam_schedule.name }}</td>
+                                        <td>{{ exam_schedule.exam_name }}</td>
+                                        <td>{{ exam_schedule.subject }}</td>
+                                        <td class="text-center">{{ exam_schedule.marks }}</td>
                                         <td>
                                             <div class="row">
                                                 <div class="col-12 text-center">

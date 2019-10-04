@@ -133,8 +133,8 @@ class Result extends Controller {
             $data['form']['field']['exam_subject'] = ( isset($this->request->post['exam_subject']) AND !empty($this->request->post['exam_subject']) ) ? $this->request->post['exam_subject'] : "";
             $data['form']['field']['student_addno'] = ( isset($this->request->post['student_addno']) AND !empty($this->request->post['student_addno']) ) ? $this->request->post['student_addno'] : "";
             $data['form']['field']['student_name'] = ( isset($this->request->post['student_name']) AND !empty($this->request->post['student_name']) ) ? $this->request->post['student_name'] : "";
-        
-            $student_exam = $this->model_student_exam->select('id','student_id','exam_schedule_id', 'marks');
+
+            $student_exam = $this->model_student_exam->select('id');
 
             // FILTER ( EXAM )
             if ( isset($this->request->post['exam_name']) AND !empty($this->request->post['exam_name']) ):
@@ -257,27 +257,37 @@ class Result extends Controller {
             endif;
 
             // RESULT
-            foreach( $student_exam->get() as $key => $element ):                
+            foreach( $student_exam->orderBy('student_id')->get() as $key => $element ):
                 
-                $data['exam']['schedules'][$key]['id'] = $element->id;
-                $data['exam']['schedules'][$key]['student_id'] = $element->student_id;
-                $data['exam']['schedules'][$key]['exam_schedule_id'] = $element->exam_schedule_id;
-                $data['exam']['schedules'][$key]['marks'] = $element->marks;
-
                 $student_data = DB::table('student_has_exam_schedule')
                     ->join('student', 'student_has_exam_schedule.student_id', '=', 'student.id')
                     ->join('student_has_class', 'student_has_exam_schedule.student_id', '=', 'student_has_class.student_id')
-                    ->select('student.admission_no','student.initials','student.surname','student_has_class.class_id','student_has_class.index_no')
-                    ->where('student_has_exam_schedule.student_id', '=', $element->student_id)->first();
+                    ->join('exam_grade_has_schedule', 'student_has_exam_schedule.exam_schedule_id', '=', 'exam_grade_has_schedule.id')
+                    ->select('student_has_exam_schedule.id', 'student_has_exam_schedule.student_id', 'student_has_exam_schedule.exam_schedule_id', 'student_has_exam_schedule.marks', 'student.admission_no','student.initials','student.surname', 'student_has_class.class_id', 'student_has_class.index_no', 'exam_grade_has_schedule.subject_id')
+                    ->where('student_has_exam_schedule.id', '=', $element->id)->first();
 
-                    // ->join('exam_grade_has_schedule', 'student_has_exam_schedule.exam_schedule_id', '=', 'exam_grade_has_schedule.id')
+                // CLASS NAME
+                $class = $this->model_class->select('name', 'grade_id')->where('id', '=',$student_data->class_id)->first();
+                $grade = $this->model_grade->select('name')->where('id', '=',$class->grade_id)->first();
+                $class_name = $grade->name." - ".$class->name;
+
+                // EXAM TYPE AND YEAR
+                $exam_grade_id = $this->model_exam_schedule->select('exam_grade_id')->where('id', '=', $student_data->exam_schedule_id)->first()->exam_grade_id;
+                $exam_id = $this->model_exam_grade->select('exam_id')->where('id', '=', $exam_grade_id)->first()->exam_id;
+                $exam = $this->model_exam->select('id', 'type_id', 'year')->where('id', '=', $exam_id)->first();
+                $exam_type_name = $this->model_exam_type->select('name')->where('id', '=', $exam->type_id)->first()->name;
+
+                $data['exam']['schedules'][$key]['id'] = $element->id;
+                $data['exam']['schedules'][$key]['student_id'] = $student_data->student_id;
+                $data['exam']['schedules'][$key]['exam_schedule_id'] = $student_data->exam_schedule_id;
+                $data['exam']['schedules'][$key]['marks'] = ($student_data->marks !== null) ? $student_data->marks : "Pending";
 
                 $data['exam']['schedules'][$key]['admission_no'] = $student_data->admission_no;
-                $data['exam']['schedules'][$key]['class'] = $student_data->class_id;
-
-                // echo "<pre>";
-                //     var_dump( $student_data->surname );
-                // echo "</pre>";
+                $data['exam']['schedules'][$key]['class'] = $class_name;
+                $data['exam']['schedules'][$key]['index'] = $student_data->index_no;
+                $data['exam']['schedules'][$key]['name'] = $student_data->initials." ".$student_data->surname;
+                $data['exam']['schedules'][$key]['exam_name'] = $exam_type_name." - ".$exam->year;
+                $data['exam']['schedules'][$key]['subject'] = $this->model_subject->select('name')->where('id', '=', $student_data->subject_id)->first()->name;
             endforeach;
 
         endif;

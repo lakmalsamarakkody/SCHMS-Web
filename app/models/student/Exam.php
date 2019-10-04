@@ -1,8 +1,5 @@
 <?php
 
-// MODELS
-require_once ABS_PATH.'/app/models/Student.php';
-
 // EXTEND ( ELOQUENT MODEL )
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,11 +16,6 @@ class StudentExam_Model extends EloquentModel {
 	// PARENT PROPERTIES
 	protected $table = 'student_has_exam_schedule';
 	protected $fillable = [ 'id', 'student_id', 'exam_schedule_id', 'marks' ];
-
-	// RELATION
-	public function student() {
-		return $this->hasOne(Student_Model::class, 'id', 'student_id');
-	}
 }
 
 ?>
