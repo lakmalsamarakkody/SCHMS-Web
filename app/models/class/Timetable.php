@@ -2,7 +2,6 @@
 
 // EXTEND ( ELOQUENT MODEL )
 use Illuminate\Database\Eloquent\Model as EloquentModel;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ClassTimetable_Model extends EloquentModel {
 

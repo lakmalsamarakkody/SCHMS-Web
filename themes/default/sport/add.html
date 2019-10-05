@@ -71,7 +71,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-6">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="nic">National Identity Card (NIC)</label>
+                                                    <input type="text" class="form-control" id="nic" required/>                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="dob">Date of Birth</label>
                                                     <input type="date" class="form-control" id="dob"/>
@@ -79,15 +86,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-6">
+                                            <div class="col-4">
                                                 <div class="form-group">
                                                     <label for="gen">Gender</label>
                                                     <select class="form-control selectpicker show-tick" id="gen">
-                                                        <option selected disabled> - Select Gender - </option>
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female</option>
+                                                        <option selected hidden> - Select Gender - </option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
                                                     </select>
-                                                    <!-- <small id="addgen" class="form-text text-muted">New Gender</small> -->
                                                 </div>                                                
                                             </div>
 
@@ -98,7 +104,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-6">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="telno">Phone Number</label>
+                                                    <input type="text" class="form-control" id="telno" maxlength="10"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
                                                 <div class="form-group">
                                                     <label for="mobno">Mobile Number</label>
                                                     <input type="text" class="form-control" id="mobno" maxlength="10"/>
@@ -123,12 +136,11 @@
                                                 <div class="form-group">
                                                     <label for="dist">District</label>
                                                     <select class="form-control selectpicker show-tick" id="dist">
-                                                        <option selected disabled> - Select District - </option>
+                                                        <option value="" selected> - Select District - </option>
                                                         {% for district in student_district %}
                                                             <option value="{{ district.id }}"> {{ district.name }} </option>
                                                         {% endfor %}
                                                     </select>
-                                                    <!-- <small id="adddistrict" class="form-text text-muted">New District</small> -->
                                                 </div>
                                             </div>
 
@@ -234,6 +246,91 @@
 </body>
 
 <script>
+
+    // FORMDATA REGISTERING
+    register = () => {
+
+        // PAYLOAD
+        var formData = new FormData;
+
+        // COACH DATA
+        formData.append('full_name', $("#fn").val())
+        formData.append('coach_sports', $("#coach_sports").val())
+        formData.append('initials', $("#initials").val())
+        formData.append('surname', $("#sn").val())
+        formData.append('nic', $("#nic").val())
+        formData.append('date_of_birth', $("#dob").val())
+        formData.append('gender', $("#gen").val())
+        formData.append('email', $("#email").val())
+        formData.append('phone_number', $("#telno").val())
+        formData.append('mobile_number', $("#mobno").val())
+        formData.append('address', $("#address").val())
+        formData.append('city', $("#city").val())
+        formData.append('district', $("#dist").val())
+        formData.append('province', $("#province").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/sport/ajax_addcoach",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "Coach added successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert(res.error);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+
+    }
+
+    // START : SCRIPT : ADD A SPORT
+    addsport = () => {
+
+        // PAYLOAD
+        var formData = new FormData;
+
+        // ADD EXAM_TYPE DATA
+        formData.append('sport_name', $("#sport_name").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/school/ajax_addsport",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "Sport added successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert(res.error);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : SCRIPT : ADD A SPORT
 
     //VIEW PROVINCE BY DISTRICT
     $("#dist").on('change', function () {

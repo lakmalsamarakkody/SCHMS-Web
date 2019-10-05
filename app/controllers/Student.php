@@ -370,21 +370,22 @@ class Student extends Controller {
          *    - validate
          *    - CRUD
          *    - response ( JSON )
-         */
+        **/
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
         //MODEL
         $this->load->model('student');
         $this->load->model('parent');
         $this->load->model('student/parent');
         $this->load->model('student/class');
 
-        // SET JSON HEADER
-        header('Content-Type: application/json');
-
         // VALIDATION : STUDENT
         // VALIDATION : admission_number
         $is_valid_admission_number = GUMP::is_valid($this->request->post, array('admission_number' => 'numeric|max_len,6'));
         if ( $is_valid_admission_number !== true ):
-            echo json_encode( array( "error" => "Please insert a valid number less or equal to six digits" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid number less or equal to six digits" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -431,28 +432,28 @@ class Student extends Controller {
         // VALIDATION : full_name
         $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
         if ( $is_valid_full_name !== true ):
-            echo json_encode( array( "error" => "Please insert student full name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter student full name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : initials
         $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
         if ( $is_valid_initials !== true ):
-            echo json_encode( array( "error" => "Please insert student initials" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter student initials" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : surname
         $is_valid_surname = GUMP::is_valid($this->request->post, array('surname' => 'required|valid_name|max_len,30'));
         if ( $is_valid_surname !== true ):
-            echo json_encode( array( "error" => "Please insert a valid surname" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid surname" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : date_of_birth
         $is_valid_date_of_birth = GUMP::is_valid($this->request->post, array('date_of_birth' => 'required|date'));
         if ( $is_valid_date_of_birth !== true ):
-            echo json_encode( array( "error" => "Please insert student Date of Birth" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter student Date of Birth" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -466,7 +467,7 @@ class Student extends Controller {
         // VALIDATION : email
         $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'valid_email'));
         if ( $is_valid_email !== true ):
-            echo json_encode( array( "error" => "Please insert a valid email" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid email" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -481,21 +482,21 @@ class Student extends Controller {
         // VALIDATION : mobile_number
         $is_valid_mobile_number = GUMP::is_valid($this->request->post, array('mobile_number' => 'numeric|exact_len,10'));
         if ( $is_valid_mobile_number !== true ):
-            echo json_encode( array( "error" => "Please insert a valid 10 digit mobile number" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid 10 digit mobile number" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : address
         $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|street_address|max_len,50'));
         if ( $is_valid_address !== true ):
-            echo json_encode( array( "error" => "Please insert a valid address" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid address" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : city
         $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
         if ( $is_valid_city !== true ):
-            echo json_encode( array( "error" => "Please insert a valid city name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid city name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -509,7 +510,7 @@ class Student extends Controller {
         // VALIDATION : birth_place
         $is_valid_birth_place = GUMP::is_valid($this->request->post, array('birth_place' => 'valid_name|max_len,30'));
         if ( $is_valid_birth_place !== true ):
-            echo json_encode( array( "error" => "Please insert a valid birth place" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid birth place" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -524,28 +525,28 @@ class Student extends Controller {
         // VALIDATION : first_guardian_full_name
         $is_valid_first_guardian_full_name = GUMP::is_valid($this->request->post, array('first_guardian_full_name' => 'required|valid_name|max_len,100'));
         if ( $is_valid_first_guardian_full_name !== true ):
-            echo json_encode( array( "error" => "Please insert a valid full name for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid full name for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_initials
         $is_valid_first_guardian_initials = GUMP::is_valid($this->request->post, array('first_guardian_initials' => 'required|alpha_space|max_len,20'));
         if ( $is_valid_first_guardian_initials !== true ):
-            echo json_encode( array( "error" => "Please insert valid initials for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter valid initials for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_surname
         $is_valid_first_guardian_surname = GUMP::is_valid($this->request->post, array('first_guardian_surname' => 'required|valid_name|max_len,20'));
         if ( $is_valid_first_guardian_surname !== true ):
-            echo json_encode( array( "error" => "Please insert a valid surname for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid surname for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_date_of_birth
         $is_valid_first_guardian_date_of_birth = GUMP::is_valid($this->request->post, array('first_guardian_date_of_birth' => 'required|date'));
         if ( $is_valid_first_guardian_date_of_birth !== true ):
-            echo json_encode( array( "error" => "Please insert a valid date of birth for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid date of birth for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -571,63 +572,63 @@ class Student extends Controller {
                 exit();
             endif;
         else:
-            echo json_encode( array( "error" => "Please insert a valid NIC number for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid NIC number for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_telephone
         $is_valid_first_guardian_telephone = GUMP::is_valid($this->request->post, array('first_guardian_telephone' => 'numeric|max_len,10'));
         if ( $is_valid_first_guardian_telephone !== true ):
-            echo json_encode( array( "error" => "Please insert a valid 10 digit telephone number for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid 10 digit telephone number for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_mobile_number
         $is_valid_first_guardian_mobile_number = GUMP::is_valid($this->request->post, array('first_guardian_mobile_number' => 'numeric|max_len,10'));
         if ( $is_valid_first_guardian_mobile_number !== true ):
-            echo json_encode( array( "error" => "Please insert a valid 10 digit mobile number for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid 10 digit mobile number for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_occupation
         $is_valid_first_guardian_occupation = GUMP::is_valid($this->request->post, array('first_guardian_occupation' => 'required|valid_name|max_len,50'));
         if ( $is_valid_first_guardian_occupation !== true ):
-            echo json_encode( array( "error" => "Please insert a occupation for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a occupation for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_position
         $is_valid_first_guardian_position = GUMP::is_valid($this->request->post, array('first_guardian_position' => 'valid_name|max_len,50'));
         if ( $is_valid_first_guardian_position !== true ):
-            echo json_encode( array( "error" => "Please insert a valid position name for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid position name for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_income
         $is_valid_first_guardian_income = GUMP::is_valid($this->request->post, array('first_guardian_income' => 'numeric|max_len,10'));
         if ( $is_valid_first_guardian_income !== true ):
-            echo json_encode( array( "error" => "Please insert a valid monthly income value for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid monthly income value for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_email
         $is_valid_first_guardian_email = GUMP::is_valid($this->request->post, array('first_guardian_email' => 'valid_email'));
         if ( $is_valid_first_guardian_email !== true ):
-            echo json_encode( array( "error" => "Please insert a valid email for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid email for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_address
         $is_valid_first_guardian_address = GUMP::is_valid($this->request->post, array('first_guardian_address' => 'required|street_address|max_len,50'));
         if ( $is_valid_first_guardian_address !== true ):
-            echo json_encode( array( "error" => "Please insert a valid address for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid address for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_city
         $is_valid_first_guardian_city = GUMP::is_valid($this->request->post, array('first_guardian_city' => 'required|valid_name|max_len,20'));
         if ( $is_valid_first_guardian_city !== true ):
-            echo json_encode( array( "error" => "Please insert a valid city for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "error" => "Please enter a valid city for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
