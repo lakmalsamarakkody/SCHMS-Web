@@ -521,22 +521,21 @@ class Exam extends Controller {
             // SUBMIT
             if ( $this->model_exam_schedule->save() ):
                 
-                // Create Student has Exam Schedule
+                // SELECT ALL CLASSES IN A GRADE
                 foreach ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $element ):
-                        
+                    
+                    // CHECK ONE OR MORE STUDENT IN A CLASS EXIST
                     if( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->first() !== NULL ):
                         
+                        // SELECT ALL STUDENTS IN A CLASS
                         foreach ( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
 
                             try {
-
+                                // CREATE STUDENT HAS EXAM SCHEDULE RECORD
                                 $this->model_student_exam->create([
                                     'student_id'        => $element2->student_id,
                                     'exam_schedule_id'  => $this->model_exam_schedule->id
                                 ]);
-
-                                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
-                                exit();
 
                             } catch (Exception $e) {
                                 echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
@@ -544,6 +543,9 @@ class Exam extends Controller {
                             }
                                    
                         endforeach;
+
+                        echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                        exit();
 
                     else:
                         echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );

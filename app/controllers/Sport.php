@@ -99,6 +99,7 @@ class Sport extends Controller {
         //MODEL
         $this->load->model('coach');
         $this->load->model('coach/sport');
+        $this->load->model('sport');
 
         // VALIDATION : COACH
         // VALIDATION : full_name
@@ -109,25 +110,28 @@ class Sport extends Controller {
         endif;
 
         // VALIDATION : SPORT IDS
-        $this->request->post['coach_sports'] = explode(",", $this->request->post['coach_sports']);
+        if ( $this->request->post['coach_sports'] !== "null"):
 
-        foreach ( $this->request->post['coach_sports'] as $key => $el ):
-            // GUMP VALIDATION
-            $is_valid_sport = GUMP::is_valid(array( 0 => $el ), array('0' => 'numeric|min_len,1|max_len,3'));
-            if ( $is_valid_sport !== true ):
-                echo json_encode( array( "error" => "Invalid Sports Selected" ), JSON_PRETTY_PRINT );
-                exit();
-            endif;
+            $this->request->post['coach_sports'] = explode(",", $this->request->post['coach_sports']);
+            foreach ( $this->request->post['coach_sports'] as $key => $el ):
+                // GUMP VALIDATION
+                $is_valid_sport = GUMP::is_valid(array( 0 => $el ), array('0' => 'numeric|min_len,1|max_len,3'));
+                if ( $is_valid_sport !== true ):
+                    echo json_encode( array( "error" => "Invalid Sports Selected" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
 
-            // DB VALIDATION : VALID SPORTS
-            $is_duplicate = $this->model_coach->select('id')->where('nic', '=', $this->request->post['nic'])->first();
-            if ( $is_duplicate !== NULL ):
-                echo json_encode( array( "error" => "This NIC number is already in use" ), JSON_PRETTY_PRINT );
-                exit();
-            endif;
-
-
-        endforeach;
+                // DB VALIDATION : VALID SPORTS
+                $is_exist = $this->model_sport->select('id')->where('id', '=', $el)->first();
+                if ( $is_exist === NULL ):
+                    echo json_encode( array( "error" => "Selected sport is not in the system" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+            endforeach;
+        else:
+            echo json_encode( array( "error" => "Select one or more Sports" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : initials
         $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
@@ -239,10 +243,23 @@ class Sport extends Controller {
         $this->model_coach->city = $this->request->post['city'];
         $this->model_coach->district_id = ( $this->request->post['district'] == "" ) ? null : $this->request->post['district'];
 
+        // CREATE COACH RECORD
         if ( $this->model_coach->save() ):
 
-            $this->model_coach_sport->coach_id = $this->model_coach->id;
-            $this->model_coach_sport->sport_id = "hello";
+            // SELECT ALL SPORT IDS
+            foreach ( $this->request->post['coach_sports'] as $key => $element ):
+
+                try{
+                    // CREATE COACH HAS SPORT RECORD
+                    $this->model_coach_sport->create([
+                        'coach_id' => $this->model_coach->id,
+                        'sport_id' => $element
+                    ]);
+                }catch (Exception $e){
+                    echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+            endforeach;
 
             echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
             exit();
