@@ -142,7 +142,7 @@ CREATE TABLE `coach` (
   UNIQUE KEY `email` (`email`),
   KEY `district_id` (`district_id`),
   CONSTRAINT `coach_ibfk_1` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +151,7 @@ CREATE TABLE `coach` (
 
 LOCK TABLES `coach` WRITE;
 /*!40000 ALTER TABLE `coach` DISABLE KEYS */;
-INSERT INTO `coach` VALUES (1,'hello','abc','samare','953651458V','1965-02-20','male','hello@gmail.com',NULL,NULL,'no5 abc hello','Gampaha',NULL,'2019-10-05 04:43:46','2019-10-05 04:43:46',NULL);
+INSERT INTO `coach` VALUES (3,'Madura Sangeeth Gunathilake','H K M S','Gunathilake','951232308V','1995-04-11','male','madura.sangeeth@gmail.com',NULL,NULL,'121, Keenawala road','Kubaloluwa',7,'2019-10-05 08:15:35','2019-10-05 08:15:35',NULL);
 /*!40000 ALTER TABLE `coach` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +174,7 @@ CREATE TABLE `coach_has_sport` (
   KEY `coach_id` (`coach_id`),
   CONSTRAINT `coach_has_sport_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `coach_has_sport_ibfk_2` FOREIGN KEY (`coach_id`) REFERENCES `coach` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,6 +183,7 @@ CREATE TABLE `coach_has_sport` (
 
 LOCK TABLES `coach_has_sport` WRITE;
 /*!40000 ALTER TABLE `coach_has_sport` DISABLE KEYS */;
+INSERT INTO `coach_has_sport` VALUES (1,4,3,'2019-10-05 08:15:35','2019-10-05 08:15:35',NULL),(2,6,3,'2019-10-05 08:15:35','2019-10-05 08:15:35',NULL);
 /*!40000 ALTER TABLE `coach_has_sport` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1293,4 +1294,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-05  6:48:07
+-- Dump completed on 2019-10-05 21:12:28
