@@ -1,0 +1,251 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <!-- START : CONTENT -->
+            <div class="col-md-10 content">               
+                {{ template.topmenu|raw }}
+
+                <div class="sportsearch">
+
+                    <!-- START : SPORT SEARCH -->
+                    <h4 class="page-title"> Search Coach </h4>
+
+                    <div class="card mt-4">
+
+                        <div class="card-header">
+                            Search
+                        </div>
+
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="form-row">
+
+                                    <div class="col-5">
+                                        <div class="form-group">
+                                            <label for="coach_name">Name</label>
+                                            <input type="text" class="form-control" name="coach_name" value="{{ (form.field.coach_name) ? form.field.coach_name }}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="coach_sport">Sport</label>
+                                            <select class="form-control" name="coach_sport">
+                                                <option value="" selected>- Select Sport -</option>
+                                                {% for sport in sports %}
+                                                    {% if form.field.coach_sport == sport.id %}
+                                                        <option value="{{ sport.id }}" selected> {{ sport.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ sport.id }}"> {{ sport.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="no_of_sports">No of Sports</label>
+                                            <select class="form-control" name="no_of_sports">
+                                                <option value="" selected>- Select -</option>
+                                                    {% if form.field.no_of_sports == "1" %}
+                                                    <option value="1" selected> Only One </option>
+                                                    <option value="many"> Two or More </option>
+                                                    {% elseif form.field.no_of_sports == "many" %}
+                                                    <option value="1"> Only One </option>
+                                                    <option value="many" selected> Two or More </option>
+                                                    {%else%}
+                                                    <option value="1"> Only One </option>
+                                                    <option value="many"> Two or More </option>
+                                                    {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <input type="hidden" name="isSubmitedCoach" value="true"/>
+                                        <button class="btn btn-primary px-5" type="submit"> Search </button>
+                                        <button class="btn btn-secondary" type="reset">Clear</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <!-- END : SPORT SEARCH -->
+
+
+                    <!-- START : SPORT SEARCH -->
+                    <h4 class="page-title mt-5"> Search Student </h4>
+
+                    <div class="card mt-4">
+
+                        <div class="card-header">
+                            Search
+                        </div>
+
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="form-row">
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="student_name">Name</label>
+                                            <input type="text" class="form-control" name="student_name" value="{{ (form.field.name) ? form.field.name }}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_class">Class</label>
+                                            <select class="form-control" name="student_class">
+                                                <option value="" selected>- Select Class -</option>
+                                                {% for class in student_class %}
+                                                    {% if form.field.class == class.id %}
+                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>  
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_grade">Grade</label>
+                                            <select class="form-control" name="student_grade">
+                                                <option value="" selected>- Select Grade -</option>
+                                                {% for grade in student_grade %}
+                                                    {% if form.field.grade == grade.id %}
+                                                        <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ grade.id }}"> Grade - {{ grade.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="gender">Gender</label>
+                                            <select class="form-control" name="gender">
+                                                <option value="" selected>- Select Gender -</option>
+                                                {% if form.field.gender == 'male' %}
+                                                    <option value="male" selected>Male</option>
+                                                    <option value="female">Female</option>
+                                                {% elseif form.field.gender == 'female' %}
+                                                    <option value="male">Male</option>
+                                                    <option value="female" selected>Female</option>
+                                                {% else %}
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="student_sport">Sport</label>
+                                            <select class="form-control" name="student_sport">
+                                                <option value="" selected>- Select Sport -</option>
+                                                {% for sport in sports %}
+                                                    {% if form.field.sport == sport.id %}
+                                                        <option value="{{ sport.id }}" selected> {{ sport.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ sport.id }}"> {{ sport.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <input type="hidden" name="isSubmitedStudent" value="true"/>
+                                        <button class="btn btn-primary px-5" type="submit"> Search </button>
+                                        <button class="btn btn-secondary" type="reset">Clear</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <!-- END : SPORT SEARCH -->
+
+                    <!-- START : SEARCH RESULTS -->
+                    <section class="mt-5">
+                        <!-- START : SEARCH RESULT TABLE -->
+                        {% if coaches %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Coaches </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th width="10%" class="text-center" scope="col">NIC</th>
+                                        <th width="10%" class="text-center" scope="col">DoB</th>
+                                        <th width="5%" class="text-center" scope="col">Gender</th>
+                                        <th width="5%" class="text-center" scope="col">Email</th>
+                                        <th width="10%" class="text-center" scope="col">Mobile Number</th>
+                                        <th width="10%" class="text-center" scope="col">City</th>                       
+                                        <th width="10%" class="text-center" scope="col">&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for coach in coaches %}
+                                        <tr>
+                                            <th class="text-center" scope="row">{{ coach.id }}</th>
+                                            <td>{{ coach.coach_initials }} {{ coach.coach_surname }}</td>
+                                            <td class="text-center">{{ coach.nic }}</td>
+                                            <td class="text-center">{{ coach.dob }}</td>
+                                            <td class="text-center">{{ coach.gender }}</td>
+                                            <td class="text-center">{{ coach.email }}</td>
+                                            <td class="text-center">{{ coach.phone_mobile }}</td>
+                                            <td class="text-center">{{ coach.city }}</td>
+                                                                                    
+                                            <td class="text-center"><i class="la la-user"></i> View Profile</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        {% else %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Coaches </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">Fill your requirements and click search to view</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" scope="row">No records to display</td>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        {% endif %}
+                        <!-- END : SEARCH RESULT TABLE -->
+                    </section>
+                        <!-- END : SEARCH RESULTS -->
+
+                </div>
+                <!-- END : CONTENT -->
+
+            </div>
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>

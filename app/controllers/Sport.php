@@ -19,7 +19,127 @@ class Sport extends Controller {
         
     }
 
-    public function search() {
+    public function search_coach () {
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODEL
+        $this->load->model('sport');
+        $this->load->model('coach');
+        $this->load->model('coach/sport');
+
+        // SPORT
+		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['sports'][$key]['id'] = $element->id;
+			$data['sports'][$key]['name']= $element->name;
+        endforeach;
+
+        // SEARCH COACH
+        if( isset( $this->request->post['isSubmitedCoach']) ):
+
+            // PERSIST DATA
+            $data['form']['field']['coach_name'] = ( isset($this->request->post['coach_name']) AND !empty($this->request->post['coach_name']) ) ? $this->request->post['coach_name'] : "";
+            $data['form']['field']['coach_sport'] = ( isset($this->request->post['coach_sport']) AND !empty($this->request->post['coach_sport']) ) ? $this->request->post['coach_sport'] : "";
+            $data['form']['field']['no_of_sports'] = ( isset($this->request->post['no_of_sports']) AND !empty($this->request->post['no_of_sports']) ) ? $this->request->post['no_of_sports'] : "";
+            
+            // Eloquent OBJECT
+            $coach = $this->model_coach->select('id')->orderBy('id');
+
+            // FILTER ( NAME )
+            if ( isset($this->request->post['coach_name']) AND !empty($this->request->post['coach_name']) ):
+                $coach->where(function($query) {
+                    $query->where('full_name', 'LIKE', '%'.$this->request->post['coach_name'].'%');
+                });
+            endif;
+
+            // FILTER (SPORT)
+            if ( isset($this->request->post['coach_sport']) AND !empty($this->request->post['coach_sport']) ):
+                
+                $coach_ids = $this->model_coach_sport->select('coach_id')->where('sport_id','=', $this->request->post['coach_sport'])->get();
+                if ( $coach_ids != NULL):
+                    $coaches = array();
+                    foreach ( $coach_ids as $key => $element ):
+                        array_push($coaches,$element->coach_id);
+                    endforeach;
+                    $coach->where(function($query) use ($coaches) {
+                        $query->whereIn('id', $coaches);
+                    });
+                endif;
+            endif;
+
+            // FILTER ( NO OF STUDENTS )
+            $coachs = array();
+            if ( isset($this->request->post['no_of_sports']) AND !empty($this->request->post['no_of_sports']) ):
+
+                $coach = $coach->get();
+
+                $coach_data = array();
+                foreach ( $coach as $key => $el ):
+                    $coach_data[$el->id]['id'] = $el->id;
+                    $coach_data[$el->id]['count'] = $this->model_coach_sport->where('coach_id', '=', $el->id)->count();
+                endforeach;
+
+                // if (  ):
+                // endif;
+                foreach( $coach_data as $k => $e ):
+                    if ( $this->request->post['no_of_sports'] == 1 ):
+                        if ( $e['count'] == 1 ):
+                            array_push($coachs, $e['id']);
+                        endif;
+                    elseif ( $this->request->post['no_of_sports'] == 'many' ):
+                        if ( $e['count'] >= 2 ):
+                            array_push($coachs, $e['id']);
+                        endif;
+                    endif;
+                endforeach;
+
+            else:
+                foreach( $coach->get() as $key => $el ):
+                    array_push($coachs, $el->id);
+                endforeach;
+            endif;
+
+            $coach_data = $this->model_coach->select('id', 'full_name', 'initials', 'surname', 'nic', 'dob', 'gender', 'email', 'phone_home', 'phone_mobile', 'address', 'city')->whereIn('id', $coachs);
+
+            // APPEND DATA TO ARRAY
+            foreach( $coach_data->get() as $key => $value ):
+                $data['coaches'][$key]['id'] = $value->id;
+                $data['coaches'][$key]['coach_full_name'] = $value->full_name;
+                $data['coaches'][$key]['coach_initials'] = $value->initials;
+                $data['coaches'][$key]['coach_surname'] = $value->surname;
+                $data['coaches'][$key]['nic'] = $value->nic;
+                $data['coaches'][$key]['dob'] = $value->dob;
+                $data['coaches'][$key]['gender'] = $value->gender;
+                $data['coaches'][$key]['email'] = $value->email;
+                $data['coaches'][$key]['phone_home'] = $value->phone_home;
+                $data['coaches'][$key]['phone_mobile'] = $value->phone_mobile;
+                $data['coaches'][$key]['address'] = $value->address;
+                $data['coaches'][$key]['city'] = $value->city;
+            endforeach;
+
+        endif;
+
+        // SEARCH STUDENT
+        if( isset( $this->request->post['isSubmitedStudent']) ):
+            var_dump ("im here stu");
+            return;
+        endif;
+
+		// RENDER VIEW
+        $this->load->view('sport/search', $data);
+        
+    }
+
+    public function assign() {
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -33,11 +153,11 @@ class Sport extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
-        $this->load->view('sport/search', $data);
+        $this->load->view('sport/assign', $data);
         
     }
 
-    public function add() {
+    public function add_coach() {
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -68,7 +188,7 @@ class Sport extends Controller {
         endforeach;
 
 		// RENDER VIEW
-        $this->load->view('sport/add', $data);
+        $this->load->view('sport/add_coach', $data);
         
     }
 

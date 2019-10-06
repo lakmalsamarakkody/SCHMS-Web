@@ -237,12 +237,6 @@ class Student extends Controller {
                 $data['students'][$key]['city'] = $value->city;
             endforeach;
 
-            // // DISPLAY QUERY ( TEMP )
-            // echo "<pre>";
-            //     var_dump( $student->toSql() );
-            //     var_dump( $student->getBindings() );
-            // echo "</pre>";
-
         endif;
 
 		// RENDER VIEW

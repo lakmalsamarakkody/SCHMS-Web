@@ -532,13 +532,19 @@ h5.page-title{
 
 /* Sport/search */
 .sportsearch{
-    padding: 1rem;
+    padding: 4rem;
+}
+
+
+/* Sport/assign */
+.sportassign{
+    padding: 4rem;
 }
 
 
 /* Sport/add */
 .sportadd{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
@@ -588,7 +594,6 @@ h5.page-title{
 
 /* student/search */
 .stusearch{
-    /*padding: 1rem;*/
     padding: 4rem;
 }
 

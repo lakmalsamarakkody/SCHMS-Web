@@ -11,7 +11,7 @@ class CoachSport_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'coach_has_sport';
-	protected $fillable = [ 'id', 'sport_id', 'coach_id' ];
+	protected $fillable = [ 'id', 'coach_id', 'sport_id' ];
 }
 
 ?>

@@ -15,6 +15,7 @@
 
                     <h4 class="page-title">View Student</h4>
 
+                    <!-- START : SEARCH STUDENT FORM -->
                     <div class="card mt-4">
                         <div class="card-header">
                             Search
@@ -194,14 +195,11 @@
                             </form>
                         </div>
                     </div>
+                    <!-- END : SEARCH STUDENT FORM -->
 
-                    <!-- <div class="row mt-4">
-                        <pre>
-                            {{ dump(students) }}
-                        </pre>
-                    </div> -->
+                    <!-- START : SEARCH RESULTS -->
                     <section class="mt-5">
-                        <!-- SEARCH RESULT TABLE -->
+                        <!-- START : SEARCH RESULT TABLE -->
                         {% if students %}
                             <table class="table table-bordered table-responsive-md">
                                 <caption> Search Results of Students </caption>
@@ -234,7 +232,9 @@
                                 </tbody>
                             </table>
                         {% endif %}
+                        <!-- END : SEARCH RESULT TABLE -->
                     </section>
+                     <!-- END : SEARCH RESULTS -->
 
 
                 </div>
