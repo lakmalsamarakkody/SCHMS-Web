@@ -1,0 +1,179 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <!-- START : CONTENT -->
+            <div class="col-md-10 content">               
+                {{ template.topmenu|raw }}
+
+                <div class="sportsearchstudent">
+
+                    <!-- START : SPORT SEARCH -->
+                    <h4 class="page-title"> Search Student </h4>
+
+                    <div class="card mt-4">
+
+                        <div class="card-header">
+                            Search
+                        </div>
+
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="form-row">
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="student_name">Name</label>
+                                            <input type="text" class="form-control" name="student_name" value="{{ (form.field.student_name) ? form.field.student_name }}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_class">Class</label>
+                                            <select class="form-control selectpicker show-tick" name="student_class">
+                                                <option value="" selected>- Select Class -</option>
+                                                {% for class in student_class %}
+                                                    {% if form.field.student_class == class.id %}
+                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>  
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_grade">Grade</label>
+                                            <select class="form-control selectpicker show-tick" name="student_grade">
+                                                <option value="" selected>- Select Grade -</option>
+                                                {% for grade in student_grade %}
+                                                    {% if form.field.student_grade == grade.id %}
+                                                        <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ grade.id }}"> Grade - {{ grade.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="student_gender">Gender</label>
+                                            <select class="form-control selectpicker show-tick" name="student_gender">
+                                                <option value="" selected>- Select Gender -</option>
+                                                {% if form.field.student_gender == 'male' %}
+                                                    <option value="male" selected>Male</option>
+                                                    <option value="female">Female</option>
+                                                {% elseif form.field.student_gender == 'female' %}
+                                                    <option value="male">Male</option>
+                                                    <option value="female" selected>Female</option>
+                                                {% else %}
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="student_sport">Sport</label>
+                                            <select class="form-control selectpicker show-tick" name="student_sport[]" multiple>
+                                                {% for sport in sports %}
+                                                    {% if sport.id in form.field.student_sport %}
+                                                    <option value="{{ sport.id }}" selected> {{ sport.name }} </option>
+                                                    {% else %}
+                                                    <option value="{{ sport.id }}"> {{ sport.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                            <small class="form-text text-muted">Multiple Sports can be selected</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <input type="hidden" name="isSubmitedStudent" value="true"/>
+                                        <button class="btn btn-primary px-5" type="submit">Search</button>
+                                        <button class="btn btn-secondary" type="reset">Clear</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <!-- END : SPORT SEARCH -->
+
+                    <!-- START : SEARCH RESULTS -->
+                    <section class="mt-5">
+                        <!-- START : SEARCH RESULT TABLE -->
+                        {% if students %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Students </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th width="10%" class="text-center" scope="col">Admission</th>
+                                        <th width="1%" class="text-center" scope="col">Class</th>
+                                        <th width="10%" class="text-center" scope="col">DoB</th>
+                                        <th width="5%" class="text-center" scope="col">Gender</th>
+                                        <th width="10%" class="text-center" scope="col">City</th>
+                                        <th scope="col">Name</th>                                    
+                                        <th width="15%" class="text-center" scope="col">&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for student in students %}
+                                        <tr>
+                                            <th class="text-center" scope="row">{{ student.id }}</th>
+                                            <td class="text-center">{{ student.admission_no }}</td>
+                                            <td class="text-center">{{ student.class }}</td>
+                                            <td class="text-center">{{ student.dob }}</td>
+                                            <td class="text-center">{{ student.gender }}</td>
+                                            <td class="text-center">{{ student.city }}</td>
+                                            <td> {{ student.name }}</td>                                        
+                                            <td class="text-center"><i class="la la-user"></i> View Profile</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        {% else %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Students </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">Fill your requirements and click search to view</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" scope="row">No records to display</td>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        {% endif %}
+                        <!-- END : SEARCH RESULT TABLE -->
+                    </section>
+                    <!-- END : SEARCH RESULTS -->
+
+                </div>
+                <!-- END : CONTENT -->
+
+            </div>
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>

@@ -140,7 +140,7 @@ h5.page-title{
 /* attendance */
 /* attendance/index */
 .attendanceindex{
-    padding: 1rem;
+    padding: 4rem;
   }
 
 .attendanceindex .card{
@@ -368,7 +368,7 @@ h5.page-title{
 /* exam */
 /* exam/index */
 .examindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 .examindex .card{
@@ -397,7 +397,6 @@ h5.page-title{
 
 /* exam/create */
 .examcreate{
-    /*padding: 1rem;*/
     padding: 4rem;
 }
 
@@ -406,19 +405,19 @@ h5.page-title{
 /* health */
 /* health/index */
 .healthindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
 /* health/search */
 .healthsearch{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
 /* health/add */
 .healthadd{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
@@ -426,7 +425,7 @@ h5.page-title{
 /* home */
 /* home/index */
 .homeindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
@@ -465,7 +464,7 @@ h5.page-title{
 /* parent */
 /* parent/index */
 .parentindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
@@ -481,7 +480,6 @@ h5.page-title{
 
 /* parent/add */
 .parentadd{
-    /*padding: 1rem;*/
     padding: 4rem;
 }
 
@@ -501,19 +499,18 @@ h5.page-title{
 /* result */
 /* result/index */
 .resultindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
 /* result/search */
 .resultsearch{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
 /* result/add */
 .resultadd{
-    /*padding: 1rem;*/
     padding: 4rem;
 }
 
@@ -526,12 +523,17 @@ h5.page-title{
 /* Sport */
 /* Sport/index */
 .sportindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
-/* Sport/search */
-.sportsearch{
+/* Sport/search/student */
+.sportsearchstudent{
+    padding: 4rem;
+}
+
+/* Sport/search/coach */
+.sportsearchcoach{
     padding: 4rem;
 }
 
@@ -552,7 +554,7 @@ h5.page-title{
 /* staff */
 /* staff/index */
 .staffindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
@@ -584,7 +586,7 @@ h5.page-title{
 /* student */
 /* student/index */
 .stuindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 .stuindex .card{
@@ -619,18 +621,18 @@ h5.page-title{
 /* timetable */
 /* timetable/index */
 .timetableindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 /* timetable/search */
 .timetablesearch{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
 /* timetablecreate */
 .timetablecreate{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 
@@ -638,7 +640,7 @@ h5.page-title{
 /* user */
 /* user/index */
 .userindex{
-    padding: 1rem;
+    padding: 4rem;
 }
 
 .userindex .card{
@@ -680,7 +682,7 @@ h5.page-title{
 
 /* user/add */
 .useradd{
-    padding: 5rem 20rem 5rem 20rem;
+    padding: 4rem;
 }
 
 .useraddpanel{
@@ -697,7 +699,7 @@ h5.page-title{
 }
 
 .usercreatebody{
-    padding: 4rem 6rem 4rem 6rem;
+    padding: 4rem;
 }
 
 .usercreatebody input{
@@ -709,5 +711,5 @@ h5.page-title{
 /* Backup */
 /* Backup/index */
 .backupindex{
-    padding: 1rem;
+    padding: 4rem;
 }

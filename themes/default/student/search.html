@@ -231,6 +231,21 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                        {% else %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Students </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">Fill your requirements and click search to view</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" scope="row">No records to display</td>
+                                    </tr>
+                                </thead>
+                            </table>
+
                         {% endif %}
                         <!-- END : SEARCH RESULT TABLE -->
                     </section>
