@@ -116,57 +116,63 @@
 
                         <div class="examresult-table mt-4">
 
-                            <table class="table table-hover table-responsive-md">
-                                <caption> Search Results of Exam Schedules </caption>
-                                {% if exam.schedules %}
-                                <thead class="thead-dark">
-                                    <th width="1%" class="text-center" scope="col">ID</th>
-                                    <th width="1%" class="text-center" scope="col">Admission</th>
-                                    <th width="1%" class="text-center" scope="col">Class</th>
-                                    <th width="1%" class="text-center" scope="col">Index</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Exam Name</th>
-                                    <th scope="col">Subject</th>
-                                    <th width="1%" class="text-center" scope="col">Marks</th>
-                                    <th width="12%" class="text-center" scope="col">&nbsp;</th>
-                                </thead>
-                                {% else %}
+                            {% if exam.schedules %}
+                                <table id="table_result_search" class="table table-hover table-responsive-md">
+                                    <caption> Search Results of Exam Schedules </caption>
+                                    
                                     <thead class="thead-dark">
-                                        <th class="text-center" scope="col">Please Select an Exam to view its Schedule</th>
+                                        <tr>
+                                            <th width="1%" class="text-center" scope="col">ID</th>
+                                            <th width="1%" class="text-center" scope="col">Admission</th>
+                                            <th width="1%" class="text-center" scope="col">Class</th>
+                                            <th width="1%" class="text-center" scope="col">Index</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Exam Name</th>
+                                            <th scope="col">Subject</th>
+                                            <th width="1%" class="text-center" scope="col">Marks</th>
+                                            <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                        </tr>
                                     </thead>
-                                {% endif %}
 
-                                {% if exam.schedules %}
-                                <tbody>
-                                    {% for exam_schedule in exam.schedules %}
-                                    <tr>
-                                        <th class="text-center" scope="row">{{ exam_schedule.id }}</th>
-                                        <td class="text-center">{{ exam_schedule.admission_no }}</td>
-                                        <td class="text-center">{{ exam_schedule.class }}</td>
-                                        <td class="text-center">{{ exam_schedule.index }}</td>
-                                        <td>{{ exam_schedule.name }}</td>
-                                        <td>{{ exam_schedule.exam_name }}</td>
-                                        <td>{{ exam_schedule.subject }}</td>
-                                        <td class="text-center">{{ exam_schedule.marks }}</td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-12 text-center">
-                                                    <button class="btn btn-xs btn-warning">Edit</button>
-                                                    <button class="btn btn-xs btn-danger">Remove</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                                {% else %}
                                     <tbody>
-                                        <td class="text-center" scope="col">No records to display</td>
+                                        {% for exam_schedule in exam.schedules %}
+                                        <tr>
+                                            <th class="text-center" scope="row">{{ exam_schedule.id }}</th>
+                                            <td class="text-center">{{ exam_schedule.admission_no }}</td>
+                                            <td class="text-center">{{ exam_schedule.class }}</td>
+                                            <td class="text-center">{{ exam_schedule.index }}</td>
+                                            <td>{{ exam_schedule.name }}</td>
+                                            <td>{{ exam_schedule.exam_name }}</td>
+                                            <td>{{ exam_schedule.subject }}</td>
+                                            <td class="text-center">{{ exam_schedule.marks }}</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-12 text-center">
+                                                        <button class="btn btn-xs btn-warning">Edit</button>
+                                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                                        <button class="btn btn-xs btn-success mt-1"><i class="la la-user"></i> View Profile</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
                                     </tbody>
-                                {% endif %}
-
-                            </table>
-
+                                </table>
+                            {% else %}
+                                <table class="table table-hover table-responsive-md">
+                                    <caption> Search Results of Exam Schedules </caption>
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="text-center" scope="col">Please Select an Exam to view its Schedule</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center" scope="col">No records to display</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            {% endif %}
                         </div>
 
                     </section>
@@ -177,5 +183,12 @@
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+        // DATA TABLE
+        $(document).ready(function() {
+            $('#table_result_search').DataTable();
+        } );
+    </script>
 </body>

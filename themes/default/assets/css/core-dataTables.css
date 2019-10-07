@@ -1,0 +1,58 @@
+select{
+    /* height: calc(1.5em + .75rem + 2px); */
+    padding: .2rem .2rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* TEXT : SEARCH */
+.dataTables_wrapper .dataTables_filter {
+    color: #111;
+}
+
+/* INPUT TYPE : TEXT - SEARCH FIELD */
+.dataTables_wrapper .dataTables_filter input {
+    padding: .2rem .2rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* BOTTOM BLACK LINE */
+table.dataTable.no-footer {
+    border-bottom: 0px;
+}
+
+/* PAGINATION BUTTON */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    box-sizing: border-box;
+    display: inline-block;
+    min-width: 1.5em;
+    padding: 0px;
+    margin-left: 1px;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: hand;
+    color: #333 !important;
+    border: 0rem solid #6c757d;
+    border-radius: .25rem;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #333 !important;
+    border: 0.04rem solid #979797;
+    background-color: white;
+}

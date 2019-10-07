@@ -6,18 +6,209 @@
         <div class="row">
             
             {{ template.sidenav|raw }}
-
-            <div class="col-md-10 content">               
+            
+            <div class="col-md-10 content">
+                
                 {{ template.topmenu|raw }}
 
                 <div class="sportassign">
 
-                    <h4 class="page-title"> Assign Sport </h4>
+                    <h4 class="page-title">Assign Sports to Students</h4>
+
+                    <!-- START : SEARCH STUDENT FORM -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            Search Students
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="form-row">
+                                    
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="addno">Admission Number</label>
+                                            <input type="number" class="form-control" name="addno" maxlength="6" value="{{ (form.field.addno) ? form.field.addno }}" />
+                                        </div>                                    
+                                    </div>
+                                    
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="adddate">Admission Date</label>
+                                            <input type="date" class="form-control" name="adddate" value="{{ (form.field.adddate) ? form.field.adddate }}" />
+                                            <small id="dobHelp" class="form-text text-muted">ex : 01/15/2018</small>
+                                        </div>                                    
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="dob">Date of Birth</label>
+                                            <input type="date" class="form-control" name="dob" value="{{ (form.field.dob) ? form.field.dob }}" />
+                                            <small id="dobHelp" class="form-text text-muted">ex : 12/30/1995</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control" name="name" value="{{ (form.field.name) ? form.field.name }}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="class">Class</label>
+                                            <select class="form-control" name="class">
+                                                <option value="" selected>- Select Class -</option>
+                                                {% for class in student_class %}
+                                                    {% if form.field.class == class.id %}
+                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>  
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="grade">Grade</label>
+                                            <select class="form-control" name="grade">
+                                                <option value="" selected>- Select Grade -</option>
+                                                {% for grade in student_grade %}
+                                                    {% if form.field.grade == grade.id %}
+                                                        <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ grade.id }}"> Grade - {{ grade.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>                                
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="gender">Gender</label>
+                                            <select class="form-control" name="gender">
+                                                <option value="" selected>- Select Gender -</option>
+                                                {% if form.field.gender == 'male' %}
+                                                    <option value="male" selected>Male</option>
+                                                    <option value="female">Female</option>
+                                                {% elseif form.field.gender == 'female' %}
+                                                    <option value="male">Male</option>
+                                                    <option value="female" selected>Female</option>
+                                                {% else %}
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <select class="form-control selectpicker" data-live-search="true" name="city">
+                                                <option value="" selected>- Select City -</option>
+                                                {% for city in student_city %}
+                                                    {% if form.field.city == city.name %}
+                                                        <option value="{{ city.name }}" selected>{{ city.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ city.name }}">{{ city.name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>                            
+
+                                    <div class="col-12 mt-3">
+                                        <input type="hidden" name="isSubmited" value="true"/>
+                                        <button class="btn btn-primary px-5" type="submit"> Search </button>
+                                        <button class="btn btn-secondary" type="reset" onclick="clear();">Clear</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END : SEARCH STUDENT FORM -->
+
+                    <!-- START : SEARCH RESULTS -->
+                    <section class="mt-5">
+                        <!-- START : SEARCH RESULT TABLE -->
+                        {% if students %}
+                            <table class="table table-hover table-bordered table-responsive-md">
+                                <caption> Search Results of Students </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th width="10%" class="text-center" scope="col">Admission</th>
+                                        <th width="1%" class="text-center" scope="col">Class</th>
+                                        <th width="1%" class="text-center" scope="col">Index</th>
+                                        <th width="10%" class="text-center" scope="col">DoB</th>
+                                        <th width="5%" class="text-center" scope="col">Gender</th>
+                                        <th width="10%" class="text-center" scope="col">City</th>
+                                        <th scope="col">Name</th>
+                                        <th width="10%" class="text-center" scope="col">Assign Sports</th>
+                                        <th width="1%" scope="col">&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for student in students %}
+                                        <tr>
+                                            <th class="text-center" scope="row">{{ student.id }}</th>
+                                            <td class="text-center">{{ student.admission_no }}</td>
+                                            <td class="text-center">{{ student.class }}</td>
+                                            <td class="text-center">{{ student.index }}</td>
+                                            <td class="text-center">{{ student.dob }}</td>
+                                            <td class="text-center">{{ student.gender }}</td>
+                                            <td class="text-center">{{ student.city }}</td>
+                                            <td> {{ student.name }}</td>                                        
+                                            <td class="text-center">
+                                                <select class="form-control selectpicker show-tick" name="sport" multiple>
+                                                {% for sport in student_sport %}
+                                                    <option value="{{ sport.id }}">{{ sport.name }}</option>
+                                                {% endfor %}
+                                                </select>
+                                            </td>
+                                            <td class="text-center"><button type="button" class="btn btn-primary">Save</button></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Students </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">Fill your requirements and click search to view</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" scope="row">No records to display</td>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        {% endif %}
+                        <!-- END : SEARCH RESULT TABLE -->
+                    </section>
+                     <!-- END : SEARCH RESULTS -->
+
 
                 </div>
             </div>
+
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+        clear = () => {
+
+        }
+    </script>
 </body>

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class Sport extends Controller {
     public function index() {
     
@@ -265,6 +267,141 @@ class Sport extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODELS
+        $this->load->model('student');
+        $this->load->model('student/subject');
+        $this->load->model('student/sport');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('sport');
+
+        //STUDENT CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['student_class'][$key]['id'] = $element->id;
+            $data['student_class'][$key]['grade']['id'] = $element->grade_id;
+            $data['student_class'][$key]['staff']['id'] = $element->staff_id;
+            $data['student_class'][$key]['name'] = $element->name;
+
+            $data['student_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        //GRADE
+        foreach( $this->model_grade->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['student_grade'][$key]['id'] = $element->id;
+            $data['student_grade'][$key]['name'] = $element->name;
+        endforeach;
+
+        // CITY
+        foreach( $this->model_student->select('city')->orderBy('city')->distinct()->get() as $key => $element ):
+            $data['student_city'][$key]['name'] = $element->city;
+        endforeach;
+
+        //SPORT
+        foreach( $this->model_sport->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['student_sport'][$key]['id'] = $element->id;
+            $data['student_sport'][$key]['name'] = $element->name;
+        endforeach;
+
+        // CHECK SUBMIT
+        if ( isset($this->request->post['isSubmited']) ):
+
+            $data['form']['field']['addno'] = ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ) ? $this->request->post['addno'] : "";
+            $data['form']['field']['adddate'] = ( isset($this->request->post['adddate']) AND !empty($this->request->post['adddate']) ) ? $this->request->post['adddate'] : "";
+            $data['form']['field']['dob'] = ( isset($this->request->post['dob']) AND !empty($this->request->post['dob']) ) ? $this->request->post['dob'] : "";
+            $data['form']['field']['name'] = ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ) ? $this->request->post['name'] : "";
+            $data['form']['field']['class'] = ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ) ? $this->request->post['class'] : "";
+            $data['form']['field']['grade'] = ( isset($this->request->post['grade']) AND !empty($this->request->post['grade']) ) ? $this->request->post['grade'] : "";
+            $data['form']['field']['gender'] = ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ) ? $this->request->post['gender'] : "";
+            $data['form']['field']['city'] = ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ) ? $this->request->post['city'] : "";
+
+            // Eloquent OBJECT
+            $student = $this->model_student->select('id', 'admission_no', 'admission_date', 'class_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_mobile', 'address', 'city');
+
+            // FILTER ( ADMISSION NO )
+            if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):
+                $student->where(function($query) {
+                    $query->where('admission_no', '=', $this->request->post['addno']);
+                });
+            endif;
+
+            // FILTER ( ADMISSION DATE )
+            if ( isset($this->request->post['adddate']) AND !empty($this->request->post['adddate']) ):
+                $student->where(function($query) {
+                    $query->where('admission_date', '=', $this->request->post['adddate']);
+                });
+            endif;
+
+            // FILTER ( BIRTHDAY )
+            if ( isset($this->request->post['dob']) AND !empty($this->request->post['dob']) ):
+                $student->where(function($query) {
+                    $query->where('dob', '=', $this->request->post['dob']);
+                });
+            endif;
+
+            // FILTER ( NAME )
+            if ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ):
+                $student->where(function($query) {
+                    $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
+                });
+            endif;
+
+            // FILTER ( CLASS )
+            if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ):
+                $student->where(function($query) {
+                    $query->where('class_id', '=', $this->request->post['class']);
+                });
+            endif;
+
+            // FILTER ( GRADE )
+            if ( isset($this->request->post['grade']) AND !empty($this->request->post['grade']) ):
+                $class = $this->model_class->select('id')->where('grade_id', '=', $this->request->post['grade'])->get();
+                if ( $class != NULL ):
+                    $classes = array();
+                    foreach ( $class as $key => $element ):
+                        array_push($classes, $element->id);
+                    endforeach;
+                    $student->where(function($query) use ($classes) {
+                        $query->whereIn('class_id', $classes);
+                    });
+                endif; 
+            endif;
+
+            // FILTER ( GENDER )
+            if ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ):
+                $student->where(function($query) {
+                    $query->where('gender', '=', $this->request->post['gender']);
+                });
+            endif;
+
+            // FILTER (CITY)
+            if ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ):
+                $student->where(function($query) {
+                    $query->where('city', 'LIKE', '%'.$this->request->post['city'].'%');
+                });
+            endif;
+
+            // APPEND DATA TO ARRAY
+            foreach( $student->get() as $key => $value ):
+
+                $student_data = DB::table('student')
+                    ->join('student_has_class', 'student.id', '=', 'student_has_class.student_id')
+                    ->join('class', 'student_has_class.class_id', '=', 'class.id')
+                    ->join('grade', 'class.grade_id', '=', 'grade.id')
+                    ->select('student_has_class.index_no', 'student_has_class.class_id', 'class.name', 'grade.name')
+                    ->where('student.id', '=', $value->id)->first();
+
+                $data['students'][$key]['id'] = $value->id;
+                $data['students'][$key]['admission_no'] = $value->admission_no;
+                $data['students'][$key]['class'] = $student_data->name;
+                $data['students'][$key]['index'] = $student_data->index_no;
+                $data['students'][$key]['name'] = $value->initials." ".$value->surname;
+                $data['students'][$key]['gender'] = $value->gender;
+                $data['students'][$key]['dob'] = $value->dob;
+                $data['students'][$key]['city'] = $value->city;
+            endforeach;
+
+        endif;
 
 		// RENDER VIEW
         $this->load->view('sport/assign', $data);

@@ -39,7 +39,7 @@
                                         </div>                                    
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="dob">Date of Birth</label>
                                             <input type="date" class="form-control" name="dob" value="{{ (form.field.dob) ? form.field.dob }}" />
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-5">
                                         <div class="form-group">
                                             <label for="name">Name</label>
                                             <input type="text" class="form-control" name="name" value="{{ (form.field.name) ? form.field.name }}" />
@@ -201,7 +201,7 @@
                     <section class="mt-5">
                         <!-- START : SEARCH RESULT TABLE -->
                         {% if students %}
-                            <table class="table table-bordered table-responsive-md">
+                            <table id="table_student_search" class="table table-hover table-responsive-md">
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
@@ -212,7 +212,7 @@
                                         <th width="5%" class="text-center" scope="col">Gender</th>
                                         <th width="10%" class="text-center" scope="col">City</th>
                                         <th scope="col">Name</th>                                    
-                                        <th width="15%" class="text-center" scope="col">&nbsp;</th>
+                                        <th width="10%" class="text-center" scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
 
@@ -226,7 +226,7 @@
                                             <td class="text-center">{{ student.gender }}</td>
                                             <td class="text-center">{{ student.city }}</td>
                                             <td> {{ student.name }}</td>                                        
-                                            <td class="text-center"><i class="la la-user"></i> View Profile</td>
+                                            <td class="text-center"><button type="button" class="btn btn-xs btn-success"><i class="la la-user"></i>View Profile</button></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -264,5 +264,10 @@
         clear = () => {
 
         }
+
+        // DATA TABLE
+        $(document).ready(function() {
+            $('#table_student_search').DataTable();
+        } );
     </script>
 </body>
