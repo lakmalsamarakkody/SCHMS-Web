@@ -42,10 +42,10 @@ class Staff extends Controller {
         $this->load->model('subject');
         $this->load->model('religion');
 
-        // CITY
+        // TYPE
         foreach( $this->model_staff_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
-            $data['staff']['type'][$key]['id'] = $element->id;
-            $data['staff']['type'][$key]['name'] = $element->name;
+            $data['staff_types'][$key]['id'] = $element->id;
+            $data['staff_types'][$key]['name'] = $element->name;
         endforeach;
 
         //STAFF CLASS
@@ -100,7 +100,7 @@ class Staff extends Controller {
             $data['form']['field']['subject'] = ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ) ? $this->request->post['subject'] : "";
             $data['form']['field']['religion'] = ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ) ? $this->request->post['religion'] : "";
 
-
+            return;
         endif;
 
 		// RENDER VIEW
