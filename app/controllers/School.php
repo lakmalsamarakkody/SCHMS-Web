@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class School extends Controller {
 	public function index() {
 
@@ -93,6 +95,19 @@ class School extends Controller {
 		foreach( $this->model_staff_category->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['staff']['category'][$key]['id'] = $element->id;
 			$data['staff']['category'][$key]['name']= $element->name;
+		endforeach;
+
+		// STAFF TYPE
+		foreach( $this->model_staff_type->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+
+			$category_data = DB::table('staff_type')
+				->join('staff_category', 'staff_type.category_id', 'staff_category.id')
+				->select('staff_category.name')
+				->where('staff_type.id', '=', $element->id)->first();
+
+			$data['staff']['type'][$key]['id'] = $element->id;
+			$data['staff']['type'][$key]['name']= $element->name;
+			$data['staff']['type'][$key]['category']['name']= $category_data->name;
 		endforeach;
 
 
@@ -413,9 +428,9 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
-	 }
+	}
 
-	 public function ajax_addsport() {
+	public function ajax_addsport() {
 
 		/**
 		  * This method will receive ajax request from
@@ -457,7 +472,103 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
-	 }
+	}
+
+	public function ajax_add_staff_category() {
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- staff category name
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+		//  MODEL
+		$this->load->model('staff/category');
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+		
+		// VALIDATION : staff_category_name
+		$is_valid_staff_category_name = GUMP::is_valid($this->request->post, array('staff_category_name' => 'required|valid_name'));
+		if ( $is_valid_staff_category_name !== true ):
+			echo json_encode( array( "error" => "Please enter a valid category name" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+			// staff_category_name IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_staff_category->select('id')->where('name', '=', $this->request->post['staff_category_name'])->first() != NULL ):
+				echo json_encode( array( "error" => "This Category is already exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		
+		$this->model_staff_category->name = $this->request->post['staff_category_name'];
+		
+		// SUBMIT
+		if ( $this->model_staff_category->save() ):
+			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+		else:
+			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	}
+
+	public function ajax_add_staff_type() {
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- staff category name
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+		//  MODEL
+		$this->load->model('staff/type');
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// VALIDATION : staff_category_id
+		$is_valid_staff_category_id = GUMP::is_valid($this->request->post, array('staff_category_id' => 'required|numeric|min_len,1|max_len,3'));
+		if ( $is_valid_staff_category_id !== true ):
+			echo json_encode( array( "error" => "Please select a valid category" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : staff_type_name
+		$is_valid_staff_type_name = GUMP::is_valid($this->request->post, array('staff_type_name' => 'required|valid_name'));
+		if ( $is_valid_staff_type_name !== true ):
+			echo json_encode( array( "error" => "Please enter a valid type name" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+			// staff_type_name IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_staff_type->select('id')->where('name', '=', $this->request->post['staff_type_name'])->first() != NULL ):
+				echo json_encode( array( "error" => "This Type is already exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		
+		$this->model_staff_type->category_id = $this->request->post['staff_category_id'];
+		$this->model_staff_type->name = $this->request->post['staff_type_name'];
+		
+		// SUBMIT
+		if ( $this->model_staff_type->save() ):
+			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+		else:
+			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	}
 }
 
 ?>

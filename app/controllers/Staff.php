@@ -32,6 +32,77 @@ class Staff extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODELS
+        $this->load->model('staff');
+        $this->load->model('staff/subject');
+        $this->load->model('staff/type');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('district');
+        $this->load->model('subject');
+        $this->load->model('religion');
+
+        // CITY
+        foreach( $this->model_staff_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['staff']['type'][$key]['id'] = $element->id;
+            $data['staff']['type'][$key]['name'] = $element->name;
+        endforeach;
+
+        //STAFF CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['staff_class'][$key]['id'] = $element->id;
+            $data['staff_class'][$key]['grade']['id'] = $element->grade_id;
+            $data['staff_class'][$key]['staff']['id'] = $element->staff_id;
+            $data['staff_class'][$key]['name'] = $element->name;
+
+            $data['staff_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        // CITY
+        foreach( $this->model_staff->select('id', 'city')->orderBy('city')->distinct()->get() as $key => $element ):
+            $data['staff_city'][$key]['id'] = $element->id;
+            $data['staff_city'][$key]['name'] = $element->city;
+        endforeach;
+
+        //DISTRICT
+        foreach( $this->model_district->select('id', 'province_id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['staff_district'][$key]['id'] = $element->id;
+            $data['staff_district'][$key]['province']['id'] = $element->province_id;
+            $data['staff_district'][$key]['name'] = $element->name;
+        endforeach;
+
+        //SUBJECT
+        foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('name')->get() as $key => $element ):
+            $data['staff_subject'][$key]['id'] = $element->id;
+            $data['staff_subject'][$key]['name'] = $element->name;
+            $data['staff_subject'][$key]['si_name'] = $element->si_name;
+        endforeach;
+
+        //RELIGION
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['staff_religion'][$key]['id'] = $element->id;
+            $data['staff_religion'][$key]['name'] = $element->name;
+        endforeach;
+
+        if ( isset($this->request->post['isSubmited'])):
+
+            // PERSIST DATA
+            $data['form']['field']['staff_id'] = ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ) ? $this->request->post['staff_id'] : "";
+            $data['form']['field']['adddate'] = ( isset($this->request->post['adddate']) AND !empty($this->request->post['adddate']) ) ? $this->request->post['adddate'] : "";
+            $data['form']['field']['dob'] = ( isset($this->request->post['dob']) AND !empty($this->request->post['dob']) ) ? $this->request->post['dob'] : "";
+            $data['form']['field']['name'] = ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ) ? $this->request->post['name'] : "";
+            $data['form']['field']['class'] = ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ) ? $this->request->post['class'] : "";
+            $data['form']['field']['gender'] = ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ) ? $this->request->post['gender'] : "";
+            $data['form']['field']['nic'] = ( isset($this->request->post['nic']) AND !empty($this->request->post['nic']) ) ? $this->request->post['nic'] : "";
+            $data['form']['field']['staff_type'] = ( isset($this->request->post['staff_type']) AND !empty($this->request->post['staff_type']) ) ? $this->request->post['staff_type'] : "";
+            $data['form']['field']['city'] = ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ) ? $this->request->post['city'] : "";
+            $data['form']['field']['district'] = ( isset($this->request->post['district']) AND !empty($this->request->post['district']) ) ? $this->request->post['district'] : "";
+            $data['form']['field']['subject'] = ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ) ? $this->request->post['subject'] : "";
+            $data['form']['field']['religion'] = ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ) ? $this->request->post['religion'] : "";
+
+
+        endif;
+
 		// RENDER VIEW
         $this->load->view('staff/search', $data);
         

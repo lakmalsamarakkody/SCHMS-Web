@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                             <label for="class">Class</label>
                                             <select class="form-control" name="class">
-                                                <option value="" selected>- Select Class -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for class in student_class %}
                                                     {% if form.field.class == class.id %}
                                                         <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
@@ -74,7 +74,7 @@
                                         <div class="form-group">
                                             <label for="grade">Grade</label>
                                             <select class="form-control" name="grade">
-                                                <option value="" selected>- Select Grade -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for grade in student_grade %}
                                                     {% if form.field.grade == grade.id %}
                                                         <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
@@ -90,7 +90,7 @@
                                         <div class="form-group">
                                             <label for="gender">Gender</label>
                                             <select class="form-control" name="gender">
-                                                <option value="" selected>- Select Gender -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% if form.field.gender == 'male' %}
                                                     <option value="male" selected>Male</option>
                                                     <option value="female">Female</option>
@@ -109,7 +109,7 @@
                                         <div class="form-group">
                                             <label for="city">City</label>
                                             <select class="form-control selectpicker" data-live-search="true" name="city">
-                                                <option value="" selected>- Select City -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for city in student_city %}
                                                     {% if form.field.city == city.name %}
                                                         <option value="{{ city.name }}" selected>{{ city.name }}</option>
@@ -125,7 +125,7 @@
                                         <div class="form-group">
                                             <label for="district">District</label>
                                             <select class="form-control" name="district">
-                                                <option value="" selected>- Select District -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for district in student_district %}
                                                     {% if form.field.district == district.id %}
                                                         <option value="{{ district.id }}" selected> {{ district.name }} </option>
@@ -141,7 +141,7 @@
                                         <div class="form-group">
                                             <label for="subject">Subject</label>
                                             <select class="form-control" name="subject">
-                                                <option value="" selected>- Select Subject -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for subject in student_subject%}
                                                     {% if form.field.subject == subject.id %}
                                                         <option value="{{ subject.id }}" selected> {{ subject.name }} </option>
@@ -157,7 +157,7 @@
                                         <div class="form-group">
                                             <label for="sport">Sport</label>
                                             <select class="form-control" name="sport">
-                                                <option value="" selected>- Select Sport -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for sport in student_sport%}
                                                     {% if form.field.sport == sport.id %}
                                                         <option value="{{ sport.id }}" selected> {{ sport.name }} </option>
@@ -173,7 +173,7 @@
                                         <div class="form-group">
                                             <label for="religion">Religion</label>
                                             <select class="form-control" name="religion">
-                                                <option value="" selected>- Select Religion -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for religion in student_religion%}
                                                     {% if form.field.religion == religion.id %}
                                                         <option value="{{ religion.id }}" selected> {{ religion.name }} </option>

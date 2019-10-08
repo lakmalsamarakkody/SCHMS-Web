@@ -228,7 +228,7 @@
                     </div>
                     <!-- END : EXAM TYPE MANAGER -->
 
-                    <!-- START : EXAM TYPE MANAGER -->
+                    <!-- START : SPORT MANAGER -->
                     <div class="col-4 mx-auto">
                         <div class="card">
                             <div class="card-header">
@@ -259,7 +259,75 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END : EXAM TYPE MANAGER -->
+                    <!-- END : SPORT MANAGER -->
+
+                    <!-- START : STAFF CATEGORY MANAGER -->
+                    <div class="col-4 mx-auto">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="pull-left">STAFF CATEGORIES</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_add_staff_category">ADD</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Category </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for category in staff.category %}
+                                            <tr>
+                                                <th scope="row"> {{ category.id }} </th>
+                                                <td> {{ category.name }} </td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END : STAFF CATEGORY MANAGER -->
+
+                    <!-- START : STAFF TYPE MANAGER -->
+                    <div class="col-4 mx-auto">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="pull-left">STAFF TYPES</h6>
+                                <div class="button-group pull-right">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_add_staff_type">ADD</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive-md">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Category </th>
+                                                <th scope="col"> Type </th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for type in staff.type %}
+                                            <tr>
+                                                <th scope="row">{{ type.id }}</th>                                               
+                                                <td>{{ type.category.name }}</td>
+                                                <td>{{ type.name }}</td>
+                                            </tr>
+                                            {% endfor %} 
+                                        </tbody>                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END : STAFF TYPE MANAGER -->
 
                 </div>
 
@@ -528,7 +596,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="model_add_staff_category-title"> ADD A NEW SPORT </h5>
+                    <h5 class="modal-title" id="model_add_staff_category-title"> ADD A NEW STAFF CATEGORY </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -536,7 +604,7 @@
                 <form>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="staff_category_name"> Sport Name </label>
+                            <label for="staff_category_name"> Category Name </label>
                             <input type="text" class="form-control" id="staff_category_name"/>
                         </div>
                     </div>
@@ -551,12 +619,12 @@
     <!-- END : MODAL CREATE STAFF CATEGORY -->
 
     <!-- START : MODAL CREATE STAFF TYPE -->
-    <div class="modal fade" id="model_addstaff_type" tabindex="-1" role="dialog" aria-labelledby="model_addstaff_type-title" aria-hidden="true">
+    <div class="modal fade" id="model_add_staff_type" tabindex="-1" role="dialog" aria-labelledby="model_add_staff_type-title" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="model_addstaff_type-title"> ADD A NEW SPORT </h5>
+                    <h5 class="modal-title" id="model_add_staff_type-title"> ADD A NEW STAFF TYPE </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -575,8 +643,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="type_name"> Staff Type Name </label>
-                            <input type="text" class="form-control" id="type_name"/>
+                            <label for="staff_type_name"> Staff Type Name </label>
+                            <input type="text" class="form-control" id="staff_type_name"/>
                         </div>
                     </div>
 
@@ -817,7 +885,7 @@
             // PAYLOAD
             var formData = new FormData;
 
-            // ADD EXAM_TYPE DATA
+            // ADD SPORT DATA
             formData.append('sport_name', $("#sport_name").val())
 
             // REQUEST
@@ -846,6 +914,79 @@
             })
         }
         // END : SCRIPT : ADD A SPORT
+
+        // START : SCRIPT : ADD A STAFF CATEGORY
+        addstaff_category = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD STAFF CATEGORY DATA
+            formData.append('staff_category_name', $("#staff_category_name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_add_staff_category",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Staff Category added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A STAFF CATEGORY
+
+        // START : SCRIPT : ADD A STAFF TYPE
+        addstaff_type = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD STAFF CATEGORY DATA
+            formData.append('staff_category_id', $("#staff_category_id").val())
+            formData.append('staff_type_name', $("#staff_type_name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_add_staff_type",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Staff Type added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : SCRIPT : ADD A STAFF TYPE
     
     </script>
 
