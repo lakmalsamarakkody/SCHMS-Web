@@ -2,37 +2,61 @@
 {{ template.header|raw }}
 <body>
 
-<div class="container-fluid login"> 
+<div class="container-fluid login">
+
     <div class="container">
         <div class="row ">
 
-            <div class="col-md-6 title">
+            <div class="col-md-6 title my-auto">
                 <h1 class="login-title"> School Management System <h1>
                 <hr>
                 <h2 class="login-sub-title"> David De Silva College &nbsp; Minuwangoda </h2>
+                <a href="http://davidsilvacollege.int" class="website"><h6>(Back to Official Website)</h6></a>
             </div>
 
-            <div class="col-md-4 offset-1 loginform">
+            <div class="col-md-4 offset-1 my-auto loginform">
 
                 <form name="loginform" method="post">
-
-                    <div class="form-group"> 
-                        <input class="form-control" type="text" name="username" placeholder="Username"/>
-                    </div>
-            
-                    <div class="form-group mt-3">
-                        <input class="form-control" type="password" name="password" placeholder="Password"/>
-                    </div>
 
                     {% if msg %}
                         <div class="alert alert-danger">{{ msg }}</div>
                     {% endif %}
+
+                    
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input class="form-control" type="text" name="username" placeholder="Username" required/>
+                    </div>
+            
+                    <div class="form-group mt-3">
+                        <label>Password</label>
+                        <input class="form-control" type="password" name="password" placeholder="Password" required/>
+                    </div>
+
+                    <div class="form-group ml-4 mt-3 remember">
+                        <div class="row">
+                            <div class="col-6 pr-0">
+                                <input type="checkbox" class="form-check-input" name="remember-me">
+                                <label>Remember me</label>
+                            </div>
+
+                            <div class="col-6 ml-auto form-group login-as">
+                                
+                                <select class="form-control selectpicker show-tick" name="login_as" required>
+                                    <option value="" selected hidden>Login as</option>
+                                    <option value="student">Student</option>
+                                    <option value="parent">Parent</option>
+                                    <option value="staff">Staff</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
                     
                     <input type="hidden" name="is_submit" value="true"/>
-                    <button class="btn btn-primary mt-5 pr-3" type="submit">Login</button>
-                    <button class="btn btn-secondary mt-5" type="reset" name="reset"> Clear </button>
-
-                   
+                    <button class="btn btn-primary pr-3" type="submit">Login</button>
+                    <button class="btn btn-secondary" type="reset" name="reset">Clear</button>
 
                 </form>
             </div>

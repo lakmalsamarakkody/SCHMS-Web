@@ -26,6 +26,8 @@ class School extends Controller {
 		$this->load->model('class');
 		$this->load->model('grade');
 		$this->load->model('staff');
+		$this->load->model('staff/category');
+		$this->load->model('staff/type');
 		$this->load->model('religion');
 		$this->load->model('subject');
 		$this->load->model('student/relation');
@@ -85,6 +87,12 @@ class School extends Controller {
 		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['sports'][$key]['id'] = $element->id;
 			$data['sports'][$key]['name']= $element->name;
+		endforeach;
+
+		// STAFF CATEGORY
+		foreach( $this->model_staff_category->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['staff']['category'][$key]['id'] = $element->id;
+			$data['staff']['category'][$key]['name']= $element->name;
 		endforeach;
 
 

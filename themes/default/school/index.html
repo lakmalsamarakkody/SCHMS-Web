@@ -522,6 +522,73 @@
     </div>
     <!-- END : MODAL CREATE SPORT -->
 
+    <!-- START : MODAL CREATE STAFF CATEGORY -->
+    <div class="modal fade" id="model_add_staff_category" tabindex="-1" role="dialog" aria-labelledby="model_add_staff_category-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="model_add_staff_category-title"> ADD A NEW SPORT </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="staff_category_name"> Sport Name </label>
+                            <input type="text" class="form-control" id="staff_category_name"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="addstaff_category();"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE STAFF CATEGORY -->
+
+    <!-- START : MODAL CREATE STAFF TYPE -->
+    <div class="modal fade" id="model_addstaff_type" tabindex="-1" role="dialog" aria-labelledby="model_addstaff_type-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="model_addstaff_type-title"> ADD A NEW SPORT </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="category_id"> Staff Category </label>
+                            <select class="form-control" id="staff_category_id">
+                                <option value="">- Select -</option>
+                                {% for category in staff.category %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type_name"> Staff Type Name </label>
+                            <input type="text" class="form-control" id="type_name"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="addstaff_type();"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE STAFF TYPE -->
+
 
     <script>
 

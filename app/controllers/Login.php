@@ -13,19 +13,19 @@ class Login extends Controller {
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 
 		//Login
-		if (isset($_POST['is_submit'])):
+		if (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "staff"  ):
 
 			$this->load->model('User');
 
-			$validate = GUMP::is_valid($_POST,['username' => 'required']);
+			$validate = GUMP::is_valid($this->request->post,['username' => 'required']);
 
 			if($validate == true):
 
-				$User = $this->model_user::where('username',$_POST['username']) ->first();
+				$User = $this->model_user::where('username',$this->request->post['username']) ->first();
 
 				if($User != null):
 
-					if(password_verify ($_POST['password'],$User->password)):
+					if(password_verify ($this->request->post['password'],$User->password)):
 
 						$_SESSION['user']['is_login'] = true;
 						$_SESSION['user']['id'] = $User->id;
@@ -41,7 +41,7 @@ class Login extends Controller {
 
 				else:
 
-					$User = $this->model_user::where('stu_staff_parent_id',$_POST['username']) -> where('username',"") -> where('password',"") ->first();
+					$User = $this->model_user->where('staff_id',$this->request->post['username'])->where('username',"")->where('password',"")->first();
 
 					if($User != null):
 

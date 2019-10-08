@@ -181,13 +181,18 @@
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
+                                        <th width="1%" class="text-center" scope="col">#</th>
                                         <th width="1%" class="text-center" scope="col">ID</th>
-                                        <th width="10%" class="text-center" scope="col">Admission</th>
                                         <th width="1%" class="text-center" scope="col">Class</th>
-                                        <th width="10%" class="text-center" scope="col">DoB</th>
                                         <th width="5%" class="text-center" scope="col">Gender</th>
-                                        <th width="10%" class="text-center" scope="col">City</th>
-                                        <th scope="col">Name</th>                                    
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Speciality</th>
+                                        <th scope="col">Vaccination</th>
+                                        <th class="text-center" scope="col">Height <br/> (cm)</th>
+                                        <th class="text-center" scope="col">Weight <br/> (kg)</th>
+                                        <th class="text-center" scope="col">Heart rate <br/> (bpm)</th>
+                                        <th class="text-center" scope="col">Blood Pressure <br/> (mmHg)</th>
+                                        <th class="text-center" scope="col">Date</th>                                    
                                         <th width="12%" class="text-center" scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
@@ -198,12 +203,17 @@
                                             <th class="text-center" scope="row">{{ student.id }}</th>
                                             <td class="text-center">{{ student.admission_no }}</td>
                                             <td class="text-center">{{ student.class }}</td>
-                                            <td class="text-center">{{ student.dob }}</td>
                                             <td class="text-center">{{ student.gender }}</td>
-                                            <td class="text-center">{{ student.city }}</td>
-                                            <td> {{ student.name }}</td>                                        
+                                            <td> {{ student.name }}</td>
+                                            <td>Speciality</td>
+                                            <td>Vaccination</td>
+                                            <td class="text-center">Height</td>
+                                            <td class="text-center">Weight</td>
+                                            <td class="text-center">Heart rate</td>
+                                            <td class="text-center">Blood Pressure</td>
+                                            <td class="text-center">Date</td>
                                             <td>
-                                                <div class="col-12 text-center">
+                                                <div class="col-12 text-center p-0 m-0">
                                                         <button class="btn btn-xs btn-warning">Edit</button>
                                                         <button class="btn btn-xs btn-danger">Remove</button>
                                                         <button class="btn btn-xs btn-success mt-1"><i class="la la-user"></i>View Profile</button>

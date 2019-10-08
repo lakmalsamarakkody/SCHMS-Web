@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class User extends Controller {
     public function index() {
     
@@ -31,6 +33,55 @@ class User extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // RETRIVE USER_ROLE
+        $this->load->model('user');
+        $this->load->model('user/role');
+
+        foreach( $this->model_user_role->select('id', 'role')->orderBy('role')->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->role;
+        endforeach;
+
+        // STAFF ID AND NAME
+        foreach( DB::table('user')->join('staff', 'user.staff_id', '=', 'staff.id')->select('staff.id', 'staff.initials', 'staff.surname')->get() as $key => $element ):
+            $data['staffs'][$key]['id'] = $element->id;
+            $data['staffs'][$key]['name'] = $element->initials." ".$element->surname;
+        endforeach;
+
+        if ( isset($this->request->post['isSubmited']) ):
+
+            $user = $this->model_user->select('id', 'staff_id', 'username', 'password', 'email', 'role_id', 'status');
+            
+            // FILTER ( NAME )
+            if ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ):
+                $user->where(function($query) {
+                    $query->where('role_id', '=', $this->request->post['role_id']);
+                });
+            endif;
+
+            foreach ( $user->get() as $key => $element ):
+
+                $staff_data = DB::table('user')
+                    ->join('staff', 'user.staff_id', 'staff.id')
+                    ->join('staff_category', 'staff.category_id', 'staff_category.id')
+                    ->join('staff_type', 'staff.type_id', 'staff_type.id')
+                    ->join('user_role', 'user.role_id', 'user_role.id')
+                    ->select('staff.id', 'staff.initials', 'staff.surname', 'staff.nic', 'staff_category.name', 'staff_type.name', 'staff.gender', 'staff.email', 'staff.phone_home', 'staff.city')
+                    ->where('staff.id', '=', $element->staff_id)->first();
+
+                $data['users'][$key]['id'] = $element->id;
+                // $data['users'][$key]['role'] = $staff_data->name;
+                $data['users'][$key]['staff_name'] = $staff_data->initials." ".$staff_data->surname;
+                $data['users'][$key]['nic'] = $staff_data->nic;
+                $data['users'][$key]['gender'] = $staff_data->gender;
+                $data['users'][$key]['email'] = $staff_data->email;
+                $data['users'][$key]['phone_home'] = $staff_data->phone_home;
+                $data['users'][$key]['city'] = $staff_data->city;
+                $data['users'][$key]['status'] = $element->status;
+            endforeach;
+
+        endif;
 
 		// RENDER VIEW
         $this->load->view('user/search', $data);

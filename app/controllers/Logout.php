@@ -5,6 +5,7 @@ class Logout extends Controller {
 
         //Logout
         session_destroy();
+        // header( 'Location: ' . "http://davidsilvacollege.int" );
         header( 'Location: ' . $this->config->get('base_url') . "/login" );
 
     }
