@@ -12,7 +12,7 @@ class Staff_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'staff';
-	protected $fillable = [ 'id', 'staff_id', 'nic', 'admission_date', 'category_id', 'type_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_home', 'phone_mobile', 'address', 'street', 'city', 'district_id', 'religion_id', 'health_id'];
+	protected $fillable = [ 'id', 'employee_number', 'nic', 'admission_date', 'type_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_home', 'phone_mobile', 'address', 'city', 'district_id', 'religion_id'];
 
 }
 

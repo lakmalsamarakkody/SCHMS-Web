@@ -7,32 +7,40 @@
             
             {{ template.sidenav|raw }}
 
-            <div class="col-md-10 content">               
+            <div class="col-md-10 content">
+
                 {{ template.topmenu|raw }}
 
-                <div class="container parentsearch">
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            Search Parent
-                        </div>
+                <div class="parentsearch">
+
+                    <h4 class="page-title">View Staff</h4>
+
+                    <!-- START : SEARCH PARENT PANEL -->
+                    <div class="card mt-4">
+                        <div class="card-header">Search Parent</div>
                         <div class="card-body">
-                            <form action="">
-                                <h6><strong>Search by Parent Details</strong></h6>
-                                <br>
+                            <form method="post">
+                                <h6><strong>Search by Parent Details</strong></h6><br>
                                 <div class="form-row">
 
-                                    <div class="col-3">
+                                    <div class="col-2">
                                         <div class="form-group">
                                             <label for="gnic">NIC</label>
                                             <input type="text" class="form-control" id="gnic"/>
                                         </div>
                                     </div>
 
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="gname">Name</label>
+                                            <input type="text" class="form-control" id="gname"/>
+                                        </div>
+                                    </div>
+
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="grel">Relationship</label>
-                                            <select class="form-control" id="grel">
+                                            <label for="grelation">Relationship</label>
+                                            <select class="form-control" id="grelation">
                                                 <option selected disabled> - Select Relationship - </option>
                                                 {% for relationship in student_relations %}
                                                     <option value="{{ relationship.id }}">{{ relationship.name }}</option>
@@ -64,12 +72,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="gfn">Name</label>
-                                            <input type="text" class="form-control" id="gfn"/>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="col-3">
                                         <div class="form-group">
@@ -174,9 +177,11 @@
                                     </div>
                                     
                                 </div>
+
                             </form>
                         </div>
                     </div>
+                    <!-- END : SEARCH PARENT PANEL -->
 
                 </div>
             </div>

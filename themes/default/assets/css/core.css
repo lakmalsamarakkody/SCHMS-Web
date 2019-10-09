@@ -483,11 +483,6 @@ h5.page-title{
     padding: 4rem;
 }
 
-.parentsearch .card-header {
-    background-color: var(--sub-theme-color);
-    color: var(--white);
-}
-
 /* parent/add */
 .parentadd{
     padding: 4rem;
@@ -495,13 +490,6 @@ h5.page-title{
 
 .parentadd .card{
     margin-bottom: 1rem;
-}
- 
-.parentadd .card .card-header{
-    cursor: pointer;
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    border-radius: .25rem;
 }
 
 
@@ -605,11 +593,6 @@ h5.page-title{
 }
 
 
-.stusearch .stusearchfilter input{
-    text-align: center;
-}
-
-
 /* student/add */
 .stuadd{
     padding: 4rem;
@@ -648,60 +631,16 @@ h5.page-title{
     padding: 4rem;
 }
 
-.userindex .card{
-    border: 0rem;
-}
-
-.userindex .card-header{
-    color: var(--sub-theme-color);
-    background-color: var(--white);
-    border: 0rem;
-    font-weight: bold;
-}
-
-
 
 /* user/search */
 .usersearch{
     padding: 4rem;
 }
 
-.usersearch .usersearchheading{
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    padding: 1rem;
-    text-align: center;
-}
-
-.usersearch .usersearchfilter input{
-    text-align: center;
-}
-
 
 /* user/add */
 .useradd{
     padding: 4rem;
-}
-
-.useraddpanel{
-    background-color: var(--white);
-    color: var(--main-text-color);
-    text-align: center;
-    border: 0.05rem solid var(--sub-theme-color);
-}
-
-.usercreateheading{
-    color: var(--white);
-    background-color: var(--sub-theme-color);
-    padding: 1rem;
-}
-
-.usercreatebody{
-    padding: 4rem;
-}
-
-.usercreatebody input{
-   text-align: center;
 }
 
 

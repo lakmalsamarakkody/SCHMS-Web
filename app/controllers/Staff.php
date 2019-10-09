@@ -100,7 +100,89 @@ class Staff extends Controller {
             $data['form']['field']['subject'] = ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ) ? $this->request->post['subject'] : "";
             $data['form']['field']['religion'] = ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ) ? $this->request->post['religion'] : "";
 
-            return;
+            // Eloquent OBJECT
+            $staff = $this->model_staff->select('id', 'employee_number', 'nic', 'admission_date', 'type_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_home', 'phone_mobile', 'address', 'city', 'district_id', 'religion_id');
+        
+            // FILTER ( STAFF ID )
+            if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
+                $staff->where(function($query) {
+                    $query->where('employee_number', '=', $this->request->post['staff_id']);
+                });
+            endif;
+
+            // FILTER ( ADMISSION DATE )
+            if ( isset($this->request->post['adddate']) AND !empty($this->request->post['adddate']) ):
+                $staff->where(function($query) {
+                    $query->where('admission_date', '=', $this->request->post['adddate']);
+                });
+            endif;
+
+            // FILTER ( BIRTHDAY )
+            if ( isset($this->request->post['dob']) AND !empty($this->request->post['dob']) ):
+                $staff->where(function($query) {
+                    $query->where('dob', '=', $this->request->post['dob']);
+                });
+            endif;
+
+            // FILTER ( NAME )
+            if ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ):
+                $staff->where(function($query) {
+                    $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
+                });
+            endif;
+
+            // FILTER ( GENDER )
+            if ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ):
+                $staff->where(function($query) {
+                    $query->where('gender', '=', $this->request->post['gender']);
+                });
+            endif;
+
+            // FILTER ( NIC )
+            if ( isset($this->request->post['nic']) AND !empty($this->request->post['nic']) ):
+                $staff->where(function($query) {
+                    $query->where('nic', 'LIKE', '%'.$this->request->post['nic'].'%');
+                });
+            endif;
+
+            // FILTER ( STAFF TYPE )
+            if ( isset($this->request->post['staff_type']) AND !empty($this->request->post['staff_type']) ):
+                $staff->where(function($query) {
+                    $query->where('type_id', '=', $this->request->post['staff_type']);
+                });
+            endif;
+
+            // FILTER (CITY)
+            if ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ):
+                $staff->where(function($query) {
+                    $query->where('city', 'LIKE', '%'.$this->request->post['city'].'%');
+                });
+            endif;
+
+            // FILTER (DISTRICT)
+            if ( isset($this->request->post['district']) AND !empty($this->request->post['district']) ):
+                $staff->where(function($query) {
+                    $query->where('district_id', '=', $this->request->post['district']);
+                });
+            endif;
+
+            // FILTER (RELIGION)
+            if ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ):
+                $staff->where(function($query) {
+                    $query->where('religion_id', '=', $this->request->post['religion']);
+                });
+            endif;
+
+            // APPEND DATA TO ARRAY
+            foreach( $staff->get() as $key => $value ):
+                $data['staffs'][$key]['id'] = $value->id;
+                $data['staffs'][$key]['staff_id'] = $value->employee_number;
+                $data['staffs'][$key]['name'] = $value->full_name;
+                $data['staffs'][$key]['gender'] = $value->gender;
+                $data['staffs'][$key]['dob'] = $value->dob;
+                $data['staffs'][$key]['city'] = $value->city;
+            endforeach;
+
         endif;
 
 		// RENDER VIEW
@@ -390,7 +472,7 @@ class Staff extends Controller {
         $this->model_staff->admission_date = $this->request->post['admission_date'];
         $this->model_staff->employee_number = $this->request->post['employee_number'];
         $this->model_staff->nic = $this->request->post['nic_number'];
-        $this->model_staff->category_id = $this->request->post['category'];
+        // $this->model_staff->category_id = $this->request->post['category'];
         $this->model_staff->type_id = $this->request->post['type'];
         // $this->model_staff->role_id = $this->request->post['class'];
         // $this->model_staff->role_id = $this->request->post['subjects'];

@@ -7,17 +7,150 @@
             
             {{ template.sidenav|raw }}
 
-            <div class="col-md-10 content">               
+            <div class="col-md-10 content">
+
                 {{ template.topmenu|raw }}
 
                 <div class="backupindex">
 
-                    <h4 class="page-title"> Backup </h4>
+                    <h4 class="page-title">Backup</h4>
+
+                    <!-- START : BACKUP PANEL -->
+                    <div class="card mt-4">
+                        <div class="card-header">Database Manual Backup</div>
+                        <div class="card-body">
+                            <form method="post">
+
+                                <div class="form-row">
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control" id="name"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <input type="text" class="form-control" id="description"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="ml-auto align-self-end">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-danger" onClick="backup();">Backup Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row ml-0">
+                                    <small id="namelHelp" class="form-text text-muted">Current dat and time will be append to the end of file name</small>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END : BACKUP PANEL -->
+
+                    <!-- START : SEARCH RESULTS -->
+                    <section class="mt-5">
+                        <!-- START : SEARCH RESULT TABLE -->
+                        {% if backups %}
+                            <table id="table_backups" class="table table-hover table-responsive-md">
+                                <caption>Backup History</caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="1%" class="text-center" scope="col">#</th>
+                                        <th class="text-center" scope="col">Backup Name</th>
+                                        <th class="text-center" scope="col">Description</th>
+                                        <th width="20%" class="text-center" scope="col">Date & Time</th>
+                                        <th width="10%" scope="col">File size</th>
+                                        <th width="15%" class="text-center" scope="col">&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for backup in backups %}
+                                        <tr>
+                                            <th class="text-center" scope="row">{{ backup.id }}</th>
+                                            <td class="text-center">{{ backup.name }}</td>
+                                            <td class="text-center">{{ backup.description }}</td>
+                                            <td class="text-center">{{ backup.date_time }}</td>
+                                            <td class="text-center">{{ backup.size }}</td>
+                                            <td width="1%" class="text-center"><button class="btn btn-xs btn-danger" onclick="remove({{ backup.id }});">Remove</button></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption>Backup History</caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">Backup your system database regularly for your data safety</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" scope="row">No backups to display</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        {% endif %}
+                        <!-- END : SEARCH RESULT TABLE -->
+                    </section>
+                    <!-- END : SEARCH RESULTS -->
 
                 </div>
             </div>
         </div>
     </div>
 
-{{ template.footer|raw }}
+    {{ template.footer|raw }}
+
+    <script>
+    
+        backup = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // BACKUP DATA
+            formData.append('name', $("#name").val())
+            formData.append('description', $("#description").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/backup/ajax_add",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Backup created successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert(res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+
+        remove = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+        }
+
+    </script>
 </body>
