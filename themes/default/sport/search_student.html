@@ -103,7 +103,7 @@
                                     <div class="col-12 mt-3">
                                         <input type="hidden" name="isSubmitedStudent" value="true"/>
                                         <button class="btn btn-primary px-5" type="submit">Search</button>
-                                        <button class="btn btn-secondary" type="reset">Clear</button>
+                                        <button class="btn btn-secondary" type="button" onclick="clearForm(this.form);">Clear</button>
                                     </div>
 
                                 </div>
@@ -193,4 +193,53 @@
         } );
     
     </script>
+
+    <script>
+        
+        //  CLEAR FORM
+        function clearForm(oForm) {
+        
+            var elements = oForm.elements; 
+            
+            oForm.reset();
+        
+            for(i=0; i<elements.length; i++) {
+                
+            field_type = elements[i].type.toLowerCase();
+            
+            switch(field_type) {
+            
+                case "text":
+                case "number":
+                case "date":
+                case "time":
+                case "password": 
+                case "textarea":
+                case "hidden":	
+
+                    elements[i].value = ""; 
+                    break;
+
+                case "radio":
+                case "checkbox":
+                        if (elements[i].checked) {
+                            elements[i].checked = false; 
+                    }
+                    break;
+        
+                case "select-one":
+                case "select-multi":
+                            elements[i].selectedIndex = -1;
+                    break;
+        
+                default: 
+                    break;
+            }
+
+            location.replace(location);
+            }
+        }
+
+    </script>
+
 </body>
