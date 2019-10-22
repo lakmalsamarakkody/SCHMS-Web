@@ -1,0 +1,29 @@
+/* student */
+/* student/index */
+.stuindex{
+    padding: 4rem;
+}
+
+.stuindex .card{
+    border: 0rem;
+}
+
+
+/* student/search */
+.stusearch{
+    padding: 4rem;
+}
+
+
+/* student/add */
+.stuadd{
+    padding: 4rem;
+}
+
+.stuadd form{
+    display: contents;
+}
+
+.stuadd .card{
+    margin-bottom: 1rem;
+}

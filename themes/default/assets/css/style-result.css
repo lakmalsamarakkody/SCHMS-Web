@@ -1,0 +1,21 @@
+/* result */
+/* result/index */
+.resultindex{
+    padding: 4rem;
+}
+
+
+/* result/search */
+.resultsearch{
+    padding: 4rem;
+}
+
+
+/* result/add */
+.resultadd{
+    padding: 4rem;
+}
+
+.resultadd .card{
+    margin-bottom: 1rem;
+}

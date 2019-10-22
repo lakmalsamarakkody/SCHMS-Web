@@ -1,0 +1,34 @@
+/* exam */
+/* exam/index */
+.examindex{
+    padding: 4rem;
+}
+
+.examindex .card{
+    border: 0px;
+}
+
+.examindex .card-header{
+    color: var(--sub-theme-color);
+    background-color: var(--white);
+    border: 0rem;
+    font-weight: bold;
+}
+
+
+/* exam/search */
+.examsearch{
+    padding: 4rem;
+    padding-bottom: 0;
+}
+
+.examschedule{
+    padding: 4rem;
+    padding-top: 0;
+}
+
+
+/* exam/create */
+.examcreate{
+    padding: 4rem;
+}

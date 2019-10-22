@@ -1,0 +1,20 @@
+/* parent */
+/* parent/index */
+.parentindex{
+    padding: 4rem;
+}
+
+
+/* parent/search */
+.parentsearch{
+    padding: 4rem;
+}
+
+/* parent/add */
+.parentadd{
+    padding: 4rem;
+}
+
+.parentadd .card{
+    margin-bottom: 1rem;
+}

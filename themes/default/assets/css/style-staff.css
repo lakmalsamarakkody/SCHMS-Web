@@ -1,0 +1,25 @@
+/* staff */
+/* staff/index */
+.staffindex{
+    padding: 4rem;
+}
+
+
+/* staff/search */
+.staffsearch{
+    padding: 4rem;
+}
+
+
+/* staff/add */
+.staffadd{
+    padding: 4rem;
+}
+
+.staffadd form{
+    display: contents;
+}
+
+.staffadd .card{
+    margin-bottom: 1rem;
+}
