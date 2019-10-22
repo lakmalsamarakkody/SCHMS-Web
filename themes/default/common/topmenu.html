@@ -1,4 +1,4 @@
-<div class="row topmenu" style="display: flex; justify-content: space-between;align-items: center;height: auto;">
+<div class="row topmenu" style="display: flex; justify-content: space-between; align-items: center; height: auto;">
 
     <div class="title">David De Silva College <br/> Minuwangoda</div>
 
@@ -12,7 +12,7 @@
                 <i class="la la-comments" id="dropdownMessagesButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMessagesButton">
-                    <p> <i class="la la-globe"></i> No notifications </p>
+                    <p> <i class="la la-globe"></i> No Messages </p>
                 </div>
             </div>
             
@@ -20,7 +20,7 @@
                 <i class="la la-bell" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownNotificationsButton">
-                    <p> <i class="la la-globe"></i> No notifications </p>
+                    <p> <i class="la la-globe"></i> No Notifications </p>
                 </div>
             </div>
 
@@ -28,10 +28,16 @@
                 
                 <i class="la la-cog" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                 
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#"> <i class="la la-user"></i>  My Profile </a>
-                    <a class="dropdown-item" href="{{ app.url }}/logout"> <i class="la la-sign-out"></i>  Logout </a>
-                </div>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#"> <i class="la la-user"></i>My Profile</a></li>
+                    <li class="dropdown-item">
+                        <div class="row">
+                            <div class="col align-self-center"><i class="la la-adjust"></i>Dark Mode</div>
+                            <div class="col"><input type="checkbox" data-toggle="toggle" data-style="ios" data-onstyle="dark" data-offstyle="info" /></div>
+                        </div>
+                    </li>
+                    <li><a class="dropdown-item" href="{{ app.url }}/logout"> <i class="la la-sign-out"></i>Logout</a></li>
+                </ul>
 
             </div>
             

@@ -147,7 +147,7 @@ h5.page-title{
 }
 /* common/topmenu */
 .topmenu{
-    padding: 15px 15px;
+    padding: 0.8rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -167,29 +167,64 @@ h5.page-title{
     cursor: pointer;
 }
 
+.topmenu .messages .dropdown-menu{
+    background-color: #171a23;
+    color: var(--white);
+    margin: 1rem;
+}
+
+.topmenu .messages .dropdown-menu i{
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
 .topmenu .notifications{
     cursor: pointer;
 }
 
+.topmenu .notifications .dropdown-menu{
+    background-color: #171a23;
+    color: var(--white);
+    margin: 1rem;
+}
+
+.topmenu .notifications .dropdown-menu i{
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
 .topmenu .settings{
     cursor: pointer;
+    text-decoration: none;
 }
 
 .topmenu i{
-    font-size: 20px;
-    margin-left: 15px;
+    font-size: 1.6rem;
+    margin-left: 2rem;
 }
 
 .topmenu .notifications p{
-    color: var(--main-theme-color);
+    background-color: #171a23;
+    color: var(--white);
+}
+
+.topmenu .settings .dropdown-menu{
+    background-color: #171a23;
+}
+
+.topmenu .settings .dropdown-menu i{
+    font-size: 1.5rem;
+    margin: 0px;
+    margin-right: 1rem;
 }
 
 .topmenu .settings .dropdown-menu .dropdown-item{
-    color: var(--main-theme-color);
+    background-color: #171a23;
+    color: var(--white);
 }
 
 .topmenu .settings .dropdown-menu .dropdown-item:hover{
-    font-weight: bold;
+    font-weight: 600;
     color: var(--sub-theme-color);
     
 }
@@ -221,8 +256,8 @@ h5.page-title{
     height: 1rem;
     border: 0; 
     border-top: 0.05rem solid var(--sub-text-color);
-    margin: 2rem 0rem 2rem 0rem; 
-    padding: 0;
+    margin: 2rem 0rem 1rem 0rem; 
+    padding: 0rem;
 }
 
 .sidenav{
@@ -283,7 +318,7 @@ h5.page-title{
 }
 
 .sidenav .main-menu .la{
-    font-size: 20px;
+    font-size: 1.6rem;
 }
 
 .sidenav .main-menu .la-angle-down{
