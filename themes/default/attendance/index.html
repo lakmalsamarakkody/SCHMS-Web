@@ -32,7 +32,7 @@
 
                                         <h5 class="card-title">765</h5>
                                         <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to last year</p>
-                                        <a href="#" class="badge badge-primary">view details</a>
+                                        <a href="{{ app.url}}/student/index" class="btn btn-xs btn-primary p-2">view details</a>
 
                                     </div>
 
@@ -45,14 +45,14 @@
                                 <div class="card">
 
                                     <div class="card-header">
-                                        Today Attendance
+                                        Today Student Attendance
                                     </div>
 
                                     <div class="card-body">
 
                                         <h5 class="card-title">765</h5>
                                         <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                        <a href="#" class="badge badge-primary">view details</a>
+                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
 
                                     </div>
 
@@ -70,9 +70,12 @@
 
                                     <div class="card-body">
 
-                                        <h5 class="card-title">765</h5>
-                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                        <a href="#" class="badge badge-primary">view details</a>
+                                        <h5 class="card-title">120</h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i> 68 </span> &nbsp;
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 52 </span>
+                                        </p>
+                                        <a href="{{ app.url}}/staff/index"> <span class="btn btn-xs btn-primary p-2">view details </span> </a>
 
                                     </div>
 
@@ -90,9 +93,12 @@
 
                                     <div class="card-body">
 
-                                        <h5 class="card-title">765</h5>
-                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                        <a href="#" class="badge badge-primary">view details</a>
+                                        <h5 class="card-title">87</h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i> 45 </span> &nbsp;
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 42 </span>
+                                        </p>
+                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
 
                                     </div>
                                 </div>
@@ -111,11 +117,14 @@
                         <div class="absentstaff-table mt-4">
 
                             <table class="table table-hover table-responsive-md">
+
+                                <caption>Absent Staff List</caption>
                                 
                                 <thead class="thead-dark">
                                     <th scope="col"> Staff ID </th>
                                     <th scope="col"> Name </th>
                                     <th scope="col"> Teacher in Charge Class </th>
+                                    <th scope="col"> Subjects </th>
                                 </thead>
 
                                 <tbody>
