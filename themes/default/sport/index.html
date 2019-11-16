@@ -12,7 +12,108 @@
 
                 <div class="sportindex">
 
-                    <h4 class="page-title"> Sport Index </h4>
+                    <!-- START : SPORT SUMMARY  -->
+                    <section class="attendaceview">
+
+                        <h4 class="page-title"> Sport Overview </h4>
+
+                        <div class="row mt-5">
+
+                            <!-- TOTAL SPORTS -->
+                            <div class="col-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Total Sports
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">700</h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i> 400 </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 300 </span>
+                                        </p>
+                                        <a href="{{ app.url}}/school" class="btn btn-xs btn-primary p-2">view details</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TOTAL COACHES -->
+                            <div class="col-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Total Coaches
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">50</h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i>30</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 20</span>
+                                        </p>
+                                        <a href="{{ app.url}}/sport/search_coach" class="btn btn-xs btn-primary p-2">view details</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- STUDENTS DOING SPORTS -->
+                            <div class="col-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Total Students doing sports
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">120</h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i> 70 </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 50 </span>
+                                        </p>
+                                        <a href="{{ app.url}}/sport/search_student" class="btn btn-xs btn-primary p-2">view details</a>
+                                    </div>
+                                </div>
+                            </div> 
+            
+                            <!-- ACHIEVEMENTS -->
+                            <div class="col-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Total Achievements
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><span class="text-success">90</span></h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i>60</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 30</span>
+                                        </p>
+                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- END : SPORT SUMMARY  -->
+
+                    <!-- START : LATEST ACHIEVEMENT -->
+                    <section class="latest-achievement mt-5">
+                        <div class="card">
+                            <div class="card-header">
+                               LATEST ACHIEVEMENT
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Achievement Title</h5>
+                                <p class="card-text"> Achievemnt description </p>
+                                <a href="{{ app.url }}/ACHIEVEMENT/search" class="btn btn-sm btn-danger">view details</a>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- END : LATEST ACHIEVEMENT -->
+
+                    <!-- START : CLASS VIEW ATTENDANCE -->
+                    <section class="attendance-class-view mt-5">
+
+                        <h4 class="page-title"> Students engage in sports by sport </h4>
+                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
+    
+                    </section>
+                    <!-- END : CLASS VIEW ATTENDANCE -->
 
                 </div>
             </div>

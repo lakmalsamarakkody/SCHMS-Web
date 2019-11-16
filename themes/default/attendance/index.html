@@ -19,95 +19,84 @@
                         <h4 class="page-title">Attendance Summary</h4>
 
                         <div class="row mt-5">
-                            
-                            <div class="col-md-3">
-
+                            <!-- STUDENT SUMMARY -->
+                            <div class="col-3">
                                 <div class="card">
-
                                     <div class="card-header">
                                         Total Students
                                     </div>
-
                                     <div class="card-body">
-
-                                        <h5 class="card-title">765</h5>
-                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to last year</p>
+                                        <h5 class="card-title">700</h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i> 400 </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 300 </span>
+                                        </p>
                                         <a href="{{ app.url}}/student/index" class="btn btn-xs btn-primary p-2">view details</a>
-
                                     </div>
-
                                 </div>
-
                             </div>
 
-                            <div class="col-md-3">
-
+                            <div class="col-3">
                                 <div class="card">
-
                                     <div class="card-header">
-                                        Today Student Attendance
+                                        Today Attendance / Absence
                                     </div>
-
                                     <div class="card-body">
-
-                                        <h5 class="card-title">765</h5>
-                                        <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
+                                        <h5 class="card-title"><span class="text-success">600</span> / <span class="text-danger">100</span></h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i>350</span> / <span class="text-danger">50</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 250</span> / <span class="text-danger">50</span>
+                                        </p>
                                         <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
-
                                     </div>
-
                                 </div>
+                            </div>
 
-                            </div> 
-
-                            <div class="col-md-3">
-
+                            <!-- STAFF SUMMARY -->
+                            <div class="col-3">
                                 <div class="card">
-
                                     <div class="card-header">
                                         Total Staff
                                     </div>
-
                                     <div class="card-body">
-
                                         <h5 class="card-title">120</h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> 68 </span> &nbsp;
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 52 </span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> 70 </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 50 </span>
                                         </p>
                                         <a href="{{ app.url}}/staff/index"> <span class="btn btn-xs btn-primary p-2">view details </span> </a>
-
                                     </div>
-
                                 </div>
-
                             </div> 
-
-                            <div class="col-md-3">
-
+            
+                            <div class="col-3">
                                 <div class="card">
-
                                     <div class="card-header">
-                                        Today Staff Attendance
+                                        Today Attendance / Absence
                                     </div>
-
                                     <div class="card-body">
-
-                                        <h5 class="card-title">87</h5>
+                                        <h5 class="card-title"><span class="text-success">90</span> / <span class="text-danger">30</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> 45 </span> &nbsp;
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 42 </span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i>60</span> / <span class="text-danger">10</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 30</span> / <span class="text-danger">20</span>
                                         </p>
                                         <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
-
                                     </div>
                                 </div>
-                            </div> 
-
+                            </div>
                         </div>
 
                     </section>
                     <!-- END : ATTENDANCE SUMMARY  -->
+
+                    <!-- START : CLASS VIEW ATTENDANCE -->
+                    <section class="attendance-class-view mt-5">
+
+                        <h4 class="page-title"> Class Attendance </h4>
+                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
+    
+                    </section>
+                    <!-- END : CLASS VIEW ATTENDANCE -->
 
                     <!-- START : ABSENT STAFF  -->
                     <section class="absentstaff mt-5">
@@ -116,7 +105,7 @@
 
                         <div class="absentstaff-table mt-4">
 
-                            <table class="table table-hover table-responsive-md">
+                            <table id="table_staff_absent" class="table table-hover table-responsive-md">
 
                                 <caption>Absent Staff List</caption>
                                 
@@ -131,6 +120,7 @@
                                     <th scope="col"> 1 </th>
                                     <td> Mr.ABC </td>
                                     <td> 6A </td>
+                                    <td> Maths </td>
                                 </tbody>
 
                             </table>
@@ -148,3 +138,10 @@
 
 {{ template.footer|raw }}
 </body>
+
+<script>
+    // DATA TABLE
+    $(document).ready(function() {
+        $('#table_staff_absent').DataTable();
+    } );
+</script>

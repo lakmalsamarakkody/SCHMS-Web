@@ -13,68 +13,90 @@
 
                 <div class="stuindex">
 
-                    <h4 class="page-title"> Student Overview </h4>
-                    <div class="row mt-5">
-                        
-                        <div class="col-md-2">
-                            <div class="card">
-                                <div class="card-header">
-                                    Total Students
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to last year</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
+                    <!-- START : STUDENT OVERVIEW  -->
+                    <section class="attendaceview">
+
+                        <h4 class="page-title">Student Overview</h4>
+
+                        <div class="row mt-5">
+                            <!-- STUDENT TOTAL -->
+                            <div class="col-3">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        Total Students
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title">700</h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i> 400 </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 300 </span>
+                                        </p>
+                                        <a href="{{ app.url}}/student/index" class="btn btn-xs btn-primary p-2">view details</a>
+
+                                    </div>
+
                                 </div>
                             </div>
+    
+                            <!-- STUDENT PRESENT -->
+                            <div class="col-3">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        Present today
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title"><span class="text-success">600</span></h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i>350</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> 250</span>
+                                        </p>
+                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- STUDENT ABSENT -->
+                            <div class="col-3">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        Absent today
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <h5 class="card-title"><span class="text-danger">100</span></h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-danger"> <i class="la la-male"></i>50</span><br/>
+                                            Female - <span class="text-danger"> <i class="la la-female"></i> 50</span>
+                                        </p>
+                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+    
                         </div>
+    
+                    </section>
+                    <!-- END : ATTENDANCE SUMMARY  -->
 
-                        <div class="col-md-2">
-                            <div class="card">
-                                <div class="card-header">
-                                    Today Attendance
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
-                                </div>
-                            </div>
-                        </div> 
+                    <!-- START : CLASS STUDENT TOTAL BAR GRAPH -->
+                    <section class="class-bar-chart mt-5">
+                        <h4 class="page-title">Students in Classes</h4>
+                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
+                    </section>
+                    <!-- END : CLASS STUDENT TOTAL BAR GRAPH -->
 
-                        <div class="col-md-8"></div>
-                    </div>                
-                        
-                    <div class="row mt-3">   
-                        <div class="col-md-2">
-                            <div class="card">
-                                <div class="card-header">
-                                    Total male students
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to last year</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="card">
-                                <div class="card-header">
-                                    Total female students
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">765</h5>
-                                    <p class="card-text"> <span class="text-success"> <i class="la la-arrow-up"></i> 5.28% </span> <br/> compared to yesterday</p>
-                                    <a href="#" class="badge badge-primary">view details</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-8"></div>
-                       
-                    </div>
 
                 </div>
 
