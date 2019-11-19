@@ -4,6 +4,17 @@
     padding: 4rem;
 }
 
+.staffindex .card{
+    border: 0px;
+}
+
+.staffindex .card-header{
+    color: var(--sub-theme-color);
+    background-color: var(--white);
+    border: 0rem;
+    font-weight: bold;
+}
+
 
 /* staff/search */
 .staffsearch{

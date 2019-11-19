@@ -37,7 +37,7 @@ class School extends Controller {
 		$this->load->model('sport');
 
 		// CLASS
-		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->get() as $key => $element ):
+		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id')->get() as $key => $element ):
 			$data['classes'][$key]['id'] = $element->id;
 			$data['classes'][$key]['grade']['id'] = $element->grade_id;
 			$data['classes'][$key]['name'] = $element->name;
@@ -50,24 +50,23 @@ class School extends Controller {
 				$data['classes'][$key]['staff'] = $this->model_staff->select('initials', 'surname')->where('id', '=', $element->staff_id)->first()->toArray();
 			else:
 				$data['classes'][$key]['staff'] = "";
-			endif;				
-			
+			endif;
 		endforeach;
 
 		// GRADE
-		foreach( $this->model_grade->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+		foreach( $this->model_grade->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['grades'][$key]['id'] = $element->id;
 			$data['grades'][$key]['name']= $element->name;
 		endforeach;
 		
 		// RELIGION
-		foreach( $this->model_religion->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+		foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['religions'][$key]['id'] = $element->id;
 			$data['religions'][$key]['name']= $element->name;
 		endforeach;
 
 		// SUBJECT
-		foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('id')->get() as $key => $element ):
+		foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('name')->get() as $key => $element ):
 			$data['subjects'][$key]['id'] = $element->id;
 			$data['subjects'][$key]['name']= $element->name;
 			$data['subjects'][$key]['si_name']= $element->si_name;
@@ -80,19 +79,19 @@ class School extends Controller {
 		endforeach;
 
 		// EXAM TYPE
-		foreach( $this->model_exam_type->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+		foreach( $this->model_exam_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['exam_types'][$key]['id'] = $element->id;
 			$data['exam_types'][$key]['name']= $element->name;
 		endforeach;
 
 		// SPORT
-		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+		foreach( $this->model_sport->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['sports'][$key]['id'] = $element->id;
 			$data['sports'][$key]['name']= $element->name;
 		endforeach;
 
 		// STAFF CATEGORY
-		foreach( $this->model_staff_category->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+		foreach( $this->model_staff_category->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['staff']['category'][$key]['id'] = $element->id;
 			$data['staff']['category'][$key]['name']= $element->name;
 		endforeach;

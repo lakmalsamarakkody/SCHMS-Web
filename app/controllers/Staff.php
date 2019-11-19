@@ -14,6 +14,28 @@ class Staff extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        //MODEL
+        $this->load->model('staff');
+		$this->load->model('class');
+        $this->load->model('grade');
+        
+        // CLASS
+		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id')->get() as $key => $element ):
+			$data['classes'][$key]['id'] = $element->id;
+			$data['classes'][$key]['grade']['id'] = $element->grade_id;
+			$data['classes'][$key]['name'] = $element->name;
+
+			// GET GRADE DETAILS
+			$data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+
+			// GET STAFF DETAILS
+			if ( $element->staff_id !== NULL):
+				$data['classes'][$key]['staff'] = $this->model_staff->select('initials', 'surname')->where('id', '=', $element->staff_id)->first()->toArray();
+			else:
+				$data['classes'][$key]['staff'] = "";
+			endif;				
+		endforeach;
+
 		// RENDER VIEW
         $this->load->view('staff/index', $data);
         
