@@ -91,6 +91,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th width="10%" class="text-center" scope="col">User role</th>
                                         <th width="10%" class="text-center" scope="col">Name</th>
                                         <th width="1%" class="text-center" scope="col">NIC</th>
                                         <th width="5%" class="text-center" scope="col">Gender</th>
@@ -105,7 +106,8 @@
                                     {% for user in users %}
                                         <tr>
                                             <th class="text-center" scope="row">{{ user.id }}</th>
-                                           <td class="text-center">{{ user.staff_name }}</td>
+                                            <th class="text-center" scope="row">{{ user.role }}</th>
+                                            <td class="text-center">{{ user.staff_name }}</td>
                                             <td class="text-center">{{ user.nic }}</td>
                                             <td class="text-center">{{ user.gender }}</td>
                                             <td class="text-center">{{ user.phone_home }}</td>

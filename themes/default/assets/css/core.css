@@ -7,17 +7,6 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
 
-/* site */
-:root{
-    --main-theme-color: #727cf5;
-    --main-bg-color: #e6e6e65b;
-    --sub-theme-color: #8f75da;
-    --main-text-color: #646363;
-    --sub-text-color: #979797;
-    --sidenav-sub-text-color: #CEDCE4;
-    --footer-bg-color: #333333; 
-} 
-
 .text-capitalize{
     text-transform: uppercase;
 }
@@ -32,15 +21,11 @@ body{
 }
 
 .digital-clock {
-    color: #ffffff;
     text-align: center;
-    text-shadow: 0 0 1px #ff0;
   }
 
 .content{
     overflow-y: auto;
-    color: var(--main-text-color);
-    background-color: var(--main-bg-color);
     margin-left: 16.666667%;
 }
 
@@ -51,12 +36,6 @@ body{
 
 
 /* COMPONENT STYLES : START */
-.card .card-header {
-    background: #262a35;
-    border-radius: 0;
-    color: white;
-}
-
 .hrsearch{
     display: block; 
     height: 1rem;
@@ -67,17 +46,11 @@ body{
 }
 
 h4.page-title{
-    color: var(--main-text-color);
     margin-top: 0;
 }
 
 h5.page-title{
-    color: var(--main-text-color);
     margin-top: 1rem;
-}
-
-.table{
-    background-color: var(--white);
 }
 
 .table thead th{
@@ -109,12 +82,6 @@ h5.page-title{
     color: #FFFFFF;
 }
 
-/* BOOTSTRAP SELECT STYLE */
-.btn-light {
-    color: #495057 !important;
-    background-color: #FFFFFF;
-    border: 1px solid #ced4da !important;
-}
 
 /* Bootstrap Checkbox */
 .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; }
@@ -123,17 +90,6 @@ h5.page-title{
 /* ScrollBar */
 ::-webkit-scrollbar {
     width: 0.7rem;
-  }
-  
-  /* Track */
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #b9b8bb5b; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(180, 179, 179, 0.596); 
   }
 
 
@@ -145,6 +101,7 @@ h5.page-title{
     color: var(--sub-text-color);
     font-size: 80%
 }
+
 /* common/topmenu */
 .topmenu{
     padding: 0.8rem 2rem;

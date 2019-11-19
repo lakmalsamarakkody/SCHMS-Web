@@ -1,0 +1,147 @@
+/* site */
+:root{
+    --main-theme-color: #727cf5;
+    --main-bg-color: #171a23;
+    --sub-theme-color: #8f75da;
+    --main-text-color: #646363;
+    --sub-text-color: #dadada;
+    --sidenav-sub-text-color: #CEDCE4;
+    --footer-bg-color: #333333; 
+}
+
+/* SCROLLBAR */
+/* Track */
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #b9b8bb5b;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 179, 179, 0.596);
+    background : var(--main-theme-color);
+  }
+
+.digital-clock {
+    color: #ffffff;
+    text-shadow: 0 0 1px #ff0;
+}
+
+.content{
+    color: var(--main-text-color);
+    background-color: var(--main-bg-color);
+}
+
+.table{
+    background-color: var(--white);
+}
+
+.card .card-header {
+    background: #262a35;
+    color: var(--white);
+}
+
+.card .card-body{
+    background: #262a35;
+    color: var(--white);
+}
+
+h4.page-title{
+    color: var(--sub-text-color);
+}
+
+h5.page-title{
+    color: var(--sub-text-color);
+}
+
+
+/* BOOTSTRAP SELECT STYLE */
+.btn-light {
+    color: #495057 !important;
+    background-color: #FFFFFF;
+    border: 1px solid #ced4da !important;
+}
+
+/* common  */
+/* common/footer */
+.footer{
+    background-color: var(--footer-bg-color);
+    color: var(--sub-text-color);
+}
+
+/* common/topmenu */
+.topmenu{
+    color: var(--white);
+    background:var(--main-bg-color);
+}
+
+.topmenu .messages .dropdown-menu{
+    background-color: var(--main-bg-color);
+    color: var(--white);
+}
+
+.topmenu .notifications .dropdown-menu{
+    background-color: var(--main-bg-color);
+    color: var(--white);
+}
+
+.topmenu .notifications p{
+    background-color: var(--main-bg-color);
+    color: var(--white);
+}
+
+.topmenu .settings .dropdown-menu{
+    background-color: var(--main-bg-color);
+}
+
+.topmenu .settings .dropdown-menu .dropdown-item{
+    background-color: var(--main-bg-color);
+    color: var(--white);
+}
+
+.topmenu .settings .dropdown-menu .dropdown-item:hover{
+    color: var(--sub-theme-color);
+    
+}
+
+/* common/sidenav */
+.left-pane{
+    /* background-image: linear-gradient(135deg,#8f75da 0,#727cf5 60%); */
+    background: var(--main-bg-color);
+}
+
+.left-pane .logo .sidenavusername{
+    color: var(--white);
+}
+
+
+.sidenav li a{
+    color: var(--nav-sub-text-color);
+}
+
+.sidenav li.main-menu{
+    /*color: var(--sidenav-sub-text-color);*/
+    color: var(--white);
+}
+
+.sidenar li.main-menu.active {
+    background: #262a35;
+}
+
+.sidenav .main-menu:hover{
+    color: var(--white);
+    background: #262a35;
+}
+
+.sidenav li.sub-menu{
+    color: var(--white);
+    background: #131419;
+}
+
+.sidenav li.sub-menu:hover{
+    background: #1d1f29;
+}
+
+.sidenav li.sub-menu:hover{
+    color: var(--white);
+}

@@ -64,14 +64,14 @@ class User extends Controller {
 
                 $staff_data = DB::table('user')
                     ->join('staff', 'user.staff_id', 'staff.id')
-                    ->join('staff_category', 'staff.category_id', 'staff_category.id')
                     ->join('staff_type', 'staff.type_id', 'staff_type.id')
+                    ->join('staff_category', 'staff_type.category_id', 'staff_category.id')
                     ->join('user_role', 'user.role_id', 'user_role.id')
-                    ->select('staff.id', 'staff.initials', 'staff.surname', 'staff.nic', 'staff_category.name', 'staff_type.name', 'staff.gender', 'staff.email', 'staff.phone_home', 'staff.city')
+                    ->select('user_role.role','staff.id', 'staff.initials', 'staff.surname', 'staff.nic', 'staff_category.name', 'staff_type.name', 'staff.gender', 'staff.email', 'staff.phone_home', 'staff.city')
                     ->where('staff.id', '=', $element->staff_id)->first();
 
                 $data['users'][$key]['id'] = $element->id;
-                // $data['users'][$key]['role'] = $staff_data->name;
+                $data['users'][$key]['role'] = $staff_data->role;
                 $data['users'][$key]['staff_name'] = $staff_data->initials." ".$staff_data->surname;
                 $data['users'][$key]['nic'] = $staff_data->nic;
                 $data['users'][$key]['gender'] = $staff_data->gender;

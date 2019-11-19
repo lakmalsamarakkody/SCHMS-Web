@@ -5,17 +5,6 @@
     padding: 4rem;
   }
 
-.attendanceindex .card{
-    border: 0rem;
-}
-
-.attendanceindex .card-header{
-    color: var(--sub-theme-color);
-    background-color: var(--white);
-    border: 0rem;
-    font-weight: bold;
-}
-
 
 /* attendance/mark */
 .attendancemark{
