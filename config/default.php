@@ -5,7 +5,7 @@ $_['site_title']			=	'SCHMS - David De Silva College';
 
 // APP CONFIG
 $_['app_theme']				=	'default';
-$_['base_url']				=	'http://schms.localhost';
+$_['base_url']				=	'http://schms';
 
 // TWIG
 $_['twig_debug']			=	true;
