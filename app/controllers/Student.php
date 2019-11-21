@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+use Illuminate\Database\Capsule\Manager as DB;
+
 class Student extends Controller {
     public function index() {
     
@@ -13,6 +16,34 @@ class Student extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODEL
+		$this->load->model('student');
+        $this->load->model('student/attendance');
+        
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // STUDENT CARD
+		$data['student']['total']['all'] = $this->model_student->select('id')->count();
+		$data['student']['total']['male'] = $this->model_student->select('id')->where('gender', '=', 'male')->count();
+		$data['student']['total']['female'] = $this->model_student->select('id')->where('gender', '=', 'female')->count();
+
+		$data['student']['attendance']['all'] = $this->model_student_attendance->select('id')->where('date', '=', $date_now)->count();
+		$data['student']['attendance']['male'] = DB::table('student_attendance')
+		->join('student', 'student_attendance.student_id', '=', 'student.id')
+		->select('student.id')
+		->where('date', '=', $date_now)
+		->where('gender', '=', 'male')
+		->count();
+		$data['student']['attendance']['female'] = DB::table('student_attendance')
+		->join('student', 'student_attendance.student_id', '=', 'student.id')
+		->select('student.id')
+		->where('date', '=', $date_now)
+		->where('gender', '=', 'female')
+		->count();
+		$data['student']['absent']['all'] = $data['student']['total']['all'] - $data['student']['attendance']['all'];
+		$data['student']['absent']['male'] = $data['student']['total']['male'] - $data['student']['attendance']['male'];
+		$data['student']['absent']['female'] = $data['student']['total']['female'] - $data['student']['attendance']['female'];
 
 		// RENDER VIEW
         $this->load->view('student/index', $data);

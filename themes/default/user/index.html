@@ -21,39 +21,39 @@
                         <div class="row mt-5">
     
                             <!-- TOTAL USERS -->
-                            <div class="col-3">
+                            <div class="col">
                                 <div class="card">
                                     <div class="card-header">
                                         Total Users
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">300</h5>
+                                        <h5 class="card-title">{{ user.total.all}}</h5>
                                         <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- ACTIVE USERS -->
-                            <div class="col-3">
+                            <div class="col">
                                 <div class="card">
                                     <div class="card-header">
                                         <span class="text-success">Active Users</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">200</h5>
+                                        <h5 class="card-title">{{ user.total.active}}</h5>
                                         <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- DISABLED USERS -->
-                            <div class="col-3">
+                            <div class="col">
                                 <div class="card">
                                     <div class="card-header">
                                         <span class="text-danger">Disabled Users</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">100</h5>
+                                        <h5 class="card-title">{{ user.total.disabled}}</h5>
                                         <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>

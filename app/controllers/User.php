@@ -16,6 +16,14 @@ class User extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('user');
+
+        // USER CARDS
+        $data['user']['total']['all'] = $this->model_user->select('id')->count();
+        $data['user']['total']['active'] = $this->model_user->select('id')->where('status', '=', 'Active')->count();
+        $data['user']['total']['disabled'] = $this->model_user->select('id')->where('status', '=', 'Inactive')->count();
+
 		// RENDER VIEW
         $this->load->view('user/index', $data);
         

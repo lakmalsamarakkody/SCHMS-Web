@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+use Illuminate\Database\Capsule\Manager as DB;
+
 class Staff extends Controller {
     public function index() {
     
@@ -16,8 +19,157 @@ class Staff extends Controller {
 
         //MODEL
         $this->load->model('staff');
+        $this->load->model('staff/attendance');
 		$this->load->model('class');
         $this->load->model('grade');
+
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // STAFF TOTAL
+		$data['staff']['total']['all'] = $this->model_staff->select('id')->count();
+		$data['staff']['total']['male'] = $this->model_staff->select('id')->where('gender', '=', 'male')->count();
+        $data['staff']['total']['female'] = $this->model_staff->select('id')->where('gender', '=', 'female')->count();
+
+        // STAFF TOTAL ATTENDANCE
+        $data['staff']['total']['attendance']['all'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->count();
+        
+        $data['staff']['total']['attendance']['male'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('gender', '=', 'male')
+        ->count();
+        
+        $data['staff']['total']['attendance']['female'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('gender', '=', 'female')
+        ->count();
+        
+        $data['staff']['total']['absent']['all'] = $data['staff']['total']['all'] - $data['staff']['total']['attendance']['all'];
+        $data['staff']['total']['absent']['male'] = $data['staff']['total']['male'] - $data['staff']['total']['attendance']['male'];
+        $data['staff']['total']['absent']['female'] = $data['staff']['total']['female'] - $data['staff']['total']['attendance']['female'];
+        
+        // STAFF ACADEMIC
+        $data['staff']['academic']['all'] = DB::table('staff')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+        ->where('staff_category.name', '=', 'Academic')
+        ->count();
+        
+        $data['staff']['academic']['male'] = DB::table('staff')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+        ->select('staff.id')
+        ->where('gender', '=', 'male')
+        ->where('staff_category.name', '=', 'Academic')
+        ->count();
+        
+        $data['staff']['academic']['female'] = DB::table('staff')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+        ->select('staff.id')
+        ->where('gender', '=', 'female')
+        ->where('staff_category.name', '=', 'Academic')
+        ->count();
+
+        // STAFF ACADEMIC ATTENDANCE
+        $data['staff']['academic']['attendance']['all'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('staff_category.name', '=', 'Academic')
+        ->count();
+        
+        $data['staff']['academic']['attendance']['male'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('gender', '=', 'male')
+        ->where('staff_category.name', '=', 'Academic')
+        ->count();
+        
+        $data['staff']['academic']['attendance']['female'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('gender', '=', 'female')
+        ->where('staff_category.name', '=', 'Academic')
+        ->count();
+        
+        $data['staff']['academic']['absent']['all'] = $data['staff']['academic']['all'] - $data['staff']['academic']['attendance']['all'];
+        $data['staff']['academic']['absent']['male'] = $data['staff']['academic']['male'] - $data['staff']['academic']['attendance']['male'];
+        $data['staff']['academic']['absent']['female'] = $data['staff']['academic']['female'] - $data['staff']['academic']['attendance']['female'];
+
+        // STAFF NON ACADEMIC
+        $data['staff']['nonacademic']['all'] = DB::table('staff')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+        ->where('staff_category.name', '=', 'Non-Academic')
+        ->count();
+        
+        $data['staff']['nonacademic']['male'] = DB::table('staff')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+        ->select('staff.id')
+        ->where('gender', '=', 'male')
+        ->where('staff_category.name', '=', 'Non-Academic')
+        ->count();
+        
+        $data['staff']['nonacademic']['female'] = DB::table('staff')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+        ->select('staff.id')
+        ->where('gender', '=', 'female')
+        ->where('staff_category.name', '=', 'Non-Academic')
+        ->count();
+        
+        // STAFF NON-ACADEMIC ATTENDANCE
+        $data['staff']['nonacademic']['attendance']['all'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('staff_category.name', '=', 'Non-Academic')
+        ->count();
+        
+        $data['staff']['nonacademic']['attendance']['male'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('gender', '=', 'male')
+        ->where('staff_category.name', '=', 'Non-Academic')
+        ->count();
+        
+        $data['staff']['nonacademic']['attendance']['female'] = DB::table('staff_attendance')
+        ->join('staff', 'staff_attendance.staff_id', '=', 'staff.id')
+        ->join('staff_type', 'staff.type_id', '=', 'staff_type.id')
+        ->join('staff_category', 'staff_type.category_id', '=', 'staff_category.id')
+		->select('staff.id')
+		->where('date', '=', $date_now)
+        ->where('gender', '=', 'female')
+        ->where('staff_category.name', '=', 'Non-Academic')
+        ->count();
+        
+        $data['staff']['nonacademic']['absent']['all'] = $data['staff']['nonacademic']['all'] - $data['staff']['nonacademic']['attendance']['all'];
+        $data['staff']['nonacademic']['absent']['male'] = $data['staff']['nonacademic']['male'] - $data['staff']['nonacademic']['attendance']['male'];
+        $data['staff']['nonacademic']['absent']['female'] = $data['staff']['nonacademic']['female'] - $data['staff']['nonacademic']['attendance']['female'];
         
         // CLASS
 		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id')->get() as $key => $element ):

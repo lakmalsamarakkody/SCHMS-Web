@@ -14,7 +14,6 @@
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #b9b8bb5b;
-    height: 100%;
   }
   
   /* Handle on hover */
@@ -66,35 +65,34 @@
 .topmenu{
     color: var(--white);
     background: var(--main-theme-color);
-    background-image: linear-gradient(145deg,#8f75da,#727cf5 60%);
+    background-image: linear-gradient(145deg,#8f75da,#727cf5 70%);
 }
 
 .topmenu .messages .dropdown-menu{
-    background-color: #171a23;
+    background-color: var(--main-theme-color);
     color: var(--white);
 }
 
 .topmenu .notifications .dropdown-menu{
-    background-color: #171a23;
+    background-color: var(--main-theme-color);
     color: var(--white);
 }
 
 .topmenu .notifications p{
-    background-color: #171a23;
+    background-color: var(--main-theme-color);
     color: var(--white);
 }
 
 .topmenu .settings .dropdown-menu{
-    background-color: #171a23;
+    background-color: var(--main-theme-color);
 }
 
 .topmenu .settings .dropdown-menu .dropdown-item{
-    background-color: #171a23;
     color: var(--white);
 }
 
 .topmenu .settings .dropdown-menu .dropdown-item:hover{
-    color: var(--sub-theme-color);
+    background: #ffffff2d;
     
 }
 
@@ -120,23 +118,18 @@
 }
 
 .sidenar li.main-menu.active {
-    background: #262a35;
+    background: var(--white);
 }
 
 .sidenav .main-menu:hover{
-    color: var(--white);
-    background: #262a35;
+    background: #ffffff2d;
 }
 
 .sidenav li.sub-menu{
     color: var(--white);
-    background: #131419;
+    background: #ffffff11;
 }
 
 .sidenav li.sub-menu:hover{
-    background: #1d1f29;
-}
-
-.sidenav li.sub-menu:hover{
-    color: var(--white);
+    background: #ffffff2d;
 }

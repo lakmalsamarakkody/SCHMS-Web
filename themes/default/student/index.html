@@ -20,7 +20,7 @@
 
                         <div class="row mt-5">
                             <!-- STUDENT TOTAL -->
-                            <div class="col-3">
+                            <div class="col">
                                 <div class="card">
 
                                     <div class="card-header">
@@ -29,10 +29,10 @@
 
                                     <div class="card-body">
 
-                                        <h5 class="card-title">700</h5>
+                                        <h5 class="card-title">{{ student.total.all }}</h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> 400 </span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 300 </span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ student.total.male }} </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ student.total.female }} </span>
                                         </p>
                                         <a href="{{ app.url}}/student/index" class="btn btn-xs btn-primary p-2">view details</a>
 
@@ -42,7 +42,7 @@
                             </div>
     
                             <!-- STUDENT PRESENT -->
-                            <div class="col-3">
+                            <div class="col">
                                 <div class="card">
 
                                     <div class="card-header">
@@ -51,10 +51,10 @@
 
                                     <div class="card-body">
 
-                                        <h5 class="card-title"><span class="text-success">600</span></h5>
+                                        <h5 class="card-title"><span class="text-success"> {{ student.attendance.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i>350</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 250</span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ student.attendance.male }}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ student.attendance.female }}</span>
                                         </p>
                                         <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
 
@@ -64,7 +64,7 @@
                             </div>
 
                             <!-- STUDENT ABSENT -->
-                            <div class="col-3">
+                            <div class="col">
                                 <div class="card">
 
                                     <div class="card-header">
@@ -73,10 +73,10 @@
 
                                     <div class="card-body">
 
-                                        <h5 class="card-title"><span class1="text-danger">100</span></h5>
+                                        <h5 class="card-title"><span class1="text-danger"> {{ student.absent.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-danger"> <i class="la la-male"></i>50</span><br/>
-                                            Female - <span class="text-danger"> <i class="la la-female"></i> 50</span>
+                                            Male - <span class="text-danger"> <i class="la la-male"></i> {{ student.absent.male }}</span><br/>
+                                            Female - <span class="text-danger"> <i class="la la-female"></i> {{ student.absent.female }}</span>
                                         </p>
                                         <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
 

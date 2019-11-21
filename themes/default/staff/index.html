@@ -16,94 +16,119 @@
                     <h4 class="page-title"> Staff Overview </h4>
 
                     <!-- START : CARD SUMMARY -->
-                    <section class="card-summary">
+                    <section class="row card-summary mt-4">
 
-                        <div class="row mt-5">
-                            <!-- STAFF TOTAL -->
-                            <div class="col">
+                        <div class="card-deck">
+
+                            <div class="col card-group">
+                                <!-- STAFF TOTAL -->
                                 <div class="card">
                                     <div class="card-header">
                                         Total Staff
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">700</h5>
+                                        <h5 class="card-title">{{ staff.total.all }}</h5>
                                         <p class="card-text">
-                                            Male - <i class="la la-male"></i>400<br/>
-                                            Female - <i class="la la-female"></i> 300
+                                            Male - <i class="la la-male"></i> {{ staff.total.male }}<br/>
+                                            Female - <i class="la la-female"></i> {{ staff.total.female }}
                                         </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
                                         <a href="{{ app.url}}/staff/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
+                            
+                                <!-- STAFF TOTAL ATTENDANCE -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        Total Staff <br/><span class="text-success">Attendance</span> / <span class="text-danger">Absence</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><span class="text-success">{{ staff.total.attendance.all }}</span> / <span class="text-danger">{{ staff.total.absent.all }}</span></h5>
+                                        <p class="card-text">
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ staff.total.attendance.male }}</span> / <span class="text-danger">{{ staff.total.absent.male }}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ staff.total.attendance.female }}</span> / <span class="text-danger">{{ staff.total.absent.female }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                    </div>
+                                </div>
                             </div>
-    
-                            <!-- STAFF ACADEMIC -->
-                            <div class="col">
+                        
+                            <div class="col card-group">
+                                <!-- STAFF ACADEMIC -->
                                 <div class="card">
                                     <div class="card-header">
                                         Academic Staff
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">600</h5>
+                                        <h5 class="card-title">{{ staff.academic.all }}</h5>
                                         <p class="card-text">
-                                            Male - <i class="la la-male"></i>350<br/>
-                                            Female - <i class="la la-female"></i> 250
+                                            Male - <i class="la la-male"></i> {{ staff.academic.male }}<br/>
+                                            Female - <i class="la la-female"></i> {{ staff.academic.female }}
                                         </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
                                         <a href="{{ app.url}}/staff/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
-                            </div>
+                            
 
-                            <!-- STAFF ACADEMIC ATTENDANCE -->
-                            <div class="col">
+                                <!-- STAFF ACADEMIC ATTENDANCE -->
                                 <div class="card">
                                     <div class="card-header">
-                                        <span class="text-success">Attendance</span> / <span class="text-danger">Absence</span>
+                                        Academic Staff <span class="text-success">Attendance</span> / <span class="text-danger">Absence</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-success">90</span> / <span class="text-danger">30</span></h5>
+                                        <h5 class="card-title"><span class="text-success">{{ staff.academic.attendance.all }}</span> / <span class="text-danger">{{ staff.academic.absent.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i>60</span> / <span class="text-danger">10</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 30</span> / <span class="text-danger">20</span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ staff.academic.attendance.male }}</span> / <span class="text-danger">{{ staff.academic.absent.male }}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ staff.academic.attendance.female }}</span> / <span class="text-danger">{{ staff.academic.absent.female }}</span>
                                         </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
                                         <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- STAFF NON-ACADEMIC -->
-                            <div class="col">
+                        
+                            <div class="col card-group">
+                                <!-- STAFF NON-ACADEMIC -->
                                 <div class="card">
                                     <div class="card-header">
                                         Non-Academic Staff
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">100</h5>
+                                        <h5 class="card-title">{{ staff.nonacademic.all }}</h5>
                                         <p class="card-text">
-                                            Male - <i class="la la-male"></i>50<br/>
-                                            Female - <i class="la la-female"></i> 50
+                                            Male - <i class="la la-male"></i> {{ staff.nonacademic.male }}<br/>
+                                            Female - <i class="la la-female"></i> {{ staff.nonacademic.female }}
                                         </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
                                         <a href="{{ app.url}}/staff/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- STAFF NON-ACADEMIC ATTENDANCE -->
-                            <div class="col">
+                                <!-- STAFF NON-ACADEMIC ATTENDANCE -->
                                 <div class="card">
                                     <div class="card-header">
-                                            <span class="text-success">Attendance</span> / <span class="text-danger">Absence</span>
+                                        Non-Academic Staff <span class="text-success">Attendance</span> / <span class="text-danger">Absence</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-success">90</span> / <span class="text-danger">30</span></h5>
+                                        <h5 class="card-title"><span class="text-success">{{ staff.nonacademic.attendance.all }}</span> / <span class="text-danger">{{ staff.nonacademic.absent.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i>60</span> / <span class="text-danger">10</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 30</span> / <span class="text-danger">20</span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ staff.nonacademic.attendance.male }}</span> / <span class="text-danger">{{ staff.nonacademic.absent.male }}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ staff.nonacademic.attendance.female }}</span> / <span class="text-danger">{{ staff.nonacademic.absent.female }}</span>
                                         </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
                                         <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
                             </div>
-    
+
                         </div>
 
                     </section>
@@ -114,7 +139,7 @@
                         <h4 class="page-title"> Teacher in Charge </h4>
 
                         <!-- TEACHER IN CHARGE TABLE -->
-                        <table class="table table-bordered table-responsive-md">
+                        <table class="table table-bordered table-responsive-md mt-4">
                             <thead>
                                 <tr>
                                     <th scope="col"> # </th>
