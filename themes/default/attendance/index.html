@@ -53,7 +53,7 @@
                             </div>
 
                             <!-- STAFF SUMMARY -->
-                            <div class="col-3 {% if permission.level == 'student' %}d-none{% endif %}"> <!-- HANDLE PERMISSION !PERMISSION-->
+                            <div class="col-3 {% if permission.level == 'admin' %}d-none{% endif %}"> <!-- HANDLE PERMISSION !PERMISSION-->
                                 <div class="card">
                                     <div class="card-header">
                                         Total Staff
@@ -90,18 +90,18 @@
                     <!-- END : ATTENDANCE SUMMARY  -->
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="col-md-12 mt-3">
-                        <div class="row">
+                    <section class="class-attendance-chart mt-5">
 
-                            <!-- TITLE -->
-                            <div class="col-md-12">
-                                <h4 class="page-title">Class Attendance</h4>
+                        <!-- TITLE -->
+                        <h4 class="page-title">Class Attendance</h4>
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6 bg-white" id="chart-1"></div>
+                                <div class="col-6 bg-white" id="chart-2"></div>
                             </div>
-
-                            <div class="col-md-6 bg-white" id="chart-1"></div>
-                            <div class="col-md-6 bg-white" id="chart-2"></div>
-
                         </div>
+
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 

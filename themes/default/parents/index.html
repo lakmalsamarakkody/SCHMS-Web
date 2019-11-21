@@ -26,10 +26,10 @@
                                         Total Parents
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">1200</h5>
+                                        <h5 class="card-title">{{ parent.total.all }}</h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> 700 </span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 500 </span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ parent.total.male }} </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ parent.total.female }} </span>
                                         </p>
                                         <a href="{{ app.url}}/parent" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -43,10 +43,10 @@
                                         <span class="text-success">Total Parents above Average Income</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-success">500</span></h5>
+                                        <h5 class="card-title"><span class="text-success">{{ parent.above.income.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i>300</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 200</span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ parent.above.income.male }}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ parent.above.income.female }}</span>
                                         </p>
                                         <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -60,10 +60,10 @@
                                         <span class="text-danger">Total Parents below Average Income</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-danger">700</span></h5>
+                                        <h5 class="card-title"><span class="text-danger">{{ parent.below.income.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-danger"> <i class="la la-male"></i> 400 </span><br/>
-                                            Female - <span class="text-danger"> <i class="la la-female"></i> 300 </span>
+                                            Male - <span class="text-danger"> <i class="la la-male"></i> {{ parent.below.income.male }} </span><br/>
+                                            Female - <span class="text-danger"> <i class="la la-female"></i> {{ parent.below.income.female }} </span>
                                         </p>
                                         <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -77,10 +77,10 @@
                                         <span class="text-warning">Most listed Occupation</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-warning">90</span></h5>
+                                        <h5 class="card-title"><span class="text-warning">{{ parent.most.occupation.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-warning"> <i class="la la-male"></i>Officer</span><br/>
-                                            Female - <span class="text-warning"> <i class="la la-female"></i> Doctor</span>
+                                            Male - <span class="text-warning"> <i class="la la-male"></i> {{ parent.most.occupation.male }} </span><br/>
+                                            Female - <span class="text-warning"> <i class="la la-female"></i> {{ parent.most.occupation.female }} </span>
                                         </p>
                                         <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -93,11 +93,9 @@
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
                     <section class="attendance-class-view mt-5">
-1
                         <h4 class="page-title">Occupation bar chart and Pie Chart</h4>
                         <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
                         <img src="https://landing.moqups.com/img/content/charts-graphs/pie-donut-charts/simple-pie-chart/simple-pie-chart-1600.png" alt="" height="600" width="600">
-    
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 

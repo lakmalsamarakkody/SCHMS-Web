@@ -14,6 +14,28 @@ class Parents extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('parent');
+
+        // PARENT TOTAL CARD
+        $data['parent']['total']['all'] = $this->model_parent->select('id')->count();
+        $data['parent']['total']['male'] = $this->model_parent->select('id')->where('gender', '=', 'male')->count();
+        $data['parent']['total']['female'] = $this->model_parent->select('id')->where('gender', '=', 'female')->count();
+
+        // PARENT ABOVE AVERAGE INCOME CARD
+        $data['parent']['above']['income']['all'] = $this->model_parent->select('id')->where('income', '>=', '25000')->count();
+        $data['parent']['above']['income']['male'] = $this->model_parent->select('id')->where('gender', '=', 'male')->where('income', '>=', '25000')->count();
+        $data['parent']['above']['income']['female'] = $this->model_parent->select('id')->where('gender', '=', 'female')->where('income', '>=', '25000')->count();
+
+        // PARENT BELOW AVERAGE INCOME CARD
+        $data['parent']['below']['income']['all'] = $this->model_parent->select('id')->where('income', '<', '25000')->count();
+        $data['parent']['below']['income']['male'] = $this->model_parent->select('id')->where('gender', '=', 'male')->where('income', '<', '25000')->count();
+        $data['parent']['below']['income']['female'] = $this->model_parent->select('id')->where('gender', '=', 'female')->where('income', '<', '25000')->count();
+
+        // PARENT MOST OCCUPATION CARD
+        $data['parent']['most']['occupation']['all'] = $this->model_parent->select('occupation')->distinct()->get('occupation');
+        $data['parent']['most']['occupation']['male'] = $this->model_parent->select('occupation')->distinct()->get('occupation')->where('gender', '=', 'male')->count();
+        $data['parent']['most']['occupation']['female'] = $this->model_parent->select('occupation')->distinct()->get('occupation')->where('gender', '=', 'female')->count();
         
 		// RENDER VIEW
         $this->load->view('parents/index', $data);

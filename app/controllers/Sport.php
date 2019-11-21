@@ -16,6 +16,65 @@ class Sport extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('sport');
+        $this->load->model('coach');
+        $this->load->model('student/sport');
+        $this->load->model('student/sportAchievement');
+
+        // SPORT CARD
+        $data['sport']['total']['all'] = $this->model_sport->select('id')->count();
+
+        // COACH CARD
+        $data['coach']['total']['all'] = $this->model_coach->select('id')->count();
+        $data['coach']['total']['male'] = $this->model_coach->select('id')->where('gender', '=', 'male')->count();
+        $data['coach']['total']['female'] = $this->model_coach->select('id')->where('gender', '=', 'female')->count();
+
+        // SPORT STUDENT CARD
+        $data['sport']['student']['total']['all'] = $this->model_student_sport->distinct()->get('student_id')->count();
+
+        $data['sport']['student']['total']['male'] = DB::table('student_has_sport')
+		->join('student', 'student_has_sport.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('gender', '=', 'male')
+        ->distinct()
+        ->get('student.id')
+        ->count();
+        
+        $data['sport']['student']['total']['female'] = DB::table('student_has_sport')
+		->join('student', 'student_has_sport.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('gender', '=', 'female')
+        ->distinct()
+        ->get('student.id')
+        ->count();
+
+        // STUDENT SPORT ACHIEVEMENTS CARD
+        $data['sport']['student']['achievement']['all'] = $this->model_student_sportachievement->select('id')->count();
+
+        $data['sport']['student']['achievement']['male'] = DB::table('student_has_sport_achievement')
+        ->join('student_has_sport', 'student_has_sport_achievement.student_sport_id', '=', 'student_has_sport.id')
+        ->join('student', 'student_has_sport.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('gender', '=', 'male')
+        ->distinct()
+        ->get('student.id')
+        ->count();
+
+        $data['sport']['student']['achievement']['female'] = DB::table('student_has_sport_achievement')
+        ->join('student_has_sport', 'student_has_sport_achievement.student_sport_id', '=', 'student_has_sport.id')
+        ->join('student', 'student_has_sport.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('gender', '=', 'female')
+        ->distinct()
+        ->get('student.id')
+        ->count();
+
+        // LATEST ACHIEVEMENT
+        $data['sport']['student']['latest']['achievement'] = $this->model_student_sportachievement->select('*')->orderBy('id', 'DESC')->first(1);
+        // $data['sport']['student']['latest']['achievement']['description'] = 
+        
+
 		// RENDER VIEW
         $this->load->view('sport/index', $data);
         

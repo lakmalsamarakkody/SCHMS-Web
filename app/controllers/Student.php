@@ -23,24 +23,29 @@ class Student extends Controller {
         
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
-        // STUDENT CARD
+        // STUDENT TOTAL CARD
 		$data['student']['total']['all'] = $this->model_student->select('id')->count();
 		$data['student']['total']['male'] = $this->model_student->select('id')->where('gender', '=', 'male')->count();
 		$data['student']['total']['female'] = $this->model_student->select('id')->where('gender', '=', 'female')->count();
 
-		$data['student']['attendance']['all'] = $this->model_student_attendance->select('id')->where('date', '=', $date_now)->count();
+        // PRESENT TODAY CARD
+        $data['student']['attendance']['all'] = $this->model_student_attendance->select('id')->where('date', '=', $date_now)->count();
+        
 		$data['student']['attendance']['male'] = DB::table('student_attendance')
 		->join('student', 'student_attendance.student_id', '=', 'student.id')
 		->select('student.id')
 		->where('date', '=', $date_now)
 		->where('gender', '=', 'male')
-		->count();
+        ->count();
+        
 		$data['student']['attendance']['female'] = DB::table('student_attendance')
 		->join('student', 'student_attendance.student_id', '=', 'student.id')
 		->select('student.id')
 		->where('date', '=', $date_now)
 		->where('gender', '=', 'female')
-		->count();
+        ->count();
+
+        // ABSENT CARD
 		$data['student']['absent']['all'] = $data['student']['total']['all'] - $data['student']['attendance']['all'];
 		$data['student']['absent']['male'] = $data['student']['total']['male'] - $data['student']['attendance']['male'];
 		$data['student']['absent']['female'] = $data['student']['total']['female'] - $data['student']['attendance']['female'];

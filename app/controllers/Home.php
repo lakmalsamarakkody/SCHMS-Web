@@ -28,8 +28,13 @@ class Home extends Controller {
 		// MODEL
 		$this->load->model('student');
 		$this->load->model('student/attendance');
+		$this->load->model('student/sport');
 		$this->load->model('staff');
 		$this->load->model('staff/attendance');
+		$this->load->model('parent');
+		$this->load->model('user');
+		$this->load->model('sport');
+		$this->load->model('coach');
 
 		$date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -84,6 +89,21 @@ class Home extends Controller {
 		$data['staff']['absent']['all'] = $data['staff']['total']['all'] - $data['staff']['attendance']['all'];
 		$data['staff']['absent']['male'] = $data['staff']['total']['male'] - $data['staff']['attendance']['male'];
 		$data['staff']['absent']['female'] = $data['staff']['total']['female'] - $data['staff']['attendance']['female'];
+
+		// PARENT TOTAL CARD
+        $data['parent']['total']['all'] = $this->model_parent->select('id')->count();
+        $data['parent']['total']['male'] = $this->model_parent->select('id')->where('gender', '=', 'male')->count();
+		$data['parent']['total']['female'] = $this->model_parent->select('id')->where('gender', '=', 'female')->count();
+		
+		// USER TOTAL CARDS
+        $data['user']['total']['all'] = $this->model_user->select('id')->count();
+        $data['user']['total']['active'] = $this->model_user->select('id')->where('status', '=', 'Active')->count();
+		$data['user']['total']['disabled'] = $this->model_user->select('id')->where('status', '=', 'Inactive')->count();
+		
+		// SPORT CARD
+		$data['sport']['total']['all'] = $this->model_sport->select('id')->count();
+		$data['coach']['total']['all'] = $this->model_coach->select('id')->count();
+		$data['sport']['student']['total']['all'] = $this->model_student_sport->distinct()->get('student_id')->count();
 
 		// RENDER VIEW
 		$this->load->view('home/index', $data);

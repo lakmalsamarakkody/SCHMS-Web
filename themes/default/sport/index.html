@@ -28,8 +28,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ sport.total.all}}</h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> &nbsp; </span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> &nbsp; </span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ sport.total.all}} </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ sport.total.all}} </span>
                                         </p>
                                         <a href="{{ app.url}}/school" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -43,10 +43,10 @@
                                         Total Coaches
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">50</h5>
+                                        <h5 class="card-title">{{ coach.total.all}}</h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i>30</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 20</span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ coach.total.male}}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ coach.total.female}}</span>
                                         </p>
                                         <a href="{{ app.url}}/sport/search_coach" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -60,10 +60,10 @@
                                         Total Students doing sports
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">120</h5>
+                                        <h5 class="card-title">{{ sport.student.total.all}}</h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> 70 </span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 50 </span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ sport.student.total.male}} </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ sport.student.total.female}} </span>
                                         </p>
                                         <a href="{{ app.url}}/sport/search_student" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -77,10 +77,10 @@
                                         Total Achievements
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-success">90</span></h5>
+                                        <h5 class="card-title"><span class="text-success">{{ sport.student.achievement.all}}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i>60</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 30</span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ sport.student.achievement.male}}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ sport.student.achievement.female}}</span>
                                         </p>
                                         <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -98,8 +98,9 @@
                                LATEST ACHIEVEMENT
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Achievement Title</h5>
-                                <p class="card-text"> Achievemnt description </p>
+                                <h5 class="card-title">{{ sport.student.latest.achievement.title}}</h5>
+                                <p class="card-text"> {{ sport.student.latest.achievement.description }} </p>
+                                <p class="card-text">Achieved on - {{ sport.student.latest.achievement.achieved_on }} </p>
                                 <a href="{{ app.url }}/ACHIEVEMENT/search" class="btn btn-sm btn-danger">view details</a>
                             </div>
                         </div>

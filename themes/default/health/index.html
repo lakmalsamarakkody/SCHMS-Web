@@ -26,10 +26,10 @@
                                         Total Students
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">700</h5>
+                                        <h5 class="card-title">{{ student.total.all }}</h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> 400 </span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 300 </span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ student.total.male }} </span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ student.total.female }} </span>
                                         </p>
                                         <a href="{{ app.url}}/student" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -43,10 +43,10 @@
                                         <span class="text-success">Total Students Average BMI</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-success">50</span></h5>
+                                        <h5 class="card-title"><span class="text-success">{{ student.average.bmi.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i>30</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> 20</span>
+                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ student.average.bmi.male }}</span><br/>
+                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ student.average.bmi.female }} </span>
                                         </p>
                                         <a href="{{ app.url}}/health/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
@@ -57,35 +57,36 @@
                             <div class="col-3">
                                 <div class="card">
                                     <div class="card-header">
-                                        <span class="text-danger">Total Students not in Average BMI</span>
+                                        <span class="text-warning">Total Students Above Average BMI</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-danger">120</span></h5>
+                                        <h5 class="card-title"><span class="text-warning">{{ student.above.bmi.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-danger"> <i class="la la-male"></i> 70 </span><br/>
-                                            Female - <span class="text-danger"> <i class="la la-female"></i> 50 </span>
+                                            Male - <span class="text-warning"> <i class="la la-male"></i> {{ student.above.bmi.male }} </span><br/>
+                                            Female - <span class="text-warning"> <i class="la la-female"></i> {{ student.above.bmi.female }} </span>
                                         </p>
                                         <a href="{{ app.url}}/health/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
                             </div> 
-            
-                            <!-- ACHIEVEMENTS -->
+
+                            <!-- STUDENTS DOING SPORTS -->
                             <div class="col-3">
                                 <div class="card">
                                     <div class="card-header">
-                                        <span class="text-warning">Total Disabled</span>
+                                        <span class="text-danger">Total Students Below Average BMI</span>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title"><span class="text-warning">90</span></h5>
+                                        <h5 class="card-title"><span class="text-danger">{{ student.below.bmi.all }}</span></h5>
                                         <p class="card-text">
-                                            Male - <span class="text-warning"> <i class="la la-male"></i>60</span><br/>
-                                            Female - <span class="text-warning"> <i class="la la-female"></i> 30</span>
+                                            Male - <span class="text-danger"> <i class="la la-male"></i> {{ student.below.bmi.male }} </span><br/>
+                                            Female - <span class="text-danger"> <i class="la la-female"></i> {{ student.below.bmi.female }} </span>
                                         </p>
-                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        <a href="{{ app.url}}/health/search" class="btn btn-xs btn-primary p-2">view details</a>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                     </section>

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class Health extends Controller {
     public function index() {
     
@@ -14,9 +16,80 @@ class Health extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
-		// RENDER VIEW
-        $this->load->view('health/index', $data);
+        // MODEL
+        $this->load->model('student');
+        $this->load->model('student/health');
         
+        // STUDENT TOTAL CARD
+		$data['student']['total']['all'] = $this->model_student->select('id')->count();
+		$data['student']['total']['male'] = $this->model_student->select('id')->where('gender', '=', 'male')->count();
+        $data['student']['total']['female'] = $this->model_student->select('id')->where('gender', '=', 'female')->count();
+        
+        // STUDENT AVERAGE BMI CARD
+        $data['student']['average']['bmi']['all'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+		->where('student_health.bmi', '>=', '18.5')->where('student_health.bmi', '<=', '25')
+        ->count();
+
+        $data['student']['average']['bmi']['male'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('student_health.bmi', '>=', '18.5')->where('student_health.bmi', '<=', '25')
+        ->where('student.gender', '=', 'male')
+        ->count();
+
+        $data['student']['average']['bmi']['female'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('student_health.bmi', '>=', '18.5')->where('student_health.bmi', '<=', '25')
+        ->where('student.gender', '=', 'female')
+        ->count();
+
+        // STUDENT ABOVE AVERAGE BMI CARD
+        $data['student']['above']['bmi']['all'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+		->where('student_health.bmi', '>', '25')
+        ->count();
+
+        $data['student']['above']['bmi']['male'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('student_health.bmi', '>', '25')
+        ->where('student.gender', '=', 'male')
+        ->count();
+
+        $data['student']['above']['bmi']['female'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('student_health.bmi', '>', '25')
+        ->where('student.gender', '=', 'female')
+        ->count();
+
+        // STUDENT BELOW AVERAGE BMI CARD
+        $data['student']['below']['bmi']['all'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+		->where('student_health.bmi', '<', '18.5')
+        ->count();
+
+        $data['student']['below']['bmi']['male'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('student_health.bmi', '<', '18.5')
+        ->where('student.gender', '=', 'male')
+        ->count();
+
+        $data['student']['below']['bmi']['female'] = DB::table('student_health')
+		->join('student', 'student_health.student_id', '=', 'student.id')
+		->select('student.id')
+        ->where('student_health.bmi', '<', '18.5')
+        ->where('student.gender', '=', 'female')
+        ->count();
+
+		// RENDER VIEW
+        $this->load->view('health/index', $data);        
     }
 
     public function search() {
