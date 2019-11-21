@@ -53,14 +53,14 @@
                             </div>
 
                             <!-- STAFF SUMMARY -->
-                            <div class="col-3">
+                            <div class="col-3 {% if permission.level == 'student' %}d-none{% endif %}"> <!-- HANDLE PERMISSION !PERMISSION-->
                                 <div class="card">
                                     <div class="card-header">
                                         Total Staff
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">{{ staff.total.all }}</h5>
-                                        <p class="card-text">
+                                        <p class="card-text">l
                                             Male -  <i class="la la-male"></i> {{ staff.total.male }}<br/>
                                             Female -  <i class="la la-female"></i> {{ staff.total.female }}
                                         </p>
@@ -90,11 +90,18 @@
                     <!-- END : ATTENDANCE SUMMARY  -->
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="attendance-class-view mt-5">
+                    <section class="col-md-12 mt-3">
+                        <div class="row">
 
-                        <h4 class="page-title"> Class Attendance </h4>
-                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
-    
+                            <!-- TITLE -->
+                            <div class="col-md-12">
+                                <h4 class="page-title">Class Attendance</h4>
+                            </div>
+
+                            <div class="col-md-6 bg-white" id="chart-1"></div>
+                            <div class="col-md-6 bg-white" id="chart-2"></div>
+
+                        </div>
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
@@ -137,6 +144,43 @@
     </div>
 
 {{ template.footer|raw }}
+
+    <script>
+
+        let options = {
+            chart: {
+                height: 400,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                data: [100, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+            }],
+            xaxis: {
+                categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
+            }
+        }
+
+        let chart1 = new ApexCharts(
+            document.querySelector("#chart-1"),
+            options
+        )
+        let chart2 = new ApexCharts(
+            document.querySelector("#chart-2"),
+            options
+        )
+        chart1.render()
+        chart2.render()
+
+    </script>
+
 </body>
 
 <script>

@@ -23,7 +23,10 @@ class Attendance extends Controller {
 		$this->load->model('staff');
 		$this->load->model('staff/attendance');
 
-		$date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+        
+        // PERMISSION LEVEL
+        $data['permission']['level'] = 'student';
 
 		// STUDENT TOTAL
 		$data['student']['total']['all'] = $this->model_student->select('id')->count();
