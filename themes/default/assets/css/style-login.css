@@ -4,9 +4,7 @@
     background-image: linear-gradient(135deg,#8f75da 0,#727cf5 60%);
     color: var(--white);
     display: flex;
-    align-items: center;
-    flex-direction: column; 
-    justify-content: center;
+    flex-direction: column;
     width: 100%;
     height: 100vh;
 }
@@ -17,6 +15,8 @@
 
 .login .loginform{
     position: static;
+    background-color: #ffffff13;
+    border-radius: 1rem;;
 }
 
 .login .title h1{

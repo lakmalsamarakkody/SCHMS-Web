@@ -1,28 +1,29 @@
 <html>
 {{ template.header|raw }}
-<body>
+<body>    
 
 <div class="container-fluid login">
 
-    <div class="container">
+    <div class="section p-4">
+        <a href="http://davidsilvacollege" class="website"><h6>Back to Official Website</h6></a>
+    </div>
+
+    <div class="container my-auto">
         <div class="row ">
 
-            <div class="col-md-6 title my-auto">
+            <div class="col-6 title my-auto">
                 <h1 class="login-title"> School Management System <h1>
-                <hr>
-                <h2 class="login-sub-title"> David De Silva College &nbsp; Minuwangoda </h2>
-                <a href="http://davidsilvacollege" class="website"><h6>(Back to Official Website)</h6></a>
+                <hr class="mt-4 mb-4"/>
+                <h3 class="login-sub-title mb-5"> David De Silva College <br/> Minuwangoda - Negombo </h3>
             </div>
 
-            <div class="col-md-4 offset-1 my-auto loginform">
+            <div class="col-4 offset-2 mx-auto my-auto loginform p-5">
 
                 <form name="loginform" method="post">
 
                     {% if msg %}
                         <div class="alert alert-danger">{{ msg }}</div>
                     {% endif %}
-
-                    
 
                     <div class="form-group">
                         <label>Username</label>
@@ -43,7 +44,7 @@
 
                             <div class="col-6 ml-auto form-group login-as">
                                 
-                                <select class="form-control selectpicker show-tick" name="login_as" required>
+                                <select class="form-control form-control-sm selectpicker show-tick" name="login_as" required>
                                     <option value="" selected hidden>Login as</option>
                                     <option value="student">Student</option>
                                     <option value="parent">Parent</option>
@@ -55,8 +56,8 @@
                     </div>
                     
                     <input type="hidden" name="is_submit" value="true"/>
-                    <button class="btn btn-primary pr-3" type="submit">Login</button>
-                    <button class="btn btn-secondary" type="reset" name="reset">Clear</button>
+                    <button class="btn btn-primary mt-5 px-5" type="submit">Login</button>
+                    <button class="btn btn-secondary mt-5 px-4" type="reset" name="reset">Clear</button>
 
                 </form>
             </div>
