@@ -136,24 +136,26 @@
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
                     <section class="attendance-class-view mt-5">
-                        <h4 class="page-title"> Teacher in Charge </h4>
+                        <h4 class="page-title"> Teacher in Charge Availability </h4>
 
                         <!-- TEACHER IN CHARGE TABLE -->
                         <table class="table table-bordered table-responsive-md mt-4">
                             <thead>
                                 <tr>
-                                    <th scope="col"> # </th>
-                                    <th scope="col"> Class </th>
+                                    <th class="text-center" width="5%" scope="col"> # </th>
+                                    <th class="text-center" width="10%" scope="col"> Class </th>
                                     <th scope="col"> Teacher in Charge </th>
+                                    <th class="text-center" width="20%" scope="col"> Status </th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {% for class in classes %}
                                 <tr>
-                                    <th scope="row"> {{ class.id }} </th>
-                                    <td> {{ class.grade.name }} - {{ class.name }} </td>
-                                    <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
+                                    <th class="text-center" scope="row"> {{ class.id }} </th>
+                                    <td class="text-center"> {{ class.grade.name }} - {{ class.name }} </td>
+                                    <td> {{ class.staff.name.initials }} {{ class.staff.name.surname }}</td>
+                                    <td class="text-center"> {{ class.staff.status }}</td>
                                 </tr>
                                 {% endfor %} 
                             </tbody>  

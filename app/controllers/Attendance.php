@@ -21,7 +21,9 @@ class Attendance extends Controller {
 		$this->load->model('student');
 		$this->load->model('student/attendance');
 		$this->load->model('staff');
-		$this->load->model('staff/attendance');
+        $this->load->model('staff/attendance');
+        $this->load->model('class');
+        $this->load->model('grade');
 
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
         
@@ -78,7 +80,19 @@ class Attendance extends Controller {
 		
 		$data['staff']['absent']['all'] = $data['staff']['total']['all'] - $data['staff']['attendance']['all'];
 		$data['staff']['absent']['male'] = $data['staff']['total']['male'] - $data['staff']['attendance']['male'];
-		$data['staff']['absent']['female'] = $data['staff']['total']['female'] - $data['staff']['attendance']['female'];
+        $data['staff']['absent']['female'] = $data['staff']['total']['female'] - $data['staff']['attendance']['female'];
+        
+        // CLASS ATTENDANCE CHART
+        foreach ( $this->model_class->select('id','grade_id','name')->get() as $key => $element ):
+            $grade = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+            $data['classes'][$key]['name'] = $grade." - ".$element->name;
+            $data['classes'][$key]['present'] = DB::table('student_attendance')
+            ->join('student', 'student_attendance.student_id', '=', 'student.id')
+            ->select('student.id')
+            ->where('student.class_id', '=', $element->id)
+            ->where('date', '=', $date_now)
+            ->count();
+        endforeach;
 
 		// RENDER VIEW
         $this->load->view('attendance/index', $data);

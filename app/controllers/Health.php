@@ -19,6 +19,8 @@ class Health extends Controller {
         // MODEL
         $this->load->model('student');
         $this->load->model('student/health');
+        $this->load->model('class');
+        $this->load->model('grade');
         
         // STUDENT TOTAL CARD
 		$data['student']['total']['all'] = $this->model_student->select('id')->count();
@@ -88,8 +90,46 @@ class Health extends Controller {
         ->where('student.gender', '=', 'female')
         ->count();
 
+        // APEX CHARTS
+        // BMI LIST BY CLASS
+        foreach ( $this->model_class->select('id','grade_id','name')->get() as $key => $element ):
+
+            $grade = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+            $data['classes'][$key]['name'] = $grade." - ".$element->name;
+
+            // BELOW
+            $data['belowbmis'][$key]['all'] = DB::table('student_health')
+            ->join('student', 'student_health.student_id', '=', 'student.id')
+            ->select('student.id')
+            ->where('class_id', '=', $element->id)
+            ->where('student_health.bmi', '<', '18.5')
+            ->count();
+
+            // AVERAGE
+            $data['averagebmis'][$key]['all'] = DB::table('student_health')
+            ->join('student', 'student_health.student_id', '=', 'student.id')
+            ->select('student.id')
+            ->where('class_id', '=', $element->id)
+            ->where('student_health.bmi', '>=', '18.5')->where('student_health.bmi', '<=', '25')
+            ->count();
+
+            // ABOVE
+            $data['abovebmis'][$key]['all'] = DB::table('student_health')
+            ->join('student', 'student_health.student_id', '=', 'student.id')
+            ->select('student.id')
+            ->where('class_id', '=', $element->id)
+            ->where('student_health.bmi', '>', '25')
+            ->count();
+            
+        endforeach;
+
+        // BMI OVERALL PIE CHART
+        $data['overall_below_bmi'] = $this->model_student_health->select('id')->where('student_health.bmi', '<', '18.5')->count();
+        $data['overall_average_bmi'] = $this->model_student_health->select('id')->where('student_health.bmi', '>=', '18.5')->where('student_health.bmi', '<=', '25')->count();
+        $data['overall_above_bmi'] = $this->model_student_health->select('id')->where('student_health.bmi', '>', '25')->count();
+
 		// RENDER VIEW
-        $this->load->view('health/index', $data);        
+        $this->load->view('health/index', $data);
     }
 
     public function search() {

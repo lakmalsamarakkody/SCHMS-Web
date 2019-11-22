@@ -93,18 +93,18 @@
                     <!-- END : ATTENDANCE SUMMARY  -->
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="attendance-class-view mt-5">
-                        <h4 class="page-title"> BMI in-Average Graph Class wise </h4>
-                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
-                        <img src="https://landing.moqups.com/img/content/charts-graphs/pie-donut-charts/simple-pie-chart/simple-pie-chart-1600.png" alt="" height="600" width="600">
-                    </section>
-                    <!-- END : CLASS VIEW ATTENDANCE -->
+                    <section class="class-attendance-chart mt-5">
 
-                    <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="attendance-class-view mt-5">
-                        <h4 class="page-title"> Disabled Graph Class wise </h4>
-                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
-                        <img src="https://landing.moqups.com/img/content/charts-graphs/pie-donut-charts/simple-pie-chart/simple-pie-chart-1600.png" alt="" height="600" width="600">
+                        <!-- TITLE -->
+                        <h4 class="page-title mb-4">BMI Graph</h4>
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col bg-white pt-3" id="chart-1"></div>
+                                <div class="col bg-white pt-3" id="chart-2"></div>
+                            </div>
+                        </div>
+
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
@@ -115,3 +115,105 @@
 
 {{ template.footer|raw }}
 </body>
+
+<script>
+
+    // APEXCHARTS
+    let options = {
+        chart: {
+            height: 500,
+            type: 'bar',
+            stacked: true,
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            },
+            
+        },
+        stroke: {
+            width: 1,
+            colors: ['#fff']
+        },
+        series: [{
+            name: 'Below Average',
+            data: [{% for belowbmi in belowbmis %} {{ belowbmi.all }}, {% endfor %}]
+        },{
+            name: 'In Average',
+            data: [{% for averagebmi in averagebmis %} {{ averagebmi.all }}, {% endfor %}]
+        },{
+            name: 'Above Average',
+            data: [{% for abovebmi in abovebmis %} {{ abovebmi.all }}, {% endfor %}]
+        }],
+        title: {
+            text: 'Vizualization by Class'
+        },
+        xaxis: {
+            categories: [{% for class in classes %} '{{ class.name }}', {% endfor %}],
+            labels: {
+                formatter: function(val) {
+                    return val + ""
+                }
+            }
+        },
+        yaxis: {
+            title: {
+                text: undefined
+            },
+            
+        },
+        tooltip: {
+            y: {
+                formatter: function(val) {
+                return val + ""
+            }
+            }
+        },
+        fill: {
+            opacity: 1
+            
+        },        
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 40
+        }
+    }
+
+    let options2 = {
+        chart: {
+            width: 600,
+            type: 'pie',
+        },
+        title: {
+            text: 'Overall percentage'
+        },
+        labels: ['Below in BMI', 'Average in BMI', 'Above in BMI'],
+        series: [{{overall_below_bmi}}, {{overall_average_bmi}}, {{overall_above_bmi}}],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    }
+
+    let chart1 = new ApexCharts(
+        document.querySelector("#chart-1"),
+        options
+    );
+
+    let chart2 = new ApexCharts(
+        document.querySelector("#chart-2"),
+        options2
+    );
+        
+    chart1.render()
+    chart2.render()
+
+</script>

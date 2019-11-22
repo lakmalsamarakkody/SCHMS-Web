@@ -18,6 +18,8 @@ class Student extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODEL
+        $this->load->model('class');
+        $this->load->model('grade');
 		$this->load->model('student');
         $this->load->model('student/attendance');
         
@@ -48,7 +50,14 @@ class Student extends Controller {
         // ABSENT CARD
 		$data['student']['absent']['all'] = $data['student']['total']['all'] - $data['student']['attendance']['all'];
 		$data['student']['absent']['male'] = $data['student']['total']['male'] - $data['student']['attendance']['male'];
-		$data['student']['absent']['female'] = $data['student']['total']['female'] - $data['student']['attendance']['female'];
+        $data['student']['absent']['female'] = $data['student']['total']['female'] - $data['student']['attendance']['female'];
+        
+        // CLASS STUDENT TOTAL CHART
+        foreach ( $this->model_class->select('id','grade_id','name')->get() as $key => $element ):
+            $grade = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+            $data['classes'][$key]['name'] = $grade." - ".$element->name;
+            $data['classes'][$key]['total'] = $this->model_student->select('id')->where('class_id', '=', $element->id)->count();
+        endforeach;
 
 		// RENDER VIEW
         $this->load->view('student/index', $data);
@@ -769,7 +778,8 @@ class Student extends Controller {
                     $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first()->index_no;
                     
                     if ( $index_no !== NULL ):
-                        $this->model_student_class->index_no = $index_no->index_no++;
+                        $index_no = $index_no + 1;
+                        $this->model_student_class->index_no = $index_no;
                     else:
                         $this->model_student_class->index_no = 1;
                     endif;

@@ -108,12 +108,19 @@
                     <!-- END : LATEST ACHIEVEMENT -->
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="attendance-class-view mt-5">
+                    <section class="class-attendance-chart mt-5">
 
-                        <h4 class="page-title"> Students engage in sports by sport </h4>
-                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
-                        <img src="https://landing.moqups.com/img/content/charts-graphs/pie-donut-charts/simple-pie-chart/simple-pie-chart-1600.png" alt="" height="600" width="600">
-    
+                        <!-- TITLE -->
+                        <h1 class="page-title text-danger">CHART BUG</h1>
+                        <h4 class="page-title mb-4">Students by Sports</h4>
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col bg-white pt-3" id="chart-1"></div>
+                                <div class="col bg-white pt-3" id="chart-2"></div>
+                            </div>
+                        </div>
+
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
@@ -124,3 +131,66 @@
 
 {{ template.footer|raw }}
 </body>
+
+<script>
+
+    // APEXCHARTS
+    let options = {
+        chart: {
+            height: 500,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        title: {
+            text: 'Total Students'
+        },
+        series: [{
+            data: [{% for sport in sports %} {{ sport.count }},{% endfor %}]
+        }],
+        xaxis: {
+            categories: [ {% for sport in sports %} '{{ sport.name }}',{% endfor %} ],
+        }
+    }
+
+    let options2 = {
+        chart: {
+            width: 600,
+            type: 'pie',
+        },
+        title: {
+            text: 'Percentage'
+        },
+        labels: [{% for sport in sports %} '{{ sport.name }}',{% endfor %}],
+        series: [{% for sport in sports %} {{ sport.count }},{% endfor %}],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    }
+
+    let chart1 = new ApexCharts(
+        document.querySelector("#chart-1"),
+        options
+    )
+    let chart2 = new ApexCharts(
+        document.querySelector("#chart-2"),
+        options2
+    )
+    chart1.render()
+    chart2.render()
+
+</script>

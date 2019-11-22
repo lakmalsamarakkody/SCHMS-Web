@@ -64,11 +64,18 @@
                     <!-- END : USER SUMMARY  -->
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="attendance-class-view mt-5">
-                        <h4 class="page-title"> User role count bar graph & pie chart </h4>
-                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
-                        <img src="https://landing.moqups.com/img/content/charts-graphs/pie-donut-charts/simple-pie-chart/simple-pie-chart-1600.png" alt="" height="600" width="600">
-    
+                    <section class="class-attendance-chart mt-5">
+
+                        <!-- TITLE -->
+                        <h4 class="page-title mb-4">User Role Analysis</h4>
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col bg-white pt-3" id="chart-1"></div>
+                                <div class="col bg-white pt-3" id="chart-2"></div>
+                            </div>
+                        </div>
+
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
@@ -80,3 +87,66 @@
 
 {{ template.footer|raw }}
 </body>
+
+<script>
+
+    // APEXCHARTS
+    let options = {
+        chart: {
+            height: 500,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        title: {
+            text: 'Users by role'
+        },
+        series: [{
+            data: [{% for user in user.roles %} {{ user.count }},{% endfor %}]
+        }],
+        xaxis: {
+            categories: [{% for user in user.roles %} '{{ user.role }}',{% endfor %}],
+        }
+    }
+
+    let options2 = {
+        chart: {
+            width: 650,
+            type: 'pie',
+        },
+        title: {
+            text: 'User Percentage by role'
+        },
+        labels: [{% for user in user.roles %} '{{ user.role }}',{% endfor %}],
+        series: [{% for user in user.roles %} {{ user.count }},{% endfor %}],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    }
+
+    let chart1 = new ApexCharts(
+        document.querySelector("#chart-1"),
+        options
+    )
+    let chart2 = new ApexCharts(
+        document.querySelector("#chart-2"),
+        options2
+    )
+    chart1.render()
+    chart2.render()
+
+</script>

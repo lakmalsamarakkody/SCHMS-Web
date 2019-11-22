@@ -172,7 +172,8 @@ class Staff extends Controller {
         $data['staff']['nonacademic']['absent']['female'] = $data['staff']['nonacademic']['female'] - $data['staff']['nonacademic']['attendance']['female'];
         
         // CLASS
-		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id')->get() as $key => $element ):
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id')->get() as $key => $element ):
+            
 			$data['classes'][$key]['id'] = $element->id;
 			$data['classes'][$key]['grade']['id'] = $element->grade_id;
 			$data['classes'][$key]['name'] = $element->name;
@@ -182,10 +183,18 @@ class Staff extends Controller {
 
 			// GET STAFF DETAILS
 			if ( $element->staff_id !== NULL):
-				$data['classes'][$key]['staff'] = $this->model_staff->select('initials', 'surname')->where('id', '=', $element->staff_id)->first()->toArray();
+				$data['classes'][$key]['staff']['name'] = $this->model_staff->select('initials', 'surname')->where('id', '=', $element->staff_id)->first()->toArray();
 			else:
-				$data['classes'][$key]['staff'] = "";
-			endif;				
+				$data['classes'][$key]['staff']['name'] = "";
+            endif;
+            
+            // GET STATUS
+            if ( $this->model_staff_attendance->select('id')->where('staff_id', '=', $element->staff_id)->where('date', '=', $date_now)->first() !== NULL ):
+                $data['classes'][$key]['staff']['status'] = "Present";
+            else:
+                $data['classes'][$key]['staff']['status'] = "Absent";
+            endif;
+
 		endforeach;
 
 		// RENDER VIEW

@@ -36,6 +36,11 @@ class Parents extends Controller {
         $data['parent']['most']['occupation']['all'] = $this->model_parent->select('occupation')->distinct()->get('occupation');
         $data['parent']['most']['occupation']['male'] = $this->model_parent->select('occupation')->distinct()->get('occupation')->where('gender', '=', 'male')->count();
         $data['parent']['most']['occupation']['female'] = $this->model_parent->select('occupation')->distinct()->get('occupation')->where('gender', '=', 'female')->count();
+
+        // BMI OVERALL PIE CHART
+        $data['overall_below_income'] = $this->model_parent->select('id')->where('parent.income', '<', '25000')->count();
+        $data['overall_average_income'] = $this->model_parent->select('id')->where('parent.income', '>=', '25000')->where('parent.income', '<=', '45000')->count();
+        $data['overall_above_income'] = $this->model_parent->select('id')->where('parent.income', '>', '45000')->count();
         
 		// RENDER VIEW
         $this->load->view('parents/index', $data);

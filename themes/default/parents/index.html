@@ -92,19 +92,18 @@
                     <!-- END : ATTENDANCE SUMMARY  -->
 
                     <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="attendance-class-view mt-5">
-                        <h4 class="page-title">Occupation bar chart and Pie Chart</h4>
-                        <img src="https://lh4.googleusercontent.com/G7c_EDDarlte5Op54JJkxMKV4DkvKaM-ds6mqGeYvuyrZh0lSqmWopJ6myaCSYHr2avEVrFiyI8Vj0sC94izVP1YMlcm0d2TFVMFNcRmlqcsOvGV-SIdI_CmiilsAMPmLmXAdvtp" alt="">
-                        <img src="https://landing.moqups.com/img/content/charts-graphs/pie-donut-charts/simple-pie-chart/simple-pie-chart-1600.png" alt="" height="600" width="600">
-                    </section>
-                    <!-- END : CLASS VIEW ATTENDANCE -->
+                    <section class="class-attendance-chart mt-5">
 
-                    <!-- START : CLASS VIEW ATTENDANCE -->
-                    <section class="attendance-class-view mt-5">
+                        <!-- TITLE -->
+                        <h4 class="page-title mb-4">Income</h4>
 
-                        <h4 class="page-title">Income percentage Pie Chart</h4>
-                        <img src="https://landing.moqups.com/img/content/charts-graphs/pie-donut-charts/simple-pie-chart/simple-pie-chart-1600.png" alt="" height="600" width="600">
-    
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col bg-white pt-3" id="chart-1"></div>
+                                <div class="col bg-white pt-3" id="chart-2"></div>
+                            </div>
+                        </div>
+
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
@@ -115,3 +114,66 @@
 
 {{ template.footer|raw }}
 </body>
+
+<script>
+
+    // APEXCHARTS
+    let options = {
+        chart: {
+            height: 500,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        title: {
+            text: 'Income'
+        },
+        series: [{
+            data: [{{overall_below_income}}, {{overall_average_income}}, {{overall_above_income}}]
+        }],
+        xaxis: {
+            categories: [ 'Below in income', 'Average in income', 'Above in income' ],
+        }
+    }
+
+    let options2 = {
+        chart: {
+            width: 600,
+            type: 'pie',
+        },
+        title: {
+            text: 'Income Percentage'
+        },
+        labels: ['Below in income', 'Average in income', 'Above in income'],
+        series: [{{overall_below_income}}, {{overall_average_income}}, {{overall_above_income}}],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    }
+
+    let chart1 = new ApexCharts(
+        document.querySelector("#chart-1"),
+        options
+    )
+    let chart2 = new ApexCharts(
+        document.querySelector("#chart-2"),
+        options2
+    )
+    chart1.render()
+    chart2.render()
+
+</script>

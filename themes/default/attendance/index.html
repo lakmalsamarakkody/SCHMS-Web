@@ -93,12 +93,11 @@
                     <section class="class-attendance-chart mt-5">
 
                         <!-- TITLE -->
-                        <h4 class="page-title">Class Attendance</h4>
+                        <h4 class="page-title mb-4">Class Attendance</h4>
 
                         <div class="col-12">
                             <div class="row">
-                                <div class="col-6 bg-white" id="chart-1"></div>
-                                <div class="col-6 bg-white" id="chart-2"></div>
+                                <div class="col bg-white pt-3" id="chart-1"></div>
                             </div>
                         </div>
 
@@ -144,43 +143,6 @@
     </div>
 
 {{ template.footer|raw }}
-
-    <script>
-
-        let options = {
-            chart: {
-                height: 400,
-                type: 'bar',
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: true,
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            series: [{
-                data: [100, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-            }],
-            xaxis: {
-                categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
-            }
-        }
-
-        let chart1 = new ApexCharts(
-            document.querySelector("#chart-1"),
-            options
-        )
-        let chart2 = new ApexCharts(
-            document.querySelector("#chart-2"),
-            options
-        )
-        chart1.render()
-        chart2.render()
-
-    </script>
-
 </body>
 
 <script>
@@ -188,4 +150,34 @@
     $(document).ready(function() {
         $('#table_staff_absent').DataTable();
     } );
+
+    // APEX CHARTS
+    let options = {
+        chart: {
+            height: 500,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        series: [{
+            data: [{% for class in classes %} {{ class.present }},{% endfor %}]
+        }],
+        xaxis: {
+            categories: [ {% for class in classes %} '{{ class.name }}',{% endfor %} ],
+        }
+    }
+
+    let chart1 = new ApexCharts(
+        document.querySelector("#chart-1"),
+        options
+    )
+
+    chart1.render()
+
 </script>

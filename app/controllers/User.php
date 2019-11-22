@@ -18,11 +18,20 @@ class User extends Controller {
 
         // MODEL
         $this->load->model('user');
+        $this->load->model('user/role');
 
         // USER CARDS
         $data['user']['total']['all'] = $this->model_user->select('id')->count();
         $data['user']['total']['active'] = $this->model_user->select('id')->where('status', '=', 'Active')->count();
         $data['user']['total']['disabled'] = $this->model_user->select('id')->where('status', '=', 'Inactive')->count();
+
+        // APEX CHARTS
+        // BAR CHART
+        foreach( $this->model_user_role->select('id', 'role')->orderBy('role')->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['role'] = $element->role;
+            $data['user']['roles'][$key]['count'] = $this->model_user->select('id')->where('role_id', '=', $element->id)->count();
+        endforeach;
 
 		// RENDER VIEW
         $this->load->view('user/index', $data);
