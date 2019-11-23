@@ -31,6 +31,8 @@ class Home extends Controller {
 		$this->load->model('student/sport');
 		$this->load->model('staff');
 		$this->load->model('staff/attendance');
+		$this->load->model('class');
+		$this->load->model('grade');
 		$this->load->model('parent');
 		$this->load->model('user');
 		$this->load->model('sport');
@@ -104,6 +106,26 @@ class Home extends Controller {
 		$data['sport']['total']['all'] = $this->model_sport->select('id')->count();
 		$data['coach']['total']['all'] = $this->model_coach->select('id')->count();
 		$data['sport']['student']['total']['all'] = $this->model_student_sport->distinct()->get('student_id')->count();
+
+		// APEX CHARTS
+		// STUDENT IN CLASS CHART
+		foreach ( $this->model_class->select('id','grade_id','name')->get() as $key => $element ):
+            $grade = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+            $data['classes'][$key]['name'] = $grade." - ".$element->name;
+            $data['classes'][$key]['total'] = $this->model_student->select('id')->where('class_id', '=', $element->id)->count();
+        endforeach;
+
+		// ATTENDANCE IN CLASS CHART
+		foreach ( $this->model_class->select('id','grade_id','name')->get() as $key => $element ):
+            $grade = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+            $data['classes'][$key]['name'] = $grade." - ".$element->name;
+            $data['classes'][$key]['present'] = DB::table('student_attendance')
+            ->join('student', 'student_attendance.student_id', '=', 'student.id')
+            ->select('student.id')
+            ->where('student.class_id', '=', $element->id)
+            ->where('date', '=', $date_now)
+            ->count();
+        endforeach;
 
 		// RENDER VIEW
 		$this->load->view('home/index', $data);

@@ -14,7 +14,7 @@
 
                     <h4 class="page-title"> Dashboard </h4>
 
-                    <!-- START : BODY -->
+                    <!-- START : STUDENT STAFF CARDS -->
                     <div class="row mt-5">
 
                         <!-- STUDENT SUMMARY -->
@@ -100,9 +100,27 @@
 
                             </div>
                         </div>
+                    </div>
+                    <!-- END : STUDENT STAFF CARDS -->
+
+                    <!-- START : CLASS VIEW ATTENDANCE -->
+                    <section class="class-attendance-chart mt-5">
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12 chart-bg pt-3" id="chart-1"></div>
+                                <div class="col-12 chart-bg pt-3" id="chart-2"></div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- END : CLASS VIEW ATTENDANCE -->
+
+                    <!-- START : EXAM CARD -->
+                    <div class="row mt-4">
 
                         <!-- EXAM SUMMARY -->
-                        <div class="col-12 mt-4 mb-4">
+                        <div class="col-12">
                             <div class="card">
 
                                 <div class="card-header">
@@ -133,6 +151,10 @@
 
                             </div>
                         </div>
+                    </div>
+
+                    <!-- START : PARENT USER SPORT CARDS -->
+                    <div class="row mt-4">
 
                         <!-- PARENT SUMMARY -->
                         <div class="col-4">
@@ -255,7 +277,7 @@
                         </div>    
 
                     </div>
-                    <!-- END : BODY -->
+                    <!-- END : PARENT USER SPORT CARDS -->
 
                 </div>
             </div>
@@ -264,3 +286,67 @@
 
 {{ template.footer|raw }}
 </body>
+
+<script>
+
+    // APEXCHARTS
+    let options = {
+        chart: {
+            height: 400,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        title: {
+            text: 'Students'
+        },
+        series: [{
+            data: [{% for class in classes %} {{ class.total }},{% endfor %}]
+        }],
+        xaxis: {
+            categories: [ {% for class in classes %} '{{ class.name }}',{% endfor %} ],
+        }
+    }
+
+    let options2 = {
+        chart: {
+            height: 400,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        title: {
+            text: 'Attendance'
+        },
+        series: [{
+            data: [{% for class in classes %} {{ class.present }},{% endfor %}]
+        }],
+        xaxis: {
+            categories: [ {% for class in classes %} '{{ class.name }}',{% endfor %} ],
+        }
+    }
+
+    let chart1 = new ApexCharts(
+        document.querySelector("#chart-1"),
+        options
+    )
+    let chart2 = new ApexCharts(
+        document.querySelector("#chart-2"),
+        options2
+    )
+    chart1.render()
+    chart2.render()
+
+</script>

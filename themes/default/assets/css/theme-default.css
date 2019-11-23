@@ -9,19 +9,6 @@
     --footer-bg-color: #333333; 
 }
 
-/* SCROLLBAR */
-/* Track */
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #b9b8bb5b;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(180, 179, 179, 0.596);
-    /* background : var(--main-theme-color); */
-  }
-
 .digital-clock {
     color: #ffffff;
     text-shadow: 0 0 1px #ff0;
@@ -44,6 +31,23 @@
     color: var(--main-theme-color);
     background: var(--white);
     border: 0rem;
+}
+
+.chart-bg{
+    background-color: var(--white);
+}
+
+/* SCROLLBAR */
+/* Track */
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #b9b8bb5b;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 179, 179, 0.596);
+    /* background : var(--main-theme-color); */
 }
 
 

@@ -36,6 +36,10 @@
     background-color: var(--white);
 }
 
+.chart-bg{
+    background-color: var(--main-bg-color);
+}
+
 .card .card-header {
     background: #262a35;
     color: var(--white);
