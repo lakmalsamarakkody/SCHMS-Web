@@ -775,10 +775,10 @@ class Student extends Controller {
                     $this->model_student_class->student_id = $this->model_student->id;
                     $this->model_student_class->class_id = $this->request->post['class'];
 
-                    $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first()->index_no;
+                    $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first();
                     
                     if ( $index_no !== NULL ):
-                        $index_no = $index_no + 1;
+                        $index_no = $index_no->index + 1;
                         $this->model_student_class->index_no = $index_no;
                     else:
                         $this->model_student_class->index_no = 1;
