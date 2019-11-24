@@ -17,21 +17,17 @@
                     <div class="col-12 mt-5">
                         <div class="row">
 
-                            <div class="col-md-6 card">
-                                <div class="card-header"><h4>Attendance By Class</h4></div>
+                            <div class="col-6 card">
+                                <div class="card-header"><h5>Class Attendance</h5></div>
                                 <div class="card-body">
 
                                     <!-- FORM -->
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="inpt-class">Class</label>
-                                            <select class="form-control" id="inpt-class" name="class" {{ (form.field.isStaff) ? 'disabled' : '' }}>
+                                            <select class="form-control" id="inpt-class" name="class">
                                                 {% for class in student_class %}
-                                                    {% if class.id == form.field.class %}
-                                                        <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                                    {% else %}
-                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                                    {% endif %}
+                                                    <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -52,20 +48,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 card">
-                                <div class="card-header"><h4>Attendance By Class</h4></div>
+                            <div class="col-6 card">
+                                <div class="card-header"><h5>Staff Attendance</h5></div>
                                 <div class="card-body">
 
                                     <!-- FORM -->
                                     <div class="form-row">
-                                        <div class="col">
-                                            <label for="class">Class</label>
-                                            <input type="text" class="form-control" />
-                                        </div>
-                                        <div class="col">
-                                            <label for="class">Class</label>
-                                            <input type="text" class="form-control" />
-                                        </div>
+                                            <div class="col">
+                                                <label for="inpt-staff-month">Month</label>
+                                                <div class="input-group date" id="datetimepicker-staff-month" data-target-input="nearest">
+                                                    <input type="text" id="inpt-staff-month" class="form-control datetimepicker-input" data-target="#datetimepicker-staff-month" name="month" required/>
+                                                    <div class="input-group-append" data-target="#datetimepicker-staff-month" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="la la-calendar"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
 
                                 </div>
@@ -79,33 +76,45 @@
                         <div class="row mt-3">
 
                             <div class="col-md-6 card">
-                                <table class="table">
+                                <table class="table table-responsive-md">
                                     <thead>
                                         <tr>
-                                            <th>TEST</th>
-                                            <th></th>
+                                            <th class="text-center" scope="col">CLASS</th>
+                                            <th class="text-center" scope="col">MONTH</th>
+                                            <th class="text-center" scope="col">REPORT DATE</th>
+                                            <th class="text-right" scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>TEST</td>
-                                            <td></td>
+                                            <td class="text-center" scope="col">TEST</td>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="col-md-6 card">
-                                <table class="table">
+                                <table class="table table-responsive-md">
                                     <thead>
                                         <tr>
-                                            <th>TEST</th>
-                                            <th></th>
+                                            <th class="text-center" scope="col">MONTH</th>
+                                            <th class="text-center" scope="col">REPORT DATE</th>
+                                            <th class="text-right" scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>TEST</td>
-                                            <td></td>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -125,6 +134,11 @@
 <script>
     $(function () {
         $('#datetimepicker-class-month').datetimepicker({
+            viewMode: 'years',
+            format: 'MM/YYYY'
+        });
+
+        $('#datetimepicker-staff-month').datetimepicker({
             viewMode: 'years',
             format: 'MM/YYYY'
         });

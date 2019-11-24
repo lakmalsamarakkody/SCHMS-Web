@@ -1,9 +1,12 @@
 <?php
 
 // USE
+use Carbon\Carbon;
+use Illuminate\Database\Capsule\Manager as DB;
 use Fpdf\Fpdf;
 
 class Report extends Controller {
+
     public function index() {
     
         // SITE DETAILS
@@ -62,43 +65,81 @@ class Report extends Controller {
         $this->load->model("student");
         $this->load->model("student/attendance");
 
+        $time_now = Carbon::now();
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // VALIDATION : month
+        $is_valid_month = GUMP::is_valid($this->request->post, array('month' => 'required|max_len,8'));
+        if ( $is_valid_month !== true ):
+            echo json_encode( array("status" => "failed", "error" => "Please select a valid Month" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         // CHECK IF SUBMITED
         if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
 
             // IS CORRECT CLASS ID
             if ( $this->model_class::select('name')->where('id', '=', $this->request->post['class_id'])->first() === NULL ):
-                echo json_encode( array("status" => "failed", "error" => "Incorrect class id" ), JSON_PRETTY_PRINT );  // WENAS KARAHAN
+                echo json_encode( array("status" => "failed", "error" => "Invalid Class is Selected" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
 
-            // STUDENT NAMES
+            // FPDF LAYOUT
             $PDF = new Fpdf('L', 'mm', 'A4');
             $PDF->SetMargins(0,0,0);
             $PDF->AddPage();
-            $PDF->Image(ABS_PATH.'/data/img/report_header.png', null, null, 210, 30);
-            $PDF->SetFont('Arial','B',16);
-
-            // CONTENT
+            
+            // HEADER
+            // $PDF->Image(ABS_PATH.'/data/img/report_header.png', null, null, 210, 30);
+            $PDF->SetFillColor(114, 124, 245);
             $PDF->SetTextColor(255, 255, 255);
-            $PDF->Cell(0, 15,'Attendance By Class', 0, 1, 'C', true);
+
+            // $PDF->SetFont('Arial','',8);
+            // $PDF->Cell(0, 10,'Peellawaththa, Andiambalama', 0, 0, 'L', true);
+            $PDF->SetFont('Arial','B',14);;
+            $PDF->Cell(0, 10,'WP/NG David De Silva College', 0, 0, 'C', true);
+            $PDF->SetFont('Arial','',8);
+            $PDF->Cell(0, 10,'time : '.$time_now, 0, 1, 'R', true);
+
+            // $PDF->SetFont('Arial','',8);
+            // $PDF->Cell(0, 10,'wpngdavidsilvacollege@gmail.com', 0, 0, 'L', true);
+            $PDF->SetFont('Arial','',12);
+            $PDF->Cell(0, 5,'Minuwangoda', 0, 0, 'C', true);
+            $PDF->SetFont('Arial','',8);
+            $PDF->Cell(0, 5,'generated_by : '.$_SESSION['user']['id'], 0, 1, 'R', true);
+
+
+            // TITLE
+            $PDF->SetMargins(5,5,5);
+            $PDF->SetTextColor(100, 100, 100);
+            $PDF->SetFont('Arial','B',14);
+            $PDF->Cell(0, 15,'Attendance Report', 0, 1, 'C', false);
 
             // CLASS DATA
             $PDF->SetFont('Arial','B', 12);
             $PDF->SetTextColor(0, 0, 0);
-            $PDF->SetLeftMargin(100);
-            $PDF->Cell(0, 15,'Class : 10-A', 0, 0, 'L', false);
-            $PDF->Cell(0, 15,'Class :', 0, 0, 'R', false);
+            $PDF->Cell(0, 5,'Class : 10-A', 0, 0, 'L', false);
+            $PDF->Cell(0, 5,'Month : '.$this->request->post['month'], 0, 1, 'R', false);
+
+            // CONTENT
 
             // FOOTER
+            // $PDF->SetMargins(5,5,5);
+            $PDF->SetY(182);
+            // $PDF->SetY(271);
+            $PDF->SetFont('Arial','',8);
+            $PDF->Cell(0,5,'Authorized by : ________________',0,0,'L');
+            $PDF->SetFont('Arial','I',8);
+            $PDF->Cell(0,5,'Page '.$PDF->PageNo(),0,0,'R');
 
 
             // OUTPUT
-            $PDF->Output(ABS_PATH.'/data/reports/gg.pdf', 'F');
+            $PDF->Output(ABS_PATH.'/data/reports/attendance/gg.pdf', 'F');
 
             // ATTENDANCE
             //$data = $this->model_attendance::select()
 
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/gg' ), JSON_PRETTY_PRINT );  // WENAS KARAHAN
+            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/gg' ), JSON_PRETTY_PRINT );  // WENAS KARAHAN
             exit();
 
 
@@ -108,4 +149,90 @@ class Report extends Controller {
         endif;
 
     }
+
+    public function student() {
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+		// RENDER VIEW
+        $this->load->view('report/student', $data);
+    }
+
+    public function timetable() {
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+		// RENDER VIEW
+        $this->load->view('report/timetable', $data);
+    }
+
+    public function result() {
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+		// RENDER VIEW
+        $this->load->view('report/result', $data);
+    }
+
+    public function health() {
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+		// RENDER VIEW
+        $this->load->view('report/health', $data);
+    }
+
+    public function staff() {
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+		// RENDER VIEW
+        $this->load->view('report/staff', $data);
+    }
+
 }

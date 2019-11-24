@@ -12,10 +12,10 @@ class Login extends Controller {
 		$data['template']['header']		= $this->load->controller('common/header', $data);
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 
+		$this->load->model('User');
+
 		//Login
 		if (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "staff"  ):
-
-			$this->load->model('User');
 
 			$validate = GUMP::is_valid($this->request->post,['username' => 'required']);
 

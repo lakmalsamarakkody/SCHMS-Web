@@ -1,0 +1,185 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">               
+                {{ template.topmenu|raw }}
+
+                <section class="report-health">
+
+                    <h4 class="page-title"> Helath Reports </h4>
+
+                    <div class="col-12 mt-5">
+                        <div class="row">
+
+                            <div class="col-6 card">
+                                <div class="card-header"><h5>Student health report</h5></div>
+                                <div class="card-body">
+
+                                    <!-- FORM -->
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="inpt-class">Student</label>
+                                            <select class="form-control" id="inpt-student" name="class">
+                                                {% for student in students %}
+                                                    <option value="{{ class.id }}"> {{ student.fullname }} </option>
+                                                {% endfor %}
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <button class="btn btn-primary" onclick="Generate_StudentHealth();">Generate</button>
+                                </div>
+                            </div>
+
+                            <div class="col-6 card">
+                                <div class="card-header"><h5>Overall class health report</h5></div>
+                                <div class="card-body">
+
+                                    <!-- FORM -->
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="inpt-class">Class</label>
+                                            <select class="form-control" id="inpt-class" name="class">
+                                                {% for class in student_class %}
+                                                    <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <button class="btn btn-primary" onclick="Generate_ClassHealth();">Generate</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+
+                            <div class="col-md-6 card">
+                                <table class="table table-responsive-md">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col">CLASS</th>
+                                            <th class="text-center" scope="col">MONTH</th>
+                                            <th class="text-center" scope="col">REPORT DATE</th>
+                                            <th class="text-right" scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center" scope="col">TEST</td>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 card">
+                                <table class="table table-responsive-md">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col">MONTH</th>
+                                            <th class="text-center" scope="col">REPORT DATE</th>
+                                            <th class="text-right" scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>
+
+<script>
+
+    Generate_StudentHealth = () => {
+
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("class_id", $("#inpt-student").val())
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/health_ajax_by_student",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (Response) => {
+                if ( Response.status === 'success' ) {
+                    console.log("SUCCESS")
+                    console.log( Response )
+                } else {
+                    alertify.alert("Failed", Response.error)
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Error happened")
+                console.log( e.responseText )
+            }
+        })
+
+    }
+
+    Generate_ClassHealth = () => {
+
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("class_id", $("#inpt-class").val())
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/health_ajax_by_class",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (Response) => {
+                if ( Response.status === 'success' ) {
+                    console.log("SUCCESS")
+                    console.log( Response )
+                } else {
+                    alertify.alert("Failed", Response.error)
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Error happened")
+                console.log( e.responseText )
+            }
+        })
+
+    }
+
+</script>
