@@ -1,0 +1,164 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">               
+                {{ template.topmenu|raw }}
+
+                <section class="report-attendance">
+
+                    <h4 class="page-title"> Attendance Reports </h4>
+
+                    <div class="col-12 mt-5">
+                        <div class="row">
+
+                            <div class="col-md-6 card">
+                                <div class="card-header"><h4>Attendance By Class</h4></div>
+                                <div class="card-body">
+
+                                    <!-- FORM -->
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="inpt-class">Class</label>
+                                            <select class="form-control" id="inpt-class" name="class" {{ (form.field.isStaff) ? 'disabled' : '' }}>
+                                                {% for class in student_class %}
+                                                    {% if class.id == form.field.class %}
+                                                        <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                    {% else %}
+                                                        <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="inpt-class-month">Month</label>
+                                            <div class="input-group date" id="datetimepicker-class-month" data-target-input="nearest">
+                                                <input type="text" id="inpt-class-month" class="form-control datetimepicker-input" data-target="#datetimepicker-class-month" name="month" required/>
+                                                <div class="input-group-append" data-target="#datetimepicker-class-month" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="la la-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <button class="btn btn-primary" onclick="Generate_ClassAttendance();">Generate</button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 card">
+                                <div class="card-header"><h4>Attendance By Class</h4></div>
+                                <div class="card-body">
+
+                                    <!-- FORM -->
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="class">Class</label>
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <div class="col">
+                                            <label for="class">Class</label>
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <button class="btn btn-primary">Generate</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+
+                            <div class="col-md-6 card">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>TEST</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>TEST</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 card">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>TEST</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>TEST</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>
+
+<script>
+    $(function () {
+        $('#datetimepicker-class-month').datetimepicker({
+            viewMode: 'years',
+            format: 'MM/YYYY'
+        });
+    });
+
+    Generate_ClassAttendance = () => {
+
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("class_id", $("#inpt-class").val())
+        formData.append("month", $("#inpt-class-month").val())
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/attendance_ajax_by_class",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (Response) => {
+                if ( Response.status === 'success' ) {
+                    console.log("SUCCESS")
+                    console.log( Response )
+                } else {
+                    alertify.alert("Failed", Response.error)
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Error happened")
+                console.log( e.responseText )
+            }
+        })
+
+    }
+
+</script>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f760330309c800d7383aeaadb2b381f0",
+    "content-hash": "e99cbbfa87a7a677365ab1288ec64bc3",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -72,6 +72,48 @@
                 "string"
             ],
             "time": "2018-01-09T20:05:19+00:00"
+        },
+        {
+            "name": "fpdf/fpdf",
+            "version": "1.81.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coreydoughty/Fpdf.git",
+                "reference": "6be5dd7dd0b3077b565ecadb28e7f01f7d2f2185"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coreydoughty/Fpdf/zipball/6be5dd7dd0b3077b565ecadb28e7f01f7d2f2185",
+                "reference": "6be5dd7dd0b3077b565ecadb28e7f01f7d2f2185",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fpdf\\": "src/Fpdf"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Corey Doughty",
+                    "email": "corey@doughty.ca"
+                }
+            ],
+            "description": "FPDF Composer Wrapper",
+            "homepage": "https://github.com/coreydoughty/Fpdf",
+            "keywords": [
+                "fpdf",
+                "pdf",
+                "wrapper"
+            ],
+            "time": "2018-10-25T10:38:10+00:00"
         },
         {
             "name": "illuminate/container",
