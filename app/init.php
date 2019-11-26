@@ -21,4 +21,7 @@ require_once ABS_PATH.'/app/core/App.php';
 require_once ABS_PATH.'/app/core/Controller.php';
 require_once ABS_PATH.'/app/core/Database.php';
 
+// UTILS
+require_once ABS_PATH.'/utils/JSReport.php';
+
 ?>
