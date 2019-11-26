@@ -1,3 +1,4 @@
+data/reports/
 libs/*
 config/default.php
 error.log
