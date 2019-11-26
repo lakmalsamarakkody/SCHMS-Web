@@ -84,9 +84,20 @@ class Report extends Controller {
                 exit();
             endif;
 
+            $data['class'] = "11 - E";
+
+            $file = 'tasdasda';
+
+            for ( $i = 1; $i < 10; $i++ ):
+                $data['students'][$i] = array(
+                    "name" => "th Student",
+                    "age" => 10
+                );
+            endfor;
+
             // JSReports
             $JSReport = new JSReport();
-            $JSReport->get_report('AGENTS', array("name" => "Lakmal"), 'attendance/name');
+            $JSReport->get_report('CLASS_ATTENDANCE', $data, 'attendance/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
 

@@ -1,8 +1,8 @@
 <?php
 
 class Data extends Controller {
-    public function report($file) {
-        $path = ABS_PATH.'/data/reports/'.$file.".pdf";
+    public function report($dir, $file) {
+        $path = ABS_PATH.'/data/reports/'.$dir.'/'.$file.".pdf";
         header('Content-type:application/pdf');
         header('Content-disposition: inline; filename="'.$file.'"');
         header('content-Transfer-Encoding:binary');
