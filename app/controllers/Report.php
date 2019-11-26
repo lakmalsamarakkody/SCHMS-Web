@@ -84,60 +84,11 @@ class Report extends Controller {
                 exit();
             endif;
 
-            // FPDF LAYOUT
-            $PDF = new Fpdf('L', 'mm', 'A4');
-            $PDF->SetMargins(0,0,0);
-            $PDF->AddPage();
-            
-            // HEADER
-            // $PDF->Image(ABS_PATH.'/data/img/report_header.png', null, null, 210, 30);
-            $PDF->SetFillColor(114, 124, 245);
-            $PDF->SetTextColor(255, 255, 255);
+            // JSReports
+            $JSReport = new JSReport();
+            $JSReport->get_report('AGENTS', array("name" => "Lakmal"), 'attendance/name');
 
-            // $PDF->SetFont('Arial','',8);
-            // $PDF->Cell(0, 10,'Peellawaththa, Andiambalama', 0, 0, 'L', true);
-            $PDF->SetFont('Arial','B',14);;
-            $PDF->Cell(0, 10,'WP/NG David De Silva College', 0, 0, 'C', true);
-            $PDF->SetFont('Arial','',8);
-            $PDF->Cell(0, 10,'time : '.$time_now, 0, 1, 'R', true);
-
-            // $PDF->SetFont('Arial','',8);
-            // $PDF->Cell(0, 10,'wpngdavidsilvacollege@gmail.com', 0, 0, 'L', true);
-            $PDF->SetFont('Arial','',12);
-            $PDF->Cell(0, 5,'Minuwangoda', 0, 0, 'C', true);
-            $PDF->SetFont('Arial','',8);
-            $PDF->Cell(0, 5,'generated_by : '.$_SESSION['user']['id'], 0, 1, 'R', true);
-
-
-            // TITLE
-            $PDF->SetMargins(5,5,5);
-            $PDF->SetTextColor(100, 100, 100);
-            $PDF->SetFont('Arial','B',14);
-            $PDF->Cell(0, 15,'Attendance Report', 0, 1, 'C', false);
-
-            // CLASS DATA
-            $PDF->SetFont('Arial','B', 12);
-            $PDF->SetTextColor(0, 0, 0);
-            $PDF->Cell(0, 5,'Class : 10-A', 0, 0, 'L', false);
-            $PDF->Cell(0, 5,'Month : '.$this->request->post['month'], 0, 1, 'R', false);
-
-            // CONTENT
-
-            // FOOTER
-            // $PDF->SetMargins(5,5,5);
-            $PDF->SetY(182);
-            // $PDF->SetY(271);
-            $PDF->SetFont('Arial','',8);
-            $PDF->Cell(0,5,'Authorized by : ________________',0,0,'L');
-            $PDF->SetFont('Arial','I',8);
-            $PDF->Cell(0,5,'Page '.$PDF->PageNo(),0,0,'R');
-
-
-            // OUTPUT
-            $PDF->Output(ABS_PATH.'/data/reports/attendance/gg.pdf', 'F');
-
-            // ATTENDANCE
-            //$data = $this->model_attendance::select()
+            // ADD ENTRY TO DATABASE ( report table )
 
             echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/gg' ), JSON_PRETTY_PRINT );  // WENAS KARAHAN
             exit();
