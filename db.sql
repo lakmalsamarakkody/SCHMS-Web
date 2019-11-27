@@ -598,6 +598,35 @@ INSERT INTO `religion` VALUES (1,'Catholic','2019-09-18 00:00:00','2019-09-18 00
 UNLOCK TABLES;
 
 --
+-- Table structure for table `report`
+--
+
+DROP TABLE IF EXISTS `report`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `generated_by` int(11) NOT NULL,
+  `generated_at` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `report`
+--
+
+LOCK TABLES `report` WRITE;
+/*!40000 ALTER TABLE `report` DISABLE KEYS */;
+/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sport`
 --
 
@@ -1178,20 +1207,20 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int(7) NOT NULL AUTO_INCREMENT,
-  `staff_id` int(6) DEFAULT NULL,
+  `ref_id` int(6) DEFAULT NULL,
+  `user_type` enum('Staff','Student','Parent','') COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role_id` int(2) NOT NULL,
   `status` enum('Active','Inactive') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `stu_staff_parent_id` (`staff_id`,`role_id`),
+  UNIQUE KEY `stu_staff_parent_id` (`ref_id`,`role_id`),
   KEY `user_user_role_id_fk` (`role_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `user_staff_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `user_staff_id_fk` FOREIGN KEY (`ref_id`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1201,7 +1230,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,1,'lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi',NULL,1,'Active','2019-10-08 00:00:00','2019-10-08 00:00:00',NULL),(4,NULL,'shyaminayesh','$2y$10$7AHT9/.5vnxmHChH5WTMV.tMLzUzhDnvaesJ.K1DsgeJ6aqokIauK','me@shyamin.com',5,'Active','2019-11-24 03:24:02','2019-11-24 03:24:02',NULL);
+INSERT INTO `user` VALUES (3,1,'Staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi',1,'Active','2019-10-08 00:00:00','2019-10-08 00:00:00',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1301,4 +1330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-26 19:18:02
+-- Dump completed on 2019-11-27 12:28:14
