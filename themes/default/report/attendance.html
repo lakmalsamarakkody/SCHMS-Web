@@ -67,7 +67,7 @@
 
                                 </div>
                                 <div class="card-footer bg-transparent border-0">
-                                    <button class="btn btn-primary">Generate</button>
+                                    <button class="btn btn-primary" onclick="Generate_StaffAttendance();">Generate</button>
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
                                             <td class="text-center" scope="col">TEST</td>
                                             <td class="text-center">TEST</td>
                                             <td class="text-right">
-                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href="{{ app.url }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
                                                 <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
                                             </td>
                                         </tr>
@@ -110,7 +110,7 @@
                                             <td class="text-center" scope="col">TEST</td>
                                             <td class="text-center">TEST</td>
                                             <td class="text-right">
-                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href="{{ app.url }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
                                                 <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
                                             </td>
                                         </tr>
@@ -151,7 +151,38 @@
 
         // AJAX
         $.ajax({
-            url: "{{ app.url }}/report/attendance_ajax_by_class",
+            url: "{{ app.url }}/report/class_attendance_ajax",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (Response) => {
+                if ( Response.status === 'success' ) {
+                    console.log("SUCCESS")
+                    console.log( Response )
+                    alertify.alert("Success", "Report Generated Successfully")
+                } else {
+                    alertify.alert("Failed", Response.error)
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Error happened")
+                console.log( e.responseText )
+            }
+        })
+
+    }
+
+    Generate_StaffAttendance = () => {
+
+    // PAYLOAD
+    let formData = new FormData()
+    formData.append("month", $("#inpt-staff-month").val())
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/staff_attendance_ajax",
             method: 'POST',
             data: formData,
             processData: false,

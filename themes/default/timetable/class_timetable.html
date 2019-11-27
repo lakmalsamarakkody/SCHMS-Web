@@ -66,29 +66,34 @@
 
                                     <tbody>
 
-                                        {% set period = 1 %}
+                                    {% set period = 1 %}
 
                                         {% for row in 1..9 %}
-                                            {% if row != 5 %}
 
-                                            <tr>
-                                                <th scope="row" class="text-center">{{ period }}</th>
-                                                {% for cols in 1..5 %}
-                                                <td class="text-center">
-                                                    {% if timetables[cols].period.id == period %}
-                                                    <span>{{ timetables[cols].period.subject_name }}</span>
-                                                    <br>
-                                                    <span>{{ timetables[cols].period.staff_name }}</span>
-                                                    {% endif %}
-                                                </td>
-                                                {% endfor %}
-                                            </tr>
-                                            {% set period = period + 1 %}
+                                            {% if row != 5 %}
+                                            
+                                                <tr>
+                                                    <th scope="row" class="text-center">{{ period }}</th>
+                                                    {% for cols in 1..5 %}
+                                                    <td class="text-center">
+                                                        {% if timetables[cols].period.id == period %}
+                                                        <span>{{ timetables[cols].period.subject_name }}</span>
+                                                        <br>
+                                                        <span>{{ timetables[cols].period.staff_name }}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    {% endfor %}
+                                                </tr>
+                                                {% set period = period + 1 %}
+
                                             {% else %}
-                                            <tr class="thead-dark">
-                                                <th class="text-center" colspan="6">I N T E R V A L</th>
-                                            </tr>
+
+                                                <tr class="thead-dark">
+                                                    <th class="text-center" colspan="6">I N T E R V A L</th>
+                                                </tr>
+
                                             {% endif %}
+
                                         {% endfor %}
 
                                     </tbody>
