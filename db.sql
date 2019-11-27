@@ -700,7 +700,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,1,3,'2019-09-16','953651408V','Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','Male','lakmalsamarakkody@gmail.com','0332296548','0774924351','144/5A','Veyangoda',7,1,'2019-09-16 00:00:00','2019-09-16 00:00:00',NULL),(3,3,1,'2019-09-03','943651408V','SAMARAKKODY ARACHCHIGE LAKMAL SAMARAKKODY','SAL','SAMARAKKODY','1995-12-30','Male','','','','267/10, Nagahakotuwa Road','Balummahara',NULL,NULL,'2019-09-21 19:07:50','2019-09-21 19:07:50',NULL),(4,4,1,'2019-09-20','953611408V','Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','Male','','','','144/5a, 3rd lane, Palmgrove Estate','Veyangoda',NULL,1,'2019-09-21 19:15:34','2019-09-21 19:15:34',NULL),(7,4562,2,'2019-11-05','956351408V','Lakmal','Lakmal','Samarakkody','2019-10-29','Male','lakmalsamarakkody90@gmail.com','0774924351',NULL,'144/5A, 3rd Lane, Plamgrove Estate','Gampaha',7,NULL,'2019-11-24 03:08:26','2019-11-24 03:08:26',NULL),(8,7456,2,'2019-11-14','945637892V','Lakmal','Lakmal','Samarakkody','2019-11-05','Male','lakmalsamarakkody56@gmail.com','0774924351','4774924351','144/5A, 3rd Lane, Plamgrove Estate','Veyangoda',NULL,3,'2019-11-24 03:09:50','2019-11-24 03:09:50',NULL);
+INSERT INTO `staff` VALUES (1,1,3,'2019-09-16','953651408V','Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','Male','lakmalsamarakkody@gmail.com','0332296548','0774924351','144/5A','Veyangoda',7,1,'2019-09-16 00:00:00','2019-09-16 00:00:00',NULL),(3,3,1,'2019-09-03','943651408V','SAMARAKKODY ARACHCHIGE LAKMAL SAMARAKKODY','SAL','SAMARAKKODY','1995-12-30','Male','','','','267/10, Nagahakotuwa Road','Balummahara',NULL,NULL,'2019-09-21 19:07:50','2019-09-21 19:07:50',NULL),(4,4,1,'2019-09-20','953611408V','Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','Male','','','','144/5a, 3rd lane, Palmgrove Estate','Veyangoda',NULL,1,'2019-09-21 19:15:34','2019-09-21 19:15:34',NULL),(7,4562,2,'2019-11-05','956351408V','Heshan Nayanajith mallawarachchi','M A H N','Mallawarachchi','2019-10-29','Male','lakmalsamarakkody90@gmail.com','0774924351',NULL,'144/5A, 3rd Lane, Plamgrove Estate','Gampaha',7,NULL,'2019-11-24 03:08:26','2019-11-24 03:08:26',NULL),(8,7456,2,'2019-11-14','945637892V','Laksara Prageeth Maduwantha','L P','Maduwantha','2019-11-05','Male','lakmalsamarakkody56@gmail.com','0774924351','4774924351','144/5A, 3rd Lane, Plamgrove Estate','Veyangoda',NULL,3,'2019-11-24 03:09:50','2019-11-24 03:09:50',NULL);
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1330,4 +1330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-27 12:28:14
+-- Dump completed on 2019-11-28  0:32:57
