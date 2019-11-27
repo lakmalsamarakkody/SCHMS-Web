@@ -13,6 +13,7 @@ class Login extends Controller {
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 
 		$this->load->model('User');
+		$this->load->model('Staff');
 
 		//Login
 		if (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "staff"  ):
@@ -21,7 +22,7 @@ class Login extends Controller {
 
 			if($validate == true):
 
-				$User = $this->model_user::where('username',$this->request->post['username']) ->first();
+				$User = $this->model_user::where('username',$this->request->post['username'])->where('user_type', '=', 'Staff')->first();
 
 				if($User != null):
 
@@ -41,13 +42,13 @@ class Login extends Controller {
 
 				else:
 
-					$User = $this->model_user->where('staff_id',$this->request->post['username'])->where('username',"")->where('password',"")->first();
+					$User = $this->model_staff->where('employee_number',$this->request->post['username'])->where('nic', '=', $this->request->post['password'])->first();
 
 					if($User != null):
 
 						if($_POST['password'] == $User->nic):
 
-							$data['msg'] = "New User detected";
+							$data['msg'] = "Available Staff detected";
 
 						else:
 
@@ -57,7 +58,7 @@ class Login extends Controller {
 					
 					else:
 
-						$data['msg'] = "No User found";
+						$data['msg'] = "No Staff is registered to this NIC";
 
 					endif;
 

@@ -62,11 +62,9 @@ class Report extends Controller {
 
         // MODELS
         $this->load->model("class");
+        $this->load->model("grade");
         $this->load->model("student");
         $this->load->model("student/attendance");
-
-        $time_now = Carbon::now();
-        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // VALIDATION : month
         $is_valid_month = GUMP::is_valid($this->request->post, array('month' => 'required|max_len,8'));
@@ -74,6 +72,14 @@ class Report extends Controller {
             echo json_encode( array("status" => "failed", "error" => "Please select a valid Month" ), JSON_PRETTY_PRINT );
             exit();
         endif;
+
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // Days in a month
+        $dates = Carbon::createFromFormat("d/m/Y", "01/".$this->request->post['month']);
+        $month_year = $dates->format("Y-m");
+        $days_in_month = $dates->daysInMonth;
 
         // CHECK IF SUBMITED
         if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
@@ -84,9 +90,38 @@ class Report extends Controller {
                 exit();
             endif;
 
-            $data['class'] = "11 - E";
+            // CLASS DATA
+            $class_data = $this->model_class->select('grade_id', 'name')->where('id', "=", $this->request->post['class_id'])->first();
 
-            $file = 'tasdasda';
+            // TITLE DETAILS
+            $data['class_attendance']['class']['name'] = $this->model_grade->select('name')->where('id', '=', $class_data->grade_id)->first()->name." - ".$class_data->name;
+            $data['class_attendance']['month'] = $this->request->post['month'];
+            $data['class_attendance']['generated_on'] = $time_now;
+            $data['class_attendance']['generated_by'] = "";
+
+            // CONTENT
+            $student = $this->model_student->select('id', 'class_id', 'admission_no', 'full_name', 'initials', 'surname')->where('class_id', '=', $this->request->post['class_id']);
+
+            foreach( $student->get() as $key => $element ):
+                $data['student']['attendance'][$key]['id']  = $element->id;
+                $data['student']['attendance'][$key]['admission_no'] = $element->admission_no;
+                $data['student']['attendance'][$key]['full_name'] = $element->full_name;
+                $data['student']['attendance'][$key]['initials'] = $element->initials;
+                $data['student']['attendance'][$key]['surname'] = $element->surname;
+
+                // STUDENT STATUS FOR MONTH
+                for ( $i=1; $i<= $days_in_month; $i++ ):
+                    $attendance = $this->model_student_attendance->select('id', 'date')->where('student_id', '=', $element->id)->where('date', '=', $month_year."-".$i)->first();
+                    if ( $attendance != NULL):
+                        $data['student']['attendance'][$key]['status'][$i] = true;
+                    else:
+                        $data['student']['attendance'][$key]['status'][$i] = false;
+                    endif;
+
+                    $data['days_in_month'][$i] = $i;
+                endfor;
+
+            endforeach;
 
             for ( $i = 1; $i < 10; $i++ ):
                 $data['students'][$i] = array(
@@ -97,6 +132,7 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
+            $file = 'class_attendance';
             $JSReport->get_report('CLASS_ATTENDANCE', $data, 'attendance/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
