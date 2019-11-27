@@ -93,6 +93,9 @@ class Report extends Controller {
             // CLASS DATA
             $class_data = $this->model_class->select('grade_id', 'name')->where('id', "=", $this->request->post['class_id'])->first();
 
+            // DAY COUTNS
+            $data['day_count'] = $days_in_month;
+
             // TITLE DETAILS
             $data['class_attendance']['class']['name'] = $this->model_grade->select('name')->where('id', '=', $class_data->grade_id)->first()->name." - ".$class_data->name;
             $data['class_attendance']['month'] = $this->request->post['month'];
@@ -103,32 +106,22 @@ class Report extends Controller {
             $student = $this->model_student->select('id', 'class_id', 'admission_no', 'full_name', 'initials', 'surname')->where('class_id', '=', $this->request->post['class_id']);
 
             foreach( $student->get() as $key => $element ):
-                $data['student']['attendance'][$key]['id']  = $element->id;
-                $data['student']['attendance'][$key]['admission_no'] = $element->admission_no;
-                $data['student']['attendance'][$key]['full_name'] = $element->full_name;
-                $data['student']['attendance'][$key]['initials'] = $element->initials;
-                $data['student']['attendance'][$key]['surname'] = $element->surname;
+                $data['student'][$key]['index']  = 10;
+                $data['student'][$key]['name'] = $element->initials.' '.$element->surname;
 
                 // STUDENT STATUS FOR MONTH
                 for ( $i=1; $i<= $days_in_month; $i++ ):
                     $attendance = $this->model_student_attendance->select('id', 'date')->where('student_id', '=', $element->id)->where('date', '=', $month_year."-".$i)->first();
-                    if ( $attendance != NULL):
-                        $data['student']['attendance'][$key]['status'][$i] = true;
+                    if ( $attendance !== NULL):
+                        $data['student'][$key]['attendance'][$i] = true;
                     else:
-                        $data['student']['attendance'][$key]['status'][$i] = false;
+                        $data['student'][$key]['attendance'][$i] = false;
                     endif;
 
                     $data['days_in_month'][$i] = $i;
                 endfor;
 
             endforeach;
-
-            for ( $i = 1; $i < 10; $i++ ):
-                $data['students'][$i] = array(
-                    "name" => "th Student",
-                    "age" => 10
-                );
-            endfor;
 
             // JSReports
             $JSReport = new JSReport();
