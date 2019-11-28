@@ -19,7 +19,7 @@
                         <!-- START : SELECT CLASS -->
                         <form method="post">
 
-                            <div class="form-row mr-2">
+                            <div class="form-row mr-1">
 
                                 <h4 class="page-title mb-0 pb-0"> Class Time Table </h4>
 
@@ -66,7 +66,7 @@
 
                                     <tbody>
 
-                                    {% set period = 1 %}
+                                        {% set period = 1 %}
 
                                         {% for row in 1..9 %}
 
@@ -116,95 +116,7 @@
                         <!-- END : CLASS TIME TABLE -->
 
                     </section>
-                    <!-- END : CLASS TIMETABLE SECTION -->
-
-                    <!-- START : SELECT SCHEDULE DATE -->
-                    <section class="dateschedule mt-5">
-
-                        <h4 class="page-title">REPORT DATE SCHEDULE</h4>
-
-                        <!-- START : SELECT SCHEDULE DATE -->
-                        <form name="selectperiodtimetable">
-
-                            <div class="form-row mr-2">
-
-                                <div class="form-group col-md-1 ml-auto mr-1">
-                                    <label for="period"> Period </label>
-                                    <select class="form-control" id="period">
-                                        <option selected disabled> - Select - </option>
-                                        <option value="1">Period 1</option>
-                                        <option value="2">Period 2</option>
-                                        <option value="3">Period 3</option>
-                                        <option value="4">Period 4</option>
-                                        <option value="5">Period 5</option>
-                                        <option value="6">Period 6</option>
-                                        <option value="7">Period 7</option>
-                                        <option value="8">Period 8</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="date"> Date </label>
-                                    <input class="form-control" type="date" id="date"/>
-                                </div>
-
-                            </div>
-
-                            <div class="form-row mr-2">
-                                <div class="form-group ml-auto">
-                                    <button type="submit" class="form-control btn btn-primary"> View </button>
-                                </div>
-                            </div>
-
-                        </form>
-                        <!-- END : SELECT SCHEDULE DATE -->
-
-                        <!-- START : DATE SCHEDULE -->
-                        <div class="timetable">
-
-                            <table class="table table-hover table-responsive-md">
-    
-                                <thead class="thead-dark">
-    
-                                    <tr>
-                                        <th scope="col">Period</th>
-                                        <th scope="col">Class</th>
-                                        <th scope="col">Subject</th>
-                                        <th scope="col">Staff</th>
-                                        <th scope="col">Staff status</th>
-                                    </tr>
-    
-                                </thead>
-    
-                                <tbody>
-    
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>6A</td>
-                                        <td>English</td>
-                                        <td>Mr.ABC</td>
-                                        <td>Present</td>
-                                    </tr>
-    
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>6A</td>
-                                        <td>Maths</td>
-                                        <td>Mrs.ABC</td>
-                                        <td>Absent</td>
-                                    </tr>
-                                
-                                </tbody>
-    
-                            </table>
-    
-                        </div>
-                        <!-- END : DATE SCHEDULE -->
-
-                    </section>
-                    <!-- END : SELECT SCHEDULE DATE -->
-
-                    
+                    <!-- END : CLASS TIMETABLE SECTION -->                    
 
                 </div>
 

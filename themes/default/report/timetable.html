@@ -47,10 +47,10 @@
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="inpt-class">Name</label>
-                                            <select class="form-control selectpicker" data-live-search="true" name="staff">
+                                            <select class="form-control selectpicker show-tick" data-live-search="true" data-size="5" id="inpt-staff" name="staff">
                                                 <option value="" selected>- Select -</option>
                                                 {% for staff in staffs %}
-                                                    <option value="{{ staff.fullname }}">{{ staff.fullname }}</option>
+                                                    <option value="{{ staff.id }}">{{ staff.fullname }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -126,7 +126,7 @@
 
         // PAYLOAD
         let formData = new FormData()
-        formData.append("class_id", $("#class").val())
+        formData.append("class_id", $("#inpt-class").val())
         
         // AJAX
         $.ajax({
@@ -138,10 +138,10 @@
             dataType: 'json',
             success: (Response) => {
                 if ( Response.status === 'success' ) {
-                    console.log("SUCCESS")
                     console.log( Response )
                     alertify.alert("Success", "Report Generated Successfully")
                 } else {
+                    console.log( Response )
                     alertify.alert("Failed", Response.error)
                 }
             },
@@ -157,7 +157,7 @@
 
     // PAYLOAD
     let formData = new FormData()
-    formData.append("staff_id", $("#staff").val())
+    formData.append("staff_id", $("#inpt-staff").val())
 
         // AJAX
         $.ajax({

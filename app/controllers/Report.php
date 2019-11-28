@@ -240,7 +240,9 @@ class Report extends Controller {
 		// RENDER VIEW
         $this->load->view('report/student', $data);
     }
+    // END : STUDENT REPORTS
 
+    // START : TIMETABLE REPORTS
     public function timetable() {
     
         // SITE DETAILS
@@ -288,6 +290,8 @@ class Report extends Controller {
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("class/timetable");
+        $this->load->model("subject");
+        $this->load->model("staff");
 
         $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -304,9 +308,6 @@ class Report extends Controller {
             // CLASS DATA
             $class_data = $this->model_class->select('grade_id', 'name')->where('id', "=", $this->request->post['class_id'])->first();
 
-            // DAY COUTNS
-            $data['day_count'] = $days_in_month;
-
             // TITLE DETAILS
             $data['timetable']['name'] = $this->model_grade->select('name')->where('id', '=', $class_data->grade_id)->first()->name." - ".$class_data->name;
             $data['timetable']['generated_on'] = $time_now;
@@ -315,25 +316,44 @@ class Report extends Controller {
             // CONTENT
             $class_timetable = $this->model_class_timetable->select('id', 'day', 'period', 'subject_id', 'staff_id')->where('class_id', '=', $this->request->post['class_id']);
 
-            foreach( $class_timetable->get() as $key => $element ):
+            $day_map = array(
+                "1" => "mon",
+                "2" => "tue",
+                "3" => "wed",
+                "4" => "thu",
+                "5" => "fri"
+            );
 
-                // TIMETABLE DETAILS
-                $data['class_timetable'][$key]['id']  = $element->id;
-                $data['class_timetable'][$key]['day']  = $element->day;
-                $data['class_timetable'][$key]['period']  = $element->period;
-                $data['class_timetable'][$key]['subject_id']  = $element->subject_id;
-                $data['class_timetable'][$key]['staff_id']  = $element->staff_id;
+            foreach( $class_timetable->get() as $key => $el ):
+
+                // CLEAR ASSIGNED VALUES AFTER REPETITION
+                $subject_name = NULL;
+                $staff_name = NULL;
+
+                // QUERY SUBJECT NAME
+                if ( $el->subject_id !== NULL ):
+                    $subject_name = $this->model_subject->select('name')->where('id', '=', $el->subject_id)->first()->name;
+                endif;
+
+                // QUERY STAFF NAME
+                if ( $el->staff_id !== NULL ):
+                    $staff_name = $this->model_staff->select('initials')->where('id', '=', $el->staff_id)->first()->initials . " ". $this->model_staff->select('surname')->where('id', '=', $el->staff_id)->first()->surname;
+                endif;
+                // SCHEDULE
+                $data['timetable']['schedule'][$day_map[$el->day]][$el->period]['subject']  = $subject_name;
+                $data['timetable']['schedule'][$day_map[$el->day]][$el->period]['staff']  = $staff_name;
 
             endforeach;
 
             // JSReports
             $JSReport = new JSReport();
             $file = 'class_timetable';
-            $JSReport->get_report('CLASS_ATTENDANCE', $data, 'attendance/'.$file);
+            $JSReport->get_report('CLASS_TIMETABLE', $data, 'timetable/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
 
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+            // RETURN
+            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/timetable/' ), JSON_PRETTY_PRINT );  
             exit();
 
 
@@ -341,10 +361,95 @@ class Report extends Controller {
             echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
             exit();
         endif;
-
-
     }
 
+    public function staff_timetable_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("class");
+        $this->load->model("grade");
+        $this->load->model("class/timetable");
+        $this->load->model("subject");
+        $this->load->model("staff");
+
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
+
+            // IS CORRECT STAFF ID
+            if ( $this->model_staff->select('initials')->where('id', '=', $this->request->post['staff_id'])->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "Invalid Staff is Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            $staff = $this->model_staff->select('employee_number','initials', 'surname')->where('id', '=', $this->request->post['staff_id'])->first();
+
+            // TITLE DETAILS
+            $data['timetable']['employee_number'] = $staff->employee_number;
+            $data['timetable']['name'] = $staff->initials. " ". $staff->surname;
+            $data['timetable']['generated_on'] = $time_now;
+            $data['timetable']['generated_by'] = "";
+
+            // CONTENT
+            $class_timetable = $this->model_class_timetable->select('id', 'day', 'period', 'subject_id', 'class_id')->where('staff_id', '=', $this->request->post['staff_id']);
+
+            $day_map = array(
+                "1" => "mon",
+                "2" => "tue",
+                "3" => "wed",
+                "4" => "thu",
+                "5" => "fri"
+            );
+
+            foreach( $class_timetable->get() as $key => $el ):
+
+                // CLEAR ASSIGNED VALUES AFTER REPETITION
+                $subject_name = NULL;
+                $class_name = NULL;
+
+                // QUERY SUBJECT NAME
+                if ( $el->subject_id !== NULL ):
+                    $subject_name = $this->model_subject->select('name')->where('id', '=', $el->subject_id)->first()->name;
+                endif;
+
+                // QUERY CLASS NAME
+                if ( $el->class_id !== NULL ):
+                    $class = $this->model_class->select('grade_id', 'name')->where('id', '=', $el->class_id)->first();
+                    $grade = $this->model_grade->select('name')->where('id', '=', $class->grade_id)->first();
+                    $class_name =  $grade->name. " - ". $class->name ;
+                endif;
+
+                // SCHEDULE
+                $data['timetable']['schedule'][$day_map[$el->day]][$el->period]['subject']  = $subject_name;
+                $data['timetable']['schedule'][$day_map[$el->day]][$el->period]['class']  = $class_name;
+
+            endforeach;
+
+            // JSReports
+            $JSReport = new JSReport();
+            $file = 'staff_timetable';
+            $JSReport->get_report('STAFF_TIMETABLE', $data, 'timetable/'.$file);
+
+            // ADD ENTRY TO DATABASE ( report table )
+
+            // RETURN
+            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/timetable/' ), JSON_PRETTY_PRINT );  
+            exit();
+
+
+        else:
+            echo json_encode( array("status" => "failed", "error" => "Please Select a Staff name" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+    }
+    // END : TIMETABLE REPORTS
+
+    // START : RESULT REPORTS
     public function result() {
     
         // SITE DETAILS
@@ -361,7 +466,9 @@ class Report extends Controller {
 		// RENDER VIEW
         $this->load->view('report/result', $data);
     }
+    // END : RESULT REPORTS
 
+    // START : HEALTH REPORTS
     public function health() {
     
         // SITE DETAILS
@@ -375,10 +482,106 @@ class Report extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('student');
+
+        // QUERY CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['student_class'][$key]['id'] = $element->id;
+            $data['student_class'][$key]['grade']['id'] = $element->grade_id;
+            $data['student_class'][$key]['staff']['id'] = $element->staff_id;
+            $data['student_class'][$key]['name'] = $element->name;
+
+            $data['student_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        // QUERY STUDENT
+        foreach( $this->model_student->select('id', 'full_name')->get() as $key => $element ):
+            $data['students'][$key]['id'] = $element->id;
+            $data['students'][$key]['fullname'] = $element->full_name;
+        endforeach;
+
 		// RENDER VIEW
         $this->load->view('report/health', $data);
     }
 
+    public function class_health_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("class");
+        $this->load->model("grade");
+        $this->load->model("student");
+        $this->load->model("student/health");
+
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
+
+            // IS CORRECT CLASS ID
+            if ( $this->model_class->select('name')->where('id', '=', $this->request->post['class_id'])->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "Invalid Class is Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // QUERY CLASS NAME
+            $class = $this->model_class->select('grade_id', 'name')->where('id', '=', $this->request->post['class_id'])->first();
+            $grade = $this->model_grade->select('name')->where('id', '=', $class->grade_id)->first();
+            $class_name =  $grade->name. " - ". $class->name ;
+
+            $join_data = DB::table('student')
+            ->join('student_has_class', 'student.id', 'student_has_class.student_id')
+            ->join('student_health', 'student.id', 'student_health.student_id')
+            ->where('student.class_id', '=', $this->request->post['class_id'])
+            ->select('student.initials', 'student.surname', 'student_has_class.index_no', 'student_health.heart_rate', 'student_health.blood_pressure', 'student_health.height', 'student_health.weight', 'student_health.bmi', 'student_health.vaccination', 'student_health.speciality', 'student_health.blood_group', 'student_health.surgeries');
+
+            // TITLE DETAILS
+            $data['health']['class']['name'] = $class_name;
+            $data['health']['generated_on'] = $time_now;
+            $data['health']['generated_by'] = "";
+
+            // CONTENT
+            foreach ( $join_data->get() as $key => $el ):
+                $data['health']['student'][$key]['index'] = $el->index_no;
+                $data['health']['student'][$key]['name'] = $el->initials. " ". $el->surname;
+                $data['health']['student'][$key]['hr'] = $el->heart_rate;
+                $data['health']['student'][$key]['bp'] = $el->blood_pressure;
+                $data['health']['student'][$key]['height'] = $el->height;
+                $data['health']['student'][$key]['weight'] = $el->weight;
+                $data['health']['student'][$key]['bmi'] = $el->bmi;
+                $data['health']['student'][$key]['vaccination'] = $el->vaccination;
+                $data['health']['student'][$key]['specialities'] = $el->speciality;
+                $data['health']['student'][$key]['blood_group'] = $el->blood_group;
+                $data['health']['student'][$key]['surgeries'] = $el->surgeries;
+            endforeach;
+
+            // JSReports
+            $JSReport = new JSReport();
+            $file = 'class_health';
+            $JSReport->get_report('CLASS_HEALTH', $data, 'health/'.$file);
+
+            // ADD ENTRY TO DATABASE ( report table )
+
+            // RETURN
+            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/health/' ), JSON_PRETTY_PRINT );  
+            exit();
+
+
+        else:
+            echo json_encode( array("status" => "failed", "error" => "Please Select a Class" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+    }
+    // END : HEALTH REPORTS
+
+    // START : STAFF REPORTS
     public function staff() {
     
         // SITE DETAILS
@@ -395,5 +598,6 @@ class Report extends Controller {
 		// RENDER VIEW
         $this->load->view('report/staff', $data);
     }
+    // END : STAFF REPORTS
 
 }

@@ -18,28 +18,7 @@
                         <div class="row">
 
                             <div class="col-6 card">
-                                <div class="card-header"><h5>Student health report</h5></div>
-                                <div class="card-body">
-
-                                    <!-- FORM -->
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <label for="inpt-class">Student</label>
-                                            <select class="form-control" id="inpt-student" name="class">
-                                                {% for student in students %}
-                                                    <option value="{{ class.id }}"> {{ student.fullname }} </option>
-                                                {% endfor %}
-                                            </select>                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer bg-transparent border-0">
-                                    <button class="btn btn-primary" onclick="Generate_StudentHealth();">Generate</button>
-                                </div>
-                            </div>
-
-                            <div class="col-6 card">
-                                <div class="card-header"><h5>Overall class health report</h5></div>
+                                <div class="card-header"><h5>Class health report</h5></div>
                                 <div class="card-body">
 
                                     <!-- FORM -->
@@ -57,6 +36,28 @@
                                 </div>
                                 <div class="card-footer bg-transparent border-0">
                                     <button class="btn btn-primary" onclick="Generate_ClassHealth();">Generate</button>
+                                </div>
+                            </div>
+
+                            <div class="col-6 card">
+                                <div class="card-header"><h5>Student health report</h5></div>
+                                <div class="card-body">
+
+                                    <!-- FORM -->
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="inpt-class">Student</label>
+                                            <select class="form-control selectpicker show-tick" data-live-search="true" data-size="5" id="inpt-student" name="student">
+                                                <option value="" selected>- Select -</option>
+                                                {% for student in students %}
+                                                    <option value="{{ class.id }}"> {{ student.fullname }} </option>
+                                                {% endfor %}
+                                            </select>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <button class="btn btn-primary" onclick="Generate_StudentHealth();">Generate</button>
                                 </div>
                             </div>
 
@@ -122,36 +123,6 @@
 
 <script>
 
-    Generate_StudentHealth = () => {
-
-        // PAYLOAD
-        let formData = new FormData()
-        formData.append("class_id", $("#inpt-student").val())
-
-        // AJAX
-        $.ajax({
-            url: "{{ app.url }}/report/health_ajax_by_student",
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: (Response) => {
-                if ( Response.status === 'success' ) {
-                    console.log("SUCCESS")
-                    console.log( Response )
-                } else {
-                    alertify.alert("Failed", Response.error)
-                }
-            },
-            error: (e) => {
-                alertify.alert("Error", "Error happened")
-                console.log( e.responseText )
-            }
-        })
-
-    }
-
     Generate_ClassHealth = () => {
 
         // PAYLOAD
@@ -160,7 +131,7 @@
 
         // AJAX
         $.ajax({
-            url: "{{ app.url }}/report/health_ajax_by_class",
+            url: "{{ app.url }}/report/class_health_ajax",
             method: 'POST',
             data: formData,
             processData: false,
@@ -170,6 +141,7 @@
                 if ( Response.status === 'success' ) {
                     console.log("SUCCESS")
                     console.log( Response )
+                    alertify.alert("Success", "Report Generated Successfully")
                 } else {
                     alertify.alert("Failed", Response.error)
                 }
@@ -179,7 +151,36 @@
                 console.log( e.responseText )
             }
         })
+    }
 
+    Generate_StudentHealth = () => {
+
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("class_id", $("#inpt-student").val())
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/student_health_ajax",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (Response) => {
+                if ( Response.status === 'success' ) {
+                    console.log("SUCCESS")
+                    console.log( Response )
+                    alertify.alert("Success", "Report Generated Successfully")
+                } else {
+                    alertify.alert("Failed", Response.error)
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Error happened")
+                console.log( e.responseText )
+            }
+        })
     }
 
 </script>
