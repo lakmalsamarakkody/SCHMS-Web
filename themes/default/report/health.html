@@ -50,7 +50,7 @@
                                             <select class="form-control selectpicker show-tick" data-live-search="true" data-size="5" id="inpt-student" name="student">
                                                 <option value="" selected>- Select -</option>
                                                 {% for student in students %}
-                                                    <option value="{{ class.id }}"> {{ student.fullname }} </option>
+                                                    <option value="{{ student.id }}"> {{ student.fullname }} </option>
                                                 {% endfor %}
                                             </select>                                    
                                         </div>
@@ -157,7 +157,7 @@
 
         // PAYLOAD
         let formData = new FormData()
-        formData.append("class_id", $("#inpt-student").val())
+        formData.append("student_id", $("#inpt-student").val())
 
         // AJAX
         $.ajax({

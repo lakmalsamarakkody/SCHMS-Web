@@ -579,6 +579,79 @@ class Report extends Controller {
         endif;
 
     }
+
+    public function student_health_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("class");
+        $this->load->model("grade");
+        $this->load->model("student");
+        $this->load->model("student/health");
+
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
+
+            // IS CORRECT STUDENT ID
+            if ( $this->model_student->select('id')->where('id', '=', $this->request->post['student_id'])->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "Invalid Student is Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // QUERY CLASS NAME
+            $class_id = $this->model_student->select('class_id')->where('id', '=', $this->request->post['student_id'])->first()->class_id;
+            $class = $this->model_class->select('grade_id', 'name')->where('id', '=', $class_id)->first();
+            $grade = $this->model_grade->select('name')->where('id', '=', $class->grade_id)->first();
+            $class_name =  $grade->name. " - ". $class->name ;
+
+            $join_data = DB::table('student')
+            ->join('student_has_class', 'student.id', 'student_has_class.student_id')
+            ->join('student_health', 'student.id', 'student_health.student_id')
+            ->where('student.id', '=', $this->request->post['student_id'])
+            ->select('student.initials', 'student.surname', 'student_has_class.index_no', 'student_health.heart_rate', 'student_health.blood_pressure', 'student_health.height', 'student_health.weight', 'student_health.bmi', 'student_health.vaccination', 'student_health.speciality', 'student_health.blood_group', 'student_health.surgeries')
+            ->first();
+
+            // TITLE DETAILS
+            $data['health']['class']['name'] = $class_name;
+            $data['health']['generated_on'] = $time_now;
+            $data['health']['generated_by'] = "";
+
+            // CONTENT
+            $data['health']['student']['index'] = $join_data->index_no;
+            $data['health']['student']['name'] = $join_data->initials. " ". $join_data->surname;
+            $data['health']['student']['hr'] = $join_data->heart_rate;
+            $data['health']['student']['bp'] = $join_data->blood_pressure;
+            $data['health']['student']['height'] = $join_data->height;
+            $data['health']['student']['weight'] = $join_data->weight;
+            $data['health']['student']['bmi'] = $join_data->bmi;
+            $data['health']['student']['vaccination'] = $join_data->vaccination;
+            $data['health']['student']['specialities'] = $join_data->speciality;
+            $data['health']['student']['blood_group'] = $join_data->blood_group;
+            $data['health']['student']['surgeries'] = $join_data->surgeries;
+
+            // JSReports
+            $JSReport = new JSReport();
+            $file = 'student_health';
+            $JSReport->get_report('STUDENT_HEALTH', $data, 'health/'.$file);
+
+            // ADD ENTRY TO DATABASE ( report table )
+
+            // RETURN
+            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/health/' ), JSON_PRETTY_PRINT );  
+            exit();
+
+
+        else:
+            echo json_encode( array("status" => "failed", "error" => "Please Select a Student" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+    }
     // END : HEALTH REPORTS
 
     // START : STAFF REPORTS
