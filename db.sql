@@ -377,37 +377,6 @@ INSERT INTO `grade` VALUES (1,1,'2019-09-16 00:00:00','2019-09-16 00:00:00',NULL
 UNLOCK TABLES;
 
 --
--- Table structure for table `health`
---
-
-DROP TABLE IF EXISTS `health`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `health` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
-  `student_id` int(6) NOT NULL,
-  `blood_group` enum('A+','A-','B+','B-','AB+','AB-','O+','O-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Specialities` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Surgeries` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_on` datetime NOT NULL,
-  `updated_on` datetime NOT NULL,
-  `deleted_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `student_id` (`student_id`),
-  CONSTRAINT `health_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `health`
---
-
-LOCK TABLES `health` WRITE;
-/*!40000 ALTER TABLE `health` DISABLE KEYS */;
-/*!40000 ALTER TABLE `health` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `message`
 --
 
@@ -1151,6 +1120,8 @@ CREATE TABLE `student_health` (
   `vaccination` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `speciality` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date NOT NULL,
+  `blood_group` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `surgeries` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
@@ -1166,7 +1137,7 @@ CREATE TABLE `student_health` (
 
 LOCK TABLES `student_health` WRITE;
 /*!40000 ALTER TABLE `student_health` DISABLE KEYS */;
-INSERT INTO `student_health` VALUES (1,52,80,NULL,160,60,23.40,NULL,NULL,'2019-11-22','2019-11-22 00:00:00','2019-11-22 00:00:00',NULL),(3,53,80,NULL,160,60,17.40,NULL,NULL,'2019-11-22','2019-11-22 00:00:00','2019-11-22 00:00:00',NULL),(8,64,NULL,NULL,NULL,NULL,12.45,NULL,NULL,'2019-11-23','2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(9,59,NULL,NULL,NULL,NULL,28.23,NULL,NULL,'2019-11-23','2019-11-23 00:00:00','2019-11-23 00:00:00',NULL);
+INSERT INTO `student_health` VALUES (1,52,80,NULL,160,60,23.40,NULL,NULL,'2019-11-22',NULL,NULL,'2019-11-22 00:00:00','2019-11-22 00:00:00',NULL),(3,53,80,NULL,160,60,17.40,NULL,NULL,'2019-11-22',NULL,NULL,'2019-11-22 00:00:00','2019-11-22 00:00:00',NULL),(8,64,NULL,NULL,NULL,NULL,12.45,NULL,NULL,'2019-11-23',NULL,NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(9,59,NULL,NULL,NULL,NULL,28.23,NULL,NULL,'2019-11-23',NULL,NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL);
 /*!40000 ALTER TABLE `student_health` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1330,4 +1301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-28  0:32:57
+-- Dump completed on 2019-11-28 14:52:13
