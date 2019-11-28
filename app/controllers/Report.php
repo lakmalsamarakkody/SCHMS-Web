@@ -68,6 +68,12 @@ class Report extends Controller {
         $this->load->model("student/class");
         $this->load->model("student/attendance");
 
+         // IS ANY student EXISTS
+         if ( $this->model_student->select('id')->first() === NULL ):
+            echo json_encode( array("status" => "failed", "error" => "No student exists in this system" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         // VALIDATION : month
         $is_valid_month = GUMP::is_valid($this->request->post, array('month' => 'required|max_len,8'));
         if ( $is_valid_month !== true ):
@@ -75,7 +81,7 @@ class Report extends Controller {
             exit();
         endif;
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // Days in a month
@@ -157,6 +163,12 @@ class Report extends Controller {
         $this->load->model("staff");
         $this->load->model("staff/attendance");
 
+        // IS ANY STAFF EXISTS
+        if ( $this->model_staff->select('id')->first() === NULL ):
+            echo json_encode( array("status" => "failed", "error" => "No staff exists in this system" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         // VALIDATION : month
         $is_valid_month = GUMP::is_valid($this->request->post, array('month' => 'required|max_len,8'));
         if ( $is_valid_month !== true ):
@@ -164,7 +176,7 @@ class Report extends Controller {
             exit();
         endif;
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // Days in a month
@@ -293,11 +305,17 @@ class Report extends Controller {
         $this->load->model("subject");
         $this->load->model("staff");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
         if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
+
+            // IS ANY class EXISTS
+            if ( $this->model_class->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No class exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
             // IS CORRECT CLASS ID
             if ( $this->model_class->select('name')->where('id', '=', $this->request->post['class_id'])->first() === NULL ):
@@ -375,11 +393,17 @@ class Report extends Controller {
         $this->load->model("subject");
         $this->load->model("staff");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
         if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
+
+             // IS ANY STAFF EXISTS
+            if ( $this->model_staff->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No staff exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
             // IS CORRECT STAFF ID
             if ( $this->model_staff->select('initials')->where('id', '=', $this->request->post['staff_id'])->first() === NULL ):
@@ -518,11 +542,17 @@ class Report extends Controller {
         $this->load->model("student");
         $this->load->model("student/health");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
         if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
+
+             // IS ANY STUDENT EXISTS
+             if ( $this->model_student->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No student exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
             // IS CORRECT CLASS ID
             if ( $this->model_class->select('name')->where('id', '=', $this->request->post['class_id'])->first() === NULL ):
@@ -591,11 +621,17 @@ class Report extends Controller {
         $this->load->model("student");
         $this->load->model("student/health");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
         if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
+
+             // IS ANY STUDENT EXISTS
+             if ( $this->model_student->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No Student exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
             // IS CORRECT STUDENT ID
             if ( $this->model_student->select('id')->where('id', '=', $this->request->post['student_id'])->first() === NULL ):
@@ -670,6 +706,195 @@ class Report extends Controller {
 
 		// RENDER VIEW
         $this->load->view('report/staff', $data);
+    }
+
+    public function staff_present_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("class");
+        $this->load->model("grade");
+        $this->load->model("staff");
+        $this->load->model("staff/attendance");
+
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['staff-present']) AND !empty($this->request->post['staff-present']) ):
+
+            // IS ANY STAFF EXISTS
+            if ( $this->model_staff->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No staff exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            $staff = DB::table('staff_attendance')
+            ->join('staff', 'staff_attendance.staff_id', 'staff.id')
+            ->join('staff_type', 'staff.type_id', 'staff_type.id')
+            ->join('staff_category', 'staff_type.category_id', 'staff_category.id')
+            ->where('staff_attendance.date', '=', $date_now)
+            ->select('staff.id', 'staff.employee_number', 'staff.initials', 'staff.surname', 'staff.gender', 'staff_attendance.date', 'staff_type.name as stname', 'staff_category.name as scname');
+
+            // TITLE DETAILS
+            $data['staff']['present']['date'] = $date_now;
+            $data['staff']['present']['count'] = $staff->get()->count();
+            $data['staff']['present']['generated_on'] = $time_now;
+            $data['staff']['present']['generated_by'] = "";
+            
+            // CONTENT
+            if ( $staff !== NULL ):
+
+                foreach ( $staff->get() as $key => $element ):
+
+                    $data['staff'][$key]['employee_number'] = $element->employee_number;
+                    $data['staff'][$key]['name'] = $element->initials. " ". $element->surname;
+                    $data['staff'][$key]['category'] = $element->scname;
+                    $data['staff'][$key]['type'] = $element->stname;
+
+                    // SET TITLE
+                    if ( $element->gender == "Male" ): 
+                        $data['staff'][$key]['title'] = "Mr. "; 
+                    else:
+                        $data['staff'][$key]['title'] = "Mrs. "; 
+                    endif;
+
+                    // TEACHER IN CHARGE CLASS
+                    $tic_class = $this->model_class->select('id', 'grade_id', 'name')->where('staff_id', '=', $element->id)->first();
+
+                    if ( $tic_class !== NULL ):
+
+                        // QUERY CLASS NAME
+                        $grade = $this->model_grade->select('name')->where('id', '=', $tic_class->grade_id)->first();
+                        $data['staff'][$key]['class'] =  $grade->name. " - ". $tic_class->name ;
+
+                    endif;
+
+                endforeach;
+
+                // JSReports
+                $JSReport = new JSReport();
+                $file = 'staff_present';
+                $JSReport->get_report('STAFF_PRESENT', $data, 'staff/'.$file);
+
+                // ADD ENTRY TO DATABASE ( report table )
+
+                // RETURN
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/staff/' ), JSON_PRETTY_PRINT );  
+                exit();
+
+            else:
+                // RETURN
+                echo json_encode( array("status" => "failed", "error" => "No any staff is present today till now" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;        
+
+        else:
+            // RETURN
+            echo json_encode( array("status" => "failed", "error" => "Generating from an Invalid path" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;        
+    }
+
+    public function staff_absent_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("class");
+        $this->load->model("grade");
+        $this->load->model("staff");
+        $this->load->model("staff/attendance");
+
+        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['staff-absent']) AND !empty($this->request->post['staff-absent']) ):
+
+            // IS ANY STAFF EXISTS
+            if ( $this->model_staff->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No staff exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            $staff = DB::table('staff')
+            ->join('staff_type', 'staff.type_id', 'staff_type.id')
+            ->join('staff_category', 'staff_type.category_id', 'staff_category.id')
+            ->select('staff.id', 'staff.employee_number', 'staff.initials', 'staff.surname', 'staff.gender', 'staff_type.name as stname', 'staff_category.name as scname');
+
+            // TITLE DETAILS
+            $data['staff']['absent']['date'] = $date_now;
+            $data['staff']['absent']['generated_on'] = $time_now;
+            $data['staff']['absent']['generated_by'] = "";
+            $count = 0;
+            
+            // CONTENT
+            if ( $staff !== NULL ):
+
+                foreach ( $staff->get() as $key => $element ):
+
+                    $staff_attendance = $this->model_staff_attendance->select('id')->where('staff_id', '=', $element->id)->where('date', '=', $date_now)->first();
+
+                    if ( $staff_attendance == NULL ):
+
+                        $data['staff'][$key]['employee_number'] = $element->employee_number;
+                        $data['staff'][$key]['name'] = $element->initials. " ". $element->surname;
+                        $data['staff'][$key]['category'] = $element->scname;
+                        $data['staff'][$key]['type'] = $element->stname;
+
+                        // SET TITLE
+                        if ( $element->gender == "Male" ): 
+                            $data['staff'][$key]['title'] = "Mr. "; 
+                        else:
+                            $data['staff'][$key]['title'] = "Mrs. "; 
+                        endif;
+
+                        // TEACHER IN CHARGE CLASS
+                        $tic_class = $this->model_class->select('id', 'grade_id', 'name')->where('staff_id', '=', $element->id)->first();
+
+                        if ( $tic_class !== NULL ):
+
+                            // QUERY CLASS NAME
+                            $grade = $this->model_grade->select('name')->where('id', '=', $tic_class->grade_id)->first();
+                            $data['staff'][$key]['class'] =  $grade->name. " - ". $tic_class->name ;
+
+                        endif;
+                        unset ($staff_attendance);
+
+                        // COUNT
+                        $count = $count + 1;
+
+                    endif;
+                    $data['staff']['absent']['count'] = $count;
+
+                endforeach;
+
+                // JSReports
+                $JSReport = new JSReport();
+                $file = 'staff_absent';
+                $JSReport->get_report('STAFF_ABSENT', $data, 'staff/'.$file);
+
+                // ADD ENTRY TO DATABASE ( report table )
+
+                // RETURN
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/staff/' ), JSON_PRETTY_PRINT );  
+                exit();
+                
+            else:
+                // RETURN
+                echo json_encode( array("status" => "failed", "error" => "No any staff is present today till now" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;        
+
+        else:
+            // RETURN
+            echo json_encode( array("status" => "failed", "error" => "Generating from an Invalid path" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;        
     }
     // END : STAFF REPORTS
 

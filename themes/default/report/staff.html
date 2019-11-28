@@ -1,0 +1,182 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <div class="col-md-10 content">               
+                {{ template.topmenu|raw }}
+
+                <section class="report-staff">
+
+                    <h4 class="page-title"> Staff Reports </h4>
+
+                    <div class="col-12 mt-5">
+                        <div class="row">
+
+                            <div class="col-6 card">
+                                <div class="card-header"><h5>Today Present Staff report</h5></div>
+                                <!-- <div class="card-body">
+
+                                    
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="inpt-class">Class</label>
+                                            <select class="form-control" id="inpt-class" name="class">
+                                                {% for class in student_class %}
+                                                    <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div> -->
+                                <div class="card-footer bg-transparent">
+                                    <input type="hidden" id="staff-present" value="true"/>
+                                    <button class="btn btn-primary" onclick="Generate_StaffPresent();">Generate</button>
+                                </div>
+                            </div>
+
+                            <div class="col-6 card">
+                                <div class="card-header"><h5>Today On-Leave Staff report</h5></div>
+                                <!-- <div class="card-body">
+
+                                    
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="inpt-class">Student</label>
+                                            <select class="form-control selectpicker show-tick" data-live-search="true" data-size="5" id="inpt-student" name="student">
+                                                <option value="" selected>- Select -</option>
+                                                {% for student in students %}
+                                                    <option value="{{ student.id }}"> {{ student.fullname }} </option>
+                                                {% endfor %}
+                                            </select>                                    
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="card-footer bg-transparent">
+                                    <input type="hidden" id="staff-absent" value="true"/>
+                                    <button class="btn btn-primary" onclick="Generate_StaffAbsent();">Generate</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+
+                            <div class="col-md-6 card">
+                                <table class="table table-responsive-md">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col">REPORT DATE</th>
+                                            <th class="text-right" scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 card">
+                                <table class="table table-responsive-md">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col">REPORT DATE</th>
+                                            <th class="text-right" scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">TEST</td>
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/data/reports/attendance/gg.pdf" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>
+
+<script>
+
+    Generate_StaffPresent = () => {
+
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("staff-present", $("#staff-present").val())
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/staff_present_ajax",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (Response) => {
+                if ( Response.status === 'success' ) {
+                    console.log("SUCCESS")
+                    console.log( Response )
+                    alertify.alert("Success", "Report Generated Successfully")
+                } else {
+                    alertify.alert("Failed", Response.error)
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Error happened")
+                console.log( e.responseText )
+            }
+        })
+    }
+
+    Generate_StaffAbsent = () => {
+
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("staff-absent", $("#staff-absent").val())
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/staff_absent_ajax",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (Response) => {
+                if ( Response.status === 'success' ) {
+                    console.log("SUCCESS")
+                    console.log( Response )
+                    alertify.alert("Success", "Report Generated Successfully")
+                } else {
+                    alertify.alert("Failed", Response.error)
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Error happened")
+                console.log( e.responseText )
+            }
+        })
+    }
+
+</script>
