@@ -12,33 +12,24 @@
 
                 <section class="report-attendance">
 
-                    <h4 class="page-title"> Attendance Reports </h4>
+                    <h4 class="page-title"> Student Profile Report </h4>
 
                     <div class="col-12 mt-5">
                         <div class="row">
 
                             <div class="col-6 card">
-                                <div class="card-header"><h5>Class Attendance</h5></div>
+                                <div class="card-header"><h5>All Students in a class Profile Report</h5></div>
                                 <div class="card-body">
 
                                     <!-- FORM -->
                                     <div class="form-row">
-                                        <div class="col">
+                                        <div class="col-6">
                                             <label for="inpt-class">Class</label>
                                             <select class="form-control" id="inpt-class" name="class">
-                                                {% for class in student_class %}
+                                                {% for class in classes %}
                                                     <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
                                                 {% endfor %}
                                             </select>
-                                        </div>
-                                        <div class="col">
-                                            <label for="inpt-class-month">Month</label>
-                                            <div class="input-group date" id="datetimepicker-class-month" data-target-input="nearest">
-                                                <input type="text" id="inpt-class-month" class="form-control datetimepicker-input" data-target="#datetimepicker-class-month" name="month" required/>
-                                                <div class="input-group-append" data-target="#datetimepicker-class-month" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="la la-calendar"></i></div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -49,20 +40,23 @@
                             </div>
 
                             <div class="col-6 card">
-                                <div class="card-header"><h5>Staff Attendance</h5></div>
+                                <div class="card-header"><h5>Student Profile Report</h5></div>
                                 <div class="card-body">
 
                                     <!-- FORM -->
                                     <div class="form-row">
-                                            <div class="col">
-                                                <label for="inpt-staff-month">Month</label>
-                                                <div class="input-group date" id="datetimepicker-staff-month" data-target-input="nearest">
-                                                    <input type="text" id="inpt-staff-month" class="form-control datetimepicker-input" data-target="#datetimepicker-staff-month" name="month" required/>
-                                                    <div class="input-group-append" data-target="#datetimepicker-staff-month" data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="la la-calendar"></i></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="col-3">
+                                            <label for="inpt-admission">Student Admission No</label>
+                                            <input class="form-control" type="text" id="inpt-admission" name="admission"/>
+                                        </div>
+                                        <div class="col-9">
+                                            <label for="inpt-student">Student Name</label>
+                                            <select class="form-control" id="inpt-student" name="student">
+                                                {% for student in students %}
+                                                    <option value="{{ student.id }}"> {{ student.fullname }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
                                     </div>
 
                                 </div>
