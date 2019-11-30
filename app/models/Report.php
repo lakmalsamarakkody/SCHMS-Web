@@ -4,7 +4,7 @@
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Religion_Model extends EloquentModel {
+class Report_Model extends EloquentModel {
 
 	const CREATED_AT = 'created_on';
 	const UPDATED_AT = 'updated_on';

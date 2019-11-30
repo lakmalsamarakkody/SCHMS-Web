@@ -24,6 +24,8 @@ class Report extends Controller {
         $this->load->view('report/index', $data);
     }
 
+
+
     // START : ATTENDANCE REPORTS
     public function attendance() {
     
@@ -56,6 +58,8 @@ class Report extends Controller {
         $this->load->view('report/attendance', $data);
     }
 
+
+
     public function class_attendance_ajax() {
 
         // SET JSON HEADER
@@ -65,6 +69,7 @@ class Report extends Controller {
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("student");
+        $this->load->model("report");
         $this->load->model("student/class");
         $this->load->model("student/attendance");
 
@@ -138,14 +143,22 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
-            $file = 'class_attendance';
+            $file = 'CLASS-ATTENDANCE-'.$_SESSION['user']['id'].'-'.Carbon::now()->format('Ymd-His');
             $JSReport->get_report('CLASS_ATTENDANCE', $data, 'attendance/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'attendance_class';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
 
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
-            exit();
-
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
         else:
             echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
