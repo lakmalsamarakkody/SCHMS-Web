@@ -58,14 +58,17 @@ class Report extends Controller {
 
 
         // QUERY REPORTS ( BY CLASS )
-        foreach( $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'attendance_class')->get() as $key => $el ):
-            $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
-            $data['reports']['class'][$key]['id'] = $el->id;
-            $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/attendance/'.$el->file_name;
-            $data['reports']['class'][$key]['file'] = $el->file_name;
-            $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('y/m/d h:i:s A');
-            $data['reports']['class'][$key]['user']['username'] = $user->username;
-        endforeach;
+        $is_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'class_attendance')->get();
+        if ( $is_reports !== NULL ):
+            foreach( $is_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['class'][$key]['id'] = $el->id;
+                $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/attendance/'.$el->file_name;
+                $data['reports']['class'][$key]['file'] = $el->file_name;
+                $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['class'][$key]['user']['username'] = $user->username;
+            endforeach;
+        endif;
 
 		// RENDER VIEW
         $this->load->view('report/attendance', $data);
@@ -79,6 +82,7 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model("user");
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("student");
@@ -99,7 +103,7 @@ class Report extends Controller {
             exit();
         endif;
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // Days in a month
@@ -126,7 +130,7 @@ class Report extends Controller {
             $data['class_attendance']['class']['name'] = $this->model_grade->select('name')->where('id', '=', $class_data->grade_id)->first()->name." - ".$class_data->name;
             $data['class_attendance']['month'] = $this->request->post['month'];
             $data['class_attendance']['generated_on'] = $time_now;
-            $data['class_attendance']['generated_by'] = "";
+            $data['class_attendance']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
 
             // CONTENT
             $student = $this->model_student->select('id', 'class_id', 'admission_no', 'full_name', 'initials', 'surname')->where('class_id', '=', $this->request->post['class_id']);
@@ -160,7 +164,7 @@ class Report extends Controller {
             $JSReport->get_report('CLASS_ATTENDANCE', $data, 'attendance/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
-            $this->model_report->type = 'attendance_class';
+            $this->model_report->type = 'class_attendance';
             $this->model_report->file_name = $file.'.pdf';
             $this->model_report->generated_by = $_SESSION['user']['id'];
 
@@ -179,28 +183,6 @@ class Report extends Controller {
         endif;
 
     }
-
-
-
-    public function ajax_delete_class_attendance() {
-
-        // SET JSON HEADER
-        header('Content-Type: application/json');
-
-        // MODELS
-        $this->load->model("report");
-
-        // QUERY REPORT
-        $report = $this->model_report->find($this->request->post['report_id']);
-
-        // REMOVE FILE
-        unlink( ABS_PATH.'/data/reports/attendance/'.$report->file_name );
-
-        // REMOVE DATABASE RECORD
-        $report->delete();
-    }
-
-
 
     public function staff_attendance_ajax() {
 
@@ -224,7 +206,7 @@ class Report extends Controller {
             exit();
         endif;
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // Days in a month
@@ -279,7 +261,27 @@ class Report extends Controller {
             echo json_encode( array("status" => "failed", "error" => "Invalid Month Selected" ), JSON_PRETTY_PRINT );
             exit();
         endif;
+    }
 
+    public function delete_report_attendance_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("report");
+
+        // QUERY REPORT
+        $report = $this->model_report->find($this->request->post['report_id']);
+
+        // REMOVE FILE
+        // unlink( ABS_PATH.'/data/reports/attendance/'.$report->file_name );
+
+        // REMOVE DATABASE RECORD
+        if ( $report->delete() ):
+            echo json_encode( array("status" => "success", "msg" => "Report Deleted Successfully" ), JSON_PRETTY_PRINT );  
+            exit();
+        endif;
     }
     // END : ATTENDANCE REPORTS
 
@@ -353,7 +355,7 @@ class Report extends Controller {
         $this->load->model("subject");
         $this->load->model("staff");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
@@ -441,7 +443,7 @@ class Report extends Controller {
         $this->load->model("subject");
         $this->load->model("staff");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
@@ -590,7 +592,7 @@ class Report extends Controller {
         $this->load->model("student");
         $this->load->model("student/health");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
@@ -669,7 +671,7 @@ class Report extends Controller {
         $this->load->model("student");
         $this->load->model("student/health");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
@@ -767,7 +769,7 @@ class Report extends Controller {
         $this->load->model("staff");
         $this->load->model("staff/attendance");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
@@ -857,7 +859,7 @@ class Report extends Controller {
         $this->load->model("staff");
         $this->load->model("staff/attendance");
 
-        $time_now = Carbon::now()->isoFormat('YYYY-MM-DD HH:mm');
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // CHECK IF SUBMITED
