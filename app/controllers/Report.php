@@ -41,8 +41,10 @@ class Report extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODELS
+        $this->load->model('user');
         $this->load->model('class');
         $this->load->model('grade');
+        $this->load->model('report');
 
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -52,6 +54,17 @@ class Report extends Controller {
             $data['student_class'][$key]['name'] = $element->name;
 
             $data['student_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+
+        // QUERY REPORTS ( BY CLASS )
+        foreach( $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'attendance_class')->get() as $key => $el ):
+            $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+            $data['reports']['class'][$key]['id'] = $el->id;
+            $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/attendance/'.$el->file_name;
+            $data['reports']['class'][$key]['file'] = $el->file_name;
+            $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('y/m/d h:i:s A');
+            $data['reports']['class'][$key]['user']['username'] = $user->username;
         endforeach;
 
 		// RENDER VIEW
@@ -166,6 +179,28 @@ class Report extends Controller {
         endif;
 
     }
+
+
+
+    public function ajax_delete_class_attendance() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("report");
+
+        // QUERY REPORT
+        $report = $this->model_report->find($this->request->post['report_id']);
+
+        // REMOVE FILE
+        unlink( ABS_PATH.'/data/reports/attendance/'.$report->file_name );
+
+        // REMOVE DATABASE RECORD
+        $report->delete();
+    }
+
+
 
     public function staff_attendance_ajax() {
 

@@ -85,14 +85,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for report in reports.class %}
                                         <tr>
-                                            <td class="text-center" scope="col">TEST</td>
-                                            <td class="text-center">TEST</td>
+                                            <td class="text-center">{{ report.generated_on }}</td>
+                                            <td class="text-center" scope="col">{{ report.user.username }}</td>
                                             <td class="text-right">
-                                                <a href="{{ app.url }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
-                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
+                                                <a href="{{ report.path }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <button onClick="onClick_DeleteReport('{{ report.id }}')" class="btn btn-sm btn-danger">Remove</button>
                                             </td>
                                         </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -130,6 +132,8 @@
 </body>
 
 <script>
+
+
     $(function () {
         $('#datetimepicker-class-month').datetimepicker({
             viewMode: 'years',
@@ -141,6 +145,8 @@
             format: 'MM/YYYY'
         });
     });
+
+
 
     Generate_ClassAttendance = () => {
 
@@ -159,9 +165,12 @@
             dataType: 'json',
             success: (Response) => {
                 if ( Response.status === 'success' ) {
-                    console.log("SUCCESS")
-                    console.log( Response )
-                    alertify.alert("Success", "Report Generated Successfully")
+                    alertify.alert("Success", "Report Generated Successfully").set({
+                        'closable': false,
+                        'onok': () => {
+                            location.reload()
+                        }
+                    })
                 } else {
                     alertify.alert("Failed", Response.error)
                 }
@@ -174,11 +183,13 @@
 
     }
 
+
+
     Generate_StaffAttendance = () => {
 
-    // PAYLOAD
-    let formData = new FormData()
-    formData.append("month", $("#inpt-staff-month").val())
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("month", $("#inpt-staff-month").val())
 
         // AJAX
         $.ajax({
@@ -204,5 +215,31 @@
         })
 
     }
+
+
+
+    onClick_DeleteReport = (id) => {
+
+        // PAYLOAD
+        let formData = new FormData()
+        formData.append("report_id", id)
+
+        // AJAX
+        $.ajax({
+            url: "{{ app.url }}/report/ajax_delete_class_attendance",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: Response => {
+                console.log( Response )
+            },
+            error: e => {
+                console.log( e.responseText )
+            }
+        })
+    }
+
 
 </script>
