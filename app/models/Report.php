@@ -14,7 +14,7 @@ class Religion_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'report';
-	protected $fillable = [ 'id', 'type', 'file_name', 'generated_by', 'generated_at' ];
+	protected $fillable = [ 'id', 'type', 'file_name', 'generated_by' ];
 
 }
 
