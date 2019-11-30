@@ -58,15 +58,28 @@ class Report extends Controller {
 
 
         // QUERY REPORTS ( BY CLASS )
-        $is_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'class_attendance')->get();
-        if ( $is_reports !== NULL ):
-            foreach( $is_reports as $key => $el ):
+        $is_class_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'class_attendance')->get();
+        if ( $is_class_reports !== NULL ):
+            foreach( $is_class_reports as $key => $el ):
                 $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
                 $data['reports']['class'][$key]['id'] = $el->id;
-                $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/attendance/'.$el->file_name;
-                $data['reports']['class'][$key]['file'] = $el->file_name;
                 $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
                 $data['reports']['class'][$key]['user']['username'] = $user->username;
+                $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/attendance/'.$el->file_name;
+                $data['reports']['class'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
+        // QUERY REPORTS ( BY STAFF )
+        $is_staff_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'staff_attendance')->get();
+        if ( $is_staff_reports !== NULL ):
+            foreach( $is_staff_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['staff'][$key]['id'] = $el->id;
+                $data['reports']['staff'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['staff'][$key]['user']['username'] = $user->username;
+                $data['reports']['staff'][$key]['path'] = $this->config->get('base_url').'/data/reports/attendance/'.$el->file_name;
+                $data['reports']['staff'][$key]['file'] = $el->file_name;
             endforeach;
         endif;
 
@@ -160,7 +173,7 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
-            $file = 'CLASS-ATTENDANCE-'.$_SESSION['user']['id'].'-'.Carbon::now()->format('Ymd-His');
+            $file = 'class_attendance_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
             $JSReport->get_report('CLASS_ATTENDANCE', $data, 'attendance/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
@@ -190,6 +203,8 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
         $this->load->model("staff");
         $this->load->model("staff/attendance");
 
@@ -223,7 +238,7 @@ class Report extends Controller {
             // TITLE DETAILS
             $data['staff_attendance']['month'] = $this->request->post['month'];
             $data['staff_attendance']['generated_on'] = $time_now;
-            $data['staff_attendance']['generated_by'] = "";
+            $data['staff_attendance']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;;
 
             // CONTENT
             $staff = $this->model_staff->select('id', 'employee_number', 'full_name', 'initials', 'surname');
@@ -248,38 +263,25 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
-            $file = 'staff_attendance';
+            $file = 'staff_attendance_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
             $JSReport->get_report('STAFF_ATTENDANCE', $data, 'attendance/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'staff_attendance';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
 
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
-            exit();
-
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
         else:
             echo json_encode( array("status" => "failed", "error" => "Invalid Month Selected" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
-    }
-
-    public function delete_report_attendance_ajax() {
-
-        // SET JSON HEADER
-        header('Content-Type: application/json');
-
-        // MODELS
-        $this->load->model("report");
-
-        // QUERY REPORT
-        $report = $this->model_report->find($this->request->post['report_id']);
-
-        // REMOVE FILE
-        // unlink( ABS_PATH.'/data/reports/attendance/'.$report->file_name );
-
-        // REMOVE DATABASE RECORD
-        if ( $report->delete() ):
-            echo json_encode( array("status" => "success", "msg" => "Report Deleted Successfully" ), JSON_PRETTY_PRINT );  
             exit();
         endif;
     }
@@ -947,5 +949,28 @@ class Report extends Controller {
         endif;        
     }
     // END : STAFF REPORTS
+
+    // START : DELETE REPORTS
+    public function delete_report_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("report");
+
+        // QUERY REPORT
+        $report = $this->model_report->find($this->request->post['report_id']);
+
+        // REMOVE FILE
+        // unlink( ABS_PATH.'/data/reports/attendance/'.$report->file_name );
+
+        // REMOVE DATABASE RECORD
+        if ( $report->delete() ):
+            echo json_encode( array("status" => "success", "msg" => "Report Deleted Successfully" ), JSON_PRETTY_PRINT );  
+            exit();
+        endif;
+    }
+    // END : DELETE REPORTS
 
 }

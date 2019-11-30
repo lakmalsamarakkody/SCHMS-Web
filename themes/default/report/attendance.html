@@ -98,7 +98,7 @@
                                             {% endfor %}
                                         {% else %}
                                             <tr>
-                                                <td class="text-center" scope="col" colspan="3">No reports found</td>
+                                                <td class="text-center" scope="col" colspan="3">No Class Attendance Reports Found</td>
                                             </tr>
                                         {% endif %}
                                     </tbody>
@@ -114,14 +114,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-center" scope="col">TEST</td>
-                                            <td class="text-center">TEST</td>
-                                            <td class="text-right">
-                                                <a href="{{ app.url }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
-                                                <a href=""><button class="btn btn-sm btn-danger">Remove</button></a>
-                                            </td>
-                                        </tr>
+                                        {% if reports.staff %}
+                                            {% for report in reports.staff %}
+                                            <tr>
+                                                <td class="text-center">{{ report.generated_on }}</td>
+                                                <td class="text-center" scope="col">{{ report.user.username }}</td>
+                                                <td class="text-right">
+                                                    <a href="{{ report.path }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
+                                                    <button onClick="onClick_DeleteReport('{{ report.id }}')" class="btn btn-sm btn-danger">Remove</button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td class="text-center" scope="col" colspan="3">No Staff Attendance Reports Found</td>
+                                            </tr>
+                                        {% endif %}
                                     </tbody>
                                 </table>
                             </div>
@@ -207,9 +215,12 @@
             dataType: 'json',
             success: (Response) => {
                 if ( Response.status === 'success' ) {
-                    console.log("SUCCESS")
-                    console.log( Response )
-                    alertify.alert("Success", "Report Generated Successfully")
+                    alertify.alert("Success", "Report Generated Successfully").set({
+                        'closable': false,
+                        'onok': () => {
+                            location.reload()
+                        }
+                    })
                 } else {
                     alertify.alert("Failed", Response.error)
                 }
@@ -223,7 +234,6 @@
     }
 
 
-
     onClick_DeleteReport = (id) => {
 
         // PAYLOAD
@@ -232,7 +242,7 @@
 
         // AJAX
         $.ajax({
-            url: "{{ app.url }}/report/delete_report_attendance_ajax",
+            url: "{{ app.url }}/report/delete_report_ajax",
             method: 'POST',
             data: formData,
             processData: false,
