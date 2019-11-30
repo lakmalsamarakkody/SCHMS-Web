@@ -42,9 +42,9 @@ class Report extends Controller {
 
         // MODELS
         $this->load->model('user');
+        $this->load->model('report');
         $this->load->model('class');
         $this->load->model('grade');
-        $this->load->model('report');
 
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -96,10 +96,10 @@ class Report extends Controller {
 
         // MODELS
         $this->load->model("user");
+        $this->load->model("report");
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("student");
-        $this->load->model("report");
         $this->load->model("student/class");
         $this->load->model("student/attendance");
 
@@ -238,7 +238,7 @@ class Report extends Controller {
             // TITLE DETAILS
             $data['staff_attendance']['month'] = $this->request->post['month'];
             $data['staff_attendance']['generated_on'] = $time_now;
-            $data['staff_attendance']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;;
+            $data['staff_attendance']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
 
             // CONTENT
             $staff = $this->model_staff->select('id', 'employee_number', 'full_name', 'initials', 'surname');
@@ -321,6 +321,8 @@ class Report extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODEL
+        $this->load->model('user');
+        $this->load->model('report');
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('staff');
@@ -341,6 +343,32 @@ class Report extends Controller {
             $data['staffs'][$key]['fullname'] = $element->full_name;
         endforeach;
 
+        // QUERY REPORTS ( BY CLASS )
+        $is_class_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'class_timetable')->get();
+        if ( $is_class_reports !== NULL ):
+            foreach( $is_class_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['class'][$key]['id'] = $el->id;
+                $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['class'][$key]['user']['username'] = $user->username;
+                $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/timetable/'.$el->file_name;
+                $data['reports']['class'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
+        // QUERY REPORTS ( BY STAFF )
+        $is_staff_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'staff_timetable')->get();
+        if ( $is_staff_reports !== NULL ):
+            foreach( $is_staff_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['staff'][$key]['id'] = $el->id;
+                $data['reports']['staff'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['staff'][$key]['user']['username'] = $user->username;
+                $data['reports']['staff'][$key]['path'] = $this->config->get('base_url').'/data/reports/timetable/'.$el->file_name;
+                $data['reports']['staff'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/timetable', $data);
     }
@@ -351,6 +379,8 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("class/timetable");
@@ -381,7 +411,7 @@ class Report extends Controller {
             // TITLE DETAILS
             $data['timetable']['name'] = $this->model_grade->select('name')->where('id', '=', $class_data->grade_id)->first()->name." - ".$class_data->name;
             $data['timetable']['generated_on'] = $time_now;
-            $data['timetable']['generated_by'] = "";
+            $data['timetable']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
 
             // CONTENT
             $class_timetable = $this->model_class_timetable->select('id', 'day', 'period', 'subject_id', 'staff_id')->where('class_id', '=', $this->request->post['class_id']);
@@ -417,14 +447,22 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
-            $file = 'class_timetable';
+            $file = 'class_timetable_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
             $JSReport->get_report('CLASS_TIMETABLE', $data, 'timetable/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'class_timetable';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
 
-            // RETURN
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/timetable/' ), JSON_PRETTY_PRINT );  
-            exit();
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/timetable/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
 
         else:
@@ -439,6 +477,8 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("class/timetable");
@@ -469,7 +509,7 @@ class Report extends Controller {
             $data['timetable']['employee_number'] = $staff->employee_number;
             $data['timetable']['name'] = $staff->initials. " ". $staff->surname;
             $data['timetable']['generated_on'] = $time_now;
-            $data['timetable']['generated_by'] = "";
+            $data['timetable']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
 
             // CONTENT
             $class_timetable = $this->model_class_timetable->select('id', 'day', 'period', 'subject_id', 'class_id')->where('staff_id', '=', $this->request->post['staff_id']);
@@ -508,14 +548,22 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
-            $file = 'staff_timetable';
+            $file = 'staff_timetable_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
             $JSReport->get_report('STAFF_TIMETABLE', $data, 'timetable/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'staff_timetable';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
 
-            // RETURN
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/timetable/' ), JSON_PRETTY_PRINT );  
-            exit();
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
 
         else:
