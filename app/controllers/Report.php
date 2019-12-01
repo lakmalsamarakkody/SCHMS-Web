@@ -103,6 +103,9 @@ class Report extends Controller {
         $this->load->model("student/class");
         $this->load->model("student/attendance");
 
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
          // IS ANY student EXISTS
          if ( $this->model_student->select('id')->first() === NULL ):
             echo json_encode( array("status" => "failed", "error" => "No student exists in this system" ), JSON_PRETTY_PRINT );
@@ -115,9 +118,6 @@ class Report extends Controller {
             echo json_encode( array("status" => "failed", "error" => "Please select a valid Month" ), JSON_PRETTY_PRINT );
             exit();
         endif;
-
-        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
-        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // Days in a month
         $dates = Carbon::createFromFormat("d/m/Y", "01/".$this->request->post['month']);
@@ -186,7 +186,7 @@ class Report extends Controller {
                 echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
                 exit();
             else:
-                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
 
@@ -208,6 +208,9 @@ class Report extends Controller {
         $this->load->model("staff");
         $this->load->model("staff/attendance");
 
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
         // IS ANY STAFF EXISTS
         if ( $this->model_staff->select('id')->first() === NULL ):
             echo json_encode( array("status" => "failed", "error" => "No staff exists in this system" ), JSON_PRETTY_PRINT );
@@ -220,9 +223,6 @@ class Report extends Controller {
             echo json_encode( array("status" => "failed", "error" => "Please select a valid Month" ), JSON_PRETTY_PRINT );
             exit();
         endif;
-
-        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
-        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // Days in a month
         $dates = Carbon::createFromFormat("d/m/Y", "01/".$this->request->post['month']);
@@ -276,7 +276,7 @@ class Report extends Controller {
                 echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
                 exit();
             else:
-                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
 
@@ -460,7 +460,7 @@ class Report extends Controller {
                 echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/timetable/' ), JSON_PRETTY_PRINT );  
                 exit();
             else:
-                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
 
@@ -561,7 +561,7 @@ class Report extends Controller {
                 echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
                 exit();
             else:
-                echo json_encode( array("status" => "failed", "error" => "Invalid Class Selected" ), JSON_PRETTY_PRINT );
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
 
@@ -607,6 +607,8 @@ class Report extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODEL
+        $this->load->model('user');
+        $this->load->model('report');
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('student');
@@ -627,6 +629,32 @@ class Report extends Controller {
             $data['students'][$key]['fullname'] = $element->full_name;
         endforeach;
 
+        // QUERY REPORTS ( BY CLASS )
+        $is_class_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'class_health')->get();
+        if ( $is_class_reports !== NULL ):
+            foreach( $is_class_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['class'][$key]['id'] = $el->id;
+                $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['class'][$key]['user']['username'] = $user->username;
+                $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/health/'.$el->file_name;
+                $data['reports']['class'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
+        // QUERY REPORTS ( BY STAFF )
+        $is_staff_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'student_health')->get();
+        if ( $is_staff_reports !== NULL ):
+            foreach( $is_staff_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['staff'][$key]['id'] = $el->id;
+                $data['reports']['staff'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['staff'][$key]['user']['username'] = $user->username;
+                $data['reports']['staff'][$key]['path'] = $this->config->get('base_url').'/data/reports/health/'.$el->file_name;
+                $data['reports']['staff'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/health', $data);
     }
@@ -637,6 +665,8 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("student");
@@ -674,7 +704,7 @@ class Report extends Controller {
             // TITLE DETAILS
             $data['health']['class']['name'] = $class_name;
             $data['health']['generated_on'] = $time_now;
-            $data['health']['generated_by'] = "";
+            $data['health']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
 
             // CONTENT
             foreach ( $join_data->get() as $key => $el ):
@@ -693,15 +723,22 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
-            $file = 'class_health';
+            $file = 'class_health_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
             $JSReport->get_report('CLASS_HEALTH', $data, 'health/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'class_health';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
 
-            // RETURN
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/health/' ), JSON_PRETTY_PRINT );  
-            exit();
-
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
         else:
             echo json_encode( array("status" => "failed", "error" => "Please Select a Class" ), JSON_PRETTY_PRINT );
@@ -716,6 +753,8 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("student");
@@ -755,7 +794,7 @@ class Report extends Controller {
             // TITLE DETAILS
             $data['health']['class']['name'] = $class_name;
             $data['health']['generated_on'] = $time_now;
-            $data['health']['generated_by'] = "";
+            $data['health']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
 
             // CONTENT
             $data['health']['student']['index'] = $join_data->index_no;
@@ -772,14 +811,22 @@ class Report extends Controller {
 
             // JSReports
             $JSReport = new JSReport();
-            $file = 'student_health';
+            $file = 'student_health_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');;
             $JSReport->get_report('STUDENT_HEALTH', $data, 'health/'.$file);
 
             // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'student_health';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
 
-            // RETURN
-            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/health/' ), JSON_PRETTY_PRINT );  
-            exit();
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
 
         else:
@@ -804,6 +851,36 @@ class Report extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
+
+        // QUERY REPORTS ( BY PRESENT )
+        $is_staff_present_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'staff_present_today')->get();
+        if ( $is_staff_present_reports !== NULL ):
+            foreach( $is_staff_present_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['staff']['present'][$key]['id'] = $el->id;
+                $data['reports']['staff']['present'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['staff']['present'][$key]['user']['username'] = $user->username;
+                $data['reports']['staff']['present'][$key]['path'] = $this->config->get('base_url').'/data/reports/staff/'.$el->file_name;
+                $data['reports']['staff']['present'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
+        // QUERY REPORTS ( BY ABSENT )
+        $is_staff__absent_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'staff_absent_today')->get();
+        if ( $is_staff__absent_reports !== NULL ):
+            foreach( $is_staff__absent_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['staff']['absent'][$key]['id'] = $el->id;
+                $data['reports']['staff']['absent'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['staff']['absent'][$key]['user']['username'] = $user->username;
+                $data['reports']['staff']['absent'][$key]['path'] = $this->config->get('base_url').'/data/reports/staff/'.$el->file_name;
+                $data['reports']['staff']['absent'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/staff', $data);
     }
@@ -814,6 +891,8 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model('user');
+        $this->load->model('report');
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("staff");
@@ -842,10 +921,13 @@ class Report extends Controller {
             $data['staff']['present']['date'] = $date_now;
             $data['staff']['present']['count'] = $staff->get()->count();
             $data['staff']['present']['generated_on'] = $time_now;
-            $data['staff']['present']['generated_by'] = "";
+            $data['staff']['present']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
             
+            // IS AVAILABLE STAFF TODAY
+            $is_staff_available = $this->model_staff_attendance->select('id')->where('date', '=', $date_now)->first();
+
             // CONTENT
-            if ( $staff !== NULL ):
+            if ( $is_staff_available !== NULL ):
 
                 foreach ( $staff->get() as $key => $element ):
 
@@ -876,18 +958,26 @@ class Report extends Controller {
 
                 // JSReports
                 $JSReport = new JSReport();
-                $file = 'staff_present';
+                $file = 'staff_present_today_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
                 $JSReport->get_report('STAFF_PRESENT', $data, 'staff/'.$file);
 
                 // ADD ENTRY TO DATABASE ( report table )
+                $this->model_report->type = 'staff_present_today';
+                $this->model_report->file_name = $file.'.pdf';
+                $this->model_report->generated_by = $_SESSION['user']['id'];
 
-                // RETURN
-                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/staff/' ), JSON_PRETTY_PRINT );  
-                exit();
+                // VALIDATE SAVE
+                if ( $this->model_report->save() ):
+                    echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                    exit();
+                else:
+                    echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
 
             else:
                 // RETURN
-                echo json_encode( array("status" => "failed", "error" => "No any staff is present today till now" ), JSON_PRETTY_PRINT );
+                echo json_encode( array("status" => "failed", "error" => "No any staff is present today" ), JSON_PRETTY_PRINT );
                 exit();
             endif;        
 
@@ -904,6 +994,8 @@ class Report extends Controller {
         header('Content-Type: application/json');
 
         // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
         $this->load->model("class");
         $this->load->model("grade");
         $this->load->model("staff");
@@ -929,7 +1021,7 @@ class Report extends Controller {
             // TITLE DETAILS
             $data['staff']['absent']['date'] = $date_now;
             $data['staff']['absent']['generated_on'] = $time_now;
-            $data['staff']['absent']['generated_by'] = "";
+            $data['staff']['absent']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
             $count = 0;
             
             // CONTENT
@@ -975,14 +1067,22 @@ class Report extends Controller {
 
                 // JSReports
                 $JSReport = new JSReport();
-                $file = 'staff_absent';
+                $file = 'staff_absent_today_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
                 $JSReport->get_report('STAFF_ABSENT', $data, 'staff/'.$file);
 
                 // ADD ENTRY TO DATABASE ( report table )
+                $this->model_report->type = 'staff_absent_today';
+                $this->model_report->file_name = $file.'.pdf';
+                $this->model_report->generated_by = $_SESSION['user']['id'];
 
-                // RETURN
-                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/staff/' ), JSON_PRETTY_PRINT );  
-                exit();
+                // VALIDATE SAVE
+                if ( $this->model_report->save() ):
+                    echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                    exit();
+                else:
+                    echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
                 
             else:
                 // RETURN
