@@ -26,7 +26,7 @@
                                         <div class="col">
                                             <label for="inpt-class">Class</label>
                                             <select class="form-control" id="inpt-class" name="class">
-                                                {% for class in student_class %}
+                                                {% for class in classes %}
                                                     <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
                                                 {% endfor %}
                                             </select>
@@ -104,8 +104,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% if reports.staff %}
-                                            {% for report in reports.staff %}
+                                        {% if reports.student %}
+                                            {% for report in reports.student %}
                                             <tr>
                                                 <td class="text-center">{{ report.generated_on }}</td>
                                                 <td class="text-center" scope="col">{{ report.user.username }}</td>

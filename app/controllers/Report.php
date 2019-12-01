@@ -301,8 +301,249 @@ class Report extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('user');
+        $this->load->model('report');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('student');
+
+        // QUERY CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        // QUERY STUDENT
+        foreach( $this->model_student->select('id', 'full_name')->get() as $key => $element ):
+            $data['students'][$key]['id'] = $element->id;
+            $data['students'][$key]['fullname'] = $element->full_name;
+        endforeach;
+
+        // QUERY REPORTS ( BY CLASS )
+        $is_class_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'class_student_bio')->get();
+        if ( $is_class_reports !== NULL ):
+            foreach( $is_class_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['class'][$key]['id'] = $el->id;
+                $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['class'][$key]['user']['username'] = $user->username;
+                $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/student/'.$el->file_name;
+                $data['reports']['class'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
+        // QUERY REPORTS ( BY STUDENT )
+        $is_student_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'one_student_bio')->get();
+        if ( $is_student_reports !== NULL ):
+            foreach( $is_student_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['student'][$key]['id'] = $el->id;
+                $data['reports']['student'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['student'][$key]['user']['username'] = $user->username;
+                $data['reports']['student'][$key]['path'] = $this->config->get('base_url').'/data/reports/student/'.$el->file_name;
+                $data['reports']['student'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/student', $data);
+    }
+
+    public function class_all_student_ajax() {
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
+        $this->load->model("student");
+        $this->load->model("district");
+        $this->load->model("religion");
+        $this->load->model("student/class");
+        $this->load->model("class");
+        $this->load->model("grade");
+
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
+            
+            // IS ANY STUDENT EXISTS
+            if ( $this->model_student->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No student exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // IS CORRECT CLASS ID
+            if ( $this->model_class->select('name')->where('id', '=', $this->request->post['class_id'])->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "Invalid Class is Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // QUERY CLASS NAME
+            $class = $this->model_class->select('grade_id', 'name')->where('id', '=', $this->request->post['class_id'])->first();
+            $grade = $this->model_grade->select('name')->where('id', '=', $class->grade_id)->first();
+            $class_name =  $grade->name. " - ". $class->name ;
+
+            // QUERY STUDENT DATA
+            $join_data = DB::table('student')
+            ->join('district', 'student.district_id', 'district.id')
+            ->join('religion', 'student.religion_id', 'religion.id')
+            ->join('student_has_class', 'student.id', 'student_has_class.student_id')
+            ->where('student.class_id', '=', $this->request->post['class_id'])
+            ->select('admission_no', 'admission_date', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_mobile', 'address', 'city', 'birth_place', 'district.name as distname', 'religion.name as relname', 'student_has_class.index_no');
+
+            // TITLE DETAILS
+            $data['report']['class']['name'] = $class_name;
+            $data['report']['generated_on'] = $time_now;
+            $data['report']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
+
+            // CONTENT
+            foreach ( $join_data->get() as $key => $el ):
+                $data['student'][$key]['admission'] = $el->admission_no;
+                // $data['student'][$key]['admission_date'] = $el->admission_date;
+                $data['student'][$key]['index'] = $el->index_no;
+                // $data['student'][$key]['fullname'] = $el->full_name;
+                $data['student'][$key]['name'] = $el->initials. " ". $el->surname;
+                $data['student'][$key]['dob'] = $el->dob;
+                $data['student'][$key]['gender'] = $el->gender;
+                $data['student'][$key]['email'] = $el->email;
+                $data['student'][$key]['mobile'] = $el->phone_mobile;
+                $data['student'][$key]['address'] = $el->address;
+                $data['student'][$key]['city'] = $el->city;
+                // $data['student'][$key]['birth_place'] = $el->birth_place;
+                $data['student'][$key]['distname'] = $el->distname;
+                $data['student'][$key]['relname'] = $el->relname;
+            endforeach;
+
+            // JSReports
+            $JSReport = new JSReport();
+            $file = 'class_student_bio_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
+            $JSReport->get_report('CLASS_STUDENT', $data, 'student/'.$file);
+
+            // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'class_student_bio';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
+
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+        else:
+            echo json_encode( array("status" => "failed", "error" => "Please Select a Class" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+    }
+
+    public function class_one_student_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
+        $this->load->model("student");
+        $this->load->model("district");
+        $this->load->model("religion");
+        $this->load->model("student/class");
+        $this->load->model("class");
+        $this->load->model("grade");
+
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
+
+            // IS ANY STUDENT EXISTS
+            if ( $this->model_student->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "No Student exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // IS CORRECT STUDENT ID
+            if ( $this->model_student->select('id')->where('id', '=', $this->request->post['student_id'])->first() === NULL ):
+                echo json_encode( array("status" => "failed", "error" => "Invalid Student is Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // QUERY CLASS NAME
+            $class_id = $this->model_student->select('class_id')->where('id', '=', $this->request->post['student_id'])->first()->class_id;
+            $class = $this->model_class->select('grade_id', 'name')->where('id', '=', $class_id)->first();
+            $grade = $this->model_grade->select('name')->where('id', '=', $class->grade_id)->first();
+            $class_name =  $grade->name. " - ". $class->name ;
+
+            // QUERY STUDENT DATA
+            $join_data = DB::table('student')
+            ->join('district', 'student.district_id', 'district.id')
+            ->join('religion', 'student.religion_id', 'religion.id')
+            ->join('student_has_class', 'student.id', 'student_has_class.student_id')
+            ->where('student.id', '=', $this->request->post['student_id'])
+            ->select('admission_no', 'admission_date', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_mobile', 'address', 'city', 'birth_place', 'district.name as distname', 'religion.name as relname', 'student_has_class.index_no')
+            ->orderBy('admission_no')
+            ->first();
+
+            // TITLE DETAILS
+            $data['report']['class']['name'] = $class_name;
+            $data['report']['generated_on'] = $time_now;
+            $data['report']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
+
+            // CONTENT
+            $data['student']['admission'] = $join_data->admission_no;
+            $data['student']['admission_date'] = $join_data->admission_date;
+            $data['student']['index'] = $join_data->index_no;
+            $data['student']['fullname'] = $join_data->full_name;
+            $data['student']['name'] = $join_data->initials. " ". $join_data->surname;
+            $data['student']['dob'] = $join_data->dob;
+            $data['student']['gender'] = $join_data->gender;
+            $data['student']['email'] = $join_data->email;
+            $data['student']['mobile'] = $join_data->phone_mobile;
+            $data['student']['address'] = $join_data->address;
+            $data['student']['city'] = $join_data->city;
+            $data['student']['birth_place'] = $join_data->birth_place;
+            $data['student']['district'] = $join_data->distname;
+            $data['student']['religion'] = $join_data->relname;
+
+            // JSReports
+            $JSReport = new JSReport();
+            $file = 'one_student_bio_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');;
+            $JSReport->get_report('ONE_STUDENT', $data, 'student/'.$file);
+
+            // ADD ENTRY TO DATABASE ( report table )
+            $this->model_report->type = 'one_student_bio';
+            $this->model_report->file_name = $file.'.pdf';
+            $this->model_report->generated_by = $_SESSION['user']['id'];
+
+            // VALIDATE SAVE
+            if ( $this->model_report->save() ):
+                echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/attendance/' ), JSON_PRETTY_PRINT );  
+                exit();
+            else:
+                echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+
+        else:
+            echo json_encode( array("status" => "failed", "error" => "Please Select a Student" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+        
     }
     // END : STUDENT REPORTS
 
@@ -614,13 +855,13 @@ class Report extends Controller {
         $this->load->model('student');
 
         // QUERY CLASS
-        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
-            $data['student_class'][$key]['id'] = $element->id;
-            $data['student_class'][$key]['grade']['id'] = $element->grade_id;
-            $data['student_class'][$key]['staff']['id'] = $element->staff_id;
-            $data['student_class'][$key]['name'] = $element->name;
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBY('grade_id')->orderBY('name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
 
-            $data['student_class'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
         endforeach;
 
         // QUERY STUDENT
@@ -642,16 +883,16 @@ class Report extends Controller {
             endforeach;
         endif;
 
-        // QUERY REPORTS ( BY STAFF )
-        $is_staff_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'student_health')->get();
-        if ( $is_staff_reports !== NULL ):
-            foreach( $is_staff_reports as $key => $el ):
+        // QUERY REPORTS ( BY STUDENT )
+        $is_student_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'student_health')->get();
+        if ( $is_student_reports !== NULL ):
+            foreach( $is_student_reports as $key => $el ):
                 $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
-                $data['reports']['staff'][$key]['id'] = $el->id;
-                $data['reports']['staff'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
-                $data['reports']['staff'][$key]['user']['username'] = $user->username;
-                $data['reports']['staff'][$key]['path'] = $this->config->get('base_url').'/data/reports/health/'.$el->file_name;
-                $data['reports']['staff'][$key]['file'] = $el->file_name;
+                $data['reports']['student'][$key]['id'] = $el->id;
+                $data['reports']['student'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['student'][$key]['user']['username'] = $user->username;
+                $data['reports']['student'][$key]['path'] = $this->config->get('base_url').'/data/reports/health/'.$el->file_name;
+                $data['reports']['student'][$key]['file'] = $el->file_name;
             endforeach;
         endif;
 
@@ -678,8 +919,8 @@ class Report extends Controller {
         // CHECK IF SUBMITED
         if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
 
-             // IS ANY STUDENT EXISTS
-             if ( $this->model_student->select('id')->first() === NULL ):
+            // IS ANY STUDENT EXISTS
+            if ( $this->model_student->select('id')->first() === NULL ):
                 echo json_encode( array("status" => "failed", "error" => "No student exists in this system" ), JSON_PRETTY_PRINT );
                 exit();
             endif;

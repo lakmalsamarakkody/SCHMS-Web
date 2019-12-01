@@ -379,7 +379,7 @@ class Health extends Controller {
                 $data['students'][$key]['vaccination'] = $student_health->vaccination;
                 $data['students'][$key]['speciality'] = $student_health->speciality;
                 $data['students'][$key]['date'] = $student_health->date;
-                $data['students'][$key]['blood_group'] = $student_health->blood_group;
+                $data['students'][$key]['bg'] = $student_health->blood_group;
                 $data['students'][$key]['surgeries'] = $student_health->surgeries;
                 endif;
 

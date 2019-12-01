@@ -183,7 +183,7 @@
                                     <tr>
                                         <th width="1%" class="text-center" scope="col">Admission<br/>No</th>
                                         <th scope="col">Student<br/>Name</th>
-                                        <th width="8%" scope="col">Blood Group</th>
+                                        <th width="9%" scope="col">Blood Group</th>
                                         <th scope="col">Any Specialities<br/>(add to the end)</th>
                                         <th scope="col">Vaccination<br/>(add to the end)</th>
                                         <th width="1%" scope="col">Height<br/>(cm)</th>
@@ -199,15 +199,29 @@
                                         <tr>
                                             <td class="text-center" scope="row">{{ student.admission_no }}</td>
                                             <td> {{ student.name }}</td>
-                                            <td><select name="bg" class="form-control">
-                                                    <option value="A+">A+</option>
-                                                    <option value="A-">A-</option>
-                                                    <option value="B+">B+</option>
-                                                    <option value="B-">B-</option>
-                                                    <option value="AB+">AB+</option>
-                                                    <option value="AB-">AB-</option>
-                                                    <option value="O+">O+</option>
-                                                    <option value="O-">O-</option>
+                                            <td>
+                                                <select name="bg" class="form-control">
+                                                    {% if student.bg %}
+                                                        <option value="{{ student.bg }}" selected>{{ student.bg }}</option>
+                                                        <option value="A+">A+</option>
+                                                        <option value="A-">A-</option>
+                                                        <option value="B+">B+</option>
+                                                        <option value="B-">B-</option>
+                                                        <option value="AB+">AB+</option>
+                                                        <option value="AB-">AB-</option>
+                                                        <option value="O+">O+</option>
+                                                        <option value="O-">O-</option>
+                                                    {% else %}
+                                                        <option value="">- select -</option>
+                                                        <option value="A+">A+</option>
+                                                        <option value="A-">A-</option>
+                                                        <option value="B+">B+</option>
+                                                        <option value="B-">B-</option>
+                                                        <option value="AB+">AB+</option>
+                                                        <option value="AB-">AB-</option>
+                                                        <option value="O+">O+</option>
+                                                        <option value="O-">O-</option>
+                                                    {% endif %}
                                                 </select>
                                             </td>
                                             <td><input type="text" class="form-control" id="speciality" value="{{ student.hr }}"/></td>
