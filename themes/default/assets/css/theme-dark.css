@@ -79,6 +79,10 @@ h5.page-title{
     background:var(--main-bg-color);
 }
 
+.topmenu .heading-link{
+    color: var(--white);
+}
+
 .topmenu .messages .dropdown-menu{
     background-color: var(--main-bg-color);
     color: var(--white);

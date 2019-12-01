@@ -66,10 +66,15 @@
 }
 
 /* common/topmenu */
+
 .topmenu{
     color: var(--white);
     background: var(--main-theme-color);
     background-image: linear-gradient(145deg,#8f75da,#727cf5 70%);
+}
+
+.topmenu .heading-link{
+    color: var(--white);
 }
 
 .topmenu .messages .dropdown-menu{

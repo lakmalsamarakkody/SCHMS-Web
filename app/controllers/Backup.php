@@ -90,5 +90,29 @@ class Backup extends Controller {
 			echo json_encode( array( "status" => "failed", "error" => "Backup creation failed. Please try again." ), JSON_PRETTY_PRINT );
 		endif;
     }
+
+    // START : DELETE BACKUPS
+    public function delete_backup_ajax() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("backup");
+
+        // QUERY BACKUP
+        $backup = $this->model_backup->find($this->request->post['backup.id']);
+
+        // REMOVE FILE
+        // unlink( ABS_PATH.'/data/backups/'.$backup->name );
+
+        // REMOVE DATABASE RECORD
+        if ( $backup->delete() ):
+            echo json_encode( array("status" => "success", "msg" => "Backup Deleted Successfully" ), JSON_PRETTY_PRINT );  
+            exit();
+        endif;
+    }
+    // END : DELETE BACKUPS
+
 }
 ?>

@@ -108,6 +108,10 @@ h5.page-title{
     align-items: center;
 }
 
+.topmenu .heading-link{
+    text-decoration: none;
+}
+
 .topmenu .title{
     text-align: left;
 }
