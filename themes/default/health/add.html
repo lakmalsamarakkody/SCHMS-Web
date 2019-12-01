@@ -177,44 +177,62 @@
                     <section class="mt-5">
                         <!-- START : SEARCH RESULT TABLE -->
                         {% if students %}
-                            <table id="table_sport_search_student" class="table table-hover table-responsive-md">
+                            <table id="table_health_search_student" class="table table-hover table-responsive-md">
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th width="1%" class="text-center" scope="col">#</th>
-                                        <th width="1%" class="text-center" scope="col">ID</th>
-                                        <th width="5%" scope="col">Name</th>
-                                        <th width="10%" scope="col">Speciality</th>
-                                        <th width="10%" scope="col">Vaccination</th>
-                                        <th width="1%" scope="col">Height <br/> (cm)</th>
-                                        <th width="1%" scope="col">Weight <br/> (kg)</th>
-                                        <th width="1%" scope="col">H/R <br/> (bpm)</th>
-                                        <th width="1%" scope="col">B/P <br/> (mmHg)</th>
-                                        <th width="1%" scope="col">Date</th>
-                                        <th width="1%" class="text-center" scope="col">&nbsp;</th>
+                                        <th width="1%" class="text-center" scope="col">Admission<br/>No</th>
+                                        <th scope="col">Student<br/>Name</th>
+                                        <th width="9%" scope="col">Blood Group</th>
+                                        <th scope="col">Any Specialities<br/>(add to the end)</th>
+                                        <th scope="col">Vaccination<br/>(add to the end)</th>
+                                        <th width="1%" scope="col">Height<br/>(cm)</th>
+                                        <th width="1%" scope="col">Weight<br/>(kg)</th>
+                                        <th width="1%" scope="col">H/R<br/>(bpm)</th>
+                                        <th width="1%" scope="col">B/P<br/>(mmHg)</th>
+                                        <th width="1%" scope="col">Date<br/>(Last Updated)</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     {% for student in students %}
                                         <tr>
-                                            <th class="text-center" scope="row">{{ student.id }}</th>
-                                            <td class="text-center">{{ student.admission_no }}</td>
+                                            <td class="text-center" scope="row">{{ student.admission_no }}</td>
                                             <td> {{ student.name }}</td>
-                                            <td><input type="text" class="form-control form-control-sm" id="speciality"/></td>
-                                            <td><input type="text" class="form-control form-control-sm" id="vaccination"/></td>
-                                            <td class="text-center"><input class="form-control form-control-sm" type="text" maxlength="3" id="height"/></td>
-                                            <td class="text-center"><input class="form-control form-control-sm" type="text" maxlength="3" id="weight"/></td>
-                                            <td class="text-center"><input class="form-control form-control-sm" type="text" maxlength="3" id="heart_rate"/></td>
-                                            <td class="text-center"><input class="form-control form-control-sm" type="text" maxlength="3" id="blood_pressure"/></td>
-                                            <td class="text-center"><input class="form-control form-control-sm" type="date"/></td>
                                             <td>
-                                                <div class="col-12 text-center m-0 p-0">
-                                                    <button class="btn btn-sm btn-warning">Save</button>
-                                                </div>
+                                                <select name="bg" class="form-control">
+                                                    {% if student.bg %}
+                                                        <option value="{{ student.bg }}" selected>{{ student.bg }}</option>
+                                                        <option value="A+">A+</option>
+                                                        <option value="A-">A-</option>
+                                                        <option value="B+">B+</option>
+                                                        <option value="B-">B-</option>
+                                                        <option value="AB+">AB+</option>
+                                                        <option value="AB-">AB-</option>
+                                                        <option value="O+">O+</option>
+                                                        <option value="O-">O-</option>
+                                                    {% else %}
+                                                        <option value="">- select -</option>
+                                                        <option value="A+">A+</option>
+                                                        <option value="A-">A-</option>
+                                                        <option value="B+">B+</option>
+                                                        <option value="B-">B-</option>
+                                                        <option value="AB+">AB+</option>
+                                                        <option value="AB-">AB-</option>
+                                                        <option value="O+">O+</option>
+                                                        <option value="O-">O-</option>
+                                                    {% endif %}
+                                                </select>
                                             </td>
+                                            <td><input type="text" class="form-control" id="speciality" value="{{ student.hr }}"/></td>
+                                            <td><input type="text" class="form-control" id="vaccination" value="{{ student.hr }}"/></td>
+                                            <td><input type="text" class="form-control" id="height" value="{{ student.hr }}" maxlength="3" /></td>
+                                            <td><input type="text" class="form-control" id="weight" value="{{ student.hr }}" maxlength="3" /></td>
+                                            <td><input type="text" class="form-control" id="heart_rate" value="{{ student.hr }}" maxlength="3"/></td>
+                                            <td><input type="text" class="form-control" id="blood_pressure" value="{{ student.hr }}" maxlength="3"/></td>
+                                            <td><input type="date" class="form-control" id="date" value="{{ student.date }}"/></td>
                                         </tr>
-                                    {% endfor %}
+                                    {% endfor %}   
                                 </tbody>
                             </table>
 
@@ -251,7 +269,17 @@
 
         // DATA TABLE
         $(document).ready(function() {
-            $('#table_sport_search_student').DataTable();
+            $('#table_health_search_student').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        text: 'Update Modifications',
+                        action: function ( e, dt, node, config ) {
+                            alertify.alert("Success", "Modifications Updated Successfully");
+                        }
+                    }
+                ]
+            });
         } );
     
     </script>
