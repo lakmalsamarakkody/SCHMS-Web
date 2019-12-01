@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Ifsnop\Mysqldump as MySQLDump;
 
 class Backup extends Controller {
     public function index() {
@@ -31,6 +32,8 @@ class Backup extends Controller {
         $this->load->view('backup/index', $data);
     }
 
+
+
     public function ajax_add() {
 
         /**
@@ -53,13 +56,6 @@ class Backup extends Controller {
         // SET JSON HEADER
         header('Content-Type: application/json');
 
-        // VALIDATION : name
-        $is_valid_name = GUMP::is_valid($this->request->post, array('name' => 'required|alpha_space|max_len,50'));
-        if ( $is_valid_name !== true ):
-            echo json_encode( array( "status" => "failed", "error" => "Please enter backup name" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
-
         // VALIDATION : description
         $is_valid_description = GUMP::is_valid($this->request->post, array('description' => 'required|valid_name|max_len,50'));
         if ( $is_valid_description !== true ):
@@ -67,10 +63,25 @@ class Backup extends Controller {
             exit();
         endif;
 
+        // FILENAME
+        $file = 'DB_'.Carbon::now()->format('Ymd_His').'.sql';
+
+        try {
+            $SQLDump = new MySQLDump\Mysqldump('mysql:host='.$this->config->get('db_host').';dbname='.$this->config->get('db_name'), $this->config->get('db_user'), $this->config->get('db_pass'));
+            $SQLDump->start(ABS_PATH.'/data/backups/'.$file);
+        } catch(Exception $e) {
+            echo json_encode( array( "status" => "failed", "error" => "Backup creation failed. Please try again." ), JSON_PRETTY_PRINT );
+            exit();
+        }
+
+        // FILE SIZE
+        $filesize = filesize(ABS_PATH.'/data/backups/'.$file) / 1024;
+
         // ASSIGN DATA TO MODEL
-        $this->model_backup->name = $this->request->post['name'];
+        $this->model_backup->name = $file;
         $this->model_backup->description = $this->request->post['description'];
         $this->model_backup->date_time = Carbon::now();
+        $this->model_backup->file_size = $filesize;
 
         // SUBMIT
 		if ( $this->model_backup->save() ):
