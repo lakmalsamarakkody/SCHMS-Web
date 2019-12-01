@@ -37,7 +37,7 @@ class School extends Controller {
 		$this->load->model('sport');
 
 		// CLASS
-		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id')->get() as $key => $element ):
+		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id', 'asc')->orderBy('name', 'asc')->get() as $key => $element ):
 			$data['classes'][$key]['id'] = $element->id;
 			$data['classes'][$key]['grade']['id'] = $element->grade_id;
 			$data['classes'][$key]['name'] = $element->name;
