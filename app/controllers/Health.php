@@ -367,6 +367,22 @@ class Health extends Controller {
                 $data['students'][$key]['dob'] = $value->dob;
                 $data['students'][$key]['class'] = $value->class_id;
                 $data['students'][$key]['city'] = $value->city;
+
+                // QUERY GET HEALTH DATA
+                $student_health = $this->model_student_health->select('id', 'heart_rate', 'blood_pressure', 'height', 'weight', 'vaccination', 'speciality', 'date', 'blood_group', 'surgeries')->where('student_id', '=', $value->id)->first();
+                if ( $student_health !== NULL ):
+                // ($student_health->heart_rate) ? $data['students'][$key]['hr'] = $student_health->heart_rate : $data['students'][$key]['hr'] = "" ;
+                $data['students'][$key]['hr'] = $student_health->heart_rate;
+                $data['students'][$key]['bp'] = $student_health->bblood_pressure;
+                $data['students'][$key]['height'] = $student_health->height;
+                $data['students'][$key]['weight'] = $student_health->weight;
+                $data['students'][$key]['vaccination'] = $student_health->vaccination;
+                $data['students'][$key]['speciality'] = $student_health->speciality;
+                $data['students'][$key]['date'] = $student_health->date;
+                $data['students'][$key]['blood_group'] = $student_health->blood_group;
+                $data['students'][$key]['surgeries'] = $student_health->surgeries;
+                endif;
+
             endforeach;
 
         endif;
