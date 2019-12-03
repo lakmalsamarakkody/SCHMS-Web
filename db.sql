@@ -74,7 +74,7 @@ CREATE TABLE `class` (
 
 LOCK TABLES `class` WRITE;
 /*!40000 ALTER TABLE `class` DISABLE KEYS */;
-INSERT INTO `class` VALUES (15,1,NULL,'A','2019-09-23 01:37:15','2019-09-23 01:37:15',NULL),(16,3,1,'A','2019-09-23 01:40:39','2019-09-23 01:40:39',NULL),(17,5,NULL,'A','2019-09-23 05:12:49','2019-09-23 05:12:49',NULL),(18,4,NULL,'A','2019-09-23 05:15:05','2019-09-23 05:15:05',NULL),(21,6,NULL,'A','2019-10-01 19:17:17','2019-10-01 19:17:17',NULL),(22,6,NULL,'B','2019-10-01 19:51:15','2019-10-01 19:51:15',NULL),(33,1,NULL,'B','2019-12-01 14:17:15','2019-12-01 14:17:15',NULL),(34,7,NULL,'A','2019-12-01 14:17:41','2019-12-01 14:17:41',NULL),(35,2,NULL,'A','2019-12-01 14:21:26','2019-12-01 14:21:26',NULL),(36,2,NULL,'B','2019-12-01 14:21:35','2019-12-01 14:21:35',NULL),(37,3,NULL,'B','2019-12-01 14:21:43','2019-12-01 14:21:43',NULL),(38,4,NULL,'B','2019-12-01 14:28:52','2019-12-01 14:28:52',NULL),(39,5,NULL,'B','2019-12-01 14:57:16','2019-12-01 14:57:16',NULL),(40,7,NULL,'B','2019-12-01 14:57:44','2019-12-01 14:57:44',NULL),(41,8,NULL,'A','2019-12-01 14:58:03','2019-12-01 14:58:03',NULL),(42,8,NULL,'B','2019-12-01 14:58:26','2019-12-01 14:58:26',NULL),(43,9,NULL,'A','2019-12-01 14:58:35','2019-12-01 14:58:35',NULL),(44,9,NULL,'B','2019-12-01 14:58:42','2019-12-01 14:58:42',NULL),(45,10,NULL,'A','2019-12-01 14:58:48','2019-12-01 14:58:48',NULL),(46,10,NULL,'B','2019-12-01 14:59:02','2019-12-01 14:59:02',NULL),(47,11,NULL,'A','2019-12-01 14:59:14','2019-12-01 14:59:14',NULL),(48,11,NULL,'B','2019-12-01 14:59:22','2019-12-01 14:59:22',NULL);
+INSERT INTO `class` VALUES (15,1,NULL,'A','2019-09-23 01:37:15','2019-09-23 01:37:15',NULL),(16,3,1,'A','2019-09-23 01:40:39','2019-09-23 01:40:39',NULL),(17,5,NULL,'A','2019-09-23 05:12:49','2019-09-23 05:12:49',NULL),(18,4,NULL,'A','2019-09-23 05:15:05','2019-09-23 05:15:05',NULL),(21,6,NULL,'A','2019-10-01 19:17:17','2019-10-01 19:17:17',NULL),(22,6,NULL,'B','2019-10-01 19:51:15','2019-10-01 19:51:15',NULL),(33,1,NULL,'B','2019-12-01 14:17:15','2019-12-01 14:17:15',NULL),(34,7,NULL,'A','2019-12-01 14:17:41','2019-12-01 14:17:41',NULL),(35,2,NULL,'A','2019-12-01 14:21:26','2019-12-01 14:21:26',NULL),(36,2,NULL,'B','2019-12-01 14:21:35','2019-12-01 14:21:35',NULL),(37,3,NULL,'B','2019-12-01 14:21:43','2019-12-01 14:21:43',NULL),(38,4,NULL,'B','2019-12-01 14:28:52','2019-12-01 14:28:52',NULL),(39,5,NULL,'B','2019-12-01 14:57:16','2019-12-01 14:57:16',NULL),(40,7,NULL,'B','2019-12-01 14:57:44','2019-12-01 14:57:44',NULL),(41,8,NULL,'A','2019-12-01 14:58:03','2019-12-01 14:58:03',NULL),(42,8,NULL,'B','2019-12-01 14:58:26','2019-12-01 14:58:26',NULL),(43,9,NULL,'A','2019-12-01 14:58:35','2019-12-01 14:58:35',NULL),(44,9,NULL,'B','2019-12-01 14:58:42','2019-12-01 14:58:42',NULL),(45,10,NULL,'A','2019-12-01 14:58:48','2019-12-01 14:58:48',NULL),(46,10,NULL,'B','2019-12-01 14:59:02','2019-12-01 14:59:02',NULL),(47,11,NULL,'A','2019-12-01 14:59:14','2019-12-01 14:59:14',NULL);
 /*!40000 ALTER TABLE `class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +239,7 @@ CREATE TABLE `exam` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type_id`,`year`),
   CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `exam_type` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +248,7 @@ CREATE TABLE `exam` (
 
 LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-INSERT INTO `exam` VALUES (6,1,2019,NULL,NULL,'2019-09-24 22:33:03','2019-09-24 22:33:03',NULL),(7,3,2019,NULL,NULL,'2019-09-28 21:27:06','2019-09-28 21:27:06',NULL),(10,1,2020,NULL,NULL,'2019-09-29 03:35:16','2019-09-29 03:35:16',NULL),(13,4,2019,'test','test','2019-10-03 05:51:55','2019-10-03 05:51:55',NULL),(14,5,2020,'test','test','2019-10-03 06:02:04','2019-10-03 06:02:04',NULL),(16,5,2019,NULL,NULL,'2019-11-22 17:18:14','2019-11-22 17:18:14',NULL);
+INSERT INTO `exam` VALUES (10,1,2020,NULL,NULL,'2019-09-29 03:35:16','2019-09-29 03:35:16',NULL),(13,4,2019,'test','test','2019-10-03 05:51:55','2019-10-03 05:51:55',NULL),(14,5,2020,'test','test','2019-10-03 06:02:04','2019-10-03 06:02:04',NULL),(20,7,2019,NULL,NULL,'2019-12-04 04:21:20','2019-12-04 04:21:20',NULL);
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,7 +276,7 @@ CREATE TABLE `exam_grade_has_schedule` (
   KEY `exam_schedule_ibfk_2` (`subject_id`),
   CONSTRAINT `exam_grade_has_schedule_ibfk_1` FOREIGN KEY (`exam_grade_id`) REFERENCES `exam_has_grade` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `exam_grade_has_schedule_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,7 +285,7 @@ CREATE TABLE `exam_grade_has_schedule` (
 
 LOCK TABLES `exam_grade_has_schedule` WRITE;
 /*!40000 ALTER TABLE `exam_grade_has_schedule` DISABLE KEYS */;
-INSERT INTO `exam_grade_has_schedule` VALUES (56,39,1,'2019-10-01','08:00:00','10:00:00',NULL,NULL,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(57,40,1,'2019-10-01','01:00:00','03:00:00',NULL,NULL,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(58,41,4,'2019-10-17','10:10:00','11:11:00',NULL,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(59,42,1,'2019-10-03','08:00:00','10:00:00',NULL,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL),(61,41,5,'2019-10-18','10:00:00','23:00:00','test','test','2019-10-04 02:53:27','2019-10-04 02:53:27',NULL),(62,43,1,'2019-10-11','08:00:00','10:00:00','tet','test','2019-10-04 04:22:38','2019-10-04 04:22:38',NULL),(63,43,5,'2019-10-04','09:00:00','12:00:00',NULL,NULL,'2019-10-04 04:24:01','2019-10-04 04:24:01',NULL),(64,39,5,'2019-10-10','01:00:00','13:00:00',NULL,NULL,'2019-10-07 02:39:23','2019-10-07 02:39:23',NULL),(65,44,1,'2019-10-18','01:00:00','13:00:00',NULL,NULL,'2019-10-07 02:39:39','2019-10-07 02:39:39',NULL),(66,44,2,'2019-10-23','07:00:00','21:00:00',NULL,NULL,'2019-10-07 02:40:30','2019-10-07 02:40:30',NULL),(67,45,5,'2019-10-16','10:00:00','11:00:00',NULL,NULL,'2019-10-07 02:56:57','2019-10-07 02:56:57',NULL),(68,46,1,'2019-11-24','08:00:00','10:00:00',NULL,NULL,'2019-11-24 03:19:32','2019-11-24 03:19:32',NULL),(69,46,2,'2019-11-24','11:00:00','13:00:00',NULL,NULL,'2019-11-24 03:21:00','2019-11-24 03:21:00',NULL);
+INSERT INTO `exam_grade_has_schedule` VALUES (56,39,1,'2019-10-01','08:00:00','10:00:00',NULL,NULL,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(59,42,1,'2019-10-03','08:00:00','10:00:00',NULL,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL),(65,44,1,'2019-10-18','01:00:00','13:00:00',NULL,NULL,'2019-10-07 02:39:39','2019-10-07 02:39:39',NULL),(66,44,2,'2019-10-23','07:00:00','21:00:00',NULL,NULL,'2019-10-07 02:40:30','2019-10-07 02:40:30',NULL),(67,45,5,'2019-10-16','10:00:00','11:00:00',NULL,NULL,'2019-10-07 02:56:57','2019-10-07 02:56:57',NULL),(68,46,1,'2019-11-24','08:00:00','10:00:00',NULL,NULL,'2019-11-24 03:19:32','2019-11-24 03:19:32',NULL),(69,46,2,'2019-11-24','11:00:00','13:00:00',NULL,NULL,'2019-11-24 03:21:00','2019-11-24 03:21:00',NULL),(72,48,2,'2019-12-06','08:00:00','10:00:00',NULL,NULL,'2019-12-04 04:21:43','2019-12-04 04:21:43',NULL);
 /*!40000 ALTER TABLE `exam_grade_has_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,9 +306,9 @@ CREATE TABLE `exam_has_grade` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `exam_id` (`exam_id`,`grade_id`),
   KEY `exam_has_grade_ibfk_2` (`grade_id`),
-  CONSTRAINT `exam_has_grade_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `exam_has_grade_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `exam_has_grade_ibfk_2` FOREIGN KEY (`grade_id`) REFERENCES `grade` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,7 +317,7 @@ CREATE TABLE `exam_has_grade` (
 
 LOCK TABLES `exam_has_grade` WRITE;
 /*!40000 ALTER TABLE `exam_has_grade` DISABLE KEYS */;
-INSERT INTO `exam_has_grade` VALUES (39,10,1,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(40,10,6,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(41,6,1,'2019-10-02 03:15:34','2019-10-02 03:15:34',NULL),(42,14,3,'2019-10-03 06:09:18','2019-10-03 06:09:18',NULL),(43,6,3,'2019-10-04 04:22:38','2019-10-04 04:22:38',NULL),(44,10,3,'2019-10-07 02:39:39','2019-10-07 02:39:39',NULL),(45,13,3,'2019-10-07 02:56:57','2019-10-07 02:56:57',NULL),(46,10,5,'2019-11-24 03:19:32','2019-11-24 03:19:32',NULL);
+INSERT INTO `exam_has_grade` VALUES (39,10,1,'2019-10-01 20:15:16','2019-10-01 20:15:16',NULL),(40,10,6,'2019-10-01 20:15:47','2019-10-01 20:15:47',NULL),(42,14,3,'2019-10-03 06:09:18','2019-10-03 06:09:18',NULL),(44,10,3,'2019-10-07 02:39:39','2019-10-07 02:39:39',NULL),(45,13,3,'2019-10-07 02:56:57','2019-10-07 02:56:57',NULL),(46,10,5,'2019-11-24 03:19:32','2019-11-24 03:19:32',NULL),(48,20,11,'2019-12-04 04:21:43','2019-12-04 04:21:43',NULL);
 /*!40000 ALTER TABLE `exam_has_grade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -335,7 +335,7 @@ CREATE TABLE `exam_type` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +344,7 @@ CREATE TABLE `exam_type` (
 
 LOCK TABLES `exam_type` WRITE;
 /*!40000 ALTER TABLE `exam_type` DISABLE KEYS */;
-INSERT INTO `exam_type` VALUES (1,'First Semester','2019-09-21 05:44:36','2019-09-21 05:44:36',NULL),(2,'Second Semester','2019-09-21 05:45:16','2019-09-21 05:45:16',NULL),(3,'Third Semester','2019-09-21 05:45:27','2019-09-21 05:45:27',NULL),(4,'Mid First Semester','2019-09-22 23:52:20','2019-09-22 23:52:20',NULL),(5,'Mid Second Semester','2019-09-22 23:58:16','2019-09-22 23:58:16',NULL),(6,'Mid Third Semester','2019-12-01 15:06:50','2019-12-01 15:06:50',NULL),(7,'Ordinary Level','2019-12-01 15:07:06','2019-12-01 15:07:06',NULL);
+INSERT INTO `exam_type` VALUES (1,'First Semester','2019-09-21 05:44:36','2019-09-21 05:44:36',NULL),(4,'Mid First Semester','2019-09-22 23:52:20','2019-09-22 23:52:20',NULL),(5,'Mid Second Semester','2019-09-22 23:58:16','2019-09-22 23:58:16',NULL),(6,'Mid Third Semester','2019-12-01 15:06:50','2019-12-01 15:06:50',NULL),(7,'Ordinary Level','2019-12-01 15:07:06','2019-12-01 15:07:06',NULL);
 /*!40000 ALTER TABLE `exam_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -470,7 +470,7 @@ CREATE TABLE `parent` (
   UNIQUE KEY `nic` (`nic`),
   KEY `parent_district_id_fk` (`district_id`),
   CONSTRAINT `parent_district_id_fk` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -479,7 +479,7 @@ CREATE TABLE `parent` (
 
 LOCK TABLES `parent` WRITE;
 /*!40000 ALTER TABLE `parent` DISABLE KEYS */;
-INSERT INTO `parent` VALUES (4,'677660198V','Warnakulasooriya Mahawaduge Mallika Peiris','W M M','Peiris','1967-09-22','Female',NULL,NULL,NULL,'None',NULL,30000,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(5,'591231408V','Samarakkodi Arachchige lakshman samarakkodi','S A L','Samarakkodi','1959-02-28','Male',NULL,NULL,NULL,'karate instructor',NULL,25000,'144/5A 3rd lane','Veyangoda',7,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(6,'647845211V','Sanath Mallawarachchi','W S','Mallawarachchi','1964-02-25','Male',NULL,NULL,NULL,'AirLanka officer',NULL,12000,'no 30 malkelum, kalagedihena.','Nittambuwa',NULL,'2019-10-03 06:28:05','2019-10-03 06:28:05',NULL),(11,'536751208V','Heshani Dewage Hashara Munasinghe','Hashara','Munasinghe','1953-05-13','Female','Hashara123@gmail.com',NULL,'0774924351','Nursing','Head of Dept',50000,'144/5A, 3rd Lane, vgeytra','Bambalapitiya',5,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(13,'653257508V','Dilanka Rukshan','D','Rukshan','1965-02-04','Male','dilankarukshan@gmail.com','0332246648','0756924351','Carpenter',NULL,24000,'144/5A, 3rd Lane, Plamgrove Estate','Negombo',7,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL),(14,'661234567V','Rohan Fernando','R','Fernando','1966-06-10','Male','rfernando@gmail.com',NULL,NULL,'Teacher',NULL,60000,'10, 6th Lane, gorakadeniya','Nittambuwa',7,'2019-11-24 03:15:42','2019-11-24 03:15:42',NULL);
+INSERT INTO `parent` VALUES (4,'677660198V','Warnakulasooriya Mahawaduge Mallika Peiris','W M M','Peiris','1967-09-22','Female',NULL,NULL,NULL,'None',NULL,30000,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(5,'591231408V','Samarakkodi Arachchige lakshman samarakkodi','S A L','Samarakkodi','1959-02-28','Male',NULL,NULL,NULL,'karate instructor',NULL,25000,'144/5A 3rd lane','Veyangoda',7,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(6,'647845211V','Sanath Mallawarachchi','W S','Mallawarachchi','1964-02-25','Male',NULL,NULL,NULL,'AirLanka officer',NULL,12000,'no 30 malkelum, kalagedihena.','Nittambuwa',NULL,'2019-10-03 06:28:05','2019-10-03 06:28:05',NULL),(11,'536751208V','Heshani Dewage Hashara Munasinghe','Hashara','Munasinghe','1953-05-13','Female','Hashara123@gmail.com',NULL,'0774924351','Nursing','Head of Dept',50000,'144/5A, 3rd Lane, vgeytra','Bambalapitiya',5,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(13,'653257508V','Dilanka Rukshan','D','Rukshan','1965-02-04','Male','dilankarukshan@gmail.com','0332246648','0756924351','Carpenter',NULL,24000,'144/5A, 3rd Lane, Plamgrove Estate','Negombo',7,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL),(14,'661234567V','Rohan Fernando','R','Fernando','1966-06-10','Male','rfernando@gmail.com',NULL,NULL,'Teacher',NULL,60000,'10, 6th Lane, gorakadeniya','Nittambuwa',7,'2019-11-24 03:15:42','2019-11-24 03:15:42',NULL),(15,'561235602V','Manel Wickramarachchi','M','Wickramarachchi','1956-03-28','Male','manelwije@live.com','0332256412','0774856953','Software Engineer','Associate',65000,'5A, Rose Lane,','Gampaha',7,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
 /*!40000 ALTER TABLE `parent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -833,7 +833,7 @@ CREATE TABLE `student` (
   CONSTRAINT `student_district_id_fk` FOREIGN KEY (`district_id`) REFERENCES `district` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`religion_id`) REFERENCES `religion` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -842,7 +842,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (52,1,'2019-09-19',15,'Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','male','lakmalsamarakkody@gmail.com','0774924351','144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,7,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(53,13,'2019-09-19',16,'Shyamin Ayesh Fernando','S A','Fernando','1995-12-30','male','me@shyamin.com','0775621458','no 10 gorakadeniya','Attanagalla',NULL,7,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(59,14,'2019-10-03',21,'Heshan nayanajith','M A H N','Mallawarachchi','1995-11-11','male','heshan.nayanajith@gmail.com','0719864563','144/5A, Kalagedihena','Nittambuwa',NULL,7,1,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL),(64,15,'2019-11-22',21,'Fonseka Appuhamige Lakmali Fonseka','F A L','Fonseka','1995-07-05','female','lakmalifonseka@gmail.com','0778944951','144/5A, 3rd Lane, Plamgrove Estate','Veyangoda','Ragama',7,1,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(66,16,'2019-11-06',17,'Shehan Rajitha jayasekara','S R','Jayasekara','2002-08-05','female','rajithajayasekara@gmail.com','0775924351','144/5A, 3rd Lane, Plamgrove Estate','Negombo','Negombo',7,2,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL);
+INSERT INTO `student` VALUES (52,1,'2019-09-19',15,'Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','male','lakmalsamarakkody@gmail.com','0774924351','144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,7,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(53,13,'2019-09-19',16,'Shyamin Ayesh Fernando','S A','Fernando','1995-12-30','male','me@shyamin.com','0775621458','no 10 gorakadeniya','Attanagalla',NULL,7,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(59,14,'2019-10-03',21,'Heshan nayanajith','M A H N','Mallawarachchi','1995-11-11','male','heshan.nayanajith@gmail.com','0719864563','144/5A, Kalagedihena','Nittambuwa',NULL,7,1,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL),(64,15,'2019-11-22',21,'Fonseka Appuhamige Lakmali Fonseka','F A L','Fonseka','1995-07-05','female','lakmalifonseka@gmail.com','0778944951','144/5A, 3rd Lane, Plamgrove Estate','Veyangoda','Ragama',7,1,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(66,16,'2019-11-06',17,'Shehan Rajitha jayasekara','S R','Jayasekara','2002-08-05','female','rajithajayasekara@gmail.com','0775924351','144/5A, 3rd Lane, Plamgrove Estate','Negombo','Negombo',7,2,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL),(67,17,'2019-12-04',47,'Rivindu Rukshan Wickramarachchi','R R','Wickramarachchi','1995-04-09','male','rivndu@gmail.com','0714578652','5A, Rose Lane,','Gampaha','Gampaha',7,1,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -927,7 +927,7 @@ CREATE TABLE `student_has_class` (
   UNIQUE KEY `student_id` (`student_id`,`class_id`),
   CONSTRAINT `student_has_class_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_class_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -936,7 +936,7 @@ CREATE TABLE `student_has_class` (
 
 LOCK TABLES `student_has_class` WRITE;
 /*!40000 ALTER TABLE `student_has_class` DISABLE KEYS */;
-INSERT INTO `student_has_class` VALUES (12,52,15,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(13,53,16,1,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(14,59,21,1,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL),(16,64,21,2,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(18,66,17,1,'2019-11-24 02:58:27','2019-11-24 02:58:27',NULL);
+INSERT INTO `student_has_class` VALUES (12,52,15,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(13,53,16,1,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(14,59,21,1,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL),(16,64,21,2,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(18,66,17,1,'2019-11-24 02:58:27','2019-11-24 02:58:27',NULL),(19,67,47,1,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
 /*!40000 ALTER TABLE `student_has_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -960,7 +960,7 @@ CREATE TABLE `student_has_exam_schedule` (
   KEY `exam_schedule_id` (`exam_schedule_id`),
   CONSTRAINT `student_has_exam_schedule_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_exam_schedule_ibfk_2` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exam_grade_has_schedule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -969,7 +969,7 @@ CREATE TABLE `student_has_exam_schedule` (
 
 LOCK TABLES `student_has_exam_schedule` WRITE;
 /*!40000 ALTER TABLE `student_has_exam_schedule` DISABLE KEYS */;
-INSERT INTO `student_has_exam_schedule` VALUES (3,52,56,'100','2019-10-01 20:15:17','2019-10-01 20:15:17',NULL),(4,52,58,NULL,'2019-10-02 03:15:35','2019-10-02 03:15:35',NULL),(5,53,59,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL),(6,52,61,NULL,'2019-10-04 02:53:27','2019-10-04 02:53:27',NULL),(7,53,62,NULL,'2019-10-04 04:22:38','2019-10-04 04:22:38',NULL),(8,53,63,NULL,'2019-10-04 04:24:01','2019-10-04 04:24:01',NULL),(9,52,64,NULL,'2019-10-07 02:39:23','2019-10-07 02:39:23',NULL),(10,53,65,NULL,'2019-10-07 02:39:39','2019-10-07 02:39:39',NULL),(11,53,66,NULL,'2019-10-07 02:40:30','2019-10-07 02:40:30',NULL),(12,53,67,NULL,'2019-10-07 02:56:57','2019-10-07 02:56:57',NULL),(13,66,68,NULL,'2019-11-24 03:19:32','2019-11-24 03:19:32',NULL),(14,66,69,NULL,'2019-11-24 03:21:00','2019-11-24 03:21:00',NULL);
+INSERT INTO `student_has_exam_schedule` VALUES (3,52,56,'100','2019-10-01 20:15:17','2019-10-01 20:15:17',NULL),(5,53,59,NULL,'2019-10-03 06:09:19','2019-10-03 06:09:19',NULL),(10,53,65,NULL,'2019-10-07 02:39:39','2019-10-07 02:39:39',NULL),(11,53,66,NULL,'2019-10-07 02:40:30','2019-10-07 02:40:30',NULL),(12,53,67,NULL,'2019-10-07 02:56:57','2019-10-07 02:56:57',NULL),(13,66,68,NULL,'2019-11-24 03:19:32','2019-11-24 03:19:32',NULL),(14,66,69,NULL,'2019-11-24 03:21:00','2019-11-24 03:21:00',NULL),(17,67,72,NULL,'2019-12-04 04:21:43','2019-12-04 04:21:43',NULL);
 /*!40000 ALTER TABLE `student_has_exam_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -995,7 +995,7 @@ CREATE TABLE `student_has_parent` (
   CONSTRAINT `student_has_parent_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_parent_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `student_has_parent_ibfk_3` FOREIGN KEY (`relation_id`) REFERENCES `relation_type` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1004,7 +1004,7 @@ CREATE TABLE `student_has_parent` (
 
 LOCK TABLES `student_has_parent` WRITE;
 /*!40000 ALTER TABLE `student_has_parent` DISABLE KEYS */;
-INSERT INTO `student_has_parent` VALUES (47,52,4,2,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(48,53,4,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(49,52,5,1,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(51,59,4,2,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL),(52,59,6,1,'2019-10-03 06:28:06','2019-10-03 06:28:06',NULL),(57,64,11,2,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(59,66,13,1,'2019-11-24 02:58:27','2019-11-24 02:58:27',NULL),(60,64,14,1,'2019-11-24 03:15:42','2019-11-24 03:15:42',NULL);
+INSERT INTO `student_has_parent` VALUES (47,52,4,2,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(48,53,4,2,'2019-09-26 18:36:24','2019-09-26 18:36:24',NULL),(49,52,5,1,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(51,59,4,2,'2019-10-03 05:30:08','2019-10-03 05:30:08',NULL),(52,59,6,1,'2019-10-03 06:28:06','2019-10-03 06:28:06',NULL),(57,64,11,2,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(59,66,13,1,'2019-11-24 02:58:27','2019-11-24 02:58:27',NULL),(60,64,14,1,'2019-11-24 03:15:42','2019-11-24 03:15:42',NULL),(61,67,15,1,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
 /*!40000 ALTER TABLE `student_has_parent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1303,4 +1303,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03 16:46:31
+-- Dump completed on 2019-12-04  4:28:49
