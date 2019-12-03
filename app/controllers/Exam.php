@@ -177,6 +177,8 @@ class Exam extends Controller {
         var_dump( $this->request->post['exam_id'] );
     }
 
+
+
     public function ajax_remove_exam() {
 
         /** This ajax request will
@@ -198,6 +200,7 @@ class Exam extends Controller {
                 echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
             } catch (Exception $e) {
                 echo json_encode( array( "status" => "failed", "message" => "This exam already assigned to an exam schedule" ), JSON_PRETTY_PRINT );
+                exit();
             }
 
 
@@ -207,6 +210,37 @@ class Exam extends Controller {
 
     }
     
+
+    public function ajax_remove_examschedule() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json'); 
+
+        // MODEL
+        $this->load->model('exam/schedule');
+        $this->load->model('student/exam');
+
+        /**
+         * check if the exam schedule ID is correct and
+         * this exam has no results associated with it.
+         */
+        if ( $this->model_student_exam->select('id', 'marks')->where('exam_schedule_id', '=', $this->request->post['id'])->where('marks', '!=', NULL)->first() == NULL ):
+            if ( $this->model_exam_schedule->find($this->request->post['id'])->delete() ):
+                echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+                exit();
+            else:
+                echo json_encode( array( "status" => "failed", "message" => "Cannot delete this exam schedule" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+        else:
+            echo json_encode( array( "status" => "failed", "message" => "This exam schedule already has results" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+
+    }
+
+
     public function create() {
     
         // SITE DETAILS

@@ -137,7 +137,7 @@
                                         <td>
                                             <div class="col-12 text-center">
                                                     <button class="btn btn-xs btn-warning">Edit</button>
-                                                    <button class="btn btn-xs btn-danger">Remove</button>
+                                                    <button onclick="exam.schedule.remove('{{ exam_schedule.id }}')" class="btn btn-xs btn-danger">Remove</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -180,44 +180,42 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form>
-                    <div class="modal-body">
+                <div class="modal-body">
 
-                        <table id="modal-exams" class="table table-hover table-responsive-md">
+                    <table id="modal-exams" class="table table-hover table-responsive-md">
 
-                            <thead class="thead-dark">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="1%" class="text-center" scope="col">ID</th>
+                                <th width="20%" scope="col">Exam Name</th>
+                                <th width="30%" scope="col">Venue</th>
+                                <th scope="col">Instructions</th>
+                                <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for exam in exams %}
                                 <tr>
-                                    <th width="1%" class="text-center" scope="col">ID</th>
-                                    <th width="20%" scope="col">Exam Name</th>
-                                    <th width="30%" scope="col">Venue</th>
-                                    <th scope="col">Instructions</th>
-                                    <th width="12%" class="text-center" scope="col">&nbsp;</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {% for exam in exams %}
-                                    <tr>
-                                        <th class="text-center" scope="row">{{ exam.id }}</th>
-                                        <td>{{ exam.type.name }} - {{ exam.year }}</td>
-                                        <td>{{ exam.venue }}</td>
-                                        <td>{{ exam.instructions }}</td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-12 text-center">
-                                                    <button class="btn btn-xs btn-warning">Edit</button>
-                                                    <button class="btn btn-xs btn-danger">Remove</button>
-                                                </div>
+                                    <th class="text-center" scope="row">{{ exam.id }}</th>
+                                    <td>{{ exam.type.name }} - {{ exam.year }}</td>
+                                    <td>{{ exam.venue }}</td>
+                                    <td>{{ exam.instructions }}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <button class="btn btn-xs btn-warning">Edit</button>
+                                                <button class="btn btn-xs btn-danger">Remove</button>
                                             </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
 
-                        </table>
-                       
-                    </div>
-                </form>
+                    </table>
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -289,6 +287,35 @@
                     }
                 })
                 
+            },
+
+            schedule: {
+                remove: (id) => {
+
+                    // PAYLOAD
+                    let formData = new FormData
+                    formData.append('id', id)
+
+                    // AJAX
+                    $.ajax({
+                        url: "{{ app.url }}/exam/ajax_remove_examschedule",
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        success: Response => {
+                            if ( Response.status === 'failed' ) {
+                                alertify.alert(Response.message);
+                            } else {
+                                location.reload()
+                            }
+                        },
+                        error: e => {
+                            console.log( e.responseText )
+                        }
+                    })
+                }
             }
         }
         // END : SCRIPT FOR REMOVE EXAM 
