@@ -107,7 +107,7 @@
                     <!-- START : ABSENT STAFF  -->
                     <section class="absentstaff mt-5">
 
-                        <h4 class="page-title"> Today Absent Staff </h4>
+                        <h4 class="page-title"> Today Absent Staff <!--<span class="text-danger"> {{ all_staffs.absent.count }} </span>--></h4>
 
                         <div class="absentstaff-table mt-4">
 
@@ -116,17 +116,25 @@
                                 <caption>Absent Staff List</caption>
                                 
                                 <thead class="thead-dark">
-                                    <th scope="col"> Staff ID </th>
-                                    <th scope="col"> Name </th>
-                                    <th scope="col"> Teacher in Charge Class </th>
-                                    <th scope="col"> Subjects </th>
+                                    <tr>
+                                        <th class="text-center" scope="col" width="10%">ID</th>
+                                        <th scope="col">NAME</th>
+                                        <th class="text-center" scope="col" width="20%">CATEGORY</th>
+                                        <th class="text-center" scope="col" width="20%">TYPE</th>                                    
+                                        <th class="text-center" scope="col" width="10%">CLASS</th>
+                                    </tr>
                                 </thead>
 
                                 <tbody>
-                                    <th scope="col"> 1 </th>
-                                    <td> Mr.ABC </td>
-                                    <td> 6A </td>
-                                    <td> Maths </td>
+                                    {% for staff in staffs %}
+                                    <tr>
+                                        <th class="text-center" scope="row">{{ staff.employee_number }}</th>
+                                        <td>{{ staff.title }} {{ staff.name }}</td>
+                                        <td class="text-center">{{ staff.category }}</td>
+                                        <td class="text-center">{{ staff.type }}</td>                                    
+                                        <td class="text-center">{{ staff.class }}</td>
+                                    </tr>
+                                    {% endfor %}
                                 </tbody>
 
                             </table>

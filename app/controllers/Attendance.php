@@ -94,6 +94,57 @@ class Attendance extends Controller {
             ->count();
         endforeach;
 
+        // TODAY ABSENT STAFF
+        $staff = DB::table('staff')
+            ->join('staff_type', 'staff.type_id', 'staff_type.id')
+            ->join('staff_category', 'staff_type.category_id', 'staff_category.id')
+            ->select('staff.id', 'staff.employee_number', 'staff.initials', 'staff.surname', 'staff.gender', 'staff_type.name as stname', 'staff_category.name as scname')
+            ->orderBy('staff.employee_number');
+
+        $count = 0;
+
+        // CONTENT
+        if ( $staff !== NULL ):
+
+            foreach ( $staff->get() as $key => $element ):
+
+                $staff_attendance = $this->model_staff_attendance->select('id')->where('staff_id', '=', $element->id)->where('date', '=', $date_now)->first();
+
+                if ( $staff_attendance == NULL ):
+
+                    $data['staffs'][$key]['employee_number'] = $element->employee_number;
+                    $data['staffs'][$key]['name'] = $element->initials. " ". $element->surname;
+                    $data['staffs'][$key]['category'] = $element->scname;
+                    $data['staffs'][$key]['type'] = $element->stname;
+
+                    // SET TITLE
+                    if ( $element->gender == "Male" ): 
+                        $data['staffs'][$key]['title'] = "Mr. "; 
+                    else:
+                        $data['staffs'][$key]['title'] = "Mrs. "; 
+                    endif;
+
+                    // TEACHER IN CHARGE CLASS
+                    $tic_class = $this->model_class->select('id', 'grade_id', 'name')->where('staff_id', '=', $element->id)->first();
+
+                    if ( $tic_class !== NULL ):
+
+                        // QUERY CLASS NAME
+                        $grade = $this->model_grade->select('name')->where('id', '=', $tic_class->grade_id)->first();
+                        $data['staffs'][$key]['class'] =  $grade->name. " - ". $tic_class->name ;
+
+                    endif;
+                    unset ($staff_attendance);
+
+                    // COUNT
+                    $count = $count + 1;
+
+                endif;
+                $data['all_staffs']['absent']['count'] = $count;
+
+            endforeach;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('attendance/index', $data);
     }
