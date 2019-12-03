@@ -349,6 +349,29 @@ class Exam extends Controller {
         endif;
     }
 
+
+
+    public function ajax_edit_exam_type() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json'); 
+
+        // MODEL
+        $this->load->model('exam/type');
+
+        // UPDATE
+        if ( $this->model_exam_type->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]) ):
+            echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+            exit();
+        else:
+            echo json_encode( array( "status" => "failed", "message" => "Unable to edit exam type" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+    }
+
+
+
     public function ajax_create_exam() {
 
         /**
