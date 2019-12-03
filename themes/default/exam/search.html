@@ -119,7 +119,7 @@
                                     <th width="8%" class="text-center" scope="col">Ends at</th>
                                     <th class="text-center" scope="col">Venue</th>
                                     <th class="text-center" scope="col">Instructions</th>
-                                    <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                    <th width="10%" class="text-right" scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
 
@@ -136,8 +136,8 @@
                                         <td class="text-center">{{ exam_schedule.instructions }}</td>
                                         <td>
                                             <div class="col-12 text-center">
-                                                    <button class="btn btn-xs btn-warning">Edit</button>
-                                                    <button onclick="exam.schedule.remove('{{ exam_schedule.id }}')" class="btn btn-xs btn-danger">Remove</button>
+                                                    <button class="btn btn-sm btn-warning" onclick="exam.schedule.edit('{{ exam_schedule.id }}')">Edit</button>
+                                                    <button onclick="exam.schedule.remove('{{ exam_schedule.id }}','{{ exam_schedule.date }}')" class="btn btn-sm btn-danger"><i class="la la-trash"></i></button>
                                                 </div>
                                             </div>
                                         </td>
@@ -190,7 +190,7 @@
                                 <th width="20%" scope="col">Exam Name</th>
                                 <th width="30%" scope="col">Venue</th>
                                 <th scope="col">Instructions</th>
-                                <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                <th width="15%" class="text-center" scope="col">&nbsp;</th>
                             </tr>
                         </thead>
 
@@ -204,8 +204,8 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-12 text-center">
-                                                <button class="btn btn-xs btn-warning">Edit</button>
-                                                <button class="btn btn-xs btn-danger">Remove</button>
+                                                <button class="btn btn-sm btn-warning" onclick="exam.edit('{{ exam.id }}');">Edit</button>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="exam.remove('{{ exam.id }}');"><i class="la la-trash"></i></button>
                                             </div>
                                         </div>
                                     </td>
@@ -225,7 +225,7 @@
 
     <script>
 
-        // START : SCRIPT FOR REMOVE EXAM
+        // START : SCRIPT FOR EXAM
         var exam = {
 
             edit: (examId) => {
@@ -240,10 +240,9 @@
                     processData: false,
                     contentType: false,
                     dataType: 'json',
-                    success: (res) => {
-                        
+                    success: (res) => {                        
                         if ( res.status == 'success' ) {
-                            alertify.alert("Success", "Exam data edited successfully ... ").set('onok', function() {
+                            alertify.alert("Success", "Exam edited successfully ... ").set('onok', function() {
                                 location.reload();
                             })
                         } else {
@@ -271,7 +270,6 @@
                     contentType: false,
                     dataType: 'json',
                     success: (res) => {
-                        
                         if ( res.status == 'success' ) {
                             alertify.alert("Success", "Exam removed successfully ... ").set('onok', function() {
                                 location.reload();
@@ -290,11 +288,45 @@
             },
 
             schedule: {
-                remove: (id) => {
+                edit: (id,date) => {
 
                     // PAYLOAD
                     let formData = new FormData
                     formData.append('id', id)
+                    formData.append('date', date)
+
+                    // AJAX
+                    $.ajax({
+                        url: "{{ app.url }}/exam/ajax_edit_examschedule",
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        success: Response => {
+                            if ( Response.status === 'success' ) {
+                                alertify.alert("Success", "Schedule Deleted Successfully").set({
+                                    'closable': false,
+                                    'onok': () => {
+                                        location.reload()
+                                    }
+                                })
+                            }
+                            else {
+                                alertify.alert("Failed", Response.message)
+                            }
+                        },
+                        error: (e) => {
+                            console.log( e.responseText )
+                        }
+                    })
+                },
+                remove: (id,date) => {
+
+                    // PAYLOAD
+                    let formData = new FormData
+                    formData.append('id', id)
+                    formData.append('date', date)
 
                     // AJAX
                     $.ajax({
@@ -305,13 +337,19 @@
                         contentType: false,
                         dataType: 'json',
                         success: Response => {
-                            if ( Response.status === 'failed' ) {
-                                alertify.alert(Response.message);
-                            } else {
-                                location.reload()
+                            if ( Response.status === 'success' ) {
+                                alertify.alert("Success", "Schedule Deleted Successfully").set({
+                                    'closable': false,
+                                    'onok': () => {
+                                        location.reload()
+                                    }
+                                })
+                            }
+                            else {
+                                alertify.alert("Failed", Response.message)
                             }
                         },
-                        error: e => {
+                        error: (e) => {
                             console.log( e.responseText )
                         }
                     })

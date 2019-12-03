@@ -275,8 +275,8 @@
                                     <th class="text-center" scope="row">{{ exam_type.id }}</th>
                                     <td>{{ exam_type.name }}</td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-xs btn-warning">edit</button> 
-                                        <button type="button" class="btn btn-xs btn-danger">remove</button> 
+                                        <button type="button" class="btn btn-sm btn-warning">edit</button> 
+                                        <button type="button" onclick="exam.type.remove('{{ exam_type.id }}')" class="btn btn-sm btn-danger"><i class="la la-trash"></i></button> 
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -313,7 +313,7 @@
                                     <th width="20%" scope="col">Exam Name</th>
                                     <th width="30%" scope="col">Venue</th>
                                     <th scope="col">Instructions</th>
-                                    <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                    <th width="15%" class="text-center" scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
 
@@ -325,8 +325,8 @@
                                         <td>{{ exam.venue }}</td>
                                         <td>{{ exam.instructions }}</td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-xs btn-warning" onclick="exam.edit({{ exam.id }});" >edit</button> 
-                                            <button type="button" class="btn btn-xs btn-danger" onclick="exam.remove({{ exam.id }});">remove</button> 
+                                            <button type="button" class="btn btn-sm btn-warning" onclick="exam.edit('{{ exam.id }}');" >edit</button> 
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="exam.remove('{{ exam.id }}');"><i class="la la-trash"></i></button> 
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -345,6 +345,39 @@
 
         // START : SCRIPT FOR REMOVE EXAM
         var exam = {
+
+            type:{
+                remove: (id) =>{
+
+                    var formData = new FormData;
+                    formData.append("type_id", id)
+
+                    $.ajax({
+                        url: "{{ app.url }}/exam/ajax_remove_exam_type",
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        success: Response => {
+                            if ( Response.status === 'success' ) {
+                                alertify.alert("Success", "Exam type deleted Successfully").set({
+                                    'closable': false,
+                                    'onok': () => {
+                                        location.reload()
+                                    }
+                                })
+                            }
+                            else {
+                                alertify.alert("Failed", Response.message)
+                            }
+                        },
+                        error: (e) => {
+                            console.log( e.responseText )
+                        }
+                    })
+                }
+            },
 
             edit: (examId) => {
 
@@ -388,20 +421,21 @@
                     processData: false,
                     contentType: false,
                     dataType: 'json',
-                    success: (res) => {
-                        
-                        if ( res.status == 'success' ) {
-                            alertify.alert("Success", "Exam removed successfully ... ").set('onok', function() {
-                                location.reload();
+                    success: Response => {
+                        if ( Response.status === 'success' ) {
+                            alertify.alert("Success", "Exam Deleted Successfully").set({
+                                'closable': false,
+                                'onok': () => {
+                                    location.reload()
+                                }
                             })
-                        } else {
-                            console.log(res);
-                            alertify.alert(res.message);
+                        }
+                        else {
+                            alertify.alert("Failed", Response.message)
                         }
                     },
                     error: (e) => {
-                        alertify.alert("Error", "Something went wrong ... ");
-                        console.log(e.responseText)
+                        console.log( e.responseText )
                     }
                 })
                 

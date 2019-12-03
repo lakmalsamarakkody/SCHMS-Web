@@ -3,7 +3,6 @@
 // USE
 use Carbon\Carbon;
 use Illuminate\Database\Capsule\Manager as DB;
-use Fpdf\Fpdf;
 
 class Report extends Controller {
 

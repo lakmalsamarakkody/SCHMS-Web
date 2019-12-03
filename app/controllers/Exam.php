@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Exam extends Controller {
     public function index() {
@@ -172,13 +173,6 @@ class Exam extends Controller {
         
     }
 
-    public function ajax_edit_exam() {
-        echo "im in ajax edit exam";
-        var_dump( $this->request->post['exam_id'] );
-    }
-
-
-
     public function ajax_remove_exam() {
 
         /** This ajax request will
@@ -195,17 +189,25 @@ class Exam extends Controller {
         $is_present_exam_id = $this->model_exam->select('id')->where('id', '=', $this->request->post['exam_id'])->first();
         if ($is_present_exam_id != NULL ):
 
-            try {
+            $non_removable_exam_id = DB::table('exam')
+            ->join('exam_has_grade', 'exam.id', 'exam_has_grade.exam_id')
+            ->join('exam_grade_has_schedule', 'exam_has_grade.id', 'exam_grade_has_schedule.exam_grade_id')
+            ->where('exam.id', '=', $this->request->post['exam_id'])
+            ->select('exam.id')
+            ->first();
+
+            if ( $non_removable_exam_id == NULL ):
                 $this->model_exam->destroy($is_present_exam_id->id);
                 echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
-            } catch (Exception $e) {
-                echo json_encode( array( "status" => "failed", "message" => "This exam already assigned to an exam schedule" ), JSON_PRETTY_PRINT );
                 exit();
-            }
+            else: 
+                echo json_encode( array( "status" => "failed", "message" => "Cannot delete the exam type. This exam type has exam schedules" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
 
         else:
-            echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "message" => "Cannot delete the exam type. Please contact your system administrator" ), JSON_PRETTY_PRINT );
         endif;
 
     }
@@ -220,20 +222,27 @@ class Exam extends Controller {
         $this->load->model('exam/schedule');
         $this->load->model('student/exam');
 
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
         /**
          * check if the exam schedule ID is correct and
          * this exam has no results associated with it.
          */
-        if ( $this->model_student_exam->select('id', 'marks')->where('exam_schedule_id', '=', $this->request->post['id'])->where('marks', '!=', NULL)->first() == NULL ):
-            if ( $this->model_exam_schedule->find($this->request->post['id'])->delete() ):
-                echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
-                exit();
+        if ( isset($this->request->post['id']) AND !empty($this->request->post['id']) AND $this->request->post['date'] >= $date_now ):
+            if ( $this->model_student_exam->select('id', 'marks')->where('exam_schedule_id', '=', $this->request->post['id'])->where('marks', '!=', NULL)->first() == NULL ):
+                if ( $this->model_exam_schedule->find($this->request->post['id'])->delete() ):
+                    echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+                else:
+                    echo json_encode( array( "status" => "failed", "message" => "Cannot delete this exam schedule" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
             else:
-                echo json_encode( array( "status" => "failed", "message" => "Cannot delete this exam schedule" ), JSON_PRETTY_PRINT );
+                echo json_encode( array( "status" => "failed", "message" => "This exam schedule already has results" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
         else:
-            echo json_encode( array( "status" => "failed", "message" => "This exam schedule already has results" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "message" => "Cannot delete the exam schedule. Schedule date has expired" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -303,7 +312,41 @@ class Exam extends Controller {
 
 		// RENDER VIEW
         $this->load->view('exam/create', $data);
-        
+    }
+
+    // METHOD TO REMOVE EXAM TYPES
+    public function ajax_remove_exam_type() {
+
+        // SET JSON HEADER
+        header('Content-Type: application/json'); 
+
+        // MODEL
+        $this->load->model('exam');
+        $this->load->model('exam/type');
+
+
+        /**
+         * check if the exam type ID is correct and
+         * this exam_type has no exams associated with it.
+         */
+
+        if ( isset($this->request->post['type_id']) AND !empty($this->request->post['type_id'])):
+            if ( $this->model_exam->select('id')->where('type_id', '=', $this->request->post['type_id'])->first() == NULL ):
+                if ( $this->model_exam_type->find($this->request->post['type_id'])->delete() ):
+                    echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+                else:
+                    echo json_encode( array( "status" => "failed", "message" => "Cannot delete this exam type. Please contact your system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+            else:
+                echo json_encode( array( "status" => "failed", "message" => "This exam type already has exams" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+        else:
+            echo json_encode( array( "status" => "failed", "message" => "Cannot delete the exam type. Please contact your system administrator" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
     }
 
     public function ajax_create_exam() {
