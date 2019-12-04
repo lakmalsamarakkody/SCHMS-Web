@@ -19,69 +19,68 @@
                         <h4 class="page-title">Student Overview</h4>
 
                         <div class="row mt-5">
-                            <!-- STUDENT TOTAL -->
-                            <div class="col">
-                                <div class="card">
+                            <div class="col-12">
+                                <div class="card-deck">
 
-                                    <div class="card-header">
-                                        Total Students
-                                    </div>
+                                    <!-- STUDENT TOTAL -->
+                                    <div class="card">
 
-                                    <div class="card-body">
+                                        <div class="card-header">
+                                            Total Students
+                                        </div>
 
-                                        <h5 class="card-title">{{ student.total.all }}</h5>
-                                        <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ student.total.male }} </span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ student.total.female }} </span>
-                                        </p>
-                                        <a href="{{ app.url}}/student/index" class="btn btn-xs btn-primary p-2">view details</a>
+                                        <div class="card-body">
 
-                                    </div>
+                                            <h5 class="card-title">{{ student.total.all }}</h5>
+                                            <p class="card-text">
+                                                Male - <span class="text-success"> <i class="la la-male"></i> {{ student.total.male }} </span><br/>
+                                                Female - <span class="text-success"> <i class="la la-female"></i> {{ student.total.female }} </span>
+                                            </p>
+                                            <a href="{{ app.url}}/student/index" class="btn btn-xs btn-primary p-2">view details</a>
 
-                                </div>
-                            </div>
-    
-                            <!-- STUDENT PRESENT -->
-                            <div class="col">
-                                <div class="card">
-
-                                    <div class="card-header">
-                                        <span class="text-success">Present today</span>
-                                    </div>
-
-                                    <div class="card-body">
-
-                                        <h5 class="card-title"><span class="text-success"> {{ student.attendance.all }}</span></h5>
-                                        <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ student.attendance.male }}</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ student.attendance.female }}</span>
-                                        </p>
-                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
 
                                     </div>
+        
+                                    <!-- STUDENT PRESENT -->
+                                    <div class="card">
 
-                                </div>
-                            </div>
+                                        <div class="card-header">
+                                            <span class="text-success">Present today</span>
+                                        </div>
 
-                            <!-- STUDENT ABSENT -->
-                            <div class="col">
-                                <div class="card">
+                                        <div class="card-body">
 
-                                    <div class="card-header">
-                                        <span class="text-danger">Absent today</span>
-                                    </div>
+                                            <h5 class="card-title"><span class="text-success"> {{ student.attendance.all }}</span></h5>
+                                            <p class="card-text">
+                                                Male - <span class="text-success"> <i class="la la-male"></i> {{ student.attendance.male }}</span><br/>
+                                                Female - <span class="text-success"> <i class="la la-female"></i> {{ student.attendance.female }}</span>
+                                            </p>
+                                            <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
 
-                                    <div class="card-body">
-
-                                        <h5 class="card-title"><span class1="text-danger"> {{ student.absent.all }}</span></h5>
-                                        <p class="card-text">
-                                            Male - <span class="text-danger"> <i class="la la-male"></i> {{ student.absent.male }}</span><br/>
-                                            Female - <span class="text-danger"> <i class="la la-female"></i> {{ student.absent.female }}</span>
-                                        </p>
-                                        <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
 
                                     </div>
 
+                                    <!-- STUDENT ABSENT -->
+                                    <div class="card">
+
+                                        <div class="card-header">
+                                            <span class="text-danger">Absent today</span>
+                                        </div>
+
+                                        <div class="card-body">
+
+                                            <h5 class="card-title"><span class1="text-danger"> {{ student.absent.all }}</span></h5>
+                                            <p class="card-text">
+                                                Male - <span class="text-danger"> <i class="la la-male"></i> {{ student.absent.male }}</span><br/>
+                                                Female - <span class="text-danger"> <i class="la la-female"></i> {{ student.absent.female }}</span>
+                                            </p>
+                                            <a href="{{ app.url}}/attendance/search" class="btn btn-xs btn-primary p-2">view details</a>
+
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
     

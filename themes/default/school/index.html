@@ -13,340 +13,291 @@
 
                 <div class="row schoolindex">
 
-                    <!-- START : CLASS MANAGER -->
-                    <div class="col-4 mx-auto">
+                    <div class="col-12">
+                        <div class="card-columns">
+                            
+                            <!-- START : CLASS MANAGER -->
+                            <div class="card">
 
-                        <div class="card">
-
-                            <div class="card-header">
-                                <h6 class="pull-left">CLASSES</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addclass">ADD</button>
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-
-                                <div class="table-responsive-md">
-
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Grade</th>
-                                                <th scope="col">Class</th>
-                                                <th scope="col">Teacher in Charge</th>
-                                                <th scope="col">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {% for class in classes %}
-                                            <tr>
-                                                <th scope="row"> {{ class.id }} </th>
-                                                <td> {{ class.grade.name }} </td>
-                                                <td> {{ class.name }} </td>
-                                                <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>  
-
-                                    </table>
-
+                                <div class="card-header">
+                                    <h6 class="pull-left">CLASSES</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addclass">ADD</button>
+                                    </div>
                                 </div>
 
+                                <div class="card-body">
+
+                                    <div class="table-responsive-md">
+
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Grade</th>
+                                                    <th scope="col">Class</th>
+                                                    <th scope="col">Teacher in Charge</th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {% for class in classes %}
+                                                <tr>
+                                                    <th scope="row"> {{ class.id }} </th>
+                                                    <td> {{ class.grade.name }} </td>
+                                                    <td> {{ class.name }} </td>
+                                                    <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>  
+
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
                             </div>
+                            <!-- END : CLASS MANAGER -->
+
+                            <!-- START : GRADE MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">GRADES</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addgrade">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Grade </th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for grade in grades %}
+                                                <tr>
+                                                    <th scope="row"> {{ grade.id }} </th>
+                                                    <td> {{ grade.name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>                                
+                                </div>
+                            </div>
+                            <!-- END : GRADE MANAGER -->
+
+                            <!-- START : RELIGION MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">RELIGIONS</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addreligion">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Religion </th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for religion in religions %}
+                                                <tr>
+                                                    <th scope="row"> {{ religion.id }} </th>
+                                                    <td> {{ religion.name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>                                
+                                </div>
+                            </div>
+                            <!-- END : RELIGION MANAGER -->
+
+                            <!-- START : SUBJECT MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">SUBJECTS</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addsubject">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Subject </th>
+                                                    <th scope="col"> Sinhala Name </th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for subject in subjects %}
+                                                <tr>
+                                                    <th scope="row"> {{ subject.id }} </th>
+                                                    <td> {{ subject.name }} </td>
+                                                    <td> {{ subject.si_name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : SUBJECT MANAGER -->
+
+                            <!-- START : RELATIONSHIP MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">PARENT RELATIONSHIPS</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addrelation">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Relationship Type </th>
+                                                    <th scope="col">&nbsp;</th>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for relationship in student_relations %}
+                                                <tr>
+                                                    <th scope="row"> {{ relationship.id }} </th>
+                                                    <td> {{ relationship.name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : RELATIONSHIP MANAGER -->
+
+                            <!-- START : EXAM TYPE MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">EXAM TYPES</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_addexamtype">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Exam Type </th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for exam_type in exam_types %}
+                                                <tr>
+                                                    <th scope="row"> {{ exam_type.id }} </th>
+                                                    <td> {{ exam_type.name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : EXAM TYPE MANAGER -->
+
+                            <!-- START : SPORT MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">SPORTS</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_addsport">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Sport </th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for sport in sports %}
+                                                <tr>
+                                                    <th scope="row"> {{ sport.id }} </th>
+                                                    <td> {{ sport.name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : SPORT MANAGER -->
+
+                            <!-- START : STAFF CATEGORY MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">STAFF CATEGORIES</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_add_staff_category">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> # </th>
+                                                    <th scope="col"> Category </th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for category in staff.category %}
+                                                <tr>
+                                                    <th scope="row"> {{ category.id }} </th>
+                                                    <td> {{ category.name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : STAFF CATEGORY MANAGER -->
 
                         </div>
-
                     </div>
-                    <!-- END : CLASS MANAGER -->
-
-                    <!-- START : GRADE MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">GRADES</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addgrade">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Grade </th>
-                                                <th scope="col">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for grade in grades %}
-                                            <tr>
-                                                <th scope="row"> {{ grade.id }} </th>
-                                                <td> {{ grade.name }} </td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>                                
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : GRADE MANAGER -->
-
-                    <!-- START : RELIGION MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">RELIGIONS</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addreligion">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Religion </th>
-                                                <th scope="col">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for religion in religions %}
-                                            <tr>
-                                                <th scope="row"> {{ religion.id }} </th>
-                                                <td> {{ religion.name }} </td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>                                
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : RELIGION MANAGER -->
-
-                    <!-- START : SUBJECT MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">SUBJECTS</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addsubject">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Subject </th>
-                                                <th scope="col"> Sinhala Name </th>
-                                                <th scope="col">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for subject in subjects %}
-                                            <tr>
-                                                <th scope="row"> {{ subject.id }} </th>
-                                                <td> {{ subject.name }} </td>
-                                                <td> {{ subject.si_name }} </td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : SUBJECT MANAGER -->
-
-                    <!-- START : RELATIONSHIP MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">PARENT RELATIONSHIPS</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal_addrelation">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Relationship Type </th>
-                                                <th scope="col">&nbsp;</th>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for relationship in student_relations %}
-                                            <tr>
-                                                <th scope="row"> {{ relationship.id }} </th>
-                                                <td> {{ relationship.name }} </td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : RELATIONSHIP MANAGER -->
-
-                    <!-- START : EXAM TYPE MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">EXAM TYPES</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_addexamtype">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Exam Type </th>
-                                                <th scope="col">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for exam_type in exam_types %}
-                                            <tr>
-                                                <th scope="row"> {{ exam_type.id }} </th>
-                                                <td> {{ exam_type.name }} </td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : EXAM TYPE MANAGER -->
-
-                    <!-- START : SPORT MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">SPORTS</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_addsport">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Sport </th>
-                                                <th scope="col">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for sport in sports %}
-                                            <tr>
-                                                <th scope="row"> {{ sport.id }} </th>
-                                                <td> {{ sport.name }} </td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : SPORT MANAGER -->
-
-                    <!-- START : STAFF CATEGORY MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">STAFF CATEGORIES</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_add_staff_category">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Category </th>
-                                                <th scope="col">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for category in staff.category %}
-                                            <tr>
-                                                <th scope="row"> {{ category.id }} </th>
-                                                <td> {{ category.name }} </td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : STAFF CATEGORY MANAGER -->
-
-                    <!-- START : STAFF TYPE MANAGER -->
-                    <div class="col-4 mx-auto">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="pull-left">STAFF TYPES</h6>
-                                <div class="button-group pull-right">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_add_staff_type">ADD</button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive-md">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Category </th>
-                                                <th scope="col"> Type </th>
-                                                <th scope="col">&nbsp;</th>                                          
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for type in staff.type %}
-                                            <tr>
-                                                <th scope="row">{{ type.id }}</th>                                               
-                                                <td>{{ type.category.name }}</td>
-                                                <td>{{ type.name }}</td>
-                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
-                                            </tr>
-                                            {% endfor %} 
-                                        </tbody>                                        
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END : STAFF TYPE MANAGER -->
 
                 </div>
 

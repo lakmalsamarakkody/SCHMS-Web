@@ -19,70 +19,67 @@
 
                         <div class="row mt-5">
 
-                            <!-- TOTAL SPORTS -->
-                            <div class="col-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        Total Parents
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ parent.total.all }}</h5>
-                                        <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ parent.total.male }} </span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ parent.total.female }} </span>
-                                        </p>
-                                        <a href="{{ app.url}}/parent" class="btn btn-xs btn-primary p-2">view details</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="col-12">
+                                <div class="card-deck">
 
-                            <!-- TOTAL COACHES -->
-                            <div class="col-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="text-success">Total Parents above Average Income</span>
+                                    <!-- TOTAL SPORTS -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Total Parents
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ parent.total.all }}</h5>
+                                            <p class="card-text">
+                                                Male - <span class="text-success"> <i class="la la-male"></i> {{ parent.total.male }} </span><br/>
+                                                Female - <span class="text-success"> <i class="la la-female"></i> {{ parent.total.female }} </span>
+                                            </p>
+                                            <a href="{{ app.url}}/parent" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><span class="text-success">{{ parent.above.income.all }}</span></h5>
-                                        <p class="card-text">
-                                            Male - <span class="text-success"> <i class="la la-male"></i> {{ parent.above.income.male }}</span><br/>
-                                            Female - <span class="text-success"> <i class="la la-female"></i> {{ parent.above.income.female }}</span>
-                                        </p>
-                                        <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- STUDENTS DOING SPORTS -->
-                            <div class="col-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="text-danger">Total Parents below Average Income</span>
+                                    <!-- TOTAL COACHES -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span class="text-success">Total Parents above Average Income</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><span class="text-success">{{ parent.above.income.all }}</span></h5>
+                                            <p class="card-text">
+                                                Male - <span class="text-success"> <i class="la la-male"></i> {{ parent.above.income.male }}</span><br/>
+                                                Female - <span class="text-success"> <i class="la la-female"></i> {{ parent.above.income.female }}</span>
+                                            </p>
+                                            <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><span class="text-danger">{{ parent.below.income.all }}</span></h5>
-                                        <p class="card-text">
-                                            Male - <span class="text-danger"> <i class="la la-male"></i> {{ parent.below.income.male }} </span><br/>
-                                            Female - <span class="text-danger"> <i class="la la-female"></i> {{ parent.below.income.female }} </span>
-                                        </p>
-                                        <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
+
+                                    <!-- STUDENTS DOING SPORTS -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span class="text-danger">Total Parents below Average Income</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><span class="text-danger">{{ parent.below.income.all }}</span></h5>
+                                            <p class="card-text">
+                                                Male - <span class="text-danger"> <i class="la la-male"></i> {{ parent.below.income.male }} </span><br/>
+                                                Female - <span class="text-danger"> <i class="la la-female"></i> {{ parent.below.income.female }} </span>
+                                            </p>
+                                            <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> 
             
-                            <!-- ACHIEVEMENTS -->
-                            <div class="col-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="text-warning">Most listed Occupation</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><span class="text-warning">{{ parent.most.occupation.all }}</span></h5>
-                                        <p class="card-text">
-                                            Male - <span class="text-warning"> <i class="la la-male"></i> {{ parent.most.occupation.male }} </span><br/>
-                                            Female - <span class="text-warning"> <i class="la la-female"></i> {{ parent.most.occupation.female }} </span>
-                                        </p>
-                                        <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                    <!-- ACHIEVEMENTS -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span class="text-warning">Most listed Occupation</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><span class="text-warning">{{ parent.most.occupation.all }}</span></h5>
+                                            <p class="card-text">
+                                                Male - <span class="text-warning"> <i class="la la-male"></i> {{ parent.most.occupation.male }} </span><br/>
+                                                Female - <span class="text-warning"> <i class="la la-female"></i> {{ parent.most.occupation.female }} </span>
+                                            </p>
+                                            <a href="{{ app.url}}/parent/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -97,9 +94,11 @@
                         <!-- TITLE -->
                         <h4 class="page-title mb-4">Income</h4>
 
-                        <div class="col-12">
-                            <div class="row">
+                        <div class="row">
+                            <div class="col-6">
                                 <div class="col chart-bg pt-3" id="chart-1"></div>
+                            </div>
+                            <div class="col-6">
                                 <div class="col chart-bg pt-3" id="chart-2"></div>
                             </div>
                         </div>
