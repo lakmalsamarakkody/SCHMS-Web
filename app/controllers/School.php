@@ -5,6 +5,12 @@ use Illuminate\Database\Capsule\Manager as DB;
 class School extends Controller {
 	public function index() {
 
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
 		// SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
 		$data['app']['title']		= $this->config->get('site_title');
@@ -15,14 +21,6 @@ class School extends Controller {
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 		$data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
 		$data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
-
-		//CHECK LOGIN STATUS
-		// if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-
-		// 	header( 'Location:' . $this->config->get('base_url') . '/logout' );
-		// 	exit();
-
-		// endif;
 
 		//MODEL
 		$this->load->model('class');
@@ -116,6 +114,12 @@ class School extends Controller {
 
 	public function ajax_addclass() {
 
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
 		/**
          * This method will receive ajax request from
          * the front end with the payload
@@ -199,7 +203,48 @@ class School extends Controller {
 		endif;
 	}
 
+	public function removeclass() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('class');
+		$this->load->model('student/class');
+		
+		if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
+			$is_available_student = $this->model_student_class->select('id')->where('class_id', '=', $this->request->post['class_id'])->first();
+			if ( $is_available_student == NULL ):
+				if ( $this->model_class->find($this->request->post['id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this class. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this class. Class have one or more students" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid class" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+	}
+
 	public function ajax_addgrade() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
 		/**
          * This method will receive ajax request from
@@ -245,6 +290,12 @@ class School extends Controller {
 
 	public function ajax_addreligion() {
 
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
 		/**
          * This method will receive ajax request from
          * the front end with the payload
@@ -288,6 +339,12 @@ class School extends Controller {
 	}
 
 	public function ajax_addsubject() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
 		/**
          * This method will receive ajax request from
@@ -343,6 +400,12 @@ class School extends Controller {
 
 	public function ajax_addrelation() {
 
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
 		/**
          * This method will receive ajax request from
          * the front end with the payload
@@ -386,6 +449,12 @@ class School extends Controller {
 	}
 
 	public function ajax_addexam_type() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
 		/**
 		  * This method will receive ajax request from
@@ -431,6 +500,12 @@ class School extends Controller {
 
 	public function ajax_addsport() {
 
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
 		/**
 		  * This method will receive ajax request from
 		  * the front end with the payload
@@ -475,6 +550,12 @@ class School extends Controller {
 
 	public function ajax_add_staff_category() {
 
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
 		/**
 		  * This method will receive ajax request from
 		  * the front end with the payload
@@ -518,6 +599,12 @@ class School extends Controller {
 	}
 
 	public function ajax_add_staff_type() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
 		/**
 		  * This method will receive ajax request from

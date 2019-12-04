@@ -4,6 +4,12 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class User extends Controller {
     public function index() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -39,6 +45,12 @@ class User extends Controller {
     }
 
     public function search() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -106,6 +118,12 @@ class User extends Controller {
     }
     
     public function add() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -141,6 +159,12 @@ class User extends Controller {
 
 
     public function ajax_add() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         /**
          * This method will receive ajax request from

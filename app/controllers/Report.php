@@ -7,6 +7,12 @@ use Illuminate\Database\Capsule\Manager as DB;
 class Report extends Controller {
 
     public function index() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -27,6 +33,12 @@ class Report extends Controller {
 
     // START : ATTENDANCE REPORTS
     public function attendance() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -89,6 +101,12 @@ class Report extends Controller {
 
 
     public function class_attendance_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -198,6 +216,12 @@ class Report extends Controller {
 
     public function staff_attendance_ajax() {
 
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
         // SET JSON HEADER
         header('Content-Type: application/json');
 
@@ -288,6 +312,12 @@ class Report extends Controller {
 
     // START : STUDENT REPORTS
     public function student() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -354,6 +384,13 @@ class Report extends Controller {
     }
 
     public function class_all_student_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+        
         // SET JSON HEADER
         header('Content-Type: application/json');
 
@@ -449,6 +486,12 @@ class Report extends Controller {
     }
 
     public function class_one_student_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -548,6 +591,12 @@ class Report extends Controller {
 
     // START : TIMETABLE REPORTS
     public function timetable() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -614,6 +663,12 @@ class Report extends Controller {
     }
 
     public function class_timetable_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -712,6 +767,12 @@ class Report extends Controller {
     }
 
     public function staff_timetable_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -815,6 +876,12 @@ class Report extends Controller {
 
     // START : RESULT REPORTS
     public function result() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -834,6 +901,12 @@ class Report extends Controller {
 
     // START : HEALTH REPORTS
     public function health() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -900,6 +973,12 @@ class Report extends Controller {
     }
 
     public function class_health_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -988,6 +1067,12 @@ class Report extends Controller {
     }
 
     public function student_health_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -1079,6 +1164,12 @@ class Report extends Controller {
 
     // START : STAFF REPORTS
     public function staff() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -1126,6 +1217,12 @@ class Report extends Controller {
     }
 
     public function staff_present_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -1229,6 +1326,12 @@ class Report extends Controller {
     }
 
     public function staff_absent_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -1340,6 +1443,12 @@ class Report extends Controller {
 
     // START : DELETE REPORTS
     public function delete_report_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');

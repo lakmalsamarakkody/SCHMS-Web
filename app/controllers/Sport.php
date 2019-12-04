@@ -4,6 +4,12 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class Sport extends Controller {
     public function index() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -86,6 +92,12 @@ class Sport extends Controller {
     }
 
     public function search_student() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -207,6 +219,12 @@ class Sport extends Controller {
     }
 
     public function search_coach() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -320,6 +338,12 @@ class Sport extends Controller {
     }
 
     public function assign() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -473,6 +497,12 @@ class Sport extends Controller {
     }
 
     public function add_coach() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -508,6 +538,12 @@ class Sport extends Controller {
     }
 
     public function ajax_addcoach() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         /**
          * This method will receive ajax request from
@@ -706,6 +742,12 @@ class Sport extends Controller {
     }
 
     public function ajax_retrive_province_by_district($id) {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');

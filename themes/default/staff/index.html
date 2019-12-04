@@ -155,7 +155,13 @@
                                     <th class="text-center" scope="row"> {{ class.id }} </th>
                                     <td class="text-center"> {{ class.grade.name }} - {{ class.name }} </td>
                                     <td> {{ class.staff.name.initials }} {{ class.staff.name.surname }}</td>
+                                    {% if class.staff.status == "Present" %}
+                                    <td class="text-center text-success"> {{ class.staff.status }}</td>
+                                    {% elseif class.staff.status == "Absent" %}
+                                    <td class="text-center text-danger"> {{ class.staff.status }}</td>
+                                    {% else %}
                                     <td class="text-center"> {{ class.staff.status }}</td>
+                                    {% endif %}
                                 </tr>
                                 {% endfor %} 
                             </tbody>  

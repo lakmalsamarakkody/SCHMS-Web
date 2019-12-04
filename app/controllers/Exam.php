@@ -5,6 +5,12 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class Exam extends Controller {
     public function index() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -23,6 +29,12 @@ class Exam extends Controller {
     }
 
     public function search() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -175,6 +187,12 @@ class Exam extends Controller {
 
     public function ajax_remove_exam() {
 
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
         /** This ajax request will
          * remove selected exam 
          * by exam_id 
@@ -215,6 +233,12 @@ class Exam extends Controller {
 
     public function ajax_remove_examschedule() {
 
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
         // SET JSON HEADER
         header('Content-Type: application/json'); 
 
@@ -251,6 +275,12 @@ class Exam extends Controller {
 
 
     public function create() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -317,6 +347,12 @@ class Exam extends Controller {
     // METHOD TO REMOVE EXAM TYPES
     public function ajax_remove_exam_type() {
 
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
         // SET JSON HEADER
         header('Content-Type: application/json'); 
 
@@ -353,6 +389,12 @@ class Exam extends Controller {
 
     public function ajax_edit_exam_type() {
 
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
         // SET JSON HEADER
         header('Content-Type: application/json'); 
 
@@ -373,6 +415,12 @@ class Exam extends Controller {
 
 
     public function ajax_create_exam() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         /**
          * This method will receive ajax request from
@@ -446,6 +494,12 @@ class Exam extends Controller {
     }
 
     public function ajax_add_schedule() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         /**
          * This method will receive ajax request from

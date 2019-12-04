@@ -2,6 +2,12 @@
 
 class Timetable extends Controller {
     public function index() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -20,6 +26,12 @@ class Timetable extends Controller {
     }
     
     public function class_timetable() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -123,6 +135,12 @@ class Timetable extends Controller {
     }
     
     public function staff_timetable() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -226,6 +244,12 @@ class Timetable extends Controller {
     }
 
     public function create() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -324,6 +348,12 @@ class Timetable extends Controller {
 
     // THIS METHOD WILL MANIPULATE SUBJECT PER EACH CLASS
     public function ajax_assign_subject() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -428,6 +458,12 @@ class Timetable extends Controller {
 
     // THIS METHOD WILL MANIPULATE STAFF PER EACH PERIOD
     public function ajax_assign_staff() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // MODEL
         $this->load->model('class');

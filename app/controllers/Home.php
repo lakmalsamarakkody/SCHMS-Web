@@ -6,6 +6,14 @@ use Illuminate\Database\Capsule\Manager as DB;
 class Home extends Controller {
 	public function index() {
 
+		//Check Login Status
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+
+		endif;
+
 		// SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
 		$data['app']['title']		= $this->config->get('site_title');
@@ -16,14 +24,6 @@ class Home extends Controller {
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
 		$data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
 		$data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
-
-		//Check Login Status
-		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-
-			header( 'Location:' . $this->config->get('base_url') . '/logout' );
-			exit();
-
-		endif;
 
 		// MODEL
 		$this->load->model('student');

@@ -5,6 +5,12 @@ use Ifsnop\Mysqldump as MySQLDump;
 
 class Backup extends Controller {
     public function index() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -35,6 +41,12 @@ class Backup extends Controller {
 
 
     public function ajax_add() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         /**
          * This method will receive ajax request from
@@ -93,6 +105,12 @@ class Backup extends Controller {
 
     // START : DELETE BACKUPS
     public function delete_backup_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
 
         // SET JSON HEADER
         header('Content-Type: application/json');

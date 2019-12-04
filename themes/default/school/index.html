@@ -32,10 +32,11 @@
                                     <table class="table table-borderless">
                                         <thead>
                                             <tr>
-                                                <th scope="col"> # </th>
-                                                <th scope="col"> Grade </th>
-                                                <th scope="col"> Class </th>
-                                                <th scope="col"> Teacher in Charge </th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Grade</th>
+                                                <th scope="col">Class</th>
+                                                <th scope="col">Teacher in Charge</th>
+                                                <th scope="col">&nbsp;</th>
                                             </tr>
                                         </thead>
 
@@ -46,6 +47,7 @@
                                                 <td> {{ class.grade.name }} </td>
                                                 <td> {{ class.name }} </td>
                                                 <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>  
@@ -77,6 +79,7 @@
                                             <tr>
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Grade </th>
+                                                <th scope="col">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -84,6 +87,7 @@
                                             <tr>
                                                 <th scope="row"> {{ grade.id }} </th>
                                                 <td> {{ grade.name }} </td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -110,6 +114,7 @@
                                             <tr>
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Religion </th>
+                                                <th scope="col">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -117,6 +122,7 @@
                                             <tr>
                                                 <th scope="row"> {{ religion.id }} </th>
                                                 <td> {{ religion.name }} </td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -144,6 +150,7 @@
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Subject </th>
                                                 <th scope="col"> Sinhala Name </th>
+                                                <th scope="col">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -152,6 +159,7 @@
                                                 <th scope="row"> {{ subject.id }} </th>
                                                 <td> {{ subject.name }} </td>
                                                 <td> {{ subject.si_name }} </td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -178,6 +186,8 @@
                                             <tr>
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Relationship Type </th>
+                                                <th scope="col">&nbsp;</th>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -185,6 +195,7 @@
                                             <tr>
                                                 <th scope="row"> {{ relationship.id }} </th>
                                                 <td> {{ relationship.name }} </td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -211,6 +222,7 @@
                                             <tr>
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Exam Type </th>
+                                                <th scope="col">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -218,6 +230,7 @@
                                             <tr>
                                                 <th scope="row"> {{ exam_type.id }} </th>
                                                 <td> {{ exam_type.name }} </td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -244,6 +257,7 @@
                                             <tr>
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Sport </th>
+                                                <th scope="col">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -251,6 +265,7 @@
                                             <tr>
                                                 <th scope="row"> {{ sport.id }} </th>
                                                 <td> {{ sport.name }} </td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -277,6 +292,7 @@
                                             <tr>
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Category </th>
+                                                <th scope="col">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -284,6 +300,7 @@
                                             <tr>
                                                 <th scope="row"> {{ category.id }} </th>
                                                 <td> {{ category.name }} </td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -310,7 +327,8 @@
                                             <tr>
                                                 <th scope="col"> # </th>
                                                 <th scope="col"> Category </th>
-                                                <th scope="col"> Type </th>                                                
+                                                <th scope="col"> Type </th>
+                                                <th scope="col">&nbsp;</th>                                          
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -319,6 +337,7 @@
                                                 <th scope="row">{{ type.id }}</th>                                               
                                                 <td>{{ type.category.name }}</td>
                                                 <td>{{ type.name }}</td>
+                                                <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                             </tr>
                                             {% endfor %} 
                                         </tbody>                                        
@@ -660,7 +679,7 @@
 
     <script>
 
-        // START : SCRIPT : ADD A CLASS
+        // START : ADD A CLASS
         addclass = () => {
 
             // PAYLOAD
@@ -687,7 +706,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -696,9 +715,44 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A CLASS
+        // END : ADD A CLASS
 
-        // START : SCRIPT : ADD A GRADE
+        // START : REMOVE CLASS
+        removeclass = (class_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('class_id', class_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removeclass",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Class Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+
+        }
+        // END : REMOVE CLASS
+
+        // START : ADD A GRADE
         addgrade = () => {
 
             // PAYLOAD
@@ -723,7 +777,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -732,9 +786,9 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A GRADE
+        // END : ADD A GRADE
 
-        // START : SCRIPT : ADD A RELIGION
+        // START : ADD A RELIGION
         addreligion = () => {
 
             // PAYLOAD
@@ -759,7 +813,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -768,9 +822,9 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A RELIGION
+        // END : ADD A RELIGION
 
-        // START : SCRIPT : ADD A SUBJECT
+        // START : ADD A SUBJECT
         addsubject = () => {
 
             // PAYLOAD
@@ -796,7 +850,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -805,9 +859,9 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A SUBJECT
+        // END : ADD A SUBJECT
 
-        // START : SCRIPT : ADD A RELATION
+        // START : ADD A RELATION
         addrelation = () => {
 
             // PAYLOAD
@@ -832,7 +886,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -841,9 +895,9 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A RELATION
+        // END : ADD A RELATION
 
-        // START : SCRIPT : ADD A EXAM_TYPE
+        // START : ADD A EXAM_TYPE
         addexam_type = () => {
 
             // PAYLOAD
@@ -868,7 +922,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -877,9 +931,9 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A EXAM_TYPE
+        // END : ADD A EXAM_TYPE
 
-        // START : SCRIPT : ADD A SPORT
+        // START : ADD A SPORT
         addsport = () => {
 
             // PAYLOAD
@@ -904,7 +958,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -913,9 +967,9 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A SPORT
+        // END : ADD A SPORT
 
-        // START : SCRIPT : ADD A STAFF CATEGORY
+        // START : ADD A STAFF CATEGORY
         addstaff_category = () => {
 
             // PAYLOAD
@@ -940,7 +994,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -949,9 +1003,9 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A STAFF CATEGORY
+        // END : ADD A STAFF CATEGORY
 
-        // START : SCRIPT : ADD A STAFF TYPE
+        // START : ADD A STAFF TYPE
         addstaff_type = () => {
 
             // PAYLOAD
@@ -977,7 +1031,7 @@
                         })
                     } else {
                         console.log(res);
-                        alertify.alert(res.error);
+                        alertify.alert("Failed", res.error);
                     }
                 },
                 error: (e) => {
@@ -986,7 +1040,7 @@
                 }
             })
         }
-        // END : SCRIPT : ADD A STAFF TYPE
+        // END : ADD A STAFF TYPE
     
     </script>
 

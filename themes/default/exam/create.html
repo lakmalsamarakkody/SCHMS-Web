@@ -275,7 +275,7 @@
                                     <th class="text-center" scope="row">{{ exam_type.id }}</th>
                                     <td>{{ exam_type.name }}</td>
                                     <td class="text-center">
-                                        <button type="button" onclick="exam.type.invokeEditModal('{{ exam_type.id }}', '{{ exam_type.name }}')" class="btn btn-sm btn-warning">edit</button> 
+                                        <button type="button" onclick="exam.type.invokeEditModal('{{ exam_type.id }}', '{{ exam_type.name }}')" class="btn btn-sm btn-warning"><i class="la la-edit"></i></button> 
                                         <button type="button" onclick="exam.type.remove('{{ exam_type.id }}')" class="btn btn-sm btn-danger"><i class="la la-trash"></i></button> 
                                     </td>
                                 </tr>
@@ -290,6 +290,36 @@
         </div>
     </div>
     <!-- END : MODAL EDIT/REMOVE EXAM-TYPE -->
+
+    <!-- START : MODAL EDIT EXAM-TYPE -->
+    <div class="modal fade" id="edit-exam-type" tabindex="-1" role="dialog" aria-labelledby="create-exam-type-title"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+    
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit exam type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exam_type">Exam Type Name</label>
+                            <input type="text" class="form-control" id="modal-edit-exam-type-name" />
+                        </div>
+                        <input type="hidden" id="modal-edit-exam-type-id" value="" />
+                    </div>
+    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="exam.type.edit()"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL EDIT EXAM-TYPE -->
 
     <!-- START : MODAL EDIT/REMOVE EXAM -->
     <div class="modal fade" id="edit-exam" tabindex="-1" role="dialog" aria-labelledby="edit-exam-title" aria-hidden="true">
@@ -341,36 +371,6 @@
     </div>
     <!-- END : MODAL EDIT/REMOVE EXAM -->
 
-    <!-- START : MODAL EDIT EXAM-TYPE -->
-    <div class="modal fade" id="edit-exam-type" tabindex="-1" role="dialog" aria-labelledby="create-exam-type-title"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-    
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit exam type</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="exam_type">Exam Type Name</label>
-                            <input type="text" class="form-control" id="modal-edit-exam-type-name" />
-                        </div>
-                        <input type="hidden" id="modal-edit-exam-type-id" value="" />
-                    </div>
-    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="exam.type.edit()"> Save changes </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- END : MODAL EDIT EXAM-TYPE -->
-
     <script>
 
         // START : SCRIPT FOR REMOVE EXAM
@@ -408,6 +408,14 @@
                     })
                 },
 
+                // INVOKE EDIT MODAL
+                invokeEditModal: (id, name) => {
+                    $("#modal-edit-exam-type-id").val(id)
+                    $("#modal-edit-exam-type-name").val(name)
+                    $("#view-exam-type").modal("hide")
+                    $("#edit-exam-type").modal("show")
+                },
+
                 // HANDLE EDIT ( Exam Type )
                 edit: () => {
 
@@ -441,13 +449,6 @@
                         }
                     })
 
-                },
-
-                // INVOKE EDIT MODAL
-                invokeEditModal: (id, name) => {
-                    $("#modal-edit-exam-type-id").val(id)
-                    $("#modal-edit-exam-type-name").val(name)
-                    $("#edit-exam-type").modal("show")
                 }
             },
 
