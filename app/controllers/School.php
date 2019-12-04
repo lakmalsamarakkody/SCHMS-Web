@@ -228,14 +228,28 @@ class School extends Controller {
 			$this->request->post['staff'] == NULL;
 		endif;
 
-		if ( $this->model_class->where('id', '=', $this->request->post['id'])
-			->update(['name' => $this->request->post['name']],['grade_id' => $this->request->post['grade']],['staff_id' => $this->request->post['staff']] )):
-            echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
-            exit();
-		else:
-            echo json_encode( array( "status" => "failed", "message" => "Unable to edit class" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
+		try {
+			$this->model_class->where('id', '=', $this->request->post['id'])->update([
+				'grade_id' => $this->request->post['grade'],
+				'staff_id' => $this->request->post['staff'],
+				'name' => $this->request->post['name']
+			]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit class. Please verify that details are not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+
+
+		// if ( $this->model_class->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name'], 'grade_id' => $this->request->post['grade'], 'staff_id' => $this->request->post['staff'] ]) ):
+        //     echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+        //     exit();
+		// else:
+        //     echo json_encode( array( "status" => "failed", "message" => "Unable to edit class" ), JSON_PRETTY_PRINT );
+        //     exit();
+        // endif;
 	}
 
 	public function ajax_removeclass() {

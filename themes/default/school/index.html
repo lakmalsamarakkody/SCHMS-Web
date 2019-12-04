@@ -49,7 +49,7 @@
                                                     <td> {{ class.name }} </td>
                                                     <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
                                                     <td>
-                                                        <button class="btn btn-sm btn-warning" onclick="invokeClassEditModal('{{class.id}}','{{class.name}}','{{class.grade.id}}','{{class.staff.id}}')">edit</button>
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeClassEditModal('{{class.id}}','{{class.name}}','{{class.grade.id}}','{{class.staff.id}}')"><i class="la la-edit"></i></button>
                                                         <button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')"><i class="la la-trash"></i></button>
                                                     </td>
                                                 </tr>
@@ -181,7 +181,6 @@
                                                     <th scope="col"> # </th>
                                                     <th scope="col"> Relationship Type </th>
                                                     <th scope="col">&nbsp;</th>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
