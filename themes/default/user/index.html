@@ -19,43 +19,42 @@
                         <h4 class="page-title">User Overview</h4>
 
                         <div class="row mt-5">
-    
-                            <!-- TOTAL USERS -->
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-header">
-                                        Total Users
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ user.total.all}}</h5>
-                                        <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="col-12">
+                                <div class="card-deck">
 
-                            <!-- ACTIVE USERS -->
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="text-success">Active Users</span>
+                                    <!-- TOTAL USERS -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Total Users
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ user.total.all}}</h5>
+                                            <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ user.total.active}}</h5>
-                                        <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- DISABLED USERS -->
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="text-danger">Disabled Users</span>
+                                    <!-- ACTIVE USERS -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span class="text-success">Active Users</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ user.total.active}}</h5>
+                                            <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ user.total.disabled}}</h5>
-                                        <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
+
+                                    <!-- DISABLED USERS -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span class="text-danger">Disabled Users</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ user.total.disabled}}</h5>
+                                            <a href="{{ app.url}}/user/search" class="btn btn-xs btn-primary p-2">view details</a>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -69,9 +68,11 @@
                         <!-- TITLE -->
                         <h4 class="page-title mb-4">User Role Analysis</h4>
 
-                        <div class="col-12">
-                            <div class="row">
+                        <div class="row">
+                            <div class="col-6">
                                 <div class="col chart-bg pt-3" id="chart-1"></div>
+                            </div>
+                            <div class="col-6">
                                 <div class="col chart-bg pt-3" id="chart-2"></div>
                             </div>
                         </div>
