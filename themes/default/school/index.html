@@ -33,22 +33,22 @@
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Grade</th>
-                                                    <th scope="col">Class</th>
+                                                    <th class="text-center" width="1%" scope="col">#</th>
+                                                    <th class="text-center" width="1%" scope="col">Grade</th>
+                                                    <th class="text-center" width="1%" scope="col">Class</th>
                                                     <th scope="col">Teacher in Charge</th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-right" width="25%" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 {% for class in classes %}
                                                 <tr>
-                                                    <th scope="row"> {{ class.id }} </th>
-                                                    <td> {{ class.grade.name }} </td>
-                                                    <td> {{ class.name }} </td>
+                                                    <th class="text-center" scope="row"> {{ class.id }} </th>
+                                                    <td class="text-center"> {{ class.grade.name }} </td>
+                                                    <td class="text-center"> {{ class.name }} </td>
                                                     <td> {{ class.staff.initials }} {{ class.staff.surname }}</td>
-                                                    <td>
+                                                    <td class="text-right">
                                                         <button class="btn btn-sm btn-warning" onclick="invokeClassEditModal('{{class.id}}','{{class.name}}','{{class.grade.id}}','{{class.staff.id}}')"><i class="la la-edit"></i></button>
                                                         <button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')"><i class="la la-trash"></i></button>
                                                     </td>
@@ -77,17 +77,17 @@
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"> # </th>
-                                                    <th scope="col"> Grade </th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-center" scope="col">#</th>
+                                                    <th class="text-center" scope="col">Grade</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for grade in grades %}
                                                 <tr>
-                                                    <th scope="row"> {{ grade.id }} </th>
-                                                    <td> {{ grade.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
+                                                    <th class="text-center" scope="row">{{ grade.id }}</th>
+                                                    <td class="text-center">{{ grade.name }}</td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removegrade('{{grade.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -110,17 +110,17 @@
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"> # </th>
-                                                    <th scope="col"> Religion </th>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Religion</th>
                                                     <th scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for religion in religions %}
                                                 <tr>
-                                                    <th scope="row"> {{ religion.id }} </th>
-                                                    <td> {{ religion.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                    <th scope="row">{{ religion.id }}</th>
+                                                    <td>{{ religion.name }}</td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removereligion('{{religion.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -155,7 +155,7 @@
                                                     <th scope="row"> {{ subject.id }} </th>
                                                     <td> {{ subject.name }} </td>
                                                     <td> {{ subject.si_name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -188,7 +188,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ relationship.id }} </th>
                                                     <td> {{ relationship.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -221,7 +221,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ exam_type.id }} </th>
                                                     <td> {{ exam_type.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -254,7 +254,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ sport.id }} </th>
                                                     <td> {{ sport.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -287,7 +287,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ category.id }} </th>
                                                     <td> {{ category.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('class.id')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -845,6 +845,41 @@
         }
         // END : ADD A GRADE
 
+        // START : REMOVE GRADE
+        removegrade = (grade_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('grade_id', grade_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removegrade",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Grade Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+
+        }
+        // END : REMOVE GRADE
+
         // START : ADD A RELIGION
         addreligion = () => {
 
@@ -880,6 +915,41 @@
             })
         }
         // END : ADD A RELIGION
+
+        // START : REMOVE RELIGION
+        removereligion = (religion_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('religion_id', religion_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removereligion",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Religion Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+
+        }
+        // END : REMOVE GRADE
 
         // START : ADD A SUBJECT
         addsubject = () => {

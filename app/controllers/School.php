@@ -58,7 +58,14 @@ class School extends Controller {
 		endforeach;
 
 		// STAFF NAMES
-		foreach( $this->model_staff->select('id', 'full_name')->orderBy('full_name')->get() as $key => $element ):
+		$is_teacher = DB::table('staff')
+		->join('staff_type', 'staff.type_id', 'staff_type.id')
+		->join('staff_category', 'staff_type.category_id', 'staff_category.id')
+		->select('staff.id', 'staff.full_name')
+		->where('staff_category.name', '=', 'Academic')
+		->orderBy('full_name');
+
+		foreach( $is_teacher->get() as $key => $element ):
 			$data['staffs'][$key]['id'] = $element->id;
 			$data['staffs'][$key]['name']= $element->full_name;
 		endforeach;
@@ -241,15 +248,6 @@ class School extends Controller {
 			echo json_encode( array( "status" => "failed", "message" => "Unable to edit class. Please verify that details are not duplicating" ), JSON_PRETTY_PRINT );
 			exit();
 		}
-
-
-		// if ( $this->model_class->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name'], 'grade_id' => $this->request->post['grade'], 'staff_id' => $this->request->post['staff'] ]) ):
-        //     echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
-        //     exit();
-		// else:
-        //     echo json_encode( array( "status" => "failed", "message" => "Unable to edit class" ), JSON_PRETTY_PRINT );
-        //     exit();
-        // endif;
 	}
 
 	public function ajax_removeclass() {
@@ -337,6 +335,41 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_removegrade() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('grade');
+		$this->load->model('class');
+		
+		if ( isset($this->request->post['grade_id']) AND !empty($this->request->post['grade_id']) ):
+			$is_available_class = $this->model_class->select('id')->where('grade_id', '=', $this->request->post['grade_id']);
+			if ( $is_available_class->first() == NULL ):
+				if ( $this->model_grade->find($this->request->post['grade_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this Grade. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this Grade. Grade has existing classes" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid Grade" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+	}
+
 	public function ajax_addreligion() {
 
 		//CHECK LOGIN STATUS
@@ -384,6 +417,44 @@ class School extends Controller {
 			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	}
+
+	public function ajax_removereligion() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('religion');
+		$this->load->model('student');
+		$this->load->model('staff');
+		
+		if ( isset($this->request->post['religion_id']) AND !empty($this->request->post['religion_id']) ):
+			$is_available_student = $this->model_student->select('id')->where('religion_id', '=', $this->request->post['religion_id']);
+			$is_available_staff = $this->model_staff->select('id')->where('religion_id', '=', $this->request->post['religion_id']);
+
+			if ( $is_available_student->first() == NULL AND $is_available_staff->first() == NULL ):
+				if ( $this->model_religion->find($this->request->post['religion_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this religion. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this Religion. Religion has existing student or staff" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid Religion" ), JSON_PRETTY_PRINT );
+			exit();
 		endif;
 	}
 
