@@ -45,7 +45,7 @@ class School extends Controller {
 
 			// GET STAFF DETAILS
 			if ( $element->staff_id !== NULL):
-				$data['classes'][$key]['staff'] = $this->model_staff->select('initials', 'surname')->where('id', '=', $element->staff_id)->first()->toArray();
+				$data['classes'][$key]['staff'] = $this->model_staff->select('id','initials', 'surname')->where('id', '=', $element->staff_id)->first()->toArray();
 			else:
 				$data['classes'][$key]['staff'] = "";
 			endif;
@@ -55,6 +55,12 @@ class School extends Controller {
 		foreach( $this->model_grade->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['grades'][$key]['id'] = $element->id;
 			$data['grades'][$key]['name']= $element->name;
+		endforeach;
+
+		// STAFF NAMES
+		foreach( $this->model_staff->select('id', 'full_name')->orderBy('full_name')->get() as $key => $element ):
+			$data['staffs'][$key]['id'] = $element->id;
+			$data['staffs'][$key]['name']= $element->full_name;
 		endforeach;
 		
 		// RELIGION
@@ -156,10 +162,10 @@ class School extends Controller {
             exit();
 		endif;
 
-		// VALIDATION : employee_id
-        $is_valid_employee_id = GUMP::is_valid($this->request->post, array('employee_id' => 'numeric|max_len,6'));
-        if ( $is_valid_employee_id !== true ):
-            echo json_encode( array( "error" => "Please enter a valid Employee ID" ), JSON_PRETTY_PRINT );
+		// VALIDATION : staff_id
+        $is_valid_staff_id = GUMP::is_valid($this->request->post, array('staff_id' => 'numeric|max_len,6'));
+        if ( $is_valid_staff_id !== true ):
+            echo json_encode( array( "error" => "Please select a valid Employee ID" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 
@@ -181,7 +187,7 @@ class School extends Controller {
 			endif;
 
 			// EMPLOYEE ID IS ENTERED : CHECK FOR DUPLICATE
-			if ( $this->model_staff->select('id')->where('employee_number', '=', $this->request->post['employee_id'])->first() == NULL ):
+			if ( $this->model_staff->select('id')->where('id', '=', $this->request->post['employee_id'])->first() == NULL ):
 				echo json_encode( array( "error" => "Please enter a valid Employee ID" ), JSON_PRETTY_PRINT );
 				exit();
 			endif;
@@ -192,7 +198,7 @@ class School extends Controller {
 		$this->model_class->grade_id = $this->request->post['grade_id'];
 
 		if($this->request->post['employee_id'] != NULL):
-			$this->model_class->staff_id = $this->model_staff->select('id')->where('employee_number', '=', $this->request->post['employee_id'])->first()->id;
+			$this->model_class->staff_id = $this->request->post['employee_id'];
 		endif;
 
 		// SUBMIT
@@ -203,7 +209,36 @@ class School extends Controller {
 		endif;
 	}
 
-	public function removeclass() {
+	public function ajax_editclass() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+        $this->load->model('class');
+
+		// UPDATE
+		if ( $this->request->post['staff'] == "" ):
+			$this->request->post['staff'] == NULL;
+		endif;
+
+		if ( $this->model_class->where('id', '=', $this->request->post['id'])
+			->update(['name' => $this->request->post['name']],['grade_id' => $this->request->post['grade']],['staff_id' => $this->request->post['staff']] )):
+            echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+            exit();
+		else:
+            echo json_encode( array( "status" => "failed", "message" => "Unable to edit class" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+	}
+
+	public function ajax_removeclass() {
 
 		//CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
@@ -221,7 +256,7 @@ class School extends Controller {
 		if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
 			$is_available_student = $this->model_student_class->select('id')->where('class_id', '=', $this->request->post['class_id'])->first();
 			if ( $is_available_student == NULL ):
-				if ( $this->model_class->find($this->request->post['id'])->delete() ):
+				if ( $this->model_class->find($this->request->post['class_id'])->delete() ):
 					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 					exit();
 				else:
@@ -229,7 +264,7 @@ class School extends Controller {
                     exit();
 				endif;
 			else:
-				echo json_encode( array( "status" => "error", "message" => "Cannot delete this class. Class have one or more students" ), JSON_PRETTY_PRINT );
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this class. Class has one or more students" ), JSON_PRETTY_PRINT );
 				exit();
 			endif;
 		else:

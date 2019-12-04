@@ -344,6 +344,32 @@ class Exam extends Controller {
         $this->load->view('exam/create', $data);
     }
 
+     // METHOD TO EDIT EXAM TYPES
+    public function ajax_edit_exam_type() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+        // SET JSON HEADER
+        header('Content-Type: application/json'); 
+
+        // MODEL
+        $this->load->model('exam/type');
+
+        // UPDATE
+        if ( $this->model_exam_type->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]) ):
+            echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+            exit();
+        else:
+            echo json_encode( array( "status" => "failed", "message" => "Unable to edit exam type" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+    }
+
     // METHOD TO REMOVE EXAM TYPES
     public function ajax_remove_exam_type() {
 
@@ -384,35 +410,6 @@ class Exam extends Controller {
             exit();
         endif;
     }
-
-
-
-    public function ajax_edit_exam_type() {
-
-        //CHECK LOGIN STATUS
-		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-			header( 'Location:' . $this->config->get('base_url') . '/logout' );
-			exit();
-		endif;
-
-        // SET JSON HEADER
-        header('Content-Type: application/json'); 
-
-        // MODEL
-        $this->load->model('exam/type');
-
-        // UPDATE
-        if ( $this->model_exam_type->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]) ):
-            echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
-            exit();
-        else:
-            echo json_encode( array( "status" => "failed", "message" => "Unable to edit exam type" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
-
-    }
-
-
 
     public function ajax_create_exam() {
 
