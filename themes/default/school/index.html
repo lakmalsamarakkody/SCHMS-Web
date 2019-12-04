@@ -143,19 +143,19 @@
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"> # </th>
-                                                    <th scope="col"> Subject </th>
-                                                    <th scope="col"> Sinhala Name </th>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Subject</th>
+                                                    <th scope="col">Sinhala Name</th>
                                                     <th scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for subject in subjects %}
                                                 <tr>
-                                                    <th scope="row"> {{ subject.id }} </th>
-                                                    <td> {{ subject.name }} </td>
-                                                    <td> {{ subject.si_name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
+                                                    <th scope="row">{{ subject.id }}</th>
+                                                    <td>{{ subject.name }}</td>
+                                                    <td>{{ subject.si_name }}</td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removesubject('{{subject.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -188,7 +188,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ relationship.id }} </th>
                                                     <td> {{ relationship.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeparentrelationship('{{relationship.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -221,7 +221,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ exam_type.id }} </th>
                                                     <td> {{ exam_type.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removeexamtype('{{exam_type.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -254,7 +254,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ sport.id }} </th>
                                                     <td> {{ sport.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removesport('{{sport.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -277,8 +277,8 @@
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"> # </th>
-                                                    <th scope="col"> Category </th>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Category</th>
                                                     <th scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -287,7 +287,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ category.id }} </th>
                                                     <td> {{ category.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeclass('{{class.id}}')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removestaffcategory('{{category.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -987,6 +987,40 @@
             })
         }
         // END : ADD A SUBJECT
+
+        // START : REMOVE SUBJECT
+        removereligion = (subject_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('subject_id', subject_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removesubject",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Subject Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : REMOVE SUBJECT
 
         // START : ADD A RELATION
         addrelation = () => {
