@@ -110,17 +110,17 @@
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Religion</th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-center" scope="col">#</th>
+                                                    <th class="text-center" scope="col">Religion</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for religion in religions %}
                                                 <tr>
-                                                    <th scope="row">{{ religion.id }}</th>
-                                                    <td>{{ religion.name }}</td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removereligion('{{religion.id}}')">remove</button></td>
+                                                    <th class="text-center" scope="row">{{ religion.id }}</th>
+                                                    <td class="text-center">{{ religion.name }}</td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removereligion('{{religion.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -188,7 +188,7 @@
                                                 <tr>
                                                     <th scope="row"> {{ relationship.id }} </th>
                                                     <td> {{ relationship.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeparentrelationship('{{relationship.id}}')">remove</button></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removerelation('{{relationship.id}}')">remove</button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -297,6 +297,40 @@
                             </div>
                             <!-- END : STAFF CATEGORY MANAGER -->
 
+                            <!-- START : STAFF TYPE MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">STAFF TYPES</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_add_staff_type">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Category</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for type in staff.type %}
+                                                <tr>
+                                                    <th scope="row"> {{ type.id }} </th>
+                                                    <td> {{ type.category_name }} </td>
+                                                    <td> {{ type.name }} </td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="removestafftype('{{type.id}}')">remove</button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : STAFF TYPE MANAGER -->
                         </div>
                     </div>
 
@@ -989,7 +1023,7 @@
         // END : ADD A SUBJECT
 
         // START : REMOVE SUBJECT
-        removereligion = (subject_id) => {
+        removesubject = (subject_id) => {
 
             // PAYLOAD
             var formData = new FormData;
@@ -1058,6 +1092,40 @@
         }
         // END : ADD A RELATION
 
+        // START : REMOVE RELATION
+        removerelation = (relation_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('relation_id', relation_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removerelation",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Relation type Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : REMOVE RELATION
+
         // START : ADD A EXAM_TYPE
         addexam_type = () => {
 
@@ -1093,6 +1161,40 @@
             })
         }
         // END : ADD A EXAM_TYPE
+
+        // START : REMOVE EXAM_TYPE
+        removeexamtype = (examtype_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('examtype_id', examtype_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removeexamtype",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Exam type Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : REMOVE EXAM_TYPE
 
         // START : ADD A SPORT
         addsport = () => {
@@ -1130,6 +1232,40 @@
         }
         // END : ADD A SPORT
 
+        // START : REMOVE SPORT
+        removesport = (sport_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('sport_id', sport_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removesport",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Sport Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : REMOVE SPORT
+
         // START : ADD A STAFF CATEGORY
         addstaff_category = () => {
 
@@ -1165,6 +1301,40 @@
             })
         }
         // END : ADD A STAFF CATEGORY
+
+        // START : REMOVE STAFF CATEGORY
+        removestaffcategory = (category_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('category_id', category_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_removestaffcategory",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Staff category Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : REMOVE SPORT
 
         // START : ADD A STAFF TYPE
         addstaff_type = () => {
@@ -1202,6 +1372,40 @@
             })
         }
         // END : ADD A STAFF TYPE
+
+        // START : REMOVE STAFF TYPE
+        removestafftype = (type_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('type_id', type_id)
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/school/ajax_removestaffcategory",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "Staff category Removed successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert("Failed", res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+        }
+        // END : REMOVE TYPE
     
     </script>
 

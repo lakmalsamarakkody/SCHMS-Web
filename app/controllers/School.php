@@ -112,12 +112,12 @@ class School extends Controller {
 
 			$category_data = DB::table('staff_type')
 				->join('staff_category', 'staff_type.category_id', 'staff_category.id')
-				->select('staff_category.name')
+				->select('staff_category.name as category_name')
 				->where('staff_type.id', '=', $element->id)->first();
 
 			$data['staff']['type'][$key]['id'] = $element->id;
 			$data['staff']['type'][$key]['name']= $element->name;
-			$data['staff']['type'][$key]['category']['name']= $category_data->name;
+			$data['staff']['type'][$key]['category_name']= $category_data->category_name;
 		endforeach;
 
 
