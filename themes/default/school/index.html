@@ -30,7 +30,7 @@
 
                                     <div class="table-responsive-md">
 
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center" width="1%" scope="col">#</th>
@@ -74,11 +74,11 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center" scope="col">#</th>
-                                                    <th class="text-center" scope="col">Grade</th>
+                                                    <th scope="col">Grade</th>
                                                     <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -86,7 +86,7 @@
                                                 {% for grade in grades %}
                                                 <tr>
                                                     <th class="text-center" scope="row">{{ grade.id }}</th>
-                                                    <td class="text-center">{{ grade.name }}</td>
+                                                    <td>{{ grade.name }}</td>
                                                     <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removegrade('{{grade.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
@@ -107,11 +107,11 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center" scope="col">#</th>
-                                                    <th class="text-center" scope="col">Religion</th>
+                                                    <th scope="col">Religion</th>
                                                     <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -119,7 +119,7 @@
                                                 {% for religion in religions %}
                                                 <tr>
                                                     <th class="text-center" scope="row">{{ religion.id }}</th>
-                                                    <td class="text-center">{{ religion.name }}</td>
+                                                    <td>{{ religion.name }}</td>
                                                     <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removereligion('{{religion.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
@@ -140,22 +140,22 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
+                                                    <th class="text-center" scope="col">#</th>
                                                     <th scope="col">Subject</th>
                                                     <th scope="col">Sinhala Name</th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for subject in subjects %}
                                                 <tr>
-                                                    <th scope="row">{{ subject.id }}</th>
+                                                    <th class="text-center" scope="row">{{ subject.id }}</th>
                                                     <td>{{ subject.name }}</td>
                                                     <td>{{ subject.si_name }}</td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removesubject('{{subject.id}}')">remove</button></td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removesubject('{{subject.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -175,20 +175,20 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"> # </th>
+                                                    <th class="text-center" scope="col"> # </th>
                                                     <th scope="col"> Relationship Type </th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for relationship in student_relations %}
                                                 <tr>
-                                                    <th scope="row"> {{ relationship.id }} </th>
+                                                    <th class="text-center" scope="row"> {{ relationship.id }} </th>
                                                     <td> {{ relationship.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removerelation('{{relationship.id}}')">remove</button></td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removerelation('{{relationship.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -208,20 +208,20 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"> # </th>
+                                                    <th class="text-center" scope="col"> # </th>
                                                     <th scope="col"> Exam Type </th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for exam_type in exam_types %}
                                                 <tr>
-                                                    <th scope="row"> {{ exam_type.id }} </th>
+                                                    <th class="text-center" scope="row"> {{ exam_type.id }} </th>
                                                     <td> {{ exam_type.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removeexamtype('{{exam_type.id}}')">remove</button></td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removeexamtype('{{exam_type.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -241,20 +241,20 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"> # </th>
+                                                    <th class="text-center" scope="col"> # </th>
                                                     <th scope="col"> Sport </th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for sport in sports %}
                                                 <tr>
-                                                    <th scope="row"> {{ sport.id }} </th>
+                                                    <th class="text-center" scope="row"> {{ sport.id }} </th>
                                                     <td> {{ sport.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removesport('{{sport.id}}')">remove</button></td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removesport('{{sport.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -274,20 +274,20 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
+                                                    <th class="text-center" scope="col">#</th>
                                                     <th scope="col">Category</th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for category in staff.category %}
                                                 <tr>
-                                                    <th scope="row"> {{ category.id }} </th>
+                                                    <th class="text-center" scope="row"> {{ category.id }} </th>
                                                     <td> {{ category.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removestaffcategory('{{category.id}}')">remove</button></td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removestaffcategory('{{category.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -307,22 +307,22 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive-md">
-                                        <table class="table table-borderless">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
+                                                    <th class="text-center" scope="col">#</th>
                                                     <th scope="col">Category</th>
                                                     <th scope="col">Type</th>
-                                                    <th scope="col">&nbsp;</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for type in staff.type %}
                                                 <tr>
-                                                    <th scope="row"> {{ type.id }} </th>
+                                                    <th class="text-center" scope="row"> {{ type.id }} </th>
                                                     <td> {{ type.category_name }} </td>
                                                     <td> {{ type.name }} </td>
-                                                    <td><button class="btn btn-sm btn-danger" onclick="removestafftype('{{type.id}}')">remove</button></td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removestafftype('{{type.id}}')"><i class="la la-trash"></i></button></td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -1382,7 +1382,7 @@
 
         // REQUEST
         $.ajax({
-            url: "{{ app.url }}/school/ajax_removestaffcategory",
+            url: "{{ app.url }}/school/ajax_removestafftype",
             method: 'POST',
             data: formData,
             processData: false,
@@ -1391,7 +1391,7 @@
             success: (res) => {
                 
                 if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Staff category Removed successfully ... ").set('onok', function() {
+                    alertify.alert("Success", "Staff Type Removed successfully ... ").set('onok', function() {
                         location.reload();
                     })
                 } else {
@@ -1405,7 +1405,7 @@
             }
         })
         }
-        // END : REMOVE TYPE
+        // END : REMOVE STAFF TYPE
     
     </script>
 

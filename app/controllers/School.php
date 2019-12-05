@@ -518,6 +518,46 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_removesubject() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('subject');
+		$this->load->model('student/subject');
+		$this->load->model('staff/subject');
+		$this->load->model('exam/schedule');
+		
+		if ( isset($this->request->post['subject_id']) AND !empty($this->request->post['subject_id']) ):
+			$is_available_student = $this->model_student_subject->select('id')->where('subject_id', '=', $this->request->post['subject_id'])->first();
+			$is_available_staff = $this->model_staff_subject->select('id')->where('subject_id', '=', $this->request->post['subject_id'])->first();
+			$is_available_exam_schedule = $this->model_exam_schedule->select('id')->where('subject_id', '=', $this->request->post['subject_id'])->first();
+
+			if ( $is_available_student == NULL AND $is_available_staff == NULL AND $is_available_exam_schedule == NULL ):
+				if ( $this->model_subject->find($this->request->post['subject_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this subject. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this subject. Subject is used by students or staff or exam schedule" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid subject" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+	}
+
 	public function ajax_addrelation() {
 
 		//CHECK LOGIN STATUS
@@ -546,7 +586,7 @@ class School extends Controller {
 		header('Content-Type: application/json');
 		
 		// VALIDATION : relation_name
-        $is_valid_relation_name = GUMP::is_valid($this->request->post, array('relation_name' => 'required|valid_name'));
+        $is_valid_relation_name = GUMP::is_valid($this->request->post, array('relation_name' => 'required'));
         if ( $is_valid_relation_name !== true ):
             echo json_encode( array( "error" => "Please enter a relation type name" ), JSON_PRETTY_PRINT );
             exit();
@@ -565,6 +605,42 @@ class School extends Controller {
 			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	}
+
+	public function ajax_removerelation() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('student/relation');
+		$this->load->model('student/parent');
+		
+		if ( isset($this->request->post['relation_id']) AND !empty($this->request->post['relation_id']) ):
+			$is_available_relation = $this->model_student_parent->select('id')->where('relation_id', '=', $this->request->post['relation_id'])->first();
+
+			if ( $is_available_relation == NULL ):
+				if ( $this->model_student_relation->find($this->request->post['relation_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this Relation type. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this Relation type. Relation type is used by existing students with their parents" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid Relation type" ), JSON_PRETTY_PRINT );
+			exit();
 		endif;
 	}
 
@@ -618,6 +694,42 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_removeexamtype() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('exam');
+		$this->load->model('exam/type');
+		
+		if ( isset($this->request->post['examtype_id']) AND !empty($this->request->post['examtype_id']) ):
+			$is_available_exam_type = $this->model_exam->select('id')->where('type_id', '=', $this->request->post['examtype_id'])->first();
+
+			if ( $is_available_exam_type == NULL ):
+				if ( $this->model_exam_type->find($this->request->post['examtype_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this Exam type. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this Exam type. Exam type is used by an existing exam" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid Exam type" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+	}
+
 	public function ajax_addsport() {
 
 		//CHECK LOGIN STATUS
@@ -668,6 +780,42 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_removesport() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('sport');
+		$this->load->model('student/sport');
+		
+		if ( isset($this->request->post['sport_id']) AND !empty($this->request->post['sport_id']) ):
+			$is_available_sport = $this->model_student_sport->select('id')->where('sport_id', '=', $this->request->post['sport_id'])->first();
+
+			if ( $is_available_sport == NULL ):
+				if ( $this->model_sport->find($this->request->post['sport_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this Sport. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this Sport. One or More student is engaged in this sport" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid Sport" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+	}
+
 	public function ajax_add_staff_category() {
 
 		//CHECK LOGIN STATUS
@@ -715,6 +863,42 @@ class School extends Controller {
 			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	}
+
+	public function ajax_removestaffcategory() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('staff/category');
+		$this->load->model('staff/type');
+		
+		if ( isset($this->request->post['category_id']) AND !empty($this->request->post['category_id']) ):
+			$is_available_category = $this->model_staff_type->select('id')->where('category_id', '=', $this->request->post['category_id'])->first();
+
+			if ( $is_available_category == NULL ):
+				if ( $this->model_staff_category->find($this->request->post['category_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this Staff Category. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this Staff Category. One or More Staff is relevant to this Staff Category" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid Staff Category" ), JSON_PRETTY_PRINT );
+			exit();
 		endif;
 	}
 
@@ -773,6 +957,43 @@ class School extends Controller {
 			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	}
+
+	public function ajax_removestafftype() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('staff');
+		$this->load->model('staff/category');
+		$this->load->model('staff/type');
+		
+		if ( isset($this->request->post['type_id']) AND !empty($this->request->post['type_id']) ):
+			$is_available_type = $this->model_staff->select('id')->where('type_id', '=', $this->request->post['type_id'])->first();
+
+			if ( $is_available_type == NULL ):
+				if ( $this->model_staff_type->find($this->request->post['type_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this Staff Type. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this Staff Type. One or More Staff is relevant to this Staff Type" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid Staff Type" ), JSON_PRETTY_PRINT );
+			exit();
 		endif;
 	}
 }
