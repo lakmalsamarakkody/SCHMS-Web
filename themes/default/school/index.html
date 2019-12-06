@@ -331,6 +331,41 @@
                                 </div>
                             </div>
                             <!-- END : STAFF TYPE MANAGER -->
+
+                            <!-- START : USER ROLE MANAGER -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="pull-left">USER ROLES</h6>
+                                    <div class="button-group pull-right">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#model_add_user_role">ADD</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive-md">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" scope="col">#</th>
+                                                    <th scope="col">User Role</th>
+                                                    <th scope="col">Description</th>
+                                                    <th class="text-right" scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for role in user.roles %}
+                                                <tr>
+                                                    <th class="text-center" scope="row"> {{ role.id }} </th>
+                                                    <td> {{ role.name }} </td>
+                                                    <td> {{ role.description }} </td>
+                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removeuserrole('{{role.id}}')"><i class="la la-trash"></i></button></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>                                        
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END : USER ROLE MANAGER -->
                         </div>
                     </div>
 
@@ -348,7 +383,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW CLASS</h5>
+                    <h5 class="modal-title">ADD A NEW CLASS</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -460,7 +495,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW GRADE</h5>
+                    <h5 class="modal-title">ADD A NEW GRADE</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -494,7 +529,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW RELIGION</h5>
+                    <h5 class="modal-title">ADD A NEW RELIGION</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -528,7 +563,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW SUBJECT</h5>
+                    <h5 class="modal-title">ADD A NEW SUBJECT</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -569,7 +604,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">ADD A NEW STUDENT RELATIONSHIP</h5>
+                    <h5 class="modal-title">ADD A NEW STUDENT RELATIONSHIP</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -603,7 +638,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="model_addexamtype-title"> ADD A NEW EXAM TYPE </h5>
+                    <h5 class="modal-title"> ADD A NEW EXAM TYPE </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -631,7 +666,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="model_addsport-title"> ADD A NEW SPORT </h5>
+                    <h5 class="modal-title"> ADD A NEW SPORT </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -659,7 +694,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="model_add_staff_category-title"> ADD A NEW STAFF CATEGORY </h5>
+                    <h5 class="modal-title"> ADD A NEW STAFF CATEGORY </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -687,7 +722,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="model_add_staff_type-title"> ADD A NEW STAFF TYPE </h5>
+                    <h5 class="modal-title"> ADD A NEW STAFF TYPE </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -719,6 +754,40 @@
         </div>
     </div>
     <!-- END : MODAL CREATE STAFF TYPE -->
+
+    <!-- START : MODAL CREATE USER ROLE -->
+    <div class="modal fade" id="model_add_user_role" tabindex="-1" role="dialog" aria-labelledby="model_add_user_role-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title"> ADD A NEW USER ROLE </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="category_id"> Role name </label>
+                            <input type="text" class="form-control" id="user_role_name"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="staff_type_name"> Role Description </label>
+                            <input type="text" class="form-control" id="user_role_description"/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="adduser_role();"> Save changes </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE USER ROLE -->
 
 
     <script>
@@ -1392,6 +1461,77 @@
                 
                 if ( res.status == 'success' ) {
                     alertify.alert("Success", "Staff Type Removed successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert("Failed", res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+        }
+        // END : REMOVE STAFF TYPE
+
+        // START : ADD A USER ROLE
+        adduser_role = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // ADD STAFF CATEGORY DATA
+            formData.append('user_role_name', $("#user_role_name").val())
+            formData.append('user_role_description', $("#user_role_description").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_add_user_role",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "User role added successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.error);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : ADD A USER ROLE
+
+        // START : REMOVE STAFF TYPE
+        removeuserrole = (role_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('role_id', role_id)
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/school/ajax_removeuserrole",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "User Role Removed successfully ... ").set('onok', function() {
                         location.reload();
                     })
                 } else {

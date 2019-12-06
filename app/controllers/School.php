@@ -33,6 +33,8 @@ class School extends Controller {
 		$this->load->model('student/relation');
 		$this->load->model('exam/type');
 		$this->load->model('sport');
+		$this->load->model('user');
+		$this->load->model('user/role');
 
 		// CLASS
 		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id', 'asc')->orderBy('name', 'asc')->get() as $key => $element ):
@@ -118,6 +120,13 @@ class School extends Controller {
 			$data['staff']['type'][$key]['id'] = $element->id;
 			$data['staff']['type'][$key]['name']= $element->name;
 			$data['staff']['type'][$key]['category_name']= $category_data->category_name;
+		endforeach;
+
+		// USER ROLE
+		foreach( $this->model_user_role->select('id', 'name', 'description')->orderBy('name')->get() as $key => $element ):
+			$data['user']['roles'][$key]['id'] = $element->id;
+			$data['user']['roles'][$key]['name']= $element->name;
+			$data['user']['roles'][$key]['description']= $element->description;
 		endforeach;
 
 
@@ -996,6 +1005,102 @@ class School extends Controller {
 			exit();
 		endif;
 	}
+
+	public function ajax_add_user_role() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- user_role_name description
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+		//  MODEL
+		$this->load->model('user');
+		$this->load->model('user/role');
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// VALIDATION : user_role_name
+		$is_valid_user_role_name = GUMP::is_valid($this->request->post, array('user_role_name' => 'required|valid_name|min_len,1'));
+		if ( $is_valid_user_role_name !== true ):
+			echo json_encode( array( "error" => "Please select a valid role name" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : user_role_description
+		$is_valid_user_role_description = GUMP::is_valid($this->request->post, array('user_role_description' => 'valid_name'));
+		if ( $is_valid_user_role_description !== true ):
+			echo json_encode( array( "error" => "Please enter a valid role description" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+			// user_role_name IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_user_role->select('id')->where('name', '=', $this->request->post['user_role_name'])->first() != NULL ):
+				echo json_encode( array( "error" => "This Role is already exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		
+		$this->model_user_role->name = $this->request->post['user_role_name'];
+		$this->model_user_role->description = $this->request->post['user_role_description'];
+		
+		// SUBMIT
+		if ( $this->model_user_role->save() ):
+			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+		else:
+			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+		endif;
+	}
+
+	public function ajax_removeuserrole() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('user');
+		$this->load->model('user/role');
+		
+		if ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ):
+			$is_available_role = $this->model_user->select('id')->where('role_id', '=', $this->request->post['role_id'])->first();
+
+			if ( $is_available_role == NULL ):
+				if ( $this->model_user_role->find($this->request->post['role_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "error", "message" => "Cannot delete this user role. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+			else:
+				echo json_encode( array( "status" => "error", "message" => "Cannot delete this user role. One or More user has this role" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "error", "message" => "Please select a valid user role" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+	}
+
 }
 
 ?>

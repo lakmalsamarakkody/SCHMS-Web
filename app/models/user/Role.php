@@ -12,7 +12,7 @@ class UserRole_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'user_role';
-	protected $fillable = [ 'id', 'role' ];
+	protected $fillable = [ 'id', 'name', 'description' ];
 }
 
 ?>

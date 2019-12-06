@@ -33,9 +33,9 @@ class User extends Controller {
 
         // APEX CHARTS
         // BAR CHART
-        foreach( $this->model_user_role->select('id', 'role')->orderBy('role')->get() as $key => $element ):
+        foreach( $this->model_user_role->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
-            $data['user']['roles'][$key]['role'] = $element->role;
+            $data['user']['roles'][$key]['role'] = $element->name;
             $data['user']['roles'][$key]['count'] = $this->model_user->select('id')->where('role_id', '=', $element->id)->count();
         endforeach;
 
@@ -67,9 +67,9 @@ class User extends Controller {
         $this->load->model('user');
         $this->load->model('user/role');
 
-        foreach( $this->model_user_role->select('id', 'role')->orderBy('role')->get() as $key => $element ):
+        foreach( $this->model_user_role->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
-            $data['user']['roles'][$key]['name'] = $element->role;
+            $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
 
         // STAFF ID AND NAME
@@ -96,11 +96,11 @@ class User extends Controller {
                     ->join('staff_type', 'staff.type_id', 'staff_type.id')
                     ->join('staff_category', 'staff_type.category_id', 'staff_category.id')
                     ->join('user_role', 'user.role_id', 'user_role.id')
-                    ->select('user_role.role','staff.id', 'staff.initials', 'staff.surname', 'staff.nic', 'staff_category.name', 'staff_type.name', 'staff.gender', 'staff.email', 'staff.phone_home', 'staff.city')
+                    ->select('user_role.name as role_name','staff.id', 'staff.initials', 'staff.surname', 'staff.nic', 'staff_category.name', 'staff_type.name', 'staff.gender', 'staff.email', 'staff.phone_home', 'staff.city')
                     ->where('staff.id', '=', $element->staff_id)->first();
 
                 $data['users'][$key]['id'] = $element->id;
-                $data['users'][$key]['role'] = $staff_data->role;
+                $data['users'][$key]['role'] = $staff_data->role_name;
                 $data['users'][$key]['staff_name'] = $staff_data->initials." ".$staff_data->surname;
                 $data['users'][$key]['nic'] = $staff_data->nic;
                 $data['users'][$key]['gender'] = $staff_data->gender;
@@ -147,9 +147,9 @@ class User extends Controller {
         // RETRIVE USER_ROLE
         $this->load->model('user/role');
 
-        foreach( $this->model_user_role->select('id', 'role')->orderBy('role')->get() as $key => $element ):
+        foreach( $this->model_user_role->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
-            $data['user']['roles'][$key]['name'] = $element->role;
+            $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
 
 		// RENDER VIEW
@@ -250,6 +250,46 @@ class User extends Controller {
             echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
         endif;
 
+    }
+
+    public function permission() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+
+		endif;
+
+        // RETRIVE USER_ROLE
+        $this->load->model('user/role');
+
+        foreach( $this->model_user_role->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->name;
+        endforeach;
+
+		// RENDER VIEW
+        $this->load->view('user/permission', $data);
+        
     }
     
 }
