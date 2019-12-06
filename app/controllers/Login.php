@@ -22,7 +22,7 @@ class Login extends Controller {
 
 			if($validate == true):
 
-				$User = $this->model_user::where('username',$this->request->post['username'])->where('user_type', '=', 'Staff')->first();
+				$User = $this->model_user::where('username',$this->request->post['username'])->where('user_type', '=', 'staff')->first();
 
 				if($User != null):
 
