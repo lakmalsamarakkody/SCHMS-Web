@@ -344,6 +344,35 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_editgrade() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+        $this->load->model('grade');
+
+		// UPDATE
+		try {
+			$this->model_grade->where('id', '=', $this->request->post['id'])->update([
+				'name' => $this->request->post['name']
+			]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit Grade. Please verify that grade is not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+	}
+
 	public function ajax_removegrade() {
 
 		//CHECK LOGIN STATUS

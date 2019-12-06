@@ -87,7 +87,10 @@
                                                 <tr>
                                                     <th class="text-center" scope="row">{{ grade.id }}</th>
                                                     <td>{{ grade.name }}</td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removegrade('{{grade.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeGradeEditModal('{{grade.id}}','{{grade.name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removegrade('{{grade.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -523,6 +526,40 @@
     </div>
     <!-- END : MODAL : ADD GRADE -->
 
+    <!-- START : MODAL : EDIT GRADE -->
+    <div class="modal fade" id="modal_editgrade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT GRADE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Grade Name</label>
+                                <input type="number" class="form-control" id="modal-edit-grade-name" maxlength="2"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editgrade();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT GRADE -->
+
     <!-- START : MODAL : ADD RELIGION -->
     <div class="modal fade" id="modal_addreligion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -842,38 +879,37 @@
         // START : EDIT CLASS
         editclass = () => {
 
-        // PAYLOAD
-        var formData = new FormData;
-        formData.append('id', $("#modal-edit-class-id").val())
-        formData.append('name', $("#modal-edit-class-name").val())
-        formData.append('grade', $("#modal-edit-class-grade").val())
-        formData.append('staff', $("#modal-edit-class-staff").val())
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-class-id").val())
+            formData.append('name', $("#modal-edit-class-name").val())
+            formData.append('grade', $("#modal-edit-class-grade").val())
+            formData.append('staff', $("#modal-edit-class-staff").val())
 
-        // REQUEST
-        $.ajax({
-            url: "{{ app.url }}/school/ajax_editclass",
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: (res) => {
-                
-                if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Class Edited successfully ... ").set('onok', function() {
-                        location.reload();
-                    })
-                } else {
-                    console.log(res);
-                    alertify.alert("Failed", res.message);
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editclass",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Class Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
                 }
-            },
-            error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
-                console.log(e.responseText)
-            }
-        })
-
+            })
         }
         // END : EDIT CLASS
 
@@ -947,6 +983,48 @@
             })
         }
         // END : ADD A GRADE
+
+        // INVOKE EDIT MODAL
+        invokeGradeEditModal = (id, name) => {
+            $("#modal-edit-grade-id").val(id)
+            $("#modal-edit-grade-name").val(name)
+            $("#modal_editgrade").modal("show")
+        }
+
+        // START : EDIT GRADE
+        editgrade = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-grade-id").val())
+            formData.append('name', $("#modal-edit-grade-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editgrade",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Grade Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT CLASS
 
         // START : REMOVE GRADE
         removegrade = (grade_id) => {
