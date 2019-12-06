@@ -1243,14 +1243,14 @@ DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_role` (
   `id` int(2) NOT NULL AUTO_INCREMENT,
-  `role` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `role` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `role` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1303,4 +1303,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-06  4:25:01
+-- Dump completed on 2019-12-06  6:49:11
