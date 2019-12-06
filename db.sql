@@ -32,7 +32,7 @@ CREATE TABLE `backup` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `backup` (
 
 LOCK TABLES `backup` WRITE;
 /*!40000 ALTER TABLE `backup` DISABLE KEYS */;
-INSERT INTO `backup` VALUES (2,'DB_20191202_035747.sql','Initial','2019-12-02 03:57:47',76,'2019-12-02 03:57:47','2019-12-02 03:57:47',NULL);
+INSERT INTO `backup` VALUES (2,'DB_20191202_035747.sql','Initial','2019-12-02 03:57:47',76,'2019-12-02 03:57:47','2019-12-02 03:57:47',NULL),(3,'DB_20191206_065101.sql','After Permission View UI implementation','2019-12-06 06:51:01',76,'2019-12-06 06:51:01','2019-12-06 06:51:01',NULL);
 /*!40000 ALTER TABLE `backup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1181,7 +1181,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(7) NOT NULL AUTO_INCREMENT,
   `ref_id` int(6) DEFAULT NULL,
-  `user_type` enum('Staff','Student','Parent','') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_type` enum('staff','student','parent','') COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `theme` enum('Default','Dark') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Default',
@@ -1203,7 +1203,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,1,'Staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-10-08 00:00:00',NULL);
+INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-10-08 00:00:00',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1303,4 +1303,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-06  6:49:11
+-- Dump completed on 2019-12-06 14:32:40
