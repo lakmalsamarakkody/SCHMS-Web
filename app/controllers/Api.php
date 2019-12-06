@@ -137,6 +137,7 @@ class Api extends Controller {
             $province = $this->model_province::find($district->province_id);
             $religion = $this->model_religion::find($student->religion_id);
 
+            // DATA
             $data = array(
                 'id'        => $student->id,
                 'admission' => array(
@@ -168,6 +169,55 @@ class Api extends Controller {
             exit();
 
         elseif ( $this->request->post['type'] === 'staff' ):
+
+            // MODEL
+            $this->load->model('staff');
+            $this->load->model('staff/type');
+            $this->load->model('district');
+            $this->load->model('province');
+            $this->load->model('religion');
+
+            // QUERY
+            $staff = $this->model_staff::find($this->request->post['id']);
+            $type = $this->model_staff_type::find($staff->type_id);
+            $district = $this->model_district::find($staff->district_id);
+            $province = $this->model_province::find($district->province_id);
+            $religion = $this->model_religion::find($staff->religion_id);
+
+            // DATA
+            $data = array(
+                'id'        => $staff->id,
+                'nic'       => $staff->nic,
+                'dob'       => $staff->dob,
+                'gender'    => $staff->gender,
+                'email'     => $staff->email,
+                'type'      => $type->name,
+                'religion'  => $religion->name,
+                'emp_no'    => $staff->employee_number,
+                'name'      => array(
+                    'initials'  => $staff->initials,
+                    'surname'   => $staff->surname,
+                    'full'      => $staff->full_name
+                ),
+                'admission' => array(
+                    'date'  => $staff->admission_date
+                ),
+                'phone'     => array(
+                    'home'      => $staff->phone_home,
+                    'mobile'    => $staff->phone_mobile
+                ),
+                'address'   => array(
+                    'address'   => $staff->address,
+                    'city'      => $staff->city,
+                    'district'  => $district->name,
+                    'province'  => $province->name
+                )
+            );
+
+            // JSON
+            echo json_encode(array("status" => "success", "data" => $data), JSON_PRETTY_PRINT);
+            exit();
+
         else:
             echo json_encode(array("status" => "failed", "error" => array("message" => "invalid user type")), JSON_PRETTY_PRINT);
             exit();
