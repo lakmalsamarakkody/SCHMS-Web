@@ -24,8 +24,7 @@ class Exam extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
 		// RENDER VIEW
-        $this->load->view('exam/index', $data);
-        
+        $this->load->view('exam/index', $data);        
     }
 
     public function search() {

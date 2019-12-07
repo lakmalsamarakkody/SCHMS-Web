@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+use Illuminate\Database\Capsule\Manager as DB;
+
 class Timetable extends Controller {
     public function index() {
 
@@ -20,9 +23,176 @@ class Timetable extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('class');
+        $this->load->model('class/timetable');
+        $this->load->model('subject');
+        $this->load->model('staff');
+        $this->load->model('staff/attendance');
+
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+        $day_now = Carbon::now()->isoFormat('dddd');
+        $time_now = Carbon::now()->format('H:i');
+
+        // SETTING DAY
+        switch ($day_now) {
+            case "Monday":
+                $day_id = 1;
+                break;
+            case "Tuesday":
+                $day_id = 2;
+                break;
+            case "Wednesday":
+                $day_id = 3;
+                break;
+            case "Thursday":
+                $day_id = 4;
+                break;
+            case "Friday":
+                $day_id = 5;
+                break;
+            default:
+                $day_id = "OFF DAY";
+                break;
+        }
+
+        // $day_now = "Monday";
+        // $time_now = "12:55";
+
+        // CURRENT SCHEDULE
+        foreach( $this->model_class->select('id')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
+
+            // SETTING PERIOD
+            $period_id = 0;
+
+            if( $time_now >= "12:50" AND $time_now <= "13:30" ):
+                $period_id = 8;
+            elseif( $time_now >= "12:10" AND $time_now < "12:50" ):
+                $period_id = 7;
+            elseif( $time_now >= "11:30" AND $time_now < "12:10" ):
+                $period_id = 6;
+            elseif( $time_now >= "10:50" AND $time_now < "11:30" ):
+                $period_id = 5;
+            elseif( $time_now >= "10:30" AND $time_now < "10:50" ):
+                $period_id = "INTERVAL";
+            elseif( $time_now >= "09:50" AND $time_now < "10:30" ):
+                $period_id = 4;
+            elseif( $time_now >= "09:10" AND $time_now < "09:50" ):
+                $period_id = 3;
+            elseif( $time_now >= "08:30" AND $time_now < "09:10" ):
+                $period_id = 2;
+            elseif( $time_now >= "07:30" AND $time_now < "08:30" ):
+                $period_id = 1;
+            else:
+                $period_id = "OFF TIME";
+            endif;        
+
+            $data['ongoing_day'] = $day_id;
+            $data['ongoing_period'] = $period_id;
+
+            // QUERY CLASS DATA
+            $class_data = DB::table('class')->join('grade', 'class.grade_id', 'grade.id')->where('class.id', '=', $element->id)->select('class.name as cn', 'grade.name as gn')->first();
+            $timetable_data = $this->model_class_timetable->select('subject_id', 'staff_id')->where('class_id', '=', $element->id)->where('day', '=', $day_id)->where('period', '=', $period_id)->first();
+            
+            $data['ongoing'][$key]['class']['name'] = $class_data->gn . " - " . $class_data->cn;
+
+            // QUERY SUBJECT DATA
+            if( isset($timetable_data->subject_id) ):
+                $subject_data = $this->model_subject->select('name')->where('id', '=', $timetable_data->subject_id)->first();
+                $data['ongoing'][$key]['subject']['name'] = $subject_data->name;
+            else:
+                $data['ongoing'][$key]['subject']['name'] = "";
+            endif;
+
+            // QUERY STAFF DATA
+            if( isset($timetable_data->staff_id) ):
+                $staff_data = $this->model_staff->select('initials', 'surname')->where('id', '=', $timetable_data->staff_id)->first();
+                $data['ongoing'][$key]['staff']['name'] = $staff_data->initials." ". $staff_data->surname;
+            else:
+                $data['ongoing'][$key]['staff']['name'] = "";
+            endif;
+
+            // QUERY STAFF ATTENDANCE
+            if( isset($timetable_data->staff_id) ):
+                if ( $this->model_staff_attendance->select('id')->where('staff_id', '=', $timetable_data->staff_id)->where('date', '=', $date_now)->first() !== NULL ):
+                    $data['ongoing'][$key]['staff']['status'] = "Present";
+                else:
+                    $data['ongoing'][$key]['staff']['status'] = "Absent";
+                endif;
+            else:
+                $data['ongoing'][$key]['staff']['status'] = "";
+            endif;
+            
+        endforeach;
+
+        // UPCOMING SCHEDULE
+        foreach( $this->model_class->select('id')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
+
+            // SETTING PERIOD
+            $period_id = 0;
+
+            if( $time_now >= "12:50" AND $time_now <= "23:59" ):
+                $period_id = "OFF TIME";
+            elseif( $time_now >= "12:10" AND $time_now < "12:50" ):
+                $period_id = 8;
+            elseif( $time_now >= "11:30" AND $time_now < "12:10" ):
+                $period_id = 7;
+            elseif( $time_now >= "10:50" AND $time_now < "11:30" ):
+                $period_id = 6;
+            elseif( $time_now >= "10:30" AND $time_now < "10:50" ):
+                $period_id = 5;
+            elseif( $time_now >= "09:50" AND $time_now < "10:30" ):
+                $period_id = "INTERVAL";
+            elseif( $time_now >= "09:10" AND $time_now < "09:50" ):
+                $period_id = 4;
+            elseif( $time_now >= "08:30" AND $time_now < "09:10" ):
+                $period_id = 3;
+            elseif( $time_now >= "07:30" AND $time_now < "08:30" ):
+                $period_id = 2;
+            elseif( $time_now < "07:30" AND $time_now >= "00:00" ):
+                $period_id = 1;
+            endif;        
+
+            $data['upcoming_day'] = $day_id;
+            $data['upcoming_period'] = $period_id;
+
+            // QUERY CLASS DATA
+            $class_data = DB::table('class')->join('grade', 'class.grade_id', 'grade.id')->where('class.id', '=', $element->id)->select('class.name as cn', 'grade.name as gn')->first();
+            $timetable_data = $this->model_class_timetable->select('subject_id', 'staff_id')->where('class_id', '=', $element->id)->where('day', '=', $day_id)->where('period', '=', $period_id)->first();
+            
+            $data['upcoming'][$key]['class']['name'] = $class_data->gn . " - " . $class_data->cn;
+
+            // QUERY SUBJECT DATA
+            if( isset($timetable_data->subject_id) ):
+                $subject_data = $this->model_subject->select('name')->where('id', '=', $timetable_data->subject_id)->first();
+                $data['upcoming'][$key]['subject']['name'] = $subject_data->name;
+            else:
+                $data['upcoming'][$key]['subject']['name'] = "";
+            endif;
+
+            // QUERY STAFF DATA
+            if( isset($timetable_data->staff_id) ):
+                $staff_data = $this->model_staff->select('initials', 'surname')->where('id', '=', $timetable_data->staff_id)->first();
+                $data['upcoming'][$key]['staff']['name'] = $staff_data->initials." ". $staff_data->surname;
+            else:
+                $data['upcoming'][$key]['staff']['name'] = "";
+            endif;
+
+            // QUERY STAFF ATTENDANCE
+            if( isset($timetable_data->staff_id) ):
+                if ( $this->model_staff_attendance->select('id')->where('staff_id', '=', $timetable_data->staff_id)->where('date', '=', $date_now)->first() !== NULL ):
+                    $data['upcoming'][$key]['staff']['status'] = "Present";
+                else:
+                    $data['upcoming'][$key]['staff']['status'] = "Absent";
+                endif;
+            else:
+                $data['upcoming'][$key]['staff']['status'] = "";
+            endif;
+            
+        endforeach;
+
 		// RENDER VIEW
-        $this->load->view('timetable/index', $data);
-        
+        $this->load->view('timetable/index', $data);        
     }
     
     public function class_timetable() {

@@ -237,11 +237,52 @@ class School extends Controller {
 		header('Content-Type: application/json');
 
 		// MODEL
-        $this->load->model('class');
+		$this->load->model('class');
+		$this->load->model('staff');
 
+		// VALIDATION : class_name
+        $is_valid_class_name = GUMP::is_valid($this->request->post, array('name' => 'required|alpha_numeric|max_len,2'));
+        if ( $is_valid_class_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please enter a class name" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+		
+		// VALIDATION : grade_id
+        $is_valid_grade_id = GUMP::is_valid($this->request->post, array('grade' => 'required|numeric|max_len,2'));
+        if ( $is_valid_grade_id !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a Grade" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// VALIDATION : staff_id
+        $is_valid_staff_id = GUMP::is_valid($this->request->post, array('staff' => 'numeric|max_len,6'));
+        if ( $is_valid_staff_id !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a valid Employee ID" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// VALIDATE CLASS AND GRADE
+		$is_exist = $this->model_class->select('id')->where('name', '=', $this->request->post['name'])->where('grade_id', '=', $this->request->post['grade'])->first() != NULL;
+
+		if( $is_exist != FALSE ):
+			echo json_encode( array( "status" => "failed", "message" => "This class name and grade combination exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// CHECK EMPLOYEE ID 
+		if ( GUMP::is_valid($this->request->post, array('staff' => 'required')) === true ):
+
+			// EMPLOYEE ID IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_staff->select('id')->where('id', '=', $this->request->post['staff'])->first() == NULL ):
+				echo json_encode( array( "status" => "failed", "message" => "Please enter a valid Employee ID" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+
+		endif;
+		
 		// UPDATE
 		if ( $this->request->post['staff'] == "" ):
-			$this->request->post['staff'] == NULL;
+			$this->request->post['staff'] = NULL;
 		endif;
 
 		try {
@@ -356,13 +397,24 @@ class School extends Controller {
 		header('Content-Type: application/json');
 
 		// MODEL
-        $this->load->model('grade');
+		$this->load->model('grade');
+		
+		// VALIDATION : grade_name
+        $is_valid_grade_name = GUMP::is_valid($this->request->post, array('name' => 'required|numeric|max_len,2'));
+        if ( $is_valid_grade_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a grade number" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// ADMISSION NUMBER IS ENTERED : CHECK FOR DUPLICATE
+		if ( $this->model_grade->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This grade already exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
 
 		// UPDATE
 		try {
-			$this->model_grade->where('id', '=', $this->request->post['id'])->update([
-				'name' => $this->request->post['name']
-			]);
+			$this->model_grade->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
 			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
 			exit();
 
