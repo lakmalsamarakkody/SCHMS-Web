@@ -52,9 +52,10 @@ class Exam extends Controller {
             $data['exam']['upcoming']['schedules'][$key]['exam']['date'] = $exam_date->isoFormat('MMMM Do dddd');
             $data['exam']['upcoming']['schedules'][$key]['exam']['starttime'] = $exam_starttime->isoFormat('h:mm A');
             $data['exam']['upcoming']['schedules'][$key]['exam']['endtime'] = $exam_endtime->isoFormat('h:mm A');
+            $data['exam']['upcoming']['schedules'][$key]['exam']['venue'] = $element->venue;
         endforeach;
 
-        // UPCOMING EXAMS
+        // RECENT EXAMS
         foreach ( $this->model_exam_schedule->where('date', '<', $date_now)->orderBy('date', 'DESC')->get()->take(10) as $key => $element ):
             $exam_data = DB::table('exam_grade_has_schedule')
             ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')

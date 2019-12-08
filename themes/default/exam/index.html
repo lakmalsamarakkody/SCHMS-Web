@@ -24,7 +24,7 @@
                             <div class="card-body">
                                 {% for exam_schedule in exam.upcoming.schedules %}
                                 <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
-                                <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b> <br/>on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }}</p>
+                                <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b> <br/>Scheduled on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }} @ {{ exam_schedule.exam.venue }}</p>
                                 {% endfor %}
                                 <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-danger">view details</a>
                             </div>
@@ -41,7 +41,7 @@
                             <div class="card-body">
                                 {% for exam_schedule in exam.recent.schedules %}
                                 <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
-                                <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b><br/>on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }}</p>
+                                <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b><br/>Held on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }}</p>
                                 {% endfor %}
                                 <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-primary">view details</a>
                             </div>
