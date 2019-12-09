@@ -123,7 +123,10 @@
                                                 <tr>
                                                     <th class="text-center" scope="row">{{ religion.id }}</th>
                                                     <td>{{ religion.name }}</td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removereligion('{{religion.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeReligionEditModal('{{religion.id}}','{{religion.name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removereligion('{{religion.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -455,7 +458,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label for="class">Class Name</label>
-                            <input type="text" class="form-control text-capitalize" id="modal-edit-class-name" maxlength="2" value=""/>
+                            <input type="text" class="form-control text-capitalize" id="modal-edit-class-name" maxlength="2"/>
                         </div>
                     </div>
 
@@ -537,7 +540,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <input type="hidden" id="modal-edit-grade-id" value="" />
+                    <input type="hidden" id="modal-edit-grade-id" />
                     <form method="post">
 
                         <div class="col-12">
@@ -593,6 +596,40 @@
         </div>
     </div>
     <!-- END : MODAL : ADD RELIGION -->
+
+    <!-- START : MODAL : EDIT RELIGION -->
+    <div class="modal fade" id="modal_editreligion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT RELIGION</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-religion-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Religion Name</label>
+                                <input type="text" class="form-control" id="modal-edit-religion-name"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editreligion();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT RELIGION -->
 
     <!-- START : MODAL : ADD SUBJECT -->
     <div class="modal fade" id="modal_addsubject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -867,7 +904,7 @@
         }
         // END : ADD A CLASS
 
-        // INVOKE EDIT MODAL
+        // INVOKE CLASS EDIT MODAL
         invokeClassEditModal = (id, name, grade, staff) => {
             $("#modal-edit-class-id").val(id)
             $("#modal-edit-class-name").val(name)
@@ -984,7 +1021,7 @@
         }
         // END : ADD A GRADE
 
-        // INVOKE EDIT MODAL
+        // INVOKE GRADE EDIT MODAL
         invokeGradeEditModal = (id, name) => {
             $("#modal-edit-grade-id").val(id)
             $("#modal-edit-grade-name").val(name)
@@ -1024,7 +1061,7 @@
                 }
             })
         }
-        // END : EDIT CLASS
+        // END : EDIT GRADE
 
         // START : REMOVE GRADE
         removegrade = (grade_id) => {
@@ -1096,6 +1133,48 @@
             })
         }
         // END : ADD A RELIGION
+
+        // INVOKE RELIGION EDIT MODAL
+        invokeReligionEditModal = (id, name) => {
+            $("#modal-edit-religion-id").val(id)
+            $("#modal-edit-religion-name").val(name)
+            $("#modal_editreligion").modal("show")
+        }
+
+        // START : EDIT RELIGION
+        editreligion = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-religion-id").val())
+            formData.append('name', $("#modal-edit-religion-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editreligion",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Religion Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT RELIGION
 
         // START : REMOVE RELIGION
         removereligion = (religion_id) => {

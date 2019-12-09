@@ -240,6 +240,21 @@ class School extends Controller {
 		$this->load->model('class');
 		$this->load->model('staff');
 
+		// VALIDATION : class_id
+        $is_valid_class_id = GUMP::is_valid($this->request->post, array('id' => 'required|alpha_numeric|max_len,3'));
+        if ( $is_valid_class_id !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Invalid class id" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// VALIDATE CLASS ID
+		$is_exist = $this->model_class->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing class doesnot exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
 		// VALIDATION : class_name
         $is_valid_class_name = GUMP::is_valid($this->request->post, array('name' => 'required|alpha_numeric|max_len,2'));
         if ( $is_valid_class_name !== true ):
@@ -261,20 +276,30 @@ class School extends Controller {
             exit();
 		endif;
 
-		// VALIDATE CLASS AND GRADE
-		$is_exist = $this->model_class->select('id')->where('name', '=', $this->request->post['name'])->where('grade_id', '=', $this->request->post['grade'])->first() != NULL;
-
-		if( $is_exist != FALSE ):
-			echo json_encode( array( "status" => "failed", "message" => "This class name and grade combination exists" ), JSON_PRETTY_PRINT );
-			exit();
+		// CHECK ANY CHANGE IN CLASS
+		$is_class_changed = $this->model_class->select('id', 'name', 'grade_id')->where('id', '=', $this->request->post['id'])->first();
+		if ( $is_class_changed->name != $this->request->post['name'] OR $is_class_changed->grade_id != $this->request->post['grade'] ):
+			
+			// VALIDATE CLASS AND GRADE
+			$is_exist = $this->model_class->select('id')->where('name', '=', $this->request->post['name'])->where('grade_id', '=', $this->request->post['grade'])->first();
+			if( $is_exist != NULL ):
+				echo json_encode( array( "status" => "failed", "message" => "This class name and grade combination exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
 		endif;
 
 		// CHECK EMPLOYEE ID 
 		if ( GUMP::is_valid($this->request->post, array('staff' => 'required')) === true ):
 
-			// EMPLOYEE ID IS ENTERED : CHECK FOR DUPLICATE
+			// EMPLOYEE ID IS ENTERED : CHECK FOR VALID STAFF
 			if ( $this->model_staff->select('id')->where('id', '=', $this->request->post['staff'])->first() == NULL ):
 				echo json_encode( array( "status" => "failed", "message" => "Please enter a valid Employee ID" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+
+			// EMPLOYEE ID IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_class->select('id')->where('staff_id', '=', $this->request->post['staff'])->first() != NULL ):
+				echo json_encode( array( "status" => "failed", "message" => "This staff already has a class" ), JSON_PRETTY_PRINT );
 				exit();
 			endif;
 
@@ -398,6 +423,14 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('grade');
+
+		// VALIDATE GRADE ID
+		$is_exist = $this->model_grade->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing grade doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
 		
 		// VALIDATION : grade_name
         $is_valid_grade_name = GUMP::is_valid($this->request->post, array('name' => 'required|numeric|max_len,2'));
@@ -510,6 +543,54 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_editreligion() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('religion');
+
+		// VALIDATE RELIGION ID
+		$is_exist = $this->model_religion->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing religion doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : religion_name
+        $is_valid_religion_name = GUMP::is_valid($this->request->post, array('name' => 'required|valid_name'));
+        if ( $is_valid_religion_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a religion name" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// religion_name ENTERED : CHECK FOR DUPLICATE
+		if ( $this->model_religion->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This religion already exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_religion->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit Religion. Please verify that religion is not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+	}
+
 	public function ajax_removereligion() {
 
 		//CHECK LOGIN STATUS
@@ -608,6 +689,54 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_editsubject() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('subject');
+
+		// VALIDATE subject ID
+		$is_exist = $this->model_subject->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing subject doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : subject_name
+        $is_valid_subject_name = GUMP::is_valid($this->request->post, array('name' => 'required|valid_name'));
+        if ( $is_valid_subject_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a subject name" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// subject_name ENTERED : CHECK FOR DUPLICATE
+		if ( $this->model_subject->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This subject already exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_subject->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit subject. Please verify that subject is not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+	}
+
 	public function ajax_removesubject() {
 
 		//CHECK LOGIN STATUS
@@ -698,6 +827,54 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_editrelation() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('student/relation');
+
+		// VALIDATE relation ID
+		$is_exist = $this->model_student_relation->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing relation doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : relation_name
+        $is_valid_relation_name = GUMP::is_valid($this->request->post, array('name' => 'required'));
+        if ( $is_valid_relation_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a relation name" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// relation_name ENTERED : CHECK FOR DUPLICATE
+		if ( $this->model_student_relation->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This relation already exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_student_relation->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit relation. Please verify that relation is not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+	}
+
 	public function ajax_removerelation() {
 
 		//CHECK LOGIN STATUS
@@ -754,12 +931,20 @@ class School extends Controller {
 		  *    - CRUD
 		  *    - response ( JSON )
 		  */
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
  
 		//  MODEL
 		$this->load->model('exam/type');
 
-		// SET JSON HEADER
-		header('Content-Type: application/json');
+		// VALIDATE exam_type ID
+		$is_exist = $this->model_exam_type->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing exam type doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
 		
 		// VALIDATION : exam_type_name
 		$is_valid_exam_type_name = GUMP::is_valid($this->request->post, array('exam_type_name' => 'required|alpha_space'));
@@ -782,6 +967,46 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
+	}
+
+	public function ajax_editexam_type() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('exam/type');
+		
+		// VALIDATION : exam_type_name
+        $is_valid_exam_type_name = GUMP::is_valid($this->request->post, array('name' => 'required'));
+        if ( $is_valid_exam_type_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a exam type" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// exam_type_name ENTERED : CHECK FOR DUPLICATE
+		if ( $this->model_exam_type->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This exam type already exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_exam_type->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit exam type. Please verify that exam type is not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
 	}
 
 	public function ajax_removeexamtype() {
@@ -870,6 +1095,54 @@ class School extends Controller {
 		endif;
 	}
 
+	public function ajax_editsport() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('sport');
+
+		// VALIDATE sport ID
+		$is_exist = $this->model_sport->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing sport doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : sport_name
+        $is_valid_sport_name = GUMP::is_valid($this->request->post, array('name' => 'required|valid_name'));
+        if ( $is_valid_sport_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a sport name" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// sport_name ENTERED : CHECK FOR DUPLICATE
+		if ( $this->model_sport->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This sport already exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_sport->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit sport. Please verify that sport is not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+	}
+
 	public function ajax_removesport() {
 
 		//CHECK LOGIN STATUS
@@ -954,6 +1227,54 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
+	}
+
+	public function ajax_editstaff_category() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('staff/category');
+
+		// VALIDATE staff_category ID
+		$is_exist = $this->model_staff_category->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing staff category doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : staff_category_name
+        $is_valid_staff_category_name = GUMP::is_valid($this->request->post, array('name' => 'required|valid_name'));
+        if ( $is_valid_staff_category_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a staff category" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// staff_category_name ENTERED : CHECK FOR DUPLICATE
+		if ( $this->model_staff_category->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This staff category already exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_staff_category->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit staff category. Please verify that staff category is not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
 	}
 
 	public function ajax_removestaffcategory() {
@@ -1048,6 +1369,74 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
+	}
+
+	public function ajax_editstaff_type() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('staff');
+		$this->load->model('staff/category');
+		$this->load->model('staff/type');
+
+		// VALIDATE staff_type ID
+		$is_exist = $this->model_staff_type->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing staff type doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// VALIDATION : staff_type_name
+        $is_valid_staff_type_name = GUMP::is_valid($this->request->post, array('name' => 'required|valid_name'));
+        if ( $is_valid_staff_type_name !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please enter a staff type" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// VALIDATION : staff_category_id
+		$is_valid_staff_category_id = GUMP::is_valid($this->request->post, array('category' => 'required|numeric|min_len,1|max_len,3'));
+		if ( $is_valid_staff_category_id !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid category" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// VALIDATE staff_category
+		$is_exist = $this->model_staff_category->select('id')->where('name', '=', $this->request->post['category'])->first();
+
+		if( $is_exist != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This staff category is not valid" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// VALIDATE staff_type AND staff_category
+		$is_exist = $this->model_staff_type->select('id')->where('name', '=', $this->request->post['name'])->where('category_id', '=', $this->request->post['category'])->first();
+
+		if( $is_exist != NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "This staff_type name and grade combination exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		try {
+			$this->model_staff_type->where('id', '=', $this->request->post['id'])->update([
+				'category_id' => $this->request->post['category'],
+				'name' => $this->request->post['name']
+			]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit staff_type. Please verify that details are not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
 	}
 
 	public function ajax_removestafftype() {
