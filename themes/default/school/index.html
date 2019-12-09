@@ -37,7 +37,7 @@
                                                     <th class="text-center" width="1%" scope="col">Grade</th>
                                                     <th class="text-center" width="1%" scope="col">Class</th>
                                                     <th scope="col">Teacher in Charge</th>
-                                                    <th class="text-right" width="25%" scope="col">&nbsp;</th>
+                                                    <th class="text-right" width="1%" scope="col">&nbsp;</th>
                                                 </tr>
                                             </thead>
 
@@ -161,7 +161,10 @@
                                                     <th class="text-center" scope="row">{{ subject.id }}</th>
                                                     <td>{{ subject.name }}</td>
                                                     <td>{{ subject.si_name }}</td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removesubject('{{subject.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeSubjectEditModal('{{subject.id}}','{{subject.name}}', '{{subject.si_name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removesubject('{{subject.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -194,7 +197,10 @@
                                                 <tr>
                                                     <th class="text-center" scope="row"> {{ relationship.id }} </th>
                                                     <td> {{ relationship.name }} </td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removerelation('{{relationship.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeRelationEditModal('{{relationship.id}}','{{relationship.name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removerelation('{{relationship.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -227,7 +233,10 @@
                                                 <tr>
                                                     <th class="text-center" scope="row"> {{ exam_type.id }} </th>
                                                     <td> {{ exam_type.name }} </td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removeexamtype('{{exam_type.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeExamtypeEditModal('{{exam_type.id}}','{{exam_type.name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removeexamtype('{{exam_type.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -260,7 +269,10 @@
                                                 <tr>
                                                     <th class="text-center" scope="row"> {{ sport.id }} </th>
                                                     <td> {{ sport.name }} </td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removesport('{{sport.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeSportEditModal('{{sport.id}}','{{sport.name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removesport('{{sport.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -293,7 +305,10 @@
                                                 <tr>
                                                     <th class="text-center" scope="row"> {{ category.id }} </th>
                                                     <td> {{ category.name }} </td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removestaffcategory('{{category.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeStaffCategoryEditModal('{{category.id}}','{{category.name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removestaffcategory('{{category.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -328,7 +343,10 @@
                                                     <th class="text-center" scope="row"> {{ type.id }} </th>
                                                     <td> {{ type.category_name }} </td>
                                                     <td> {{ type.name }} </td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removestafftype('{{type.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeStaffTypeEditModal('{{type.id}}','{{type.category_id}}','{{type.name}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removestafftype('{{type.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -363,7 +381,10 @@
                                                     <th class="text-center" scope="row"> {{ role.id }} </th>
                                                     <td> {{ role.name }} </td>
                                                     <td> {{ role.description }} </td>
-                                                    <td class="text-right"><button class="btn btn-sm btn-danger" onclick="removeuserrole('{{role.id}}')"><i class="la la-trash"></i></button></td>
+                                                    <td class="text-right">
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeUserRoleEditModal('{{role.id}}','{{role.name}}','{{role.description}}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removeuserrole('{{role.id}}')"><i class="la la-trash"></i></button>
+                                                    </td>
                                                 </tr>
                                                 {% endfor %} 
                                             </tbody>                                        
@@ -672,13 +693,54 @@
     </div>
     <!-- END : MODAL : ADD SUBJECT -->
 
-    <!-- START : MODAL : ADD RELATIONSHIP -->
+    <!-- START : MODAL : EDIT SUBJECT -->
+    <div class="modal fade" id="modal_editsubject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT SUBJECT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-subject-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Subject Name</label>
+                                <input type="text" class="form-control" id="modal-edit-subject-name"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Subject Sinhala Name</label>
+                                <input type="text" class="form-control" id="modal-edit-subject-si_name"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editsubject();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT SUBJECT -->
+
+    <!-- START : MODAL : ADD RELATION -->
     <div class="modal fade" id="modal_addrelation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">ADD A NEW STUDENT RELATIONSHIP</h5>
+                    <h5 class="modal-title">ADD A NEW STUDENT RELATION</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -688,7 +750,7 @@
 
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="relation">Relationship Name</label>
+                                <label for="relation">Relation Name</label>
                                 <input type="text" class="form-control" id="relation"/>
                             </div>
                         </div>
@@ -704,7 +766,41 @@
             </div>
         </div>
     </div>
-    <!-- END : MODAL : ADD SUBJECT -->
+    <!-- END : MODAL : ADD RELATION -->
+
+    <!-- START : MODAL : EDIT RELATION -->
+    <div class="modal fade" id="modal_editrelation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT RELATION</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-relation-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Relation Name</label>
+                                <input type="text" class="form-control" id="modal-edit-relation-name"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editrelation();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT RELATION -->
 
     <!-- START : MODAL CREATE EXAM-TYPE -->
     <div class="modal fade" id="model_addexamtype" tabindex="-1" role="dialog" aria-labelledby="model_addexamtype-title" aria-hidden="true">
@@ -734,6 +830,40 @@
     </div>
     <!-- END : MODAL CREATE EXAM-TYPE -->
 
+    <!-- START : MODAL : EDIT EXAM-TYPE -->
+    <div class="modal fade" id="modal_editexam_type" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT EXAM TYPE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-exam_type-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Exam Type Name</label>
+                                <input type="text" class="form-control" id="modal-edit-exam_type-name"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editexam_type();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT EXAM-TYPE -->
+
     <!-- START : MODAL CREATE SPORT -->
     <div class="modal fade" id="model_addsport" tabindex="-1" role="dialog" aria-labelledby="model_addsport-title" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -762,6 +892,40 @@
     </div>
     <!-- END : MODAL CREATE SPORT -->
 
+    <!-- START : MODAL : EDIT SPORT -->
+    <div class="modal fade" id="modal_editsport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT SPORT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-sport-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Sport Name</label>
+                                <input type="text" class="form-control" id="modal-edit-sport-name"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editsport();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT SPORT -->
+
     <!-- START : MODAL CREATE STAFF CATEGORY -->
     <div class="modal fade" id="model_add_staff_category" tabindex="-1" role="dialog" aria-labelledby="model_add_staff_category-title" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -789,6 +953,40 @@
         </div>
     </div>
     <!-- END : MODAL CREATE STAFF CATEGORY -->
+
+    <!-- START : MODAL : EDIT CATEGORY -->
+    <div class="modal fade" id="modal_editstaff_category" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT STAFF CATEGORY</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-staff_category-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Category Name</label>
+                                <input type="text" class="form-control" id="modal-edit-staff_category-name"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editstaff_category();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT CATEGORY -->
 
     <!-- START : MODAL CREATE STAFF TYPE -->
     <div class="modal fade" id="model_add_staff_type" tabindex="-1" role="dialog" aria-labelledby="model_add_staff_type-title" aria-hidden="true">
@@ -829,6 +1027,51 @@
     </div>
     <!-- END : MODAL CREATE STAFF TYPE -->
 
+    <!-- START : MODAL : EDIT STAFF TYPE -->
+    <div class="modal fade" id="modal_editstaff_type" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT STAFF TYPE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-staff_type-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="category_id"> Staff Category </label>
+                                <select class="form-control" id="modal-edit-staff_type_category-id">
+                                    {% for category in staff.category %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Type Name</label>
+                                <input type="text" class="form-control" id="modal-edit-staff_type-name"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editstaff_type();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT STAFF TYPE -->
+
     <!-- START : MODAL CREATE USER ROLE -->
     <div class="modal fade" id="model_add_user_role" tabindex="-1" role="dialog" aria-labelledby="model_add_user_role-title" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -862,6 +1105,47 @@
         </div>
     </div>
     <!-- END : MODAL CREATE USER ROLE -->
+
+    <!-- START : MODAL : EDIT USER ROLE -->
+    <div class="modal fade" id="modal_edituser_role" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT USER ROLE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-user_role-id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Role Name</label>
+                                <input type="text" class="form-control" id="modal-edit-user_role-name"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Role Description</label>
+                                <input type="text" class="form-control" id="modal-edit-user_role-description"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="edituser_role();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT USER ROLE -->
 
 
     <script>
@@ -1248,6 +1532,50 @@
         }
         // END : ADD A SUBJECT
 
+        // INVOKE SUBJECT EDIT MODAL
+        invokeSubjectEditModal = (id, name, siname) => {
+            $("#modal-edit-subject-id").val(id)
+            $("#modal-edit-subject-name").val(name)
+            $("#modal-edit-subject-si_name").val(siname)
+            $("#modal_editsubject").modal("show")
+        }
+
+        // START : EDIT SUBJECT
+        editsubject = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-subject-id").val())
+            formData.append('name', $("#modal-edit-subject-name").val())
+            formData.append('siname', $("#modal-edit-subject-si_name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editsubject",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Subject Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT SUBJECT
+
         // START : REMOVE SUBJECT
         removesubject = (subject_id) => {
 
@@ -1317,6 +1645,48 @@
             })
         }
         // END : ADD A RELATION
+
+        // INVOKE RELATION EDIT MODAL
+        invokeRelationEditModal = (id, name) => {
+            $("#modal-edit-relation-id").val(id)
+            $("#modal-edit-relation-name").val(name)
+            $("#modal_editrelation").modal("show")
+        }
+
+        // START : EDIT RELATION
+        editrelation = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-relation-id").val())
+            formData.append('name', $("#modal-edit-relation-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editrelation",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Relation Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT RELATION
 
         // START : REMOVE RELATION
         removerelation = (relation_id) => {
@@ -1388,6 +1758,48 @@
         }
         // END : ADD A EXAM_TYPE
 
+        // INVOKE EXAM_TYPE EDIT MODAL
+        invokeExamtypeEditModal = (id, name) => {
+            $("#modal-edit-exam_type-id").val(id)
+            $("#modal-edit-exam_type-name").val(name)
+            $("#modal_editexam_type").modal("show")
+        }
+
+        // START : EDIT EXAM TYPE
+        editexam_type = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-exam_type-id").val())
+            formData.append('name', $("#modal-edit-exam_type-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editexam_type",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Exam Type Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT EXAM TYPE
+
         // START : REMOVE EXAM_TYPE
         removeexamtype = (examtype_id) => {
 
@@ -1458,6 +1870,48 @@
         }
         // END : ADD A SPORT
 
+        // INVOKE SPORT EDIT MODAL
+        invokeSportEditModal = (id, name) => {
+            $("#modal-edit-sport-id").val(id)
+            $("#modal-edit-sport-name").val(name)
+            $("#modal_editsport").modal("show")
+        }
+
+        // START : EDIT SPORT
+        editsport = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-sport-id").val())
+            formData.append('name', $("#modal-edit-sport-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editsport",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Sport Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT SPORT
+
         // START : REMOVE SPORT
         removesport = (sport_id) => {
 
@@ -1527,6 +1981,48 @@
             })
         }
         // END : ADD A STAFF CATEGORY
+
+        // INVOKE STAFF CATEGORY EDIT MODAL
+        invokeStaffCategoryEditModal = (id, name) => {
+            $("#modal-edit-staff_category-id").val(id)
+            $("#modal-edit-staff_category-name").val(name)
+            $("#modal_editstaff_category").modal("show")
+        }
+
+        // START : EDIT STAFF CATEGORY
+        editstaff_category = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-staff_category-id").val())
+            formData.append('name', $("#modal-edit-staff_category-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editstaff_category",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Category Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT STAFF CATEGORY
 
         // START : REMOVE STAFF CATEGORY
         removestaffcategory = (category_id) => {
@@ -1599,6 +2095,51 @@
         }
         // END : ADD A STAFF TYPE
 
+        // INVOKE STAFF TYPE EDIT MODAL
+        invokeStaffTypeEditModal = (id, category, name) => {
+            console.log(category)
+            $("#modal-edit-staff_type-id").val(id)
+            $("#modal-edit-staff_type_category-id").val(category)
+            $("#modal-edit-staff_type-name").val(name)
+            $("#modal_editstaff_type").modal("show")
+        }
+
+        // START : EDIT STAFF TYPE
+        editstaff_type = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-staff_type-id").val())
+            formData.append('category', $("#modal-edit-staff_type_category-id").val())
+            formData.append('name', $("#modal-edit-staff_type-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editstaff_type",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Type Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT STAFF TYPE
+
         // START : REMOVE STAFF TYPE
         removestafftype = (type_id) => {
 
@@ -1669,6 +2210,50 @@
             })
         }
         // END : ADD A USER ROLE
+
+        // INVOKE USER ROLE EDIT MODAL
+        invokeUserRoleEditModal = (id, name, description) => {
+            $("#modal-edit-user_role-id").val(id)
+            $("#modal-edit-user_role-name").val(name)
+             $("#modal-edit-user_role-description").val(description)
+            $("#modal_edituser_role").modal("show")
+        }
+
+        // START : EDIT USER ROLE
+        edituser_role = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-user_role-id").val())
+            formData.append('name', $("#modal-edit-user_role-name").val())
+            formData.append('description', $("#modal-edit-user_role-description").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_edituser_role",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "User Role Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT STAFF CATEGORY
 
         // START : REMOVE STAFF TYPE
         removeuserrole = (role_id) => {

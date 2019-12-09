@@ -110,7 +110,7 @@ class School extends Controller {
 		endforeach;
 
 		// STAFF TYPE
-		foreach( $this->model_staff_type->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+		foreach( $this->model_staff_type->select('id','category_id', 'name')->orderBy('id')->get() as $key => $element ):
 
 			$category_data = DB::table('staff_type')
 				->join('staff_category', 'staff_type.category_id', 'staff_category.id')
@@ -119,6 +119,7 @@ class School extends Controller {
 
 			$data['staff']['type'][$key]['id'] = $element->id;
 			$data['staff']['type'][$key]['name']= $element->name;
+			$data['staff']['type'][$key]['category_id']= $element->category_id;
 			$data['staff']['type'][$key]['category_name']= $category_data->category_name;
 		endforeach;
 
@@ -718,15 +719,22 @@ class School extends Controller {
             exit();
 		endif;
 
-		// subject_name ENTERED : CHECK FOR DUPLICATE
-		if ( $this->model_subject->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
-			echo json_encode( array( "status" => "failed", "message" => "This subject already exists" ), JSON_PRETTY_PRINT );
-			exit();
+		// IS_CHANGED
+		$is_changed_subject = $this->model_subject->select('id', 'name', 'si_name')->where('id', '=', $this->request->post['id'])->first();
+		if ( $is_changed_subject->name !== $this->request->post['name'] ):
+			// subject_name ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_subject->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+				echo json_encode( array( "status" => "failed", "message" => "This subject already exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
 		endif;
 
 		// UPDATE
 		try {
-			$this->model_subject->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]);
+			$this->model_subject->where('id', '=', $this->request->post['id'])->update([
+				'name' => $this->request->post['name'],
+				'si_name' => $this->request->post['siname']
+			]);
 			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
 			exit();
 
@@ -1421,7 +1429,7 @@ class School extends Controller {
 		$is_exist = $this->model_staff_type->select('id')->where('name', '=', $this->request->post['name'])->where('category_id', '=', $this->request->post['category'])->first();
 
 		if( $is_exist != NULL ):
-			echo json_encode( array( "status" => "failed", "message" => "This staff_type name and grade combination exists" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "status" => "failed", "message" => "This staff type name and grade combination exists" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
 
@@ -1434,7 +1442,7 @@ class School extends Controller {
 			exit();
 		} catch (\Illuminate\Database\QueryException $e) {
 			// var_dump( $e->errorInfo );
-			echo json_encode( array( "status" => "failed", "message" => "Unable to edit staff_type. Please verify that details are not duplicating" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit staff type. Please verify that details are not duplicating" ), JSON_PRETTY_PRINT );
 			exit();
 		}
 	}
@@ -1533,6 +1541,85 @@ class School extends Controller {
 		else:
 			echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
 		endif;
+	}
+
+	public function ajax_edituser_role() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- user_role_name description
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+		//  MODEL
+		$this->load->model('user');
+		$this->load->model('user/role');
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// VALIDATE staff_type ID
+		$is_exist = $this->model_user_role->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing User role doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+		// VALIDATION : user_role_name
+		$is_valid_user_role_name = GUMP::is_valid($this->request->post, array('name' => 'required|valid_name|min_len,1'));
+		if ( $is_valid_user_role_name !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid role name" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// VALIDATION : user_role_description
+		$is_valid_user_role_description = GUMP::is_valid($this->request->post, array('description' => 'valid_name'));
+		if ( $is_valid_user_role_description !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please enter a valid role description" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+		
+		// NAME CHANGED CHECK
+		$is_changed = $this->model_user_role->where('id', '=', $this->request->post['id'])->first();
+		if ( $is_changed->name != $this->request->post['name'] ):
+			// user_role_name IS ENTERED : CHECK FOR DUPLICATE
+			if ( $this->model_user_role->select('id')->where('name', '=', $this->request->post['name'])->first() != NULL ):
+				echo json_encode( array( "status" => "failed", "message" => "This Role is already exists" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		endif;
+
+		if ( $this->request->post['description'] == "" ):
+			$this->request->post['description'] == NULL;
+		endif;
+		
+		try {
+			$this->model_user_role->where('id', '=', $this->request->post['id'])->update([
+				'name' => $this->request->post['name'],
+				'description' => $this->request->post['description']
+			]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit staff type. Please verify that details are not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
 	}
 
 	public function ajax_removeuserrole() {
