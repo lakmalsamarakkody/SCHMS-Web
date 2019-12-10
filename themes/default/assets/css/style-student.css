@@ -23,3 +23,8 @@
 .stuadd .card{
     margin-bottom: 1rem;
 }
+
+/* student/profile */
+.stuprofile{
+    padding: 4rem;
+}

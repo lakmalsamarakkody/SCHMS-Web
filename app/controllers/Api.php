@@ -74,15 +74,22 @@ class Api extends Controller {
                 // $this->request->post['id']
 
                 // MARK ATTENDANCE
-                $this->model_student_attendance->student_id = $this->request->post['id'];
-                $this->model_student_attendance->date = Carbon::now()->format('Y-m-d');
-                if ( $this->model_student_attendance->save() ):
-                    echo json_encode(array("status" => "success"), JSON_PRETTY_PRINT);
+                try {
+
+                    $this->model_student_attendance->student_id = $this->request->post['id'];
+                    $this->model_student_attendance->date = Carbon::now()->format('Y-m-d');
+                    $this->model_student_attendance->save();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    echo json_encode(array("status" => "failed", "error" => array("message" => "Attendance already marked")), JSON_PRETTY_PRINT);
                     exit();
-                else:
+                } catch (Exception $Error) {
                     echo json_encode(array("status" => "failed", "error" => array("message" => "can't update attendance")), JSON_PRETTY_PRINT);
                     exit();
-                endif;
+                } finally {
+                    echo json_encode(array("status" => "success"), JSON_PRETTY_PRINT);
+                    exit();
+                }
 
             elseif ( $this->request->post['type'] === 'staff' ):
 
@@ -90,15 +97,22 @@ class Api extends Controller {
                 // $this->request->post['id']
 
                 // MARK ATTENDANCE
-                $this->model_staff_attendance->staff_id = $this->request->post['id'];
-                $this->model_staff_attendance->date = Carbon::now()->format('Y-m-d');
-                if ( $this->model_staff_attendance->save() ):
-                    echo json_encode(array("status" => "success"), JSON_PRETTY_PRINT);
+                try {
+
+                    $this->model_staff_attendance->staff_id = $this->request->post['id'];
+                    $this->model_staff_attendance->date = Carbon::now()->format('Y-m-d');
+                    $this->model_staff_attendance->save();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    echo json_encode(array("status" => "failed", "error" => array("message" => "Attendance already marked")), JSON_PRETTY_PRINT);
                     exit();
-                else:
+                } catch (Exception $Error) {
                     echo json_encode(array("status" => "failed", "error" => array("message" => "can't update attendance")), JSON_PRETTY_PRINT);
                     exit();
-                endif;
+                } finally {
+                    echo json_encode(array("status" => "success"), JSON_PRETTY_PRINT);
+                    exit();
+                }
 
             else:
                 echo json_encode(array("status" => "failed", "error" => array("message" => "invalid user type")), JSON_PRETTY_PRINT);
@@ -127,12 +141,16 @@ class Api extends Controller {
 
             // MODEL
             $this->load->model('student');
+            $this->load->model('class');
+            $this->load->model('grade');
             $this->load->model('district');
             $this->load->model('province');
             $this->load->model('religion');
 
             // QUERY
             $student = $this->model_student::find($this->request->post['id']);
+            $class = $this->model_class::find($student->class_id);
+            $grade = $this->model_grade::find($class->grade_id);
             $district = $this->model_district::find($student->district_id);
             $province = $this->model_province::find($district->province_id);
             $religion = $this->model_religion::find($student->religion_id);
@@ -148,6 +166,10 @@ class Api extends Controller {
                     'initials'  => $student->initials,
                     'surname'   => $student->surname,
                     'full'      => $student->full_name,
+                ),
+                'class'     => array(
+                    'name'      => $class->name,
+                    'grade'     => $grade->name
                 ),
                 'dob'       => $student->dob,
                 'gender'    => $student->gender,

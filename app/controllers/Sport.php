@@ -77,7 +77,7 @@ class Sport extends Controller {
         ->count();
 
         // LATEST ACHIEVEMENT
-        $data['sport']['student']['latest']['achievement'] = $this->model_student_sportachievement->select('*')->orderBy('id', 'DESC')->first(1);
+        $data['sport']['student']['latest']['achievement'] = $this->model_student_sportachievement->select('*')->orderBy('achieved_on', 'DESC')->first(1);
 
         // APEX CHARTS
         foreach ( $this->model_student_sport->select('id', 'student_id', 'sport_id')->groupBy('sport_id')->get() as $key => $element ):

@@ -16,43 +16,61 @@
                     <!-- START : ONGOING -->
                     <section class="ongoing">
 
-                        <h4 class="page-title"> Ongoing Schedule </h4>
+                        <h4 class="page-title"> Ongoing Schedule - Period {{ ongoing_period }} </h4>
 
                         <!-- START : ONGOING SCHEDULE -->
                         <div class="ongoing-schedule mt-3">
 
-                            <table class="table table-hover table-responsive-md">
+                            <table class="table table-sm table-hover table-responsive-md">
 
                                 <thead class="thead-dark">
 
+                                    {% if ongoing_period == "INTERVAL" %}
+                                        <tr>
+                                            <th class="text-center" scope="col">I N T E R V A L</th>
+                                        </tr>
+                                    {% elseif ongoing_period == "OFF TIME" %}
                                     <tr>
-                                        <th scope="col">Period</th>
-                                        <th scope="col">Class</th>
-                                        <th scope="col">Subject</th>
-                                        <th scope="col">Staff</th>
-                                        <th scope="col">Staff status</th>
+                                        <th class="text-center" scope="col">O F F - T I M E</th>
                                     </tr>
+                                    {% elseif ongoing_day == "OFF DAY" %}
+                                    <tr>
+                                        <th class="text-center" scope="col">W E E K E N D</th>
+                                    </tr>
+                                    {% else %}
+                                        <tr>
+                                            <th scope="col">Class</th>
+                                            <th scope="col">Subject</th>
+                                            <th scope="col">Staff</th>
+                                            <th scope="col">Staff status</th>
+                                        </tr>
+                                    {% endif %}
 
                                 </thead>
 
                                 <tbody>
-
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>6A</td>
-                                        <td>Maths</td>
-                                        <td>Mr.ABC</td>
-                                        <td>Present</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>6B</td>
-                                        <td>Science</td>
-                                        <td>Mr.BCD</td>
-                                        <td>Absent</td>
-                                    </tr>
-                                
+                                    {% if ongoing_period == "INTERVAL" %}
+                                        <tr>
+                                            <td class="text-center">From 10.30 AM TO 10.50 AM</td>
+                                        </tr>
+                                    {% elseif ongoing_period == "OFF TIME" %}
+                                        <tr>
+                                            <td class="text-center">Available Only Weekdays From 7.30 AM To 1.30 PM</td>
+                                        </tr>
+                                    {% elseif ongoing_day == "OFF DAY" %}
+                                        <tr>
+                                            <td class="text-center">Available Only Weekdays From 7.30 AM To 1.30 PM</td>
+                                        </tr>
+                                    {% else %}
+                                        {% for ongoing in ongoing %}
+                                            <tr>
+                                                <td>{{ ongoing.class.name }}</td>
+                                                <td>{{ ongoing.subject.name }}</td>
+                                                <td>{{ ongoing.staff.name }}</td>
+                                                <td>{{ ongoing.staff.status }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
                                 </tbody>
 
                             </table>
@@ -65,98 +83,66 @@
                     <!-- START : UP-COMING -->
                     <section class="up-coming mt-5">
 
-                        <h4 class="page-title"> Up-Coming Schedule </h4>
+                        <h4 class="page-title"> Up-Coming Schedule - Period {{ upcoming_period }} </h4>
 
                         <!-- START : Up-COMING SCHEDULE -->
                         <div class="upcoming-schedule mt-3">
 
-                            <table class="table table-hover table-responsive-md">
+                            <table class="table table-sm table-hover table-responsive-md">
     
                                 <thead class="thead-dark">
-    
-                                    <tr>
-                                        <th scope="col">Period</th>
-                                        <th scope="col">Class</th>
-                                        <th scope="col">Subject</th>
-                                        <th scope="col">Staff</th>
-                                        <th scope="col">Staff status</th>
-                                    </tr>
-    
+
+                                    {% if upcoming_period == "INTERVAL" %}
+                                        <tr>
+                                            <th class="text-center" scope="col">I N T E R V A L</th>
+                                        </tr>
+                                    {% elseif upcoming_period == "OFF TIME" %}
+                                        <tr>
+                                            <th class="text-center" scope="col">O F F - T I M E</th>
+                                        </tr>
+                                    {% elseif upcoming_day == "OFF DAY" %}
+                                        <tr>
+                                            <th class="text-center" scope="col">W E E K E N D</th>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <th scope="col">Class</th>
+                                            <th scope="col">Subject</th>
+                                            <th scope="col">Staff</th>
+                                            <th scope="col">Staff status</th>
+                                        </tr>
+                                    {% endif %}
                                 </thead>
     
                                 <tbody>
-    
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>6A</td>
-                                        <td>Maths</td>
-                                        <td>Mr.ABC</td>
-                                        <td>Present</td>
-                                    </tr>
-    
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>6A</td>
-                                        <td>Maths</td>
-                                        <td>Mr.ABC</td>
-                                        <td>Present</td>
-                                    </tr>
-                                
+                                    {% if upcoming_period == "INTERVAL" %}
+                                        <tr>
+                                            <td class="text-center">From 10.30 AM TO 10.50 AM</td>
+                                        </tr>
+                                    {% elseif upcoming_period == "OFF TIME" %}
+                                        <tr>
+                                            <td class="text-center">Available Only Weekdays From 7.30 AM To 1.30 PM</td>
+                                        </tr>
+                                    {% elseif upcoming_day == "OFF DAY" %}
+                                        <tr>
+                                            <td class="text-center">Available Only Weekdays From 12.00 AM To 12.00 PM</td>
+                                        </tr>
+                                    {% else %}
+                                        {% for upcoming in upcoming %}
+                                            <tr>
+                                                <td>{{ upcoming.class.name }}</td>
+                                                <td>{{ upcoming.subject.name }}</td>
+                                                <td>{{ upcoming.staff.name }}</td>
+                                                <td>{{ upcoming.staff.status }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
                                 </tbody>
     
                             </table>
     
                         </div>
                         <!-- END : UP-COMING SCHEDULE -->
-
-                    </section>
-
-                    <!-- START : PREVIOUS -->
-                    <section class="previous mt-5">
-
-                        <h4 class="page-title"> Previous Schedule </h4>
-
-                        <!-- START : PREVIOUS SCHEDULE -->
-                        <div class="previous-schedule mt-3">
-
-                            <table class="table table-hover table-responsive-md">
-    
-                                <thead class="thead-dark">
-    
-                                    <tr>
-                                        <th scope="col">Period</th>
-                                        <th scope="col">Class</th>
-                                        <th scope="col">Subject</th>
-                                        <th scope="col">Staff</th>
-                                        <th scope="col">Staff status</th>
-                                    </tr>
-    
-                                </thead>
-    
-                                <tbody>
-    
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>6A</td>
-                                        <td>Maths</td>
-                                        <td>Mr.ABC</td>
-                                        <td>Present</td>
-                                    </tr>
-    
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>6A</td>
-                                        <td>Maths</td>
-                                        <td>Mr.ABC</td>
-                                        <td>Present</td>
-                                    </tr>
-                                
-                                </tbody>
-    
-                            </table>
-    
-                        </div>
-                        <!-- END : PREVIOUS SCHEDULE -->
 
                     </section>
 
