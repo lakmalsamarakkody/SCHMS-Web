@@ -598,6 +598,14 @@ class Health extends Controller {
 			echo json_encode( array( "status" => "failed", "message" => "Please select a valid health record" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
-	}
+    }
+
+
+
+    public function ajax_update() {
+
+        var_dump( $this->request->post['height'] );
+
+    }
 }
 ?>
