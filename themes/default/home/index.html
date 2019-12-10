@@ -294,7 +294,21 @@
         chart: {
             height: 400,
             type: 'bar',
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 1500,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            }
         },
+        
         plotOptions: {
             bar: {
                 horizontal: false,
@@ -318,6 +332,19 @@
         chart: {
             height: 400,
             type: 'bar',
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 1500,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            }
         },
         plotOptions: {
             bar: {

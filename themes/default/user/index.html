@@ -96,6 +96,19 @@
         chart: {
             height: 500,
             type: 'bar',
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 1500,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            }
         },
         plotOptions: {
             bar: {
@@ -120,6 +133,19 @@
         chart: {
             width: 650,
             type: 'pie',
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 1500,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            }
         },
         title: {
             text: 'User Percentage by role'
