@@ -224,13 +224,13 @@
                                                     {% endif %}
                                                 </select>
                                             </td>
-                                            <td><input type="text" class="form-control" id="speciality" value="{{ student.hr }}"/></td>
-                                            <td><input type="text" class="form-control" id="vaccination" value="{{ student.hr }}"/></td>
-                                            <td><input type="text" class="form-control" id="height" value="{{ student.hr }}" maxlength="3" /></td>
-                                            <td><input type="text" class="form-control" id="weight" value="{{ student.hr }}" maxlength="3" /></td>
-                                            <td><input type="text" class="form-control" id="heart_rate" value="{{ student.hr }}" maxlength="3"/></td>
-                                            <td><input type="text" class="form-control" id="blood_pressure" value="{{ student.hr }}" maxlength="3"/></td>
-                                            <td><input type="date" class="form-control" id="date" value="{{ student.date }}"/></td>
+                                            <td><input id="inpt-speciality" data-name="speciality" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}"/></td>
+                                            <td><input id="inpt-vaccination" data-name="vaccination" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}"/></td>
+                                            <td><input id="inpt-height" data-name="height" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3" /></td>
+                                            <td><input id="inpt-weight" data-name="weight" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3" /></td>
+                                            <td><input id="inpt-heart_rate" data-name="heart_rate" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3"/></td>
+                                            <td><input id="inpt-blood_pressure" data-name="blood_pressure" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3"/></td>
+                                            <td><input id="inpt-date" data-name="date" data-stuid="{{ student.id }}" type="date" class="form-control" value="{{ student.date }}"/></td>
                                         </tr>
                                     {% endfor %}   
                                 </tbody>
@@ -275,7 +275,48 @@
                     {
                         text: 'Update Modifications',
                         action: function ( e, dt, node, config ) {
-                            alertify.alert("Success", "Modifications Updated Successfully");
+
+                            // STUDENT
+                            let student = new Object
+                            $("[id^=inpt-]").each((key, el) => {
+                                if ( $(el).data('stuid') in student ) {
+                                    student[$(el).data('stuid')][$(el).data('name')] = $(el).val()
+                                } else {
+                                    student[$(el).data('stuid')] = new Object
+                                    student[$(el).data('stuid')][$(el).data('name')] = $(el).val()
+                                }
+                            })
+
+
+                            $.each(student, (key, element) => {
+
+                                // PAYLOAD
+                                let formData = new FormData
+                                formData.append('id', key)
+                                $.each(element, (k, el) => {
+                                    formData.append(k, el)
+                                })
+
+                                // AJAX
+                                $.ajax({
+                                    url: "{{ app.url }}/health/ajax_update",
+                                    method: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    dataType: 'json',
+                                    success: Response => {
+                                        console.log(Response)
+                                    },
+                                    error: e => {
+                                        console.log(e.responseText)
+                                    }
+                                })
+
+                                // formData.append(key, element)
+                            })
+
+                            // alertify.alert("Success", "Modifications Updated Successfully");
                         }
                     }
                 ]
