@@ -248,6 +248,14 @@ class Health extends Controller {
                 });
             endif;
 
+            // HEIGHT
+            // if ( isset($this->request->post['height_min']) AND !empty($this->request->post['height_min']) ):
+            //     $student->where(function($query) {
+            //         $query->where('height', '>', $this->request->post['height_min']);
+            //     });
+            // endif;
+
+
             // APPEND DATA TO ARRAY
             foreach( $student->get() as $key => $value ):
                 $data['students'][$key]['id'] = $value->id;
