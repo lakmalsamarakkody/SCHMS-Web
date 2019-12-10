@@ -13,7 +13,7 @@
 
                 <div class="healthsearch">
 
-                    <!-- START : SPORT SEARCH -->
+                    <!-- START : HEALTH SEARCH -->
                     <h4 class="page-title"> Search Health Records </h4>
 
                     <div class="card mt-4">
@@ -193,13 +193,13 @@
                         </div>
                         
                     </div>
-                    <!-- END : SPORT SEARCH -->
+                    <!-- END : HEALTH SEARCH -->
 
                     <!-- START : SEARCH RESULTS -->
                     <section class="mt-5">
                         <!-- START : SEARCH RESULT TABLE -->
                         {% if students %}
-                            <table id="table_sport_search_student" class="table table-hover table-responsive-md">
+                            <table id="table_health_search_student" class="table table-hover table-responsive-md">
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
@@ -235,6 +235,7 @@
                                             <td>
                                                 <div class="col-12 text-center p-0 m-0">
                                                         <button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i>View Profile</button>
+                                                        <button class="btn btn-sm btn-warning mt-1" onclick="invokeHealthEditModal('{{ student.id }}','{{ student.name }}','{{ student.height }}','{{ student.weight }}','{{ student.hr }}','{{ student.bp }}','{{ student.bg }}','{{ student.speciality }}','{{ student.vaccination }}','{{ student.date }}')"><i class="la la-edit"></i>Edit</button>
                                                         <button class="btn btn-sm btn-danger" onclick="remove_health('{{ student.health_id }}')"><i class="la la-trash"></i></button>
                                                     </div>
                                                 </div>
@@ -272,31 +273,110 @@
 
     {{ template.footer|raw }}
 
+    <!-- START : MODAL : ADD PARENT -->
+    <div class="modal fade" id="modal_edit_health" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT HEALTH RECORD</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body p-5">
+                    <div class="row pb-5">
+                        <input type="hidden" id="modal-edit-health-id"/>
+
+                        <div class="col-4 mt-3">
+                            <label>Height</label>
+                            <input type="number" class="form-control" maxlength="3" id="modal-edit-health-height"/>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label>Weight</label>
+                            <input type="number" class="form-control" maxlength="3" id="modal-edit-health-weight"/>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label>Blood Group</label>
+                            <select class="form-control selectpicker show-tick" maxlength="3" id="modal-edit-health-blood_group">
+                                <option value="" selected>- Select -</option>
+                                {% for type in blood.types %}
+                                    <option value="{{ type.name }}">{{ type.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label>Heart Rate</label>
+                            <input type="number" class="form-control" maxlength="3" id="modal-edit-health-heart_rate"/>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label>Blood Pressure</label>
+                            <input type="number" class="form-control" maxlength="3" id="modal-edit-health-blood_pressure"/>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label>Date</label>
+                            <input type="date" class="form-control" id="modal-edit-health-date"/>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label>Speciality</label>
+                            <input type="text" class="form-control" id="modal-edit-health-speciality"/>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label>Vaccinations</label>
+                            <input type="text" class="form-control" id="modal-edit-health-vaccination"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="edit_health()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
     <script>
 
         // DATA TABLE
         $(document).ready(function() {
-            $('#table_sport_search_student').DataTable();
+            $('#table_health_search_student').DataTable();
         } );
 
         // INVOKE HEALTH EDIT MODAL
-        invokeSportEditModal = (id, name) => {
-            $("#modal-edit-sport-id").val(id)
-            $("#modal-edit-sport-name").val(name)
-            $("#modal_editsport").modal("show")
+        invokeHealthEditModal = (id, name, height, weight, heart_rate, blood_pressure, blood_group, speciality, vaccination, date) => {
+            $("#modal-edit-health-id").val(id)
+            $("#modal-edit-health-name").val(name)
+            $("#modal-edit-health-height").val(height)
+            $("#modal-edit-health-weight").val(weight)
+            $("#modal-edit-health-heart_rate").val(heart_rate)
+            $("#modal-edit-health-blood_pressure").val(blood_pressure)
+            $("#modal-edit-health-blood_group").val(blood_group)
+            $("#modal-edit-health-speciality").val(speciality)
+            $("#modal-edit-health-vaccination").val(vaccination)
+            $("#modal-edit-health-date").val(date)
+            $("#modal_edit_health").modal("show")
         }
 
-        // START : EDIT SPORT
-        editsport = () => {
+        // START : EDIT HEALTH
+        edit_health = () => {
 
             // PAYLOAD
             var formData = new FormData;
-            formData.append('id', $("#modal-edit-sport-id").val())
-            formData.append('name', $("#modal-edit-sport-name").val())
+            formData.append('id', $("#modal-edit-health-id").val())
+            formData.append('name', $("#modal-edit-health-name").val())
+            formData.append('height', $("#modal-edit-health-height").val())
+            formData.append('weight', $("#modal-edit-health-weight").val())
+            formData.append('heart_rate', $("#modal-edit-health-heart_rate").val())
+            formData.append('blood_pressure', $("#modal-edit-health-blood_pressure").val())
+            formData.append('blood_group', $("#modal-edit-health-blood_group").val())
+            formData.append('speciality', $("#modal-edit-health-speciality").val())
+            formData.append('vaccination', $("#modal-edit-health-vaccination").val())
+            formData.append('date', $("#modal-edit-health-date").val())
 
             // REQUEST
             $.ajax({
-                url: "{{ app.url }}/school/ajax_editsport",
+                url: "{{ app.url }}/health/ajax_edit_health",
                 method: 'POST',
                 data: formData,
                 processData: false,
@@ -305,7 +385,7 @@
                 success: (res) => {
                     
                     if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Sport Edited successfully ... ").set('onok', function() {
+                        alertify.alert("Success", "Health Edited successfully ... ").set('onok', function() {
                             location.reload();
                         })
                     } else {
@@ -319,7 +399,7 @@
                 }
             })
         }
-        // END : EDIT SPORT
+        // END : EDIT HEALTH
 
         // START : REMOVE SPORT
         remove_health = (health_id) => {
@@ -404,4 +484,3 @@
         }
 
     </script>
-</body>
