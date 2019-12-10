@@ -524,6 +524,47 @@ class Health extends Controller {
         $this->load->view('health/add', $data);
     }
 
+    public function ajax_edithealth() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('student/health');
+		
+        if ( isset($this->request->post['health_id']) AND !empty($this->request->post['health_id']) ):
+            $is_valid_health_id = $this->model_student_health->select('id')->where('id', '=', $this->request->post['health_id']);
+
+			if ( $is_valid_health_id->first() !== NULL ):
+				try {
+                    $this->model_student_health->where('id', '=', $this->request->post['id'])->update([
+                        'name' => $this->request->post['name'],
+                        'description' => $this->request->post['description']
+                    ]);
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+        
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to edit details. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+			else:
+				echo json_encode( array( "status" => "failed", "message" => "No record found to edit" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+		else:
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid health record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+	}
+
     public function ajax_removehealth() {
 
 		//CHECK LOGIN STATUS
@@ -546,15 +587,15 @@ class Health extends Controller {
 					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 					exit();
 				else:
-					echo json_encode( array( "status" => "error", "message" => "Cannot delete this health record. Please contact system administrator" ), JSON_PRETTY_PRINT );
+					echo json_encode( array( "status" => "failed", "message" => "Cannot delete this health record. Please contact system administrator" ), JSON_PRETTY_PRINT );
                     exit();
 				endif;
 			else:
-				echo json_encode( array( "status" => "error", "message" => "No record found" ), JSON_PRETTY_PRINT );
+				echo json_encode( array( "status" => "failed", "message" => "No record found" ), JSON_PRETTY_PRINT );
 				exit();
 			endif;
 		else:
-			echo json_encode( array( "status" => "error", "message" => "Please select a valid health record" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid health record" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
 	}

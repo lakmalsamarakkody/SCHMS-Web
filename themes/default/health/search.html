@@ -279,6 +279,48 @@
             $('#table_sport_search_student').DataTable();
         } );
 
+        // INVOKE HEALTH EDIT MODAL
+        invokeSportEditModal = (id, name) => {
+            $("#modal-edit-sport-id").val(id)
+            $("#modal-edit-sport-name").val(name)
+            $("#modal_editsport").modal("show")
+        }
+
+        // START : EDIT SPORT
+        editsport = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-sport-id").val())
+            formData.append('name', $("#modal-edit-sport-name").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/school/ajax_editsport",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Sport Edited successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT SPORT
+
         // START : REMOVE SPORT
         remove_health = (health_id) => {
 
