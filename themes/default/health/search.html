@@ -37,7 +37,7 @@
                                         <div class="form-group">
                                             <label for="student_gender">Gender</label>
                                             <select class="form-control selectpicker show-tick" name="student_gender">
-                                                <option value="" selected>- Select Gender -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% if form.field.student_gender == 'male' %}
                                                     <option value="male" selected>Male</option>
                                                     <option value="female">Female</option>
@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label for="student_class">Class</label>
                                             <select class="form-control selectpicker show-tick" name="student_class">
-                                                <option value="" selected>- Select Class -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for class in student_class %}
                                                     {% if form.field.student_class == class.id %}
                                                         <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
@@ -72,7 +72,7 @@
                                         <div class="form-group">
                                             <label for="student_grade">Grade</label>
                                             <select class="form-control selectpicker show-tick" name="student_grade">
-                                                <option value="" selected>- Select Grade -</option>
+                                                <option value="" selected>- Select -</option>
                                                 {% for grade in student_grade %}
                                                     {% if form.field.student_grade == grade.id %}
                                                         <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
@@ -81,20 +81,6 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="student_speciality">Specialities</label>
-                                            <input type="text" class="form-control" name="student_speciality" value="{{ (form.field.student_speciality) ? form.field.student_speciality }}" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="student_vaccination">Vaccinations</label>
-                                            <input type="text" class="form-control" name="student_vaccination" value="{{ (form.field.student_vaccination) ? form.field.student_vaccination }}" />
                                         </div>
                                     </div>
 
@@ -158,7 +144,43 @@
                                         </div>
                                     </div>
 
-                                   
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_bmi">BMI</label>
+                                            <select class="form-control selectpicker show-tick" name="student_bmi">
+                                                <option value="" selected>- Select -</option>
+                                                {% if form.field.student_bmi == 'below-average' %}
+                                                    <option value="below-average" selected>Below Average</option>
+                                                    <option value="in-average">In Average</option>
+                                                    <option value="above-average">Above Average</option>
+                                                {% elseif form.field.student_bmi == 'in-average' %}
+                                                    <option value="below-average">Below Average</option>
+                                                    <option value="in-average" selected>In Average</option>
+                                                    <option value="above-average">Above Average</option>
+                                                {% elseif form.field.student_bmi == 'above-average' %}
+                                                    <option value="below-average">Below Average</option>
+                                                    <option value="in-average">In Average</option>
+                                                    <option value="above-average" selected>Above Average</option>
+                                                {% else %}
+                                                    <option value="below-average">Below Average</option>
+                                                    <option value="in-average">In Average</option>
+                                                    <option value="above-average">Above Average</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_bmi">Blood Group</label>
+                                            <select class="form-control selectpicker show-tick" name="student_blood_group">
+                                                <option value="" selected>- Select -</option>
+                                                {% for type in blood.types %}
+                                                    <option value="{{ type.name }}" {% if form.field.student_blood_group == type.name %}selected{% endif %}>{{ type.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="col-12 mt-3">
                                         <input type="hidden" name="isSubmitedStudent" value="true"/>
@@ -181,15 +203,16 @@
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th width="1%" class="text-center" scope="col">#</th>
                                         <th width="1%" class="text-center" scope="col">ID</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Speciality</th>
-                                        <th scope="col">Vaccination</th>
                                         <th class="text-center" scope="col">Height <br/> (cm)</th>
                                         <th class="text-center" scope="col">Weight <br/> (kg)</th>
+                                        <th class="text-center" scope="col">BMI <br/> ()</th>
                                         <th class="text-center" scope="col">Heart rate <br/> (bpm)</th>
                                         <th class="text-center" scope="col">Blood Pressure <br/> (mmHg)</th>
+                                        <th class="text-center" scope="col">Blood Group <br/> (+/-)</th>
+                                        <th scope="col">Speciality</th>
+                                        <th scope="col">Vaccination</th>
                                         <th class="text-center" scope="col">Date</th>                                    
                                         <th width="12%" class="text-center" scope="col">&nbsp;</th>
                                     </tr>
@@ -198,21 +221,21 @@
                                 <tbody>
                                     {% for student in students %}
                                         <tr>
-                                            <th class="text-center" scope="row">{{ student.id }}</th>
                                             <td class="text-center">{{ student.admission_no }}</td>
-                                            <td> {{ student.name }}</td>
-                                            <td>Speciality</td>
-                                            <td>Vaccination</td>
-                                            <td class="text-center">Height</td>
-                                            <td class="text-center">Weight</td>
-                                            <td class="text-center">Heart rate</td>
-                                            <td class="text-center">Blood Pressure</td>
-                                            <td class="text-center">Date</td>
+                                            <td>{{ student.name }}</td>
+                                            <td class="text-center">{{ student.height }}</td>
+                                            <td class="text-center">{{ student.weight }}</td>
+                                            <td class="text-center">{{ student.bmi }}</td>
+                                            <td class="text-center">{{ student.hr }}</td>
+                                            <td class="text-center">{{ student.bp }}</td>
+                                            <td class="text-center">{{ student.bg }}</td>
+                                            <td>{{ student.speciality }}</td>
+                                            <td>{{ student.vaccination }}</td>
+                                            <td class="text-center">{{ student.date }}</td>
                                             <td>
                                                 <div class="col-12 text-center p-0 m-0">
-                                                        <button class="btn btn-xs btn-warning">Edit</button>
-                                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                                        <button class="btn btn-xs btn-success mt-1"><i class="la la-user"></i>View Profile</button>
+                                                        <button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i>View Profile</button>
+                                                        <button class="btn btn-sm btn-danger" onclick="remove_health('{{ student.health_id }}')"><i class="la la-trash"></i></button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -255,6 +278,40 @@
         $(document).ready(function() {
             $('#table_sport_search_student').DataTable();
         } );
+
+        // START : REMOVE SPORT
+        remove_health = (health_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('health_id', health_id)
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/health/ajax_removehealth",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "Health Record Deleted successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert("Failed", res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+        }
+        // END : REMOVE SPORT
     
     </script>
 
