@@ -855,6 +855,9 @@ class Student extends Controller {
         $this->load->model('parent');
         $this->load->model('student');
         $this->load->model('student/parent');
+        $this->load->model('student/relation');
+        $this->load->model('user');
+        $this->load->model('user/role');
 
         // CHECK EXISTING STUDENT
         $student = $this->model_student->where('id', '=', $id)->first();
@@ -864,6 +867,7 @@ class Student extends Controller {
             return http_response_code(404);
         }
 
+        // BIO DATA
         $data['student'] = $student;
 
         $class_data = DB::table('student')
@@ -879,17 +883,20 @@ class Student extends Controller {
         $data['religion']['name'] = $class_data->religion;
 
         // PRENT
-        $parents = $this->model_student_parent->select('parent_id')->where('student_id', '=', $id)->get();
-        $parent_information = array();
+        $parents = $this->model_student_parent->select('parent_id','relation_id')->where('student_id', '=', $id)->get();
         if ( $parents !== null ):
-            foreach( $parents as $key => $parent ):
-                $parent = $this->model_parent->find($parent->parent_id);
-                $data['parents'][$key] = array(
-                    'name'      => $parent->initials." ".$parent->surname,
-                    'nic'       => $parent->nic
-                );
-                unset($parent);
+            foreach( $parents as $key => $el ):
+                $data['parents'][$key] = $this->model_parent->find($el->parent_id);
+                $data['parents'][$key]['relation'] = $this->model_student_relation->where('id', '=', $el->relation_id)->first();
+                unset($el);
             endforeach;
+        endif;
+
+        // TOOLS DATA
+        $tools_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $student->id)->where('user_type', '=', "student")->first();
+        if ( $tools_data !== NULL):
+            $data['tools']['user_role'] = $this->model_user_role->where('id', '=', $tools_data->role_id)->first()->name;
+            $data['tools']['theme'] = $tools_data->theme;
         endif;
 
         // RENDER VIEW
