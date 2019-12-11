@@ -851,15 +851,30 @@ class Student extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
         $this->load->model('student');
 
+        // CHECK EXISTING STUDENT
         $student = $this->model_student->where('id', '=', $id)->first();
 
+        // VIEW ERROR IF NO STUDENT EXIST
         if ( $student == null ){
             return http_response_code(404);
         }
 
         $data['student'] = $student;
+
+        $class_data = DB::table('student')
+        ->join('class', 'student.class_id', 'class.id')
+        ->join('grade', 'class.grade_id', 'grade.id')
+        ->join('religion', 'student.religion_id', 'religion.id')
+        ->where('student.id', '=', $student->id)
+        ->select('class.name as class_name', 'grade.name as grade_name', 'religion.name as religion')
+        ->first();
+        $data['grade']['name'] = $class_data->grade_name;
+        $data['class']['letter'] = $class_data->class_name;
+        $data['class']['name'] = $class_data->grade_name . " - " . $class_data->class_name;
+        $data['religion']['name'] = $class_data->religion;
 
         // RENDER VIEW
         $this->load->view('student/profile', $data);

@@ -24,9 +24,10 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="media">
-                                            <img class="mr-4  img-fluid avatar" src="https://pbs.twimg.com/profile_images/915314874212868096/pn-v8Ru7_400x400.jpg">
+                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/themes/{{ app.theme }}/assets/img/profile-pic.jpg">
                                             <div class="media-body align-self-center">
-                                                <h5 class="my-0">Srivin Prabhash Fernando</h5>
+                                                <h5 class="my-0">{{ student.initials }} {{ student.surname }}</h5>
+                                                <h6 class="my-0 text-secondary">Class : {{ class.name }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -59,56 +60,63 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Name with Initials</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="L S P Fernando">
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.initials }} {{ student.surname }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="Srivin Prabhash Fernando">
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.full_name }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Gender</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="Male">
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.gender }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Date of Birth</label>
+                                                                            <input type="date" class="form-control" readonly="readonly" value="{{ student.dob }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Phone</label>
+                                                                            <input type="number" class="form-control" readonly="readonly" value="{{ student.phone_mobile }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Email</label>
+                                                                            <input type="email" class="form-control" readonly="readonly" value="{{ student.email }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="15, Yemen Rd, Yemen">
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.address }}">
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Date of Birth</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="1998 - 03 - 18">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.city }}">
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Religion</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="1998 - 03 - 18">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Phone</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="0763256000">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Email</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="hi@srivin.e">
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ religion.name }}">
                                                                         </div>
                                                                     </div>
 
@@ -124,37 +132,36 @@
                                                             <div class="card-body">
                                                                 
                                                                 <div class="form-row">
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Grade</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="11">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Class</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="A">
-                                                                        </div>
-                                                                    </div>
-                                                                    
+
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission No</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="28437">
+                                                                            <input type="number" class="form-control" readonly="readonly" value="{{ student.admission_no }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission Date</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="2009 - 01 - 09">
+                                                                            <input type="date" class="form-control" readonly="readonly" value="{{ student.admission_date }}">
                                                                         </div>
                                                                     </div>
+                                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Grade</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ grade.name }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Class</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ class.letter }}">
+                                                                        </div>
+                                                                    </div>                                                                    
 
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -238,7 +245,7 @@
 
                                                     <div class="col-md-6">
                                                         <div class="card">
-                                                            <div class="card-header">Parent 1</div>
+                                                            <div class="card-header">Parent 2</div>
                                                             <div class="card-body">
                                                                 
                                                                 <div class="form-row">
