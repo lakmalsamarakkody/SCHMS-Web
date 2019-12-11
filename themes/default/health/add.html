@@ -13,7 +13,7 @@
 
                 <div class="healthadd">
 
-                    <!-- START : SPORT SEARCH -->
+                    <!-- START : HEALTH SEARCH -->
                     <h4 class="page-title"> Add Health Records </h4>
 
                     <div class="card mt-4">
@@ -84,20 +84,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="student_speciality">Specialities</label>
-                                            <input type="text" class="form-control" name="student_speciality" value="{{ (form.field.student_speciality) ? form.field.student_speciality }}" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="student_vaccination">Vaccinations</label>
-                                            <input type="text" class="form-control" name="student_vaccination" value="{{ (form.field.student_vaccination) ? form.field.student_vaccination }}" />
-                                        </div>
-                                    </div>
-
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="student_sport">Sport</label>
@@ -158,7 +144,43 @@
                                         </div>
                                     </div>
 
-                                   
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_bmi">BMI</label>
+                                            <select class="form-control selectpicker show-tick" name="student_bmi">
+                                                <option value="" selected>- Select -</option>
+                                                {% if form.field.student_bmi == 'below-average' %}
+                                                    <option value="below-average" selected>Below Average</option>
+                                                    <option value="in-average">In Average</option>
+                                                    <option value="above-average">Above Average</option>
+                                                {% elseif form.field.student_bmi == 'in-average' %}
+                                                    <option value="below-average">Below Average</option>
+                                                    <option value="in-average" selected>In Average</option>
+                                                    <option value="above-average">Above Average</option>
+                                                {% elseif form.field.student_bmi == 'above-average' %}
+                                                    <option value="below-average">Below Average</option>
+                                                    <option value="in-average">In Average</option>
+                                                    <option value="above-average" selected>Above Average</option>
+                                                {% else %}
+                                                    <option value="below-average">Below Average</option>
+                                                    <option value="in-average">In Average</option>
+                                                    <option value="above-average">Above Average</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="student_bmi">Blood Group</label>
+                                            <select class="form-control selectpicker show-tick" name="student_blood_group">
+                                                <option value="" selected>- Select -</option>
+                                                {% for type in blood.types %}
+                                                    <option value="{{ type.name }}" {% if form.field.student_blood_group == type.name %}selected{% endif %}>{{ type.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="col-12 mt-3">
                                         <input type="hidden" name="isSubmitedStudent" value="true"/>
@@ -171,7 +193,7 @@
                         </div>
                         
                     </div>
-                    <!-- END : SPORT SEARCH -->
+                    <!-- END : HEALTH SEARCH -->
 
                     <!-- START : SEARCH RESULTS -->
                     <section class="mt-5">
@@ -181,16 +203,16 @@
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th width="1%" class="text-center" scope="col">Admission<br/>No</th>
-                                        <th scope="col">Student<br/>Name</th>
-                                        <th width="9%" scope="col">Blood Group</th>
-                                        <th scope="col">Any Specialities<br/>(add to the end)</th>
-                                        <th scope="col">Vaccination<br/>(add to the end)</th>
-                                        <th width="1%" scope="col">Height<br/>(cm)</th>
-                                        <th width="1%" scope="col">Weight<br/>(kg)</th>
-                                        <th width="1%" scope="col">H/R<br/>(bpm)</th>
-                                        <th width="1%" scope="col">B/P<br/>(mmHg)</th>
-                                        <th width="1%" scope="col">Date<br/>(Last Updated)</th>
+                                        <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th class="text-center" scope="col">Height <br/> (cm)</th>
+                                        <th class="text-center" scope="col">Weight <br/> (kg)</th>
+                                        <th class="text-center" scope="col">Heart rate <br/> (bpm)</th>
+                                        <th class="text-center" scope="col">Blood Pressure</th>
+                                        <th class="text-center" scope="col">Blood Group</th>
+                                        <th scope="col">Speciality</th>
+                                        <th scope="col">Vaccination</th>
+                                        <th class="text-center" scope="col">Date</th>
                                     </tr>
                                 </thead>
 
@@ -199,40 +221,23 @@
                                         <tr>
                                             <td class="text-center" scope="row">{{ student.admission_no }}</td>
                                             <td> {{ student.name }}</td>
+                                            <td><input id="inpt-height" data-name="height" data-stuid="{{ student.id }}" type="number" class="form-control" value="{{ student.height }}" maxlength="3" /></td>
+                                            <td><input id="inpt-weight" data-name="weight" data-stuid="{{ student.id }}" type="number" class="form-control" value="{{ student.weight }}" maxlength="3" /></td>
+                                            <td><input id="inpt-heart_rate" data-name="heart_rate" data-stuid="{{ student.id }}" type="number" class="form-control" value="{{ student.hr }}" maxlength="3"/></td>
+                                            <td><input id="inpt-blood_pressure" data-name="blood_pressure" data-stuid="{{ student.id }}" type="number" class="form-control" value="{{ student.bp }}" maxlength="3"/></td>
                                             <td>
-                                                <select name="bg" class="form-control">
-                                                    {% if student.bg %}
-                                                        <option value="{{ student.bg }}" selected>{{ student.bg }}</option>
-                                                        <option value="A+">A+</option>
-                                                        <option value="A-">A-</option>
-                                                        <option value="B+">B+</option>
-                                                        <option value="B-">B-</option>
-                                                        <option value="AB+">AB+</option>
-                                                        <option value="AB-">AB-</option>
-                                                        <option value="O+">O+</option>
-                                                        <option value="O-">O-</option>
-                                                    {% else %}
-                                                        <option value="">- select -</option>
-                                                        <option value="A+">A+</option>
-                                                        <option value="A-">A-</option>
-                                                        <option value="B+">B+</option>
-                                                        <option value="B-">B-</option>
-                                                        <option value="AB+">AB+</option>
-                                                        <option value="AB-">AB-</option>
-                                                        <option value="O+">O+</option>
-                                                        <option value="O-">O-</option>
-                                                    {% endif %}
+                                                <select class="form-control selectpicker show-tick" id="inpt-blood_group" data-name="blood_group" data-stuid="{{ student.id }}">
+                                                    <option value="" selected>- Select -</option>
+                                                    {% for type in blood.types %}
+                                                        <option value="{{ type.name }}" {% if student.bg  == type.name %}selected{% endif %}>{{ type.name }}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </td>
-                                            <td><input id="inpt-speciality" data-name="speciality" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}"/></td>
-                                            <td><input id="inpt-vaccination" data-name="vaccination" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}"/></td>
-                                            <td><input id="inpt-height" data-name="height" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3" /></td>
-                                            <td><input id="inpt-weight" data-name="weight" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3" /></td>
-                                            <td><input id="inpt-heart_rate" data-name="heart_rate" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3"/></td>
-                                            <td><input id="inpt-blood_pressure" data-name="blood_pressure" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.hr }}" maxlength="3"/></td>
+                                            <td><input id="inpt-speciality" data-name="speciality" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.speciality }}"/></td>
+                                            <td><input id="inpt-vaccination" data-name="vaccination" data-stuid="{{ student.id }}" type="text" class="form-control" value="{{ student.vaccination }}"/></td>
                                             <td><input id="inpt-date" data-name="date" data-stuid="{{ student.id }}" type="date" class="form-control" value="{{ student.date }}"/></td>
                                         </tr>
-                                    {% endfor %}   
+                                    {% endfor %}
                                 </tbody>
                             </table>
 
@@ -307,16 +312,23 @@
                                     dataType: 'json',
                                     success: Response => {
                                         console.log(Response)
+                                        if ( Response.status == "failed" ){
+                                            alertify.alert("Error", Response.message)
+                                            return false;
+                                        }
                                     },
                                     error: e => {
                                         console.log(e.responseText)
                                     }
                                 })
-
-                                // formData.append(key, element)
                             })
 
-                            // alertify.alert("Success", "Modifications Updated Successfully");
+                            alertify.alert("Success", "Records Modified Successfully").set({
+                                'closable': false,
+                                'onok': () => {
+                                    location.href="{{ app.url }}/health/add"
+                                }
+                            })
                         }
                     }
                 ]
