@@ -838,7 +838,7 @@ class Student extends Controller {
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );
 			exit();
-		endif;
+        endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -852,7 +852,9 @@ class Student extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODEL
+        $this->load->model('parent');
         $this->load->model('student');
+        $this->load->model('student/parent');
 
         // CHECK EXISTING STUDENT
         $student = $this->model_student->where('id', '=', $id)->first();
@@ -875,6 +877,20 @@ class Student extends Controller {
         $data['class']['letter'] = $class_data->class_name;
         $data['class']['name'] = $class_data->grade_name . " - " . $class_data->class_name;
         $data['religion']['name'] = $class_data->religion;
+
+        // PRENT
+        $parents = $this->model_student_parent->select('parent_id')->where('student_id', '=', $id)->get();
+        $parent_information = array();
+        if ( $parents !== null ):
+            foreach( $parents as $key => $parent ):
+                $parent = $this->model_parent->find($parent->parent_id);
+                $data['parents'][$key] = array(
+                    'name'      => $parent->initials." ".$parent->surname,
+                    'nic'       => $parent->nic
+                );
+                unset($parent);
+            endforeach;
+        endif;
 
         // RENDER VIEW
         $this->load->view('student/profile', $data);
