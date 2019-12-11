@@ -832,7 +832,7 @@ class Student extends Controller {
         endif;
     }
 
-    public function profile() {
+    public function profile($id) {
 
         //CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
@@ -850,6 +850,16 @@ class Student extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        $this->load->model('student');
+
+        $student = $this->model_student->where('id', '=', $id)->first();
+
+        if ( $student == null ){
+            return http_response_code(404);
+        }
+
+        $data['student'] = $student;
 
         // RENDER VIEW
         $this->load->view('student/profile', $data);
