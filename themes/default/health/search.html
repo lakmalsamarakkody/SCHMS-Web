@@ -234,8 +234,8 @@
                                             <td class="text-center">{{ student.date }}</td>
                                             <td>
                                                 <div class="col-12 text-center p-0 m-0">
-                                                        <button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i>View Profile</button>
-                                                        <button class="btn btn-sm btn-warning mt-1" onclick="invokeHealthEditModal('{{ student.id }}','{{ student.name }}','{{ student.height }}','{{ student.weight }}','{{ student.hr }}','{{ student.bp }}','{{ student.bg }}','{{ student.speciality }}','{{ student.vaccination }}','{{ student.date }}')"><i class="la la-edit"></i>Edit</button>
+                                                        <a href="{{ app.url }}/student/profile/{{ student.id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>
+                                                        <button class="btn btn-sm btn-warning mt-1" onclick="invokeHealthEditModal('{{ student.id }}','{{ student.name }}','{{ student.height }}','{{ student.weight }}','{{ student.hr }}','{{ student.bp }}','{{ student.bg }}','{{ student.speciality }}','{{ student.vaccination }}','{{ student.date }}')"><i class="la la-edit"></i></button>
                                                         <button class="btn btn-sm btn-danger" onclick="remove_health('{{ student.health_id }}')"><i class="la la-trash"></i></button>
                                                     </div>
                                                 </div>
