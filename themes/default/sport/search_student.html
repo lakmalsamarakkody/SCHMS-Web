@@ -124,10 +124,10 @@
                                         <th width="1%" class="text-center" scope="col">ID</th>
                                         <th width="1%" class="text-center" scope="col">Admission</th>
                                         <th width="1%" class="text-center" scope="col">Class</th>
-                                        <th width="8%" class="text-center" scope="col">DoB</th>
-                                        <th width="5%" class="text-center" scope="col">Gender</th>
+                                        <th width="1%" class="text-center" scope="col">Index</th>
+                                        <th width="1%" class="text-center" scope="col">Gender</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Sports</th>
+                                        <th scope="col">Sports engaged in</th>
                                         <th width="12%" class="text-center" scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
@@ -137,17 +137,21 @@
                                         <tr>
                                             <th class="text-center" scope="row">{{ student.id }}</th>
                                             <td class="text-center">{{ student.admission_no }}</td>
-                                            <td class="text-center">{{ student.class }}</td>
-                                            <td class="text-center">{{ student.dob }}</td>
+                                            <td class="text-center">{{ student.class.id }}</td>
+                                            <td class="text-center">{{ student.index }}</td>
                                             <td class="text-center">{{ student.gender }}</td>
                                             <td> {{ student.name }}</td>
-                                            <td>sports</td>
+                                            <td>
+                                                {% for student in students.sport %}
+                                                {% endfor %}
+
+                                            </td>
                                             <td>
                                                 <div class="row">
                                                     <div class="col-12 text-center">
+                                                        <a href="{{ app.url }}/student/profile/{{ student.id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>
                                                         <button class="btn btn-xs btn-warning">Edit</button>
                                                         <button class="btn btn-xs btn-danger">Remove</button>
-                                                        <button class="btn btn-xs btn-success mt-1"><i class="la la-user"></i>View Profile</button>
                                                     </div>
                                                 </div>
                                             </td>

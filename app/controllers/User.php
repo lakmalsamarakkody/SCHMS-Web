@@ -72,46 +72,6 @@ class User extends Controller {
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
 
-        // STAFF ID AND NAME
-        foreach( DB::table('user')->join('staff', 'user.staff_id', '=', 'staff.id')->select('staff.id', 'staff.initials', 'staff.surname')->get() as $key => $element ):
-            $data['staffs'][$key]['id'] = $element->id;
-            $data['staffs'][$key]['name'] = $element->initials." ".$element->surname;
-        endforeach;
-
-        if ( isset($this->request->post['isSubmited']) ):
-
-            $user = $this->model_user->select('id', 'staff_id', 'username', 'password', 'email', 'role_id', 'status');
-            
-            // FILTER ( NAME )
-            if ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ):
-                $user->where(function($query) {
-                    $query->where('role_id', '=', $this->request->post['role_id']);
-                });
-            endif;
-
-            foreach ( $user->get() as $key => $element ):
-
-                $staff_data = DB::table('user')
-                    ->join('staff', 'user.staff_id', 'staff.id')
-                    ->join('staff_type', 'staff.type_id', 'staff_type.id')
-                    ->join('staff_category', 'staff_type.category_id', 'staff_category.id')
-                    ->join('user_role', 'user.role_id', 'user_role.id')
-                    ->select('user_role.name as role_name','staff.id', 'staff.initials', 'staff.surname', 'staff.nic', 'staff_category.name', 'staff_type.name', 'staff.gender', 'staff.email', 'staff.phone_home', 'staff.city')
-                    ->where('staff.id', '=', $element->staff_id)->first();
-
-                $data['users'][$key]['id'] = $element->id;
-                $data['users'][$key]['role'] = $staff_data->role_name;
-                $data['users'][$key]['staff_name'] = $staff_data->initials." ".$staff_data->surname;
-                $data['users'][$key]['nic'] = $staff_data->nic;
-                $data['users'][$key]['gender'] = $staff_data->gender;
-                $data['users'][$key]['email'] = $staff_data->email;
-                $data['users'][$key]['phone_home'] = $staff_data->phone_home;
-                $data['users'][$key]['city'] = $staff_data->city;
-                $data['users'][$key]['status'] = $element->status;
-            endforeach;
-
-        endif;
-
 		// RENDER VIEW
         $this->load->view('user/search', $data);
         

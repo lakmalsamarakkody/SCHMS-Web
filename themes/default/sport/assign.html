@@ -137,7 +137,7 @@
                     <section class="mt-5">
                         <!-- START : SEARCH RESULT TABLE -->
                         {% if students %}
-                            <table class="table table-hover table-bordered table-responsive-md">
+                            <table class="table table-hover table-responsive-md">
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
@@ -166,13 +166,14 @@
                                             <td class="text-center">{{ student.city }}</td>
                                             <td> {{ student.name }}</td>                                        
                                             <td class="text-center">
-                                                <select class="form-control selectpicker show-tick" name="sport" multiple>
+                                                <select id="inpt-sports" class="form-control form-control-sm selectpicker show-tick" name="sport">
+                                                    <option value="" selected>- select -</option>
                                                 {% for sport in student_sport %}
                                                     <option value="{{ sport.id }}">{{ sport.name }}</option>
                                                 {% endfor %}
                                                 </select>
                                             </td>
-                                            <td class="text-center"><button type="button" class="btn btn-primary">Save</button></td>
+                                            <td class="text-center"><button onclick="assignSport('{{ student.id }}')" type="button" class="btn btn-sm btn-warning">Save</button></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -207,6 +208,39 @@
     {{ template.footer|raw }}
 
     <script>
+
+        assignSport = (id) => {
+
+            // PAYLOAD
+            let formData = new FormData
+            formData.append('student_id', id)
+            formData.append('sports', $("#inpt-sports").val())
+
+            // AJAX
+            $.ajax({
+                url: '{{ app.url }}/sport/ajax_assign_sport',
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                dataType: 'json',
+                success: (res) => {
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Sports assigned successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    console.log( e.responseText )
+                    alertify.alert("Error", "Something went wrong ... ");
+                }
+            })
+
+            console.log( $("#inpt-sports").val() )
+        }
         
         //  CLEAR FORM
         function clearForm(oForm) {

@@ -115,6 +115,7 @@ class Sport extends Controller {
         $this->load->model('grade');
         $this->load->model('sport');
         $this->load->model('student');
+        $this->load->model('student/class');
         $this->load->model('student/sport');
 
         //STUDENT CLASS
@@ -204,11 +205,18 @@ class Sport extends Controller {
             foreach( $student->get() as $key => $value ):
                 $data['students'][$key]['id'] = $value->id;
                 $data['students'][$key]['admission_no'] = $value->admission_no;
-                $data['students'][$key]['name'] = $value->full_name;
+                $data['students'][$key]['name'] = $value->initials." ". $value->surname;
                 $data['students'][$key]['gender'] = $value->gender;
                 $data['students'][$key]['dob'] = $value->dob;
-                $data['students'][$key]['class'] = $value->class_id;
+                $data['students'][$key]['class']['id'] = $value->class_id;
+                $data['students'][$key]['class']['name'] = $value->class_id;
+                $data['students'][$key]['index'] = $this->model_student_class->select('index_no')->where('student_id', '=', $value->id)->where('class_id', '=', $value->class_id)->first()->index_no;
                 $data['students'][$key]['city'] = $value->city;
+
+                foreach ( $this->model_student_sport->where('student_id', '=', $value->id)->get() as $key2 => $element ):
+                    $data['students'][$key]['sport'][$key2]['id'] = $element->sport_id;
+                    $data['students'][$key]['sport'][$key2]['name'] = $this->model_sport->select('name')->where('id', '=', $element->sport_id)->first()->name;
+                endforeach;
             endforeach;
 
         endif;
@@ -493,7 +501,67 @@ class Sport extends Controller {
 
 		// RENDER VIEW
         $this->load->view('sport/assign', $data);
+    }
+
+    public function ajax_assign_sport() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+
+        // MODEL
+        $this->load->model('student/sport');
+        $this->load->model('student');
+        $this->load->model('sport');
+
+        // VALIDATION : student_id
+        $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric|max_len,6'));
+        if ( $is_valid_student_id !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a valid student" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // IS EXIST : student_id
+        $is_exist_student_id = $this->model_student->where('id', '=', $this->request->post['student_id'])->first();
+        if ( $is_exist_student_id == NULL ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a valid student" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
+        // VALIDATION : sports
+        $is_valid_sports = GUMP::is_valid($this->request->post, array('sports' => 'required'));
+        if ( $is_valid_sports !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please enter a valid sport" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // COMMANS TO ARRAY
+        $sports = explode(",", $this->request->post['sports']);
+
+        foreach( $sports as $key => $element ):
+
+            // IS EXIST : sport
+            $is_exist_sport = $this->model_sport->where('id', '=', $element)->first();
+            if ( $is_exist_sport == NULL ):
+                echo json_encode( array( "status" => "failed", "message" => "Please select a valid sport" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            try{
+                // CREATE STUDENT HAS SPORT RECORD
+                $this->model_student_sport->create([
+                    'student_id' => $this->request->post['student_id'],
+                    'sport_id' => $element
+                ]);
+                echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+            }catch (Exception $e){
+                echo json_encode( array( "status" => "failed" , "message" => "Sport is already assigned" ), JSON_PRETTY_PRINT );
+                exit();
+            }
+
+        endforeach;
     }
 
     public function add_coach() {
