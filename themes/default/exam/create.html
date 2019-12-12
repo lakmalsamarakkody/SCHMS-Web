@@ -321,7 +321,7 @@
     </div>
     <!-- END : MODAL EDIT EXAM-TYPE -->
 
-    <!-- START : MODAL EDIT/REMOVE EXAM -->
+    <!-- START : MODAL EDIT / REMOVE EXAMS -->
     <div class="modal fade" id="edit-exam" tabindex="-1" role="dialog" aria-labelledby="edit-exam-title" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -332,44 +332,112 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form>
-                    <div class="modal-body">
+                <div class="modal-body">
 
-                        <table class="table table-hover table-responsive-md">
+                    <table id="modal-exams" class="table table-hover table-responsive-md">
 
-                            <thead class="thead-dark">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="1%" class="text-center" scope="col">ID</th>
+                                <th width="20%" scope="col">Exam Name</th>
+                                <th width="30%" scope="col">Venue</th>
+                                <th scope="col">Instructions</th>
+                                <th width="15%" class="text-center" scope="col">&nbsp;</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for exam in exams %}
                                 <tr>
-                                    <th width="1%" class="text-center" scope="col">ID</th>
-                                    <th width="20%" scope="col">Exam Name</th>
-                                    <th width="30%" scope="col">Venue</th>
-                                    <th scope="col">Instructions</th>
-                                    <th width="15%" class="text-center" scope="col">&nbsp;</th>
+                                    <th class="text-center" scope="row">{{ exam.id }}</th>
+                                    <td>{{ exam.type.name }} - {{ exam.year }}</td>
+                                    <td>{{ exam.venue }}</td>
+                                    <td>{{ exam.instructions }}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <button class="btn btn-sm btn-warning" onclick="exam.invokeExamEditModal('{{ exam.id }}','{{ exam.type_id }}','{{ exam.year }}','{{ exam.venue }}','{{ exam.instructions }}');"><i class="la la-edit"></i></button>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="exam.remove('{{ exam.id }}');"><i class="la la-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
+                            {% endfor %}
+                        </tbody>
 
-                            <tbody>
-                                {% for exam in exams %}
-                                    <tr>
-                                        <th class="text-center" scope="row">{{ exam.id }}</th>
-                                        <td>{{ exam.type.name }} - {{ exam.year }}</td>
-                                        <td>{{ exam.venue }}</td>
-                                        <td>{{ exam.instructions }}</td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-warning" onclick="exam.edit('{{ exam.id }}');" >edit</button> 
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="exam.remove('{{ exam.id }}');"><i class="la la-trash"></i></button> 
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-
-                        </table>
-                        
-                    </div>
-                </form>
+                    </table>
+                    
+                </div>
             </div>
         </div>
     </div>
-    <!-- END : MODAL EDIT/REMOVE EXAM -->
+    <!-- END : MODAL EDIT / REMOVE EXAMS -->
+
+    <!-- START : MODAL EDIT EXAM -->
+    <div class="modal fade" id="modal_editexam" tabindex="-1" role="dialog" aria-labelledby="modal_editexam-title" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title"> EDIT EXAM </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-exam-id" />
+                    <form method="post">
+
+                        <div class="form-row">
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="examyear"> Year </label>
+                                    <select id="modal-edit-exam-year" class="form-control">
+                                        <option selected disabled> - Select - </option>
+                                        {% for year in years %}
+                                            <option value="{{ year }}"> {{ year }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="examtype"> Exam type </label>
+                                    <select class="form-control" id="modal-edit-exam-type_id">
+                                        <option selected disabled> - Select Exam Type - </option>
+                                        {% for exam_type in exam_types %}
+                                            <option value="{{ exam_type.id }}"> {{ exam_type.name }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="venue"> Venue </label>
+                                    <input type="text" class="form-control" id="modal-edit-exam-venue"/>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="exam_instructions"> Instructions </label>
+                                    <textarea class="md-textarea form-control" id="modal-edit-exam-instructions" rows="4" placeholder="type exam instructions here.."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="exam.edit();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL EDIT EXAM -->
 
     <script>
 
@@ -452,10 +520,24 @@
                 }
             },
 
-            edit: (examId) => {
+            // INVOKE EXAM EDIT MODAL
+            invokeExamEditModal: (id,type_id,year,venue,instructions) => {
+                $("#modal-edit-exam-id").val(id)
+                $("#modal-edit-exam-type_id").val(type_id)
+                $("#modal-edit-exam-year").val(year)
+                $("#modal-edit-exam-venue").val(venue)
+                $("#modal-edit-exam-instructions").val(instructions)
+                $("#modal_editexam").modal("show")
+            },
+
+            edit: () => {
 
                 var formData = new FormData;
-                formData.append("exam_id", examId)
+                formData.append('id', $("#modal-edit-exam-id").val())
+                formData.append('type_id', $("#modal-edit-exam-type_id").val())
+                formData.append('year', $("#modal-edit-exam-year").val())
+                formData.append('venue', $("#modal-edit-exam-venue").val())
+                formData.append('instructions', $("#modal-edit-exam-instructions").val())
 
                 $.ajax({
                     url: "{{ app.url }}/exam/ajax_edit_exam",
@@ -464,10 +546,9 @@
                     processData: false,
                     contentType: false,
                     dataType: 'json',
-                    success: (res) => {
-                        
+                    success: (res) => {                        
                         if ( res.status == 'success' ) {
-                            alertify.alert("Success", "Exam data edited successfully ... ").set('onok', function() {
+                            alertify.alert("Success", "Exam edited successfully ... ").set('onok', function() {
                                 location.reload();
                             })
                         } else {
@@ -481,7 +562,7 @@
                     }
                 })
             },
-
+            
             remove: (examId) => {
 
                 var formData = new FormData;

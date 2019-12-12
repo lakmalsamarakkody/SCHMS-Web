@@ -118,6 +118,12 @@ class Exam extends Controller {
             $exam_year++;
         endfor;
 
+        // TWIG : EXAM TYPE
+        foreach( $this->model_exam_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+			$data['exam_types'][$key]['id'] = $element->id;
+			$data['exam_types'][$key]['name']= $element->name;
+        endforeach;
+
         // TWIG : EXAMS
         foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year', 'DESC')->get() as $key => $element ):
 			$data['exams'][$key]['id'] = $element->id;
@@ -125,7 +131,6 @@ class Exam extends Controller {
             $data['exams'][$key]['year'] = $element->year;
             $data['exams'][$key]['venue'] = $element->venue;
             $data['exams'][$key]['instructions'] = $element->instructions;
-
             $data['exams'][$key]['type']['name'] = $this->model_exam_type->select('name')->where('id', '=', $element->type_id)->first()->name;
         endforeach;
 
@@ -546,6 +551,93 @@ class Exam extends Controller {
 		endif;
     }
 
+    public function ajax_edit_exam() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+        /**
+         * This method will receive ajax request from
+         * the front end with the payload
+         * 
+         *	exam_year
+         *  exam_type_id
+         *  exam_venue
+         *  exam_instructions
+         * 
+         * We need to validate the data and then perform
+         * the following tasks.
+         *    - validate
+         *    - CRUD
+         *    - response ( JSON )
+         */
+
+        // MODEL
+        $this->load->model('exam');
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // VALIDATION : year
+        $is_valid_year = GUMP::is_valid($this->request->post, array('year' => 'required|numeric|exact_len,4'));
+        if ( $is_valid_year !== true ):
+            echo json_encode( array( "status" => "failed", "error" => "Please select a exam year" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : type
+        $is_valid_type = GUMP::is_valid($this->request->post, array('type_id' => 'required|numeric|max_len,2'));
+        if ( $is_valid_type !== true ):
+            echo json_encode( array( "status" => "failed", "error" => "Please select a exam type" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // IS CHANGED
+        $is_changed = $this->model_exam->where('id', '=', $this->request->post['id'])->first();
+        if ( $is_changed->type_id != $this->request->post['type_id'] OR $is_changed->year != $this->request->post['year'] ):
+            // VALIDATE TYPE AND YEAR
+            $is_exist = $this->model_exam->where('type_id', '=', $this->request->post['type_id'])->where('year', '=', $this->request->post['year'])->first();
+
+            if( $is_exist != NULL ):
+                echo json_encode( array( "status" => "failed", "error" => "This Exam is already exist" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+        endif;
+
+        // VALIDATION : venue
+        $is_valid_venue = GUMP::is_valid($this->request->post, array('venue' => 'alpha_space|max_len,50'));
+        if ( $is_valid_venue !== true ):
+            echo json_encode( array( "status" => "failed", "error" => $is_valid_venue[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : instructions
+        $is_valid_instructions = GUMP::is_valid($this->request->post, array('instructions' => 'alpha_space|max_len,200'));
+        if ( $is_valid_instructions !== true ):
+            echo json_encode( array( "status" => "failed", "error" => $is_valid_instructions[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        try {
+			$this->model_exam->where('id', '=', $this->request->post['id'])->update([
+				'year' => $this->request->post['year'],
+                'type_id' => $this->request->post['type_id'],
+                'venue' => $this->request->post['venue'],
+                'instructions' => $this->request->post['instructions']
+			]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit exam details. Please verify that details are not duplicating" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+    }
+
     public function ajax_add_schedule() {
 
         //CHECK LOGIN STATUS
@@ -825,6 +917,65 @@ class Exam extends Controller {
             endif;
 
         endif;
+    }
+
+    public function ajax_edit_exam_schedule() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+        /**
+         * This method will receive ajax request from
+         * the front end with the payload
+         * 
+         *	exam_year
+         *  exam_type_id
+         *  exam_venue
+         *  exam_instructions
+         * 
+         * We need to validate the data and then perform
+         * the following tasks.
+         *    - validate
+         *    - CRUD
+         *    - response ( JSON )
+         */
+
+        // MODEL
+        $this->load->model('exam/schedule');
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // VALIDATION : venue
+        $is_valid_venue = GUMP::is_valid($this->request->post, array('venue' => 'alpha_space|max_len,50'));
+        if ( $is_valid_venue !== true ):
+            echo json_encode( array( "status" => "failed", "error" => $is_valid_venue[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : instructions
+        $is_valid_instructions = GUMP::is_valid($this->request->post, array('instructions' => 'alpha_space|max_len,200'));
+        if ( $is_valid_instructions !== true ):
+            echo json_encode( array( "status" => "failed", "error" => $is_valid_instructions[0] ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        try {
+			$this->model_exam_schedule->where('id', '=', $this->request->post['id'])->update([
+                'venue' => $this->request->post['venue'],
+                'instructions' => $this->request->post['instructions']
+			]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit exam schedule details. Please contact System Administrator" ), JSON_PRETTY_PRINT );
+			exit();
+		}
     }
     
 }

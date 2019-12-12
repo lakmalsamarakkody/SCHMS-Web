@@ -454,7 +454,7 @@ class Student extends Controller {
         // VALIDATION : admission_number
         $is_valid_admission_number = GUMP::is_valid($this->request->post, array('admission_number' => 'numeric|max_len,6'));
         if ( $is_valid_admission_number !== true ):
-            echo json_encode( array( "error" => "Please enter a valid number less or equal to six digits" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "error" => "Please enter a valid number less or equal to six digits" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -463,7 +463,7 @@ class Student extends Controller {
 
                 // ADMISSION NUMBER IS INSERTED : CHECK FOR DUPLICATE
                 if ( $this->model_student->select('id')->where('admission_no', '=', $this->request->post['admission_number'])->first() != NULL ):
-                    echo json_encode( array( "error" => "inserted admission number is already present" ), JSON_PRETTY_PRINT );
+                    echo json_encode( array( "status" => "failed", "error" => "inserted admission number is already present" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 
@@ -480,70 +480,70 @@ class Student extends Controller {
         // VALIDATION : admission_date
         $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
         if ( $is_valid_admission_date !== true ):
-            echo json_encode( array( "error" => "Please select a admission date" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please select a admission date" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : class
         $is_valid_class = GUMP::is_valid($this->request->post, array('class' => 'required|numeric|max_len,3'));
         if ( $is_valid_class !== true ):
-            echo json_encode( array( "error" => "Please select a class" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please select a class" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // // VALIDATION : subject
         // $is_valid_subject = GUMP::is_valid($this->request->post, array('subject' => 'required|numeric|max_len,3'));
         // if ( $is_valid_subject !== true ):
-        //     echo json_encode( array( "error" => $is_valid_subject[0] ), JSON_PRETTY_PRINT );
+        //     echo json_encode( array("status" => "failed", "error" => $is_valid_subject[0] ), JSON_PRETTY_PRINT );
         //     exit();
         // endif;
 
         // VALIDATION : full_name
         $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
         if ( $is_valid_full_name !== true ):
-            echo json_encode( array( "error" => "Please enter student full name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter student full name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : initials
         $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
         if ( $is_valid_initials !== true ):
-            echo json_encode( array( "error" => "Please enter student initials" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter student initials" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : surname
         $is_valid_surname = GUMP::is_valid($this->request->post, array('surname' => 'required|valid_name|max_len,30'));
         if ( $is_valid_surname !== true ):
-            echo json_encode( array( "error" => "Please enter a valid surname" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid surname" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : date_of_birth
         $is_valid_date_of_birth = GUMP::is_valid($this->request->post, array('date_of_birth' => 'required|date'));
         if ( $is_valid_date_of_birth !== true ):
-            echo json_encode( array( "error" => "Please enter student Date of Birth" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter student Date of Birth" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : gender
         $is_valid_gender = GUMP::is_valid($this->request->post, array('gender' => 'required|contains_list,Male;Female'));
         if ( $is_valid_gender !== true ):
-            echo json_encode( array( "error" => "Please select a gender" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please select a gender" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : email
         $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'valid_email'));
         if ( $is_valid_email !== true ):
-            echo json_encode( array( "error" => "Please enter a valid email" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid email" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
             // email IS ENTERED : CHECK FOR DUPLICATE
             if ( $this->request->post['email'] !== ""):
                 if ( $this->model_student->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
-                    echo json_encode( array( "error" => "This Email is already present" ), JSON_PRETTY_PRINT );
+                    echo json_encode( array("status" => "failed", "error" => "This Email is already present" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
             endif;
@@ -551,42 +551,42 @@ class Student extends Controller {
         // VALIDATION : mobile_number
         $is_valid_mobile_number = GUMP::is_valid($this->request->post, array('mobile_number' => 'numeric|exact_len,10'));
         if ( $is_valid_mobile_number !== true ):
-            echo json_encode( array( "error" => "Please enter a valid 10 digit mobile number" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid 10 digit mobile number" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : address
         $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|street_address|max_len,50'));
         if ( $is_valid_address !== true ):
-            echo json_encode( array( "error" => "Please enter a valid address" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid address" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : city
         $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
         if ( $is_valid_city !== true ):
-            echo json_encode( array( "error" => "Please enter a valid city name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid city name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : district
         $is_valid_district = GUMP::is_valid($this->request->post, array('district' => 'numeric|max_len,2'));
         if ( $is_valid_district !== true AND $this->request->post['district'] != "null" ):
-            echo json_encode( array( "error" => "Invalid district name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Invalid district name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : birth_place
         $is_valid_birth_place = GUMP::is_valid($this->request->post, array('birth_place' => 'valid_name|max_len,30'));
         if ( $is_valid_birth_place !== true ):
-            echo json_encode( array( "error" => "Please enter a valid birth place" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid birth place" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : religion
         $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|max_len,2'));
         if ( $is_valid_religion !== true AND $this->request->post['district'] != "null" ):
-            echo json_encode( array( "error" => "Invalid religion name" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Invalid religion name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -594,42 +594,42 @@ class Student extends Controller {
         // VALIDATION : first_guardian_full_name
         $is_valid_first_guardian_full_name = GUMP::is_valid($this->request->post, array('first_guardian_full_name' => 'required|valid_name|max_len,100'));
         if ( $is_valid_first_guardian_full_name !== true ):
-            echo json_encode( array( "error" => "Please enter a valid full name for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid full name for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_initials
         $is_valid_first_guardian_initials = GUMP::is_valid($this->request->post, array('first_guardian_initials' => 'required|alpha_space|max_len,20'));
         if ( $is_valid_first_guardian_initials !== true ):
-            echo json_encode( array( "error" => "Please enter valid initials for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter valid initials for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_surname
         $is_valid_first_guardian_surname = GUMP::is_valid($this->request->post, array('first_guardian_surname' => 'required|valid_name|max_len,20'));
         if ( $is_valid_first_guardian_surname !== true ):
-            echo json_encode( array( "error" => "Please enter a valid surname for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid surname for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_date_of_birth
         $is_valid_first_guardian_date_of_birth = GUMP::is_valid($this->request->post, array('first_guardian_date_of_birth' => 'required|date'));
         if ( $is_valid_first_guardian_date_of_birth !== true ):
-            echo json_encode( array( "error" => "Please enter a valid date of birth for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid date of birth for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_relation
         $is_valid_first_guardian_relation = GUMP::is_valid($this->request->post, array('first_guardian_relation' => 'required|numeric|max_len,2'));
         if ( $is_valid_first_guardian_relation !== true ):
-            echo json_encode( array( "error" => "Please select a relation for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please select a relation for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_gender
         $is_valid_first_guardian_gender = GUMP::is_valid($this->request->post, array('first_guardian_gender' => 'required|contains_list,Male;Female'));
         if ( $is_valid_first_guardian_gender !== true ):
-            echo json_encode( array( "error" => "Please select relevant gender for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please select relevant gender for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -637,74 +637,74 @@ class Student extends Controller {
         $is_valid_first_guardian_nic = GUMP::is_valid($this->request->post, array('first_guardian_nic' => "required"));
         if ( $is_valid_first_guardian_nic === true ):
             if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['first_guardian_nic']) == false ):
-                echo json_encode( array( "error" => "Wrong NIC Format in Guardian NIC" ), JSON_PRETTY_PRINT );
+                echo json_encode( array("status" => "failed", "error" => "Wrong NIC Format in Guardian NIC" ), JSON_PRETTY_PRINT );
                 exit();
             endif;
         else:
-            echo json_encode( array( "error" => "Please enter a valid NIC number for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid NIC number for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_telephone
         $is_valid_first_guardian_telephone = GUMP::is_valid($this->request->post, array('first_guardian_telephone' => 'numeric|max_len,10'));
         if ( $is_valid_first_guardian_telephone !== true ):
-            echo json_encode( array( "error" => "Please enter a valid 10 digit telephone number for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid 10 digit telephone number for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_mobile_number
         $is_valid_first_guardian_mobile_number = GUMP::is_valid($this->request->post, array('first_guardian_mobile_number' => 'numeric|max_len,10'));
         if ( $is_valid_first_guardian_mobile_number !== true ):
-            echo json_encode( array( "error" => "Please enter a valid 10 digit mobile number for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid 10 digit mobile number for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_occupation
         $is_valid_first_guardian_occupation = GUMP::is_valid($this->request->post, array('first_guardian_occupation' => 'required|valid_name|max_len,50'));
         if ( $is_valid_first_guardian_occupation !== true ):
-            echo json_encode( array( "error" => "Please enter a occupation for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a occupation for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_position
         $is_valid_first_guardian_position = GUMP::is_valid($this->request->post, array('first_guardian_position' => 'valid_name|max_len,50'));
         if ( $is_valid_first_guardian_position !== true ):
-            echo json_encode( array( "error" => "Please enter a valid position name for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid position name for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_income
         $is_valid_first_guardian_income = GUMP::is_valid($this->request->post, array('first_guardian_income' => 'numeric|max_len,10'));
         if ( $is_valid_first_guardian_income !== true ):
-            echo json_encode( array( "error" => "Please enter a valid monthly income value for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid monthly income value for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_email
         $is_valid_first_guardian_email = GUMP::is_valid($this->request->post, array('first_guardian_email' => 'valid_email'));
         if ( $is_valid_first_guardian_email !== true ):
-            echo json_encode( array( "error" => "Please enter a valid email for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid email for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_address
         $is_valid_first_guardian_address = GUMP::is_valid($this->request->post, array('first_guardian_address' => 'required|street_address|max_len,50'));
         if ( $is_valid_first_guardian_address !== true ):
-            echo json_encode( array( "error" => "Please enter a valid address for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid address for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_city
         $is_valid_first_guardian_city = GUMP::is_valid($this->request->post, array('first_guardian_city' => 'required|valid_name|max_len,20'));
         if ( $is_valid_first_guardian_city !== true ):
-            echo json_encode( array( "error" => "Please enter a valid city for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please enter a valid city for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : first_guardian_district
         $is_valid_first_guardian_district = GUMP::is_valid($this->request->post, array('first_guardian_district' => 'numeric|max_len,2'));
         if ( $is_valid_first_guardian_district !== true AND $this->request->post['first_guardian_district'] !== "null" ):
-            echo json_encode( array( "error" => "Please select a valid district for guardian" ), JSON_PRETTY_PRINT );
+            echo json_encode( array("status" => "failed", "error" => "Please select a valid district for guardian" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
