@@ -376,7 +376,7 @@ class Result extends Controller {
         // VALIDATION : marks
         $is_valid_marks = GUMP::is_valid($this->request->post, array('marks' => 'required|numeric|max_len,3'));
         if ( $is_valid_marks !== true ):
-            echo json_encode( array( "error" => "Please insert a valid mark" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a valid result" ), JSON_PRETTY_PRINT );
             exit();
 		endif;
 
@@ -650,7 +650,7 @@ class Result extends Controller {
                 $data['exam']['schedules'][$key]['id'] = $element->id;
                 $data['exam']['schedules'][$key]['student_id'] = $student_data->student_id;
                 $data['exam']['schedules'][$key]['exam_schedule_id'] = $student_data->exam_schedule_id;
-                $data['exam']['schedules'][$key]['marks'] = ($student_data->marks !== null) ? $student_data->marks : "Pending";
+                $data['exam']['schedules'][$key]['marks'] = ($student_data->marks !== null) ? $student_data->marks : "Insert";
 
                 $data['exam']['schedules'][$key]['admission_no'] = $student_data->admission_no;
                 $data['exam']['schedules'][$key]['class'] = $class_name;
@@ -663,8 +663,48 @@ class Result extends Controller {
         endif;
 
 		// RENDER VIEW
-        $this->load->view('result/add', $data);
+        $this->load->view('result/add', $data); 
+    }
+
+    public function ajax_addresult() {
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+        $this->load->model('student/exam');
+
+        // VALIDATE RESULT ID
+		$is_exist = $this->model_student_exam->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Adding result doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
         
+        // VALIDATION : marks
+        $is_valid_marks = GUMP::is_valid($this->request->post, array('marks' => 'required|numeric|max_len,3'));
+        if ( $is_valid_marks !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please insert a valid result" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_student_exam->where('id', '=', $this->request->post['id'])->update(['marks' => $this->request->post['marks']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to Save Result. Please contact System Administrator" ), JSON_PRETTY_PRINT );
+			exit();
+		}
     }
     
 }
