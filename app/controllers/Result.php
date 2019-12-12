@@ -350,6 +350,83 @@ class Result extends Controller {
         $this->load->view('result/search', $data);
         
     }
+
+    public function ajax_editresult() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+		$this->load->model('student/exam');
+
+		// VALIDATE RESULT ID
+		$is_exist = $this->model_student_exam->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing result doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
+        
+        // VALIDATION : marks
+        $is_valid_marks = GUMP::is_valid($this->request->post, array('marks' => 'required|numeric|max_len,3'));
+        if ( $is_valid_marks !== true ):
+            echo json_encode( array( "error" => "Please insert a valid mark" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+
+		// UPDATE
+		try {
+			$this->model_student_exam->where('id', '=', $this->request->post['id'])->update(['marks' => $this->request->post['marks']]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to edit Result. Please contact System Administrator" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+    }
+    
+    public function ajax_removeresult() {
+
+		//CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
+		// MODEL
+        $this->load->model('student/exam');
+        
+        // VALIDATE RESULT ID
+		$is_exist = $this->model_student_exam->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Editing result doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
+		
+		// UPDATE
+		try {
+			$this->model_student_exam->where('id', '=', $this->request->post['id'])->update(['marks' => NULL]);
+			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+			exit();
+
+		} catch (\Illuminate\Database\QueryException $e) {
+			// var_dump( $e->errorInfo );
+			echo json_encode( array( "status" => "failed", "message" => "Unable to Delete Result. Please contact System Administrator" ), JSON_PRETTY_PRINT );
+			exit();
+		}
+	}
     
     public function add() {
 

@@ -131,7 +131,7 @@
                                             <th scope="col">Exam Name</th>
                                             <th scope="col">Subject</th>
                                             <th width="1%" class="text-center" scope="col">Marks</th>
-                                            <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                            <th width="12%" class="text-right" scope="col">&nbsp;</th>
                                         </tr>
                                     </thead>
 
@@ -148,10 +148,10 @@
                                             <td class="text-center">{{ exam_schedule.marks }}</td>
                                             <td>
                                                 <div class="row">
-                                                    <div class="col-12 text-center">
-                                                        <button class="btn btn-xs btn-warning">Edit</button>
-                                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                                        <button class="btn btn-xs btn-success mt-1"><i class="la la-user"></i> View Profile</button>
+                                                    <div class="col-12 text-right">
+                                                        <a href="{{ app.url }}/student/profile/{{ exam_schedule.student_id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>
+                                                        <button class="btn btn-sm btn-warning" onclick="invokeResultEditModal('{{exam_schedule.id}}', '{{ exam_schedule.student_id }}', '{{ exam_schedule.name }}', '{{ exam_schedule.exam_name }}', '{{ exam_schedule.subject }}', '{{ exam_schedule.marks }}')"><i class="la la-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removeresult('{{exam_schedule.id}}')"><i class="la la-trash"></i></button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -186,11 +186,135 @@
 
     {{ template.footer|raw }}
 
+    <!-- START : MODAL : EDIT RESULTS -->
+    <div class="modal fade" id="modal_editresult" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">EDIT MARKS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-result-id" />
+                    <form method="post">
+
+                        {% for exam_schedule in exam.schedules if exam_schedules.student_id == modal-edit-result-student_id %}
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Name : </label><span> {{ exam_schedule.name }}</span><br/>
+                                <label for="grade">Exam : </label><span> {{ exam_schedule.exam_name }}</span><br/>
+                                <label for="grade">Subject : </label><span> {{ exam_schedule.subject }}</span><br/>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="grade">Marks</label>
+                                <input type="number" class="form-control" id="modal-edit-result-marks"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="editresult();">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT RESULTS -->
+
     <script>
         // DATA TABLE
         $(document).ready(function() {
             $('#table_result_search').DataTable();
         } );
+
+        // INVOKE RESULT EDIT MODAL
+        invokeResultEditModal = (id, student_id, name, exam_name, subject, marks) => {
+            $("#modal-edit-result-id").val(id)
+            $("#modal-edit-result-student_id").val(student_id)
+            $("#modal-edit-result-name").val(name)
+            $("#modal-edit-result-exam_name").val(exam_name)
+            $("#modal-edit-result-subject").val(subject)
+            $("#modal-edit-result-marks").val(marks)
+            $("#modal_editresult").modal("show")
+        }
+
+        // START : EDIT RESULT
+        editresult = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', $("#modal-edit-result-id").val())
+            formData.append('marks', $("#modal-edit-result-marks").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/result/ajax_editresult",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Marks Modified successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : EDIT RESULT
+
+        // START : REMOVE RESULT
+        removeresult = (id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('id', id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/result/ajax_removeresult",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Result Deleted successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : REMOVE RESULT
     </script>
 
     <script>
