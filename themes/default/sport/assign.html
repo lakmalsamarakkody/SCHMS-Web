@@ -173,11 +173,6 @@
                                                     {% else %}
                                                     <option value="{{ sport.id }}">{{ sport.name }}</option>
                                                     {% endif %}
-                                                    <!-- {% if sport.id in student.sports|keys %}
-                                                    <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
-                                                    {% else %}
-                                                    <option value="{{ sport.id }}">{{ sport.name }}</option>
-                                                    {% endif %} -->
                                                 {% endfor %}
                                                 </select>
                                             </td>
@@ -228,9 +223,9 @@
             $.ajax({
                 url: '{{ app.url }}/sport/ajax_assign_sport',
                 method: 'POST',
+                data: formData,
                 processData: false,
                 contentType: false,
-                data: formData,
                 dataType: 'json',
                 success: (res) => {
                     if ( res.status == 'success' ) {

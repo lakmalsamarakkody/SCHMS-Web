@@ -209,10 +209,15 @@ class Sport extends Controller {
                 $data['students'][$key]['gender'] = $value->gender;
                 $data['students'][$key]['dob'] = $value->dob;
                 $data['students'][$key]['class']['id'] = $value->class_id;
-                $data['students'][$key]['class']['name'] = $value->class_id;
                 $data['students'][$key]['index'] = $this->model_student_class->select('index_no')->where('student_id', '=', $value->id)->where('class_id', '=', $value->class_id)->first()->index_no;
                 $data['students'][$key]['city'] = $value->city;
 
+                // QUERY CLASS DATA
+                $class = $this->model_class->where('id', '=', $value->class_id)->first();
+                $grade = $this->model_grade->where('id', '=', $class->grade_id)->first();
+                $data['students'][$key]['class']['name'] = $grade->name." - ".$class->name;
+
+                // SPORTS ENGAGED BY STUDENT
                 foreach ( $this->model_student_sport->where('student_id', '=', $value->id)->get() as $key2 => $element ):
                     $data['students'][$key]['sport'][$key2]['id'] = $element->sport_id;
                     $data['students'][$key]['sport'][$key2]['name'] = $this->model_sport->select('name')->where('id', '=', $element->sport_id)->first()->name;
@@ -224,6 +229,44 @@ class Sport extends Controller {
 		// RENDER VIEW
         $this->load->view('sport/search_student', $data);
         
+    }
+
+    public function ajax_removestudentsport() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+        
+        // SET JSON HEADER
+		header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('student/sport');
+        $this->load->model('student');
+
+        // VALIDATION : student_id
+        $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric|max_len,6'));
+        if ( $is_valid_student_id !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a valid student" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // IS EXIST : student_id
+        $is_exist_student_id = $this->model_student->where('id', '=', $this->request->post['student_id'])->first();
+        if ( $is_exist_student_id == NULL ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a valid student" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // REMOVE CURRENT RECORDS
+		if ( $this->model_student_sport->where('student_id', '=', $this->request->post['student_id'])->delete() ):
+			echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+		else:
+			echo json_encode( array( "status" => "failed", "message" => "Deletion failed. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+		endif;
+
     }
 
     public function search_coach() {
@@ -509,6 +552,9 @@ class Sport extends Controller {
 
     public function ajax_assign_sport() {
 
+        // SET JSON HEADER
+		header('Content-Type: application/json');
+
         //CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );
@@ -516,9 +562,9 @@ class Sport extends Controller {
         endif;
 
         // MODEL
-        $this->load->model('student/sport');
         $this->load->model('student');
         $this->load->model('sport');
+        $this->load->model('student/sport');
 
         // VALIDATION : student_id
         $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric|max_len,6'));
@@ -535,9 +581,14 @@ class Sport extends Controller {
         endif;
 
         // REMOVE CURRENT RECORDS
-        $this->model_student_sport->where('student_id', '=', $this->request->post['student_id'])->delete();
+        if ( $this->model_student_sport->where('student_id', '=', $this->request->post['student_id'])->first() !== NULL ):
+            if ($this->model_student_sport->where('student_id', '=', $this->request->post['student_id'])->delete() == FALSE ):
+                echo json_encode( array( "status" => "failed", "message" => "Couldn't Assign Sports. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+        endif;
 
-        // COMMANS TO ARRAY
+        // SEPERATE DATA BY COMMAS TO ARRAY
         $sports = explode(",", $this->request->post['sports']);
 
         foreach( $sports as $key => $element ):
@@ -559,6 +610,7 @@ class Sport extends Controller {
 
         endforeach;
         echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+        exit();
     }
 
     public function add_coach() {

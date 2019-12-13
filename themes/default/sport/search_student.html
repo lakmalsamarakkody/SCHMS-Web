@@ -118,40 +118,43 @@
                         <!-- START : SEARCH RESULT TABLE -->
                         {% if students %}
                             <table id="table_sport_search_student" class="table table-hover table-responsive-md">
-                                <caption> Search Results of Students </caption>
+                                <caption> Go to submenu 'Assign' to Change Assigned Sports </caption>
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th width="1%" class="text-center" scope="col">ID</th>
-                                        <th width="1%" class="text-center" scope="col">Admission</th>
-                                        <th width="1%" class="text-center" scope="col">Class</th>
-                                        <th width="1%" class="text-center" scope="col">Index</th>
-                                        <th width="1%" class="text-center" scope="col">Gender</th>
+                                        <th width="1%" scope="col">ID</th>
+                                        <th width="1%" scope="col">Admission</th>
+                                        <th width="1%" scope="col">Class</th>
+                                        <th width="1%" scope="col">Index</th>
+                                        <th width="1%" scope="col">Gender</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Sports engaged in</th>
-                                        <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                        <th width="12%" class="text-right" scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     {% for student in students %}
                                         <tr>
-                                            <th class="text-center" scope="row">{{ student.id }}</th>
-                                            <td class="text-center">{{ student.admission_no }}</td>
-                                            <td class="text-center">{{ student.class.id }}</td>
-                                            <td class="text-center">{{ student.index }}</td>
-                                            <td class="text-center">{{ student.gender }}</td>
+                                            <th scope="row">{{ student.id }}</th>
+                                            <td>{{ student.admission_no }}</td>
+                                            <td>{{ student.class.name }}</td>
+                                            <td>{{ student.index }}</td>
+                                            <td>{{ student.gender }}</td>
                                             <td> {{ student.name }}</td>
                                             <td>
-                                                {% for student in students.sport %}
-                                                {% endfor %}
-
+                                                {% if student.sport == NULL %}
+                                                    <span>No sports are assigned to this student</span>
+                                                {% else %}
+                                                    {% for sport in student.sport %}
+                                                        <span>{{ sport.name }}&nbsp;</span>
+                                                    {% endfor %}
+                                                {% endif %}
                                             </td>
                                             <td>
                                                 <div class="row">
-                                                    <div class="col-12 text-center">
+                                                    <div class="col-12 text-right">
                                                         <a href="{{ app.url }}/student/profile/{{ student.id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>
-                                                        <button class="btn btn-xs btn-warning">Edit</button>
-                                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                                        <button class="btn btn-sm btn-danger" onclick="removestudentsport('{{ student.id }}')"><i class="la la-trash"></i></button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -162,7 +165,7 @@
 
                         {% else %}
                             <table class="table table-bordered table-responsive-md">
-                                <caption> Search Results of Students </caption>
+                                <caption> Go to submenu 'Assign' to Change Assigned Sports </caption>
                                 <thead class="thead-dark">
                                     <tr>
                                         <th class="text-center" scope="col">Fill your requirements and click search to view</th>
@@ -195,6 +198,40 @@
         $(document).ready(function() {
             $('#table_sport_search_student').DataTable();
         } );
+
+        // START : REMOVE CLASS
+        removestudentsport = (student_id) => {
+
+            // PAYLOAD
+            var formData = new FormData;
+            formData.append('student_id', student_id)
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/sport/ajax_removestudentsport",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "All Sports Removed successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert("Failed", res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+        // END : REMOVE CLASS
     
     </script>
 
