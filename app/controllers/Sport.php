@@ -487,6 +487,10 @@ class Sport extends Controller {
                     ->select('student_has_class.index_no', 'student_has_class.class_id', 'class.name', 'grade.name')
                     ->where('student.id', '=', $value->id)->first();
 
+                foreach ( $this->model_student_sport->where('student_id', '=', $value->id)->get() as $key2 => $el ):
+                    $data['students'][$key]['sport'][$key2] = $el->sport_id;
+                endforeach;
+
                 $data['students'][$key]['id'] = $value->id;
                 $data['students'][$key]['admission_no'] = $value->admission_no;
                 $data['students'][$key]['class'] = $student_data->name;
@@ -529,39 +533,32 @@ class Sport extends Controller {
             echo json_encode( array( "status" => "failed", "message" => "Please select a valid student" ), JSON_PRETTY_PRINT );
             exit();
         endif;
-        
-        // VALIDATION : sports
-        $is_valid_sports = GUMP::is_valid($this->request->post, array('sports' => 'required'));
-        if ( $is_valid_sports !== true ):
-            echo json_encode( array( "status" => "failed", "message" => "Please enter a valid sport" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
+
+        // REMOVE CURRENT RECORDS
+        $this->model_student_sport->where('student_id', '=', $this->request->post['student_id'])->delete();
 
         // COMMANS TO ARRAY
         $sports = explode(",", $this->request->post['sports']);
 
         foreach( $sports as $key => $element ):
 
-            // IS EXIST : sport
-            $is_exist_sport = $this->model_sport->where('id', '=', $element)->first();
-            if ( $is_exist_sport == NULL ):
-                echo json_encode( array( "status" => "failed", "message" => "Please select a valid sport" ), JSON_PRETTY_PRINT );
-                exit();
-            endif;
-
             try{
-                // CREATE STUDENT HAS SPORT RECORD
-                $this->model_student_sport->create([
-                    'student_id' => $this->request->post['student_id'],
-                    'sport_id' => $element
-                ]);
-                echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                // CHECK ANY SPORT TO SAVE
+                $is_exist_sport = $this->model_sport->where('id', '=', $element)->first();
+                if ( $is_exist_sport !== NULL ):
+                    // CREATE STUDENT HAS SPORT RECORD
+                    $this->model_student_sport->create([
+                        'student_id' => $this->request->post['student_id'],
+                        'sport_id' => $element
+                    ]);
+                endif;
             }catch (Exception $e){
-                echo json_encode( array( "status" => "failed" , "message" => "Sport is already assigned" ), JSON_PRETTY_PRINT );
+                echo json_encode( array( "status" => "failed" , "message" => "Sport assign process failed. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
                 exit();
             }
 
         endforeach;
+        echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
     }
 
     public function add_coach() {

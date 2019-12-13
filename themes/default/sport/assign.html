@@ -164,12 +164,20 @@
                                             <td class="text-center">{{ student.dob }}</td>
                                             <td class="text-center">{{ student.gender }}</td>
                                             <td class="text-center">{{ student.city }}</td>
-                                            <td> {{ student.name }}</td>                                        
+                                            <td> {{ student.name }}</td>
                                             <td class="text-center">
-                                                <select id="inpt-sports" class="form-control form-control-sm selectpicker show-tick" name="sport">
-                                                    <option value="" selected>- select -</option>
+                                                <select id="inpt-sports" class="form-control form-control-sm selectpicker show-tick" name="sport" multiple>
                                                 {% for sport in student_sport %}
+                                                    {% if sport.id in student.sport %}
+                                                    <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
+                                                    {% else %}
                                                     <option value="{{ sport.id }}">{{ sport.name }}</option>
+                                                    {% endif %}
+                                                    <!-- {% if sport.id in student.sports|keys %}
+                                                    <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
+                                                    {% else %}
+                                                    <option value="{{ sport.id }}">{{ sport.name }}</option>
+                                                    {% endif %} -->
                                                 {% endfor %}
                                                 </select>
                                             </td>

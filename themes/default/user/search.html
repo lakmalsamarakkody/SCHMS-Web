@@ -19,28 +19,59 @@
                         <div class="card-body">
                             <form method="post">
 
-                                <div class="form-row">
+                                <div class="form-row mb-3">
                                     
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="role_id">User Role</label>
                                             <select class="form-control" name="role_id">
                                                 <option value="" selected>- Select -</option>
                                                 {% for user_role in user.roles %}
-                                                <option value="{{ user_role.id }}">{{ user_role.name }}</option>
+                                                    {% if form.field.role_id == user_role.id %}
+                                                        <option value="{{ user_role.id }}" selected>{{ user_role.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ user_role.id }}">{{ user_role.name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                     
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <div class="form-group">
-                                            <label for="empno">Emp ID</label>
-                                            <input type="number" class="form-control" id="empno"></select>
+                                            <label for="ref_id">Reference ID</label>
+                                            <input type="number" class="form-control" id="ref_id" value="{{ (form.field.ref_id) ? form.field.ref_id }}"/>
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="type">Type</label>
+                                            <select class="form-control" name="type">
+                                                {% for type in user.types %}
+                                                    {% if form.field.type == type.id %}
+                                                        <option value="{{ type.id }}" selected>{{ type.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="class_id">Class</label>
+                                            <select class="form-control" name="class_id">
+                                                <option value="" selected>- Select -</option>
+                                                {% for class in classes %}
+                                                <option value="{{ class.id }}">{{ class.class_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="status">Status</label>
                                             <select class="form-control" name="status">
@@ -50,23 +81,18 @@
                                             </select>
                                         </div>
                                     </div>
-
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="staff_name">Staff Name</label>
-                                            <select class="form-control selectpicker show-tick" data-live-search="true" name="staff_name">
-                                                <option value="" selected>Search staff name here</option>
-                                                {% for staff in staffs %}
-                                                <option value="{{ staff.id }}">{{ staff.name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
                             
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="username">Username</label>
                                             <input type="text" class="form-control" name="username"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="created_on">Created on</label>
+                                            <input type="month" class="form-control" name="created_on"/>
                                         </div>
                                     </div>
                                 
