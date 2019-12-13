@@ -808,7 +808,7 @@ class Student extends Controller {
                     $index_no = $this->model_student_class->select('index_no')->where('class_id', '=' , $this->request->post['class'])->orderBy('index_no', 'DESC')->take(1)->first();
                     
                     if ( $index_no !== NULL ):
-                        $index_no = $index_no->index + 1;
+                        $index_no = $index_no->index_no + 1;
                         $this->model_student_class->index_no = $index_no;
                     else:
                         $this->model_student_class->index_no = 1;
