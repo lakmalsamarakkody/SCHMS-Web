@@ -166,7 +166,7 @@
                                             <td class="text-center">{{ student.city }}</td>
                                             <td> {{ student.name }}</td>
                                             <td class="text-center">
-                                                <select id="inpt-sports" class="form-control form-control-sm selectpicker show-tick" name="sport" multiple>
+                                                <select id="inpt-sports-{{ student.id }}" class="form-control form-control-sm selectpicker show-tick" name="sport" multiple>
                                                 {% for sport in student_sport %}
                                                     {% if sport.id in student.sport %}
                                                     <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
@@ -217,7 +217,7 @@
             // PAYLOAD
             let formData = new FormData
             formData.append('student_id', id)
-            formData.append('sports', $("#inpt-sports").val())
+            formData.append('sports', $("#inpt-sports-"+id).val())
 
             // AJAX
             $.ajax({
