@@ -57,6 +57,7 @@ class Portal extends Controller {
 
         // HEADER/FOOTER
         $data['template']['header'] = $this->load->controller('common/header', $data);
+        $data['template']['topmenu'] = $this->load->controller('common/topmenu', $data);
         $data['template']['footer'] = $this->load->controller('common/footer', $data);
 
         // RENDER VIEW
