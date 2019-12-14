@@ -21,7 +21,10 @@ class Messages extends Controller {
 		// HEADER / FOOTER
 		$data['template']['header']		= $this->load->controller('common/header', $data);
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
-		$data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        
+        // QUERY MESSAGE CONVERSATIONS
 
 
         // LOAD CONVERSATIONS
