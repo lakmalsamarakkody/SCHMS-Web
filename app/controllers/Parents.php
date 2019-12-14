@@ -141,7 +141,20 @@ class Parents extends Controller {
 			$data['religions'][$key]['id'] = $element->id;
 			$data['religions'][$key]['name']= $element->name;
         endforeach;
-                
+
+
+        /**
+         * PARENT_ID
+         * STUDENT_ID
+         */
+
+        // $parents = $this->model_student_has_parent::select('parent_id');
+
+        // if ( $student_id ):
+        //     $parents->ehereIn('student_d', $students)
+        // endif;
+
+        // $parents->get();
         
 		// RENDER VIEW
         $this->load->view('parents/search', $data);
