@@ -23,8 +23,32 @@ class Messages extends Controller {
 		$data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+
+        // MODELS
+        $this->load->model('user');
+        $this->load->model('message');
         
-        // QUERY MESSAGE CONVERSATIONS
+        /**
+         * We need to display list of all the conversations specific
+         * user have at a given time. Conversations will be sorted
+         * using the message table with the help of grouping SQL.
+         */
+        $converstations = $this->model_message->select('id', 'sender_id')->where('receiver_id', '=', $_SESSION['user']['id'])->groupBy('sender_id')->orderBy('created_on', 'desc')->get();
+        foreach( $converstations as $key => $element ):
+
+            // RESOLVE SENDER
+            $data['converstations'][$key]['user']['username']       = $this->model_user->find($element->sender_id)->username;
+            $data['converstations'][$key]['user']['id']             = $element->sender_id;
+
+            // echo "<pre>";
+            //     var_dump( $element->sender_id );
+            // echo "</pre>";
+
+        endforeach;
+
+        echo "<pre>";
+            var_dump( $data['converstations'] );
+        echo "</pre>";
 
 
         // LOAD CONVERSATIONS

@@ -31,6 +31,7 @@ class Login extends Controller {
 					if(password_verify ($this->request->post['password'],$User->password)):
 						$_SESSION['user']['is_login'] = true;
 						$_SESSION['user']['id'] = $User->id;
+						$_SESSION['user']['type'] = 'staff';
 						header('Location:' . $this->config->get('base_url') . '/home');
 						exit();
 					else:
