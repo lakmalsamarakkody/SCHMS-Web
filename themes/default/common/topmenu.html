@@ -8,13 +8,9 @@
 
         <div class="d-flex justify-content-space-between">
 
-            <div class="messages">
-                <i class="la la-comments" id="dropdownMessagesButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-
-                <div class="dropdown-menu" aria-labelledby="dropdownMessagesButton">
-                    <p> <i class="la la-globe"></i> No Messages </p>
-                </div>
-            </div>
+            <a href="{{ app.url }}/messages" class="text-white" style="text-decoration: none;">
+                <i class="la la-comments"></i>
+            </a>
             
             <div class="notifications">
                 <i class="la la-bell" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
