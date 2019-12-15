@@ -46,9 +46,9 @@ class Messages extends Controller {
 
         endforeach;
 
-        echo "<pre>";
-            var_dump( $data['converstations'] );
-        echo "</pre>";
+        // echo "<pre>";
+        //     var_dump( $data['converstations'] );
+        // echo "</pre>";
 
 
         // LOAD CONVERSATIONS
