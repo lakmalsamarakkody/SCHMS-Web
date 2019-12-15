@@ -26,24 +26,28 @@
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="gnic">NIC</label>
-                                            <input type="text" class="form-control" id="gnic"/>
+                                            <input type="text" class="form-control" name="gnic" value="{{ (form.field.gnic) ? form.field.gnic }}"/>
                                         </div>
                                     </div>
 
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="gname">Name</label>
-                                            <input type="text" class="form-control" id="gname"/>
+                                            <input type="text" class="form-control" name="gname" value="{{ (form.field.gname) ? form.field.gname }}"/>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="grelation">Relationship</label>
-                                            <select class="form-control" id="grelation">
+                                            <select class="form-control" name="grelation">
                                                 <option selected disabled> - Select Relationship - </option>
                                                 {% for relationship in student_relations %}
+                                                    {% if form.field.grelation == relationship.id %}
+                                                    <option value="{{ relationship.id }}" selected>{{ relationship.name }}</option>
+                                                    {% else %}
                                                     <option value="{{ relationship.id }}">{{ relationship.name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -52,10 +56,18 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="ggen">Gender</label>
-                                            <select class="form-control" id="ggen">
+                                            <select class="form-control" name="ggen">
                                                 <option selected disabled> - Select Gender - </option>
-                                                <option value="Male">Male</option>
+                                                {% if form.field.ggen == "Male" %}
+                                                <option value="Male" selected>Male</option>
                                                 <option value="Female">Female</option>
+                                                {% elseif form.field.ggen == "Female" %}
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female" selected>Female</option>
+                                                {% else %}
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                                {% endif %}
                                             </select>
                                         </div>
                                     </div>
@@ -63,24 +75,30 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="gcity">City</label>
-                                            <select class="form-control" id="gcity">
+                                            <select class="form-control" name="gcity">
                                                 <option selected disabled> - Select City - </option>
                                                 {% for city in cities %}
+                                                    {% if form.field.gcity == city.name %}
+                                                    <option value="{{ city.name }}" selected>{{ city.name }}</option>
+                                                    {% else %}
                                                     <option value="{{ city.name }}">{{ city.name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
                                     </div>
 
-                                    
-
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="goccu">Occupation</label>
-                                            <select class="form-control" id="goccu">
+                                            <select class="form-control" name="goccu">
                                                 <option selected disabled> - Select Occupation - </option>
                                                 {% for occupation in occupations %}
+                                                    {% if form.field.goccu == occupation.name %}
+                                                    <option value="{{ occupation.name }}" selected>{{ occupation.name }}</option>
+                                                    {% else %}
                                                     <option value="{{ occupation.name }}">{{ occupation.name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -89,10 +107,14 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="gpos">Position</label>
-                                            <select class="form-control" id="gpos">
+                                            <select class="form-control" name="gpos">
                                                 <option selected disabled> - Select Position - </option>
                                                 {% for position in positions %}
+                                                    {% if form.field.gpos == position.name %}
+                                                    <option value="{{ position.name }}" selected>{{ position.name }}</option>
+                                                    {% else %}
                                                     <option value="{{ position.name }}">{{ position.name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -100,79 +122,62 @@
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="ginc">Annual Income &gt; </label>
-                                            <input type="number" class="form-control" id="ginc"/>
+                                            <label for="gincome">Annual Income &gt; </label>
+                                            <input type="number" class="form-control" name="gincome" value="{{ (form.field.gincome) ? form.field.gincome }}"/>
                                         </div>   
                                     </div>
                                 </div>
-                                <hr>
-                                <h6><strong>Search by Student Details</strong></h6>
-                                <br>
+                                <hr><h6><strong>Search by Student Details</strong></h6><br>
                                 <div class="form-row">
 
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label for="addno">Admission Number</label>
-                                            <input type="number" class="form-control" id="addno"/>
+                                            <label for="saddno">Admission Number</label>
+                                            <input type="number" class="form-control" name="saddno" value="{{ (form.field.saddno) ? form.field.saddno }}"/>
                                         </div>                                        
                                     </div>
 
-                                    <div class="col-2">
+                                    <div class="col-4">
                                         <div class="form-group">
-                                            <label for="name">Name</label>
-                                            <input type="text" class="form-control" id="name"/>
+                                            <label for="sname">Name</label>
+                                            <input type="text" class="form-control" name="sname" value="{{ (form.field.sname) ? form.field.sname }}"/>
                                         </div>                                        
                                     </div>
 
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <div class="form-group">
-                                            <label for="class">Class</label>
-                                            <select class="form-control" id="class">
+                                            <label for="sclass">Class</label>
+                                            <select class="form-control" name="sclass">
                                                     <option selected disabled> - Select Class - </option>
                                                     {% for class in classes %}
-                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                        {% if form.field.sclass == class.id %}
+                                                            <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                        {% else %}
+                                                            <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                                        {% endif %}
                                                     {% endfor %}
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <div class="form-group">
-                                            <label for="grade">Grade</label>
-                                            <select class="form-control" id="grade">
+                                            <label for="sgrade">Grade</label>
+                                            <select class="form-control" name="sgrade">
                                                     <option selected disabled> - Select Grade - </option>
                                                     {% for grade in grades %}
-                                                        <option value="{{ grade.id }}">{{ grade.name }}</option>
+                                                       {% if form.field.sgrade == grade.id %}
+                                                            <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
+                                                        {% else %}
+                                                            <option value="{{ grade.id }}"> Grade - {{ grade.name }} </option>
+                                                        {% endif %}
                                                     {% endfor %}
                                             </select>
                                         </div>                                        
-                                    </div>
-
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="sport">Sport</label>
-                                            <select class="form-control" id="sport">
-                                                    <option selected disabled> - Select sport - </option>
-                                                    {% for sport in sports %}
-                                                        <option value="{{ sport.id }}">{{ sport.name }}</option>
-                                                    {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="religion">Religion</label>
-                                            <select class="form-control" id="religion">
-                                                    <option selected disabled> - Select Religion - </option>
-                                                    {% for religion in religions %}
-                                                        <option value="{{ religion.id }}">{{ religion.name }}</option>
-                                                    {% endfor %}
-                                            </select>
-                                        </div>
                                     </div>
 
                                     <div class="col-12">
+                                        <input type="hidden" name="isSubmited"/>
                                         <button class="btn btn-primary" type="submit">Search</button>
                                         <button class="btn btn-secondary" type="button" onclick="clearForm(this.form);">Clear</button>
                                     </div>
@@ -184,6 +189,57 @@
                     </div>
                     <!-- END : SEARCH PARENT PANEL -->
 
+                    <!-- START : SEARCH RESULTS -->
+                    <section class="mt-5">
+                        <!-- START : SEARCH RESULT TABLE -->
+                        {% if parents %}
+                            <table id="table_parent_search" class="table table-hover table-responsive-md">
+                                <caption> Search Results of parents </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th width="10%" class="text-center" scope="col">DoB</th>
+                                        <th width="5%" class="text-center" scope="col">Gender</th>
+                                        <th width="10%" class="text-center" scope="col">City</th>                                 
+                                        <th width="12%" class="text-center" scope="col">&nbsp;</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for parent in parents %}
+                                        <tr>
+                                            <th class="text-center" scope="row">{{ parent.id }}</th>
+                                            <td> {{ parent.name }}</td>
+                                            <td class="text-center">{{ parent.dob }}</td>
+                                            <td class="text-center">{{ parent.gender }}</td>
+                                            <td class="text-center">{{ parent.city }}</td>                              
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/parent/profile/{{ parent.id }}"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i> View Profile</button></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <table class="table table-bordered table-responsive-md">
+                                <caption> Search Results of Parents </caption>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" scope="col">Fill your requirements and click search to view</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" scope="row">No records to display</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        {% endif %}
+                        <!-- END : SEARCH RESULT TABLE -->
+                    </section>
+                    <!-- END : SEARCH RESULTS -->
+
                 </div>
             </div>
         </div>
@@ -192,6 +248,10 @@
     {{ template.footer|raw }}
 
     <script>
+        // DATA TABLE
+        $(document).ready(function() {
+            $('#table_parent_search').DataTable();
+        } );
         
         //  CLEAR FORM
         function clearForm(oForm) {
