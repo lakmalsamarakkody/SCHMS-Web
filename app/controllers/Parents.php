@@ -107,7 +107,7 @@ class Parents extends Controller {
         endforeach;
 
         // CLASS
-		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->get() as $key => $element ):
+		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
 			$data['classes'][$key]['id'] = $element->id;
 			$data['classes'][$key]['grade']['id'] = $element->grade_id;
 			$data['classes'][$key]['name'] = $element->name;
@@ -128,33 +128,74 @@ class Parents extends Controller {
 		foreach( $this->model_grade->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['grades'][$key]['id'] = $element->id;
 			$data['grades'][$key]['name']= $element->name;
-		endforeach;
-        
-        // SPORT
-		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
-			$data['sports'][$key]['id'] = $element->id;
-			$data['sports'][$key]['name']= $element->name;
         endforeach;
         
-		// RELIGION
-		foreach( $this->model_religion->select('id', 'name')->orderBy('id')->get() as $key => $element ):
-			$data['religions'][$key]['id'] = $element->id;
-			$data['religions'][$key]['name']= $element->name;
-        endforeach;
+        // CHECK SUBMIT
+        if ( isset($this->request->post['isSubmited']) ):
+
+            $data['form']['field']['gnic'] = ( isset($this->request->post['gnic']) AND !empty($this->request->post['gnic']) ) ? $this->request->post['gnic'] : "";
+            $data['form']['field']['gname'] = ( isset($this->request->post['gname']) AND !empty($this->request->post['gname']) ) ? $this->request->post['gname'] : "";
+            $data['form']['field']['grelation'] = ( isset($this->request->post['grelation']) AND !empty($this->request->post['grelation']) ) ? $this->request->post['grelation'] : "";
+            $data['form']['field']['ggen'] = ( isset($this->request->post['ggen']) AND !empty($this->request->post['ggen']) ) ? $this->request->post['ggen'] : "";
+            $data['form']['field']['gcity'] = ( isset($this->request->post['gcity']) AND !empty($this->request->post['gcity']) ) ? $this->request->post['gcity'] : "";
+            $data['form']['field']['goccu'] = ( isset($this->request->post['goccu']) AND !empty($this->request->post['goccu']) ) ? $this->request->post['goccu'] : "";
+            $data['form']['field']['gpos'] = ( isset($this->request->post['gpos']) AND !empty($this->request->post['gpos']) ) ? $this->request->post['gpos'] : "";
+            $data['form']['field']['gincome'] = ( isset($this->request->post['gincome']) AND !empty($this->request->post['gincome']) ) ? $this->request->post['gincome'] : "";
+            $data['form']['field']['saddno'] = ( isset($this->request->post['saddno']) AND !empty($this->request->post['saddno']) ) ? $this->request->post['saddno'] : "";
+            $data['form']['field']['sname'] = ( isset($this->request->post['sname']) AND !empty($this->request->post['sname']) ) ? $this->request->post['sname'] : "";
+            $data['form']['field']['sclass'] = ( isset($this->request->post['sclass']) AND !empty($this->request->post['sclass']) ) ? $this->request->post['sclass'] : "";
+            $data['form']['field']['sgrade'] = ( isset($this->request->post['sgrade']) AND !empty($this->request->post['sgrade']) ) ? $this->request->post['sgrade'] : "";
 
 
-        /**
-         * PARENT_ID
-         * STUDENT_ID
-         */
+            /**
+             * GET RELEVENT PARENT_ID
+             */
 
-        // $parents = $this->model_student_has_parent::select('parent_id');
+            // Eloquent OBJECT
+            $parents = $this->model_parent;
 
-        // if ( $student_id ):
-        //     $parents->ehereIn('student_d', $students)
-        // endif;
+            var_dump($this->request->post['gnic']);
 
-        // $parents->get();
+            // FILTER ( NIC NO )
+            if ( isset($this->request->post['gnic']) AND !empty($this->request->post['gnic']) ):
+                $parents->where(function($query) {
+                    $query->where('nic', '=', $this->request->post['gnic']);
+                });
+            endif;
+
+            /**
+             * GET RELEVENT STUDENT_ID
+             */
+
+            // if ( $student_id ):
+            //     $parents->whereIn('student_d', $students)
+            // endif;
+
+            // $parents->get();
+
+            // APPEND DATA TO ARRAY
+            foreach( $parents->get() as $key => $value ):
+
+                // $parent_data = DB::table('student')
+                //     ->join('student_has_class', 'student.id', '=', 'student_has_class.student_id')
+                //     ->join('class', 'student_has_class.class_id', '=', 'class.id')
+                //     ->join('grade', 'class.grade_id', '=', 'grade.id')
+                //     ->select('student_has_class.index_no', 'student_has_class.class_id', 'class.name', 'grade.name')
+                //     ->where('student.id', '=', $value->id)->first();
+
+                // foreach ( $this->model_student_sport->where('student_id', '=', $value->id)->get() as $key2 => $el ):
+                //     $data['students'][$key]['sport'][$key2] = $el->sport_id;
+                // endforeach;
+
+                $data['parents'][$key]['id'] = $value->id;
+                // $data['parents'][$key]['class'] = $parent_data->name;
+                // $data['parents'][$key]['index'] = $parent_data->index_no;
+                $data['parents'][$key]['name'] = $value->initials." ".$value->surname;
+                $data['parents'][$key]['gender'] = $value->gender;
+                $data['parents'][$key]['dob'] = $value->dob;
+                $data['parents'][$key]['city'] = $value->city;
+            endforeach;
+        endif;
         
 		// RENDER VIEW
         $this->load->view('parents/search', $data);
