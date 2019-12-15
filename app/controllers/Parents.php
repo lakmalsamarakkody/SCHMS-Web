@@ -152,7 +152,7 @@ class Parents extends Controller {
              */
 
             // Eloquent OBJECT
-            $parents = $this->model_parent;
+            $parents = $this->model_parent->select('');
 
             var_dump($this->request->post['gnic']);
 
