@@ -386,10 +386,7 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `sender_id` int(6) NOT NULL,
-  `sender_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
   `receiver_id` int(6) NOT NULL,
-  `receiver_type` enum('Administrator','Staff','Student','Parent') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_time` datetime NOT NULL,
   `body` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
@@ -1027,7 +1024,7 @@ CREATE TABLE `student_has_sport` (
   KEY `student_has_sport_student_id_fk` (`student_id`),
   CONSTRAINT `student_has_sport_sport_id_fk` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_has_sport_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1036,7 +1033,7 @@ CREATE TABLE `student_has_sport` (
 
 LOCK TABLES `student_has_sport` WRITE;
 /*!40000 ALTER TABLE `student_has_sport` DISABLE KEYS */;
-INSERT INTO `student_has_sport` VALUES (83,53,2,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(84,53,5,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(88,52,4,'2019-12-14 23:29:08','2019-12-14 23:29:08',NULL),(89,52,1,'2019-12-14 23:29:08','2019-12-14 23:29:08',NULL),(90,52,2,'2019-12-14 23:29:08','2019-12-14 23:29:08',NULL),(91,52,5,'2019-12-14 23:29:08','2019-12-14 23:29:08',NULL),(92,52,3,'2019-12-14 23:29:08','2019-12-14 23:29:08',NULL),(93,52,7,'2019-12-14 23:29:09','2019-12-14 23:29:09',NULL);
+INSERT INTO `student_has_sport` VALUES (83,53,2,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(84,53,5,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(94,52,4,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL),(95,52,1,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL),(96,52,2,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL);
 /*!40000 ALTER TABLE `student_has_sport` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1302,4 +1299,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-15  3:06:33
+-- Dump completed on 2019-12-15 21:58:46
