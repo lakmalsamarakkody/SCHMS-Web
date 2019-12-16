@@ -1,5 +1,6 @@
-.messagesinbox {
+.messagesinbox , .messagessingle{
 	padding: 4rem;
+	background: #DDD;
 }
 
 .messagesinbox a {
@@ -36,4 +37,50 @@
 
 .messagesinbox .btn {
 	cursor: pointer;
+}
+
+.messagessingle .card .card-header {
+	display: flex;
+	align-items: center;
+	border-bottom: solid 1px #ECECEC;
+}
+
+.messagessingle .card .card-header img.avatar {
+	width: 45px;
+	height: 45px;
+	border-radius: 100%;
+	margin-right: 25px;
+}
+
+.messagessingle .card .card-header h5 {
+	margin-bottom: 0;
+}
+
+.messagessingle .card .card-body {
+	height: 600px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.messagessingle .single-msg img.avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+}
+
+.messagessingle .single-msg .media-body {
+	background: #efefef;
+	padding: 10px;
+	border-radius: 15px;
+	margin-bottom: 15px;
+}
+
+.messagessingle .single-msg p {
+	font-size: 14px;
+	margin-bottom: 0;
+}
+
+.messagessingle .single-msg.incoming .media-body {
+	background: #007bff;
+	color: #FFF;
 }

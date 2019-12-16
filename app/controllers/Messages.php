@@ -5,7 +5,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class Messages extends Controller {
     
-    public function index(){
+    public function index($id=null){
 
         //CHECK LOGIN STATUS
         if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
@@ -46,13 +46,18 @@ class Messages extends Controller {
 
         endforeach;
 
-        echo "<pre>";
-            var_dump( $data['converstations'] );
-        echo "</pre>";
+        // echo "<pre>";
+        //     var_dump( $data['converstations'] );
+        // echo "</pre>";
 
 
-        // LOAD CONVERSATIONS
-        $this->load->view('messages/index', $data);
+        if ( $id !== null ){
+            $this->load->view('messages/single', $data);
+        } else {
+            // LOAD CONVERSATIONS
+            $this->load->view('messages/index', $data);
+        }
+
 
     }
 

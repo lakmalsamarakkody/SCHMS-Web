@@ -1,0 +1,82 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid home">
+        <div class="row">
+            
+            {{ template.sidenav|raw }}
+
+            <!-- START : CONTENT -->
+            <div class="col-md-10 content">               
+                {{ template.topmenu|raw }}
+
+                <div class="messagessingle">
+
+                    <!-- START : HEALTH SEARCH -->
+                    <h4 class="page-title">Messages</h4>
+
+					<div class="card mt-5">
+						<div class="card-header">
+							<img src="https://pbs.twimg.com/profile_images/915314874212868096/pn-v8Ru7_400x400.jpg" class="avatar">
+							<h5>
+								Srivin Prabhash
+							</h5>
+						</div>
+
+						<div id="messages-wrapper" class="card-body">
+							
+
+							<div class="media single-msg incoming">
+								<img class="avatar mr-3" src="https://pbs.twimg.com/profile_images/915314874212868096/pn-v8Ru7_400x400.jpg" alt="Generic placeholder image">
+								<div class="media-body">
+									<p>
+										Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+									</p>
+								</div>
+							</div>
+
+							<div class="media single-msg">
+								<img class="avatar mr-3" src="https://res.cloudinary.com/practicaldev/image/fetch/s--7Cv2wOOr--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/21568/292135f9-e192-4e4c-8cc6-06c8191c1471.png" alt="Generic placeholder image">
+								<div class="media-body">
+									<p>
+										Consequat cupidatat ullamco non officia incididunt ex officia sunt mollit quis et culpa.
+									</p>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- CARD FOOTER -->
+						<div class="card-footer">
+							<form action="">
+								<div class="form-group">
+									<textarea class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary btn-sm"><i class="la la-paper-plane"></i> &nbsp; Send</button>
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+
+            </div>
+                <!-- END : CONTENT -->
+
+        </div>
+    </div>
+
+    {{ template.footer|raw }}
+
+    <script>
+		
+		// SCROLL TO BOTTOM ON PAGE LOAD
+		jQuery(document).ready(function($) {
+			$("#messages-wrapper").scrollTop($('#messages-wrapper')[0].scrollHeight)
+		});
+
+    </script>
+
+</body>
