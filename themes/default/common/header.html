@@ -34,13 +34,19 @@
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/alertify.default.min.css" />
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/alertify.semantic.min.css" />
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/alertify.bootstrap.min.css" />
-	
+
 
 	<!-- CSS : LOCAL -->
 	<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/core.css" />
 
+
+	{% if user.theme == 'Dark' %}
+	<!-- CSS : LOCAL : THEME -->
+	<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/theme-dark.css" />
+	{% else %}
 	<!-- CSS : LOCAL : THEME -->
 	<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/theme-default.css" />
+	{% endif %}
 	<!-- <link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/theme-dark.css" /> -->
 	<!-- <link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/core-dataTables.css" /> -->
 

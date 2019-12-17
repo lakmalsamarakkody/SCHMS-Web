@@ -40,6 +40,51 @@
 		})
 	</script>
 
+	<!-- THEME TOGGLE  -->
+	<script>
+
+	$("#theme-mode-toggle").change(function() {
+
+		var toggleBool = $(this).prop('checked');
+		var theme = null;
+
+
+		if ( toggleBool == true ){
+			// ENABLE DARK THEME
+			theme = 'Dark';
+		} else if ( toggleBool == false ){
+			theme = 'Default';
+		}
+		
+		var formData = new FormData();
+		formData.append('theme', theme);
+
+		$.ajax({
+            url: "{{ app.url }}/user/ajax_change_theme",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {              
+                
+            	if ( res.status == 'success'){
+            		location.reload();
+            		return;
+            	} else if (res.status == 'error'){
+            		console.log(res.error);
+            	}
+
+            },
+            error: (e) => {
+                console.log(e.responseText)
+            }
+        })
+
+	});
+
+	</script>
+
 <!-- <section class="footer">
 	<div class="container-fluid ">
 		<div class="row">

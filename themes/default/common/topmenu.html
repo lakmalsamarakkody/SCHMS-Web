@@ -29,7 +29,13 @@
                     <li class="dropdown-item">
                         <div class="row">
                             <div class="col align-self-center"><i class="la la-adjust"></i>Dark Mode</div>
-                            <div class="col"><input type="checkbox" data-toggle="toggle" data-style="ios" data-onstyle="dark" data-offstyle="info" /></div>
+                            <div class="col">
+                                {% if user.theme == 'Dark' %}
+                                <input id="theme-mode-toggle" type="checkbox" data-toggle="toggle" data-style="ios" data-onstyle="dark" data-offstyle="info" checked="checked" />
+                                {% else %}
+                                <input id="theme-mode-toggle" type="checkbox" data-toggle="toggle" data-style="ios" data-onstyle="dark" data-offstyle="info" />
+                                {% endif %}
+                            </div>
                         </div>
                     </li>
                     <li><a class="dropdown-item" href="{{ app.url }}/logout"> <i class="la la-sign-out"></i>Logout</a></li>
