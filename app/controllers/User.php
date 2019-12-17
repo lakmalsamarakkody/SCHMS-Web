@@ -86,8 +86,6 @@ class User extends Controller {
 
         //USER TYPE
         
-        
-
         // SEARCH
         if ( isset($this->request->post['isSubmited'])):
 

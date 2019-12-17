@@ -278,14 +278,23 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="">User Role</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ tools.user_role }}">
+                                                                            <select class="form-control" name="user_role" disabled>
+                                                                                <option value="">- select -</option>
+                                                                                {% for role in user.roles %}
+                                                                                <option value="{{ role.id }}">{{ role.name }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="">Preffered Theme</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ tools.theme }}">
+                                                                            <select class="form-control" name="user_theme" disabled>
+                                                                                {% for theme in user.themes %}
+                                                                                <option value="{{ theme.name }}">{{ theme.name }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 

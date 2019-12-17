@@ -859,6 +859,17 @@ class Student extends Controller {
         $this->load->model('user');
         $this->load->model('user/role');
 
+        // QUERY ( USER ROLES )
+        foreach( $this->model_user_role->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( USER THEMES )
+        foreach( $this->model_user->select('theme')->groupBy('theme')->get() as $key => $element ):
+            $data['user']['themes'][$key]['name'] = $element->theme;
+        endforeach;
+
         // CHECK EXISTING STUDENT
         $student = $this->model_student->where('id', '=', $id)->first();
 
