@@ -258,7 +258,7 @@ class Staff extends Controller {
         endforeach;
 
         // CITY
-        foreach( $this->model_staff->select('id', 'city')->orderBy('city')->distinct()->get() as $key => $element ):
+        foreach( $this->model_staff->select('id', 'city')->groupBy('city')->orderBy('city')->distinct()->get() as $key => $element ):
             $data['staff_city'][$key]['id'] = $element->id;
             $data['staff_city'][$key]['name'] = $element->city;
         endforeach;
@@ -329,20 +329,6 @@ class Staff extends Controller {
                 });
             endif;
 
-            // // FILTER ( CLASS )
-            // if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ):
-            //     $class = $this->model_class->select('staff_id')->where('id','=', $this->request->post['class'])->get();
-            //     if ( $class != NULL):
-            //         $classes = array();
-            //         foreach ( $class as $key => $element ):
-            //             array_push($classes,$element->staff_id);
-            //         endforeach;
-            //         $staff->where(function($query) use ($classes) {
-            //             $query->whereIn('id', '=', $classes);
-            //         });
-            //     endif;
-            // endif;
-
             // FILTER ( GENDER )
             if ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ):
                 $staff->where(function($query) {
@@ -364,6 +350,37 @@ class Staff extends Controller {
                 });
             endif;
 
+            // FILTER ( CLASS )
+            if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ):
+                $tic_id = $this->model_class->select('staff_id')->where('id','=', $this->request->post['class'])->first();
+                if ( $tic_id != NULL):
+                    $staff->where(function($query) use ($tic_id) {
+                        $query->where('id', '=', $tic_id->staff_id);
+                    });
+                endif;
+            endif;
+
+            // FILTER ( SUBJECT )
+            if ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ):
+                $subject = $this->model_staff_subject->select('staff_id')->where('subject_id','=', $this->request->post['subject'])->get();
+                if ( $subject != NULL):
+                    $subjects = array();
+                    foreach ( $subject as $key => $element ):
+                        array_push($subjects,$element->staff_id);
+                    endforeach;
+                    $staff->where(function($query) use ($subjects) {
+                        $query->whereIn('id', $subjects);
+                    });
+                endif;
+            endif;
+
+            // FILTER ( RELIGION )
+            if ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ):
+                $staff->where(function($query) {
+                    $query->where('religion_id', '=', $this->request->post['religion']);
+                });
+            endif;
+
             // FILTER ( CITY )
             if ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ):
                 $staff->where(function($query) {
@@ -378,28 +395,15 @@ class Staff extends Controller {
                 });
             endif;
 
-            // // FILTER ( SUBJECT )
-            // if ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ):
-            //     $staff->where(function($query) {
-            //         $query->where('subject_id', '=', $this->request->post['subject']);
-            //     });
-            // endif;
-
-            // FILTER ( RELIGION )
-            if ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ):
-                $staff->where(function($query) {
-                    $query->where('religion_id', '=', $this->request->post['religion']);
-                });
-            endif;
-
             // APPEND DATA TO ARRAY
             foreach( $staff->get() as $key => $value ):
-                $data['staff']['details'][$key]['id'] = $value->employee_number;
-                $data['staff']['details'][$key]['type'] = $value->type_id;
+                $data['staff']['details'][$key]['id'] = $value->id;
+                $data['staff']['details'][$key]['employee_id'] = $value->employee_number;
+                $data['staff']['details'][$key]['type'] = $this->model_staff_type->select('name')->where('id', '=', $value->type_id)->first()->name;
+                $data['staff']['details'][$key]['nic'] = $value->nic;
                 $data['staff']['details'][$key]['gender'] = $value->gender;
-                $data['staff']['details'][$key]['name'] = $value->full_name;
-
-                echo "hi";
+                $data['staff']['details'][$key]['name'] = $value->initials." ".$value->surname;
+                $data['staff']['details'][$key]['mobile'] = $value->phone_mobile;
             endforeach;
 
         endif;

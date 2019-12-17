@@ -200,9 +200,11 @@
                                     <tr>
                                         <th width="1%" scope="col">ID</th>
                                         <th width="10%" scope="col">Employee ID</th>
-                                        <th width="15%" scope="col">Type</th>
+                                        <th width="10%" scope="col">Type</th>
+                                        <th width="10%" scope="col">NIC</th>
                                         <th width="5%" scope="col">Gender</th>
-                                        <th scope="col">Name</th>                                    
+                                        <th scope="col">Name</th>
+                                        <th width="10%" scope="col">Mobile Phone</th>
                                         <th width="12%" class="text-right" scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
@@ -211,10 +213,13 @@
                                     {% for staff in staff.details %}
                                         <tr>
                                             <th scope="row">{{ staff.id }}</th>
+                                            <td>{{ staff.employee_id }}</td>
                                             <td>{{ staff.type }}</td>
+                                            <td>{{ staff.nic }}</td>
                                             <td>{{ staff.gender }}</td>
-                                            <td> {{ staff.name }}</td>                                        
-                                            <td><a href="{{ app.url }}/staff/profile"><button type="button" class="btn btn-xs btn-success"><i class="la la-user"></i>View Profile</button></a></td>
+                                            <td>{{ staff.name }}</td>
+                                            <td>{{ staff.mobile }}</td>
+                                            <td  class="text-right"><a href="{{ app.url }}/staff/profile/{{ staff.id }}"><button type="button" class="btn btn-xs btn-success"><i class="la la-user"></i>View Profile</button></a></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

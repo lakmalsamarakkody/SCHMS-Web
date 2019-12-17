@@ -29,3 +29,36 @@
 .staffprofile{
     padding: 4rem;
 }
+
+.staffprofile img.avatar {
+	width: 50px;
+}
+
+.staffprofile .card-body .nav.nav-pills {
+	border-bottom: solid 1px #ececec;
+}
+
+.staffprofile .card-body .nav.nav-pills .nav-link {
+	border-radius: 0;
+}
+
+.staffprofile .card-body .nav.nav-pills a.nav-link {
+	color: #a0a0a0;
+}
+
+.staffprofile .card-body .nav.nav-pills .nav-link.active,.staffprofile .card-body .nav.nav-pills .nav-pills .show>.nav-link {
+	background: #FFFFFF;
+}
+
+.staffprofile .card-body .nav.nav-pills .nav-link.active {
+	border-bottom: solid 2px #727cf5;
+}
+
+
+.staffprofile .card-body .nav.nav-pills a.nav-link.active {
+	color: #727cf5;
+}
+
+.staffprofile .card-body .form-row .form-group input[readonly='readonly'] {
+	padding: 4px 10px;
+}
