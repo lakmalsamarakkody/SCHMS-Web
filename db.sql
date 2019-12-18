@@ -391,8 +391,12 @@ CREATE TABLE `message` (
   `created_on` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`),
+  KEY `receiver_id` (`receiver_id`),
+  KEY `sender_id` (`sender_id`),
+  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,6 +405,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (1,3,5,'Thank you for your purchase. We have received your payment for item #13201. Best Ways Shop.\r\n\r\n','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL),(2,5,3,'thank you','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL),(3,3,5,'You are welcome','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1190,7 +1195,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `stu_staff_parent_id` (`ref_id`,`role_id`),
   KEY `user_user_role_id_fk` (`role_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1199,7 +1204,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-12-18 22:38:51',NULL);
+INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-12-18 22:38:51',NULL),(5,53,'student',NULL,NULL,'Default',7,'Active','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1246,7 +1251,7 @@ CREATE TABLE `user_role` (
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1255,7 +1260,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,'System Administrator','This user has full access to this system','2019-09-02 00:00:00','2019-12-09 20:24:26',NULL),(2,'Database Administrator',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(3,'Principal',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(4,'Academic Staff',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL);
+INSERT INTO `user_role` VALUES (1,'System Administrator','This user has full access to this system','2019-09-02 00:00:00','2019-12-09 20:24:26',NULL),(2,'Database Administrator',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(3,'Principal',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(4,'Academic Staff',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(7,'Student',NULL,'2019-12-18 00:00:00','2019-12-18 00:00:00',NULL);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1299,4 +1304,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-18 23:33:31
+-- Dump completed on 2019-12-18 23:50:36
