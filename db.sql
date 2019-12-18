@@ -476,7 +476,7 @@ CREATE TABLE `parent` (
 
 LOCK TABLES `parent` WRITE;
 /*!40000 ALTER TABLE `parent` DISABLE KEYS */;
-INSERT INTO `parent` VALUES (4,'677660198V','Warnakulasooriya Mahawaduge Mallika Peiris','W M M','Peiris','1967-09-22','Female','mallika.pieris67@gmail.com','0332289862','0771007842','None',NULL,30000,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(5,'591231408V','Samarakkodi Arachchige lakshman samarakkodi','S A L','Samarakkodi','1959-02-28','Male','lakshmansamarakkodi@gmail.com','0332296548','0760411256','karate instructor',NULL,25000,'144/5A 3rd lane','Veyangoda',7,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(6,'647845211V','Sanath Mallawarachchi','W S','Mallawarachchi','1964-02-25','Male',NULL,NULL,NULL,'AirLanka officer',NULL,12000,'no 30 malkelum, kalagedihena.','Nittambuwa',NULL,'2019-10-03 06:28:05','2019-10-03 06:28:05',NULL),(11,'536751208V','Heshani Dewage Hashara Munasinghe','Hashara','Munasinghe','1953-05-13','Female','Hashara123@gmail.com','0332256985','0774924351','Nursing','Head of Dept',50000,'144/5A, 3rd Lane, vgeytra','Bambalapitiya',5,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(13,'653257508V','Dilanka Rukshan','D','Rukshan','1965-02-04','Male','dilankarukshan@gmail.com','0332246648','0756924351','Carpenter',NULL,24000,'144/5A, 3rd Lane, Plamgrove Estate','Negombo',7,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL),(14,'661234567V','Rohan Fernando','R','Fernando','1966-06-10','Male','rfernando@gmail.com',NULL,NULL,'Teacher',NULL,60000,'10, 6th Lane, gorakadeniya','Nittambuwa',7,'2019-11-24 03:15:42','2019-11-24 03:15:42',NULL),(15,'561235602V','Manel Wickramarachchi','M','Wickramarachchi','1956-03-28','Male','manelwije@live.com','0332256412','0774856953','Software Engineer','Associate',65000,'5A, Rose Lane,','Gampaha',7,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL),(16,'199807814372','Lakmal','Lakmal','Samarakkody','2019-12-13','Male','lakmalsamarakkody@gmail.comd','0332278673','0774924351','Teacher',NULL,10000,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',19,'2019-12-13 04:59:23','2019-12-13 04:59:23',NULL),(17,'269807814375','Lakmal','Lakmal','Samarakkody','2019-12-13','Female','lakmalsamarakkody@gmail.comsdsfdsfd','0776831019','0776831019','jhdgf','khgshg',545154,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',17,'2019-12-13 05:08:57','2019-12-13 05:08:57',NULL),(18,'198724512345','Lakmal','Lakmal','Samarakkody','2019-12-12','Male','lakmalsamarakkody@gmail.vfbfdbfdb',NULL,'0774924351','None',NULL,NULL,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',18,'2019-12-14 13:50:51','2019-12-14 13:50:51',NULL);
+INSERT INTO `parent` VALUES (4,'677660198V','Warnakulasooriya Mahawaduge Mallika Peiris','W M M','Peiris','1967-09-22','Female','mallika.pieris67@gmail.com','0332289862','0771007842','None',NULL,30000,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(5,'591231408V','Samarakkodi Arachchige lakshman samarakkodi','S A L','Samarakkodi','1959-02-28','Male','lakshmansamarakkodi@gmail.com','0332296548','0760411256','karate instructor',NULL,25000,'144/5A 3rd lane','Veyangoda',7,'2019-09-26 23:54:13','2019-09-26 23:54:13',NULL),(6,'647845211V','Sanath Mallawarachchi','W S','Mallawarachchi','1964-02-25','Male',NULL,NULL,NULL,'AirLanka officer',NULL,12000,'no 30 malkelum, kalagedihena.','Nittambuwa',NULL,'2019-10-03 06:28:05','2019-10-03 06:28:05',NULL),(11,'536751208V','Heshani Dewage Hashara Munasinghe','Hashara','Munasinghe','1953-05-13','Female','Hashara123@gmail.com','0332256985','0774924351','Nursing','Head of Dept',50000,'144/5A, 3rd Lane, vgeytra','Bambalapitiya',5,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(13,'653257508V','Dilanka Rukshan','D','Rukshan','1965-02-04','Male','dilankarukshan@gmail.com','0332246648','0756924351','Carpenter',NULL,24000,'144/5A, 3rd Lane, Plamgrove Estate','Negombo',7,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL),(14,'661234567V','Rohan Fernando','R','Fernando','1966-06-10','Male','rfernando@gmail.com',NULL,NULL,'Teacher',NULL,60000,'10, 6th Lane, gorakadeniya','Nittambuwa',7,'2019-11-24 03:15:42','2019-11-24 03:15:42',NULL),(15,'561235602V','Manel Wickramarachchi','M','Wickramarachchi','1956-03-28','Male','manelwije@live.com','0332256412','0774856953','Software Engineer','Associate',65000,'5A, Rose Lane,','Gampaha',7,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL),(16,'199807814372','Lakmal','Lakmal','Samarakkody','2019-12-13','Male','lakmalsamarakkody@gmail.comd','0332278673','0774924351','Teacher',NULL,10000,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',19,'2019-12-13 04:59:23','2019-12-13 04:59:23',NULL),(17,'269807814375','Lakmal','Lakmal','Samarakkody','2019-12-13','Female','lakmalsamarakkody@gmail.comsdsfdsfd','0776831019','0776831019','jhdgf','khgshg',54000,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',17,'2019-12-13 05:08:57','2019-12-13 05:08:57',NULL),(18,'198724512345','Lakmal','Lakmal','Samarakkody','2019-12-12','Male','lakmalsamarakkody@gmail.vfbfdbfdb',NULL,'0774924351','None',NULL,NULL,'144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',18,'2019-12-14 13:50:51','2019-12-14 13:50:51',NULL);
 /*!40000 ALTER TABLE `parent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1024,7 +1024,7 @@ CREATE TABLE `student_has_sport` (
   KEY `student_has_sport_student_id_fk` (`student_id`),
   CONSTRAINT `student_has_sport_sport_id_fk` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_has_sport_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1033,7 +1033,7 @@ CREATE TABLE `student_has_sport` (
 
 LOCK TABLES `student_has_sport` WRITE;
 /*!40000 ALTER TABLE `student_has_sport` DISABLE KEYS */;
-INSERT INTO `student_has_sport` VALUES (83,53,2,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(84,53,5,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(94,52,4,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL),(95,52,1,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL),(96,52,2,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL);
+INSERT INTO `student_has_sport` VALUES (83,53,2,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(84,53,5,'2019-12-14 21:59:42','2019-12-14 21:59:42',NULL),(94,52,4,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL),(95,52,1,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL),(96,52,2,'2019-12-15 03:07:52','2019-12-15 03:07:52',NULL),(97,59,2,'2019-12-15 22:19:29','2019-12-15 22:19:29',NULL),(98,59,5,'2019-12-15 22:19:29','2019-12-15 22:19:29',NULL);
 /*!40000 ALTER TABLE `student_has_sport` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1199,7 +1199,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-10-08 00:00:00',NULL);
+INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-12-18 22:38:51',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1299,4 +1299,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-15 21:58:46
+-- Dump completed on 2019-12-18 23:33:31
