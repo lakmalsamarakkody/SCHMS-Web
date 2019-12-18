@@ -832,7 +832,7 @@ class Student extends Controller {
         endif;
     }
 
-    public function profile($id) {
+    public function profile($student_id) {
 
         //CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
@@ -865,13 +865,12 @@ class Student extends Controller {
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
 
-        // QUERY ( USER THEMES )
-        foreach( $this->model_user->select('theme')->groupBy('theme')->get() as $key => $element ):
-            $data['user']['themes'][$key]['name'] = $element->theme;
-        endforeach;
+        // USER THEMES
+        $data['user']['themes'][1]['name'] = 'Default';
+        $data['user']['themes'][2]['name'] = 'Dark';
 
         // CHECK EXISTING STUDENT
-        $student = $this->model_student->where('id', '=', $id)->first();
+        $student = $this->model_student->where('id', '=', $student_id)->first();
 
         // VIEW ERROR IF NO STUDENT EXIST
         if ( $student == null ){
@@ -894,7 +893,7 @@ class Student extends Controller {
         $data['religion']['name'] = $class_data->religion;
 
         // PRENT
-        $parents = $this->model_student_parent->select('parent_id','relation_id')->where('student_id', '=', $id)->get();
+        $parents = $this->model_student_parent->select('parent_id','relation_id')->where('student_id', '=', $student_id)->get();
         if ( $parents !== null ):
             foreach( $parents as $key => $el ):
                 $data['parents'][$key] = $this->model_parent->find($el->parent_id);
@@ -903,11 +902,12 @@ class Student extends Controller {
             endforeach;
         endif;
 
-        // TOOLS DATA
-        $tools_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $student->id)->where('user_type', '=', "student")->first();
-        if ( $tools_data !== NULL):
-            $data['tools']['user_role'] = $this->model_user_role->where('id', '=', $tools_data->role_id)->first()->name;
-            $data['tools']['theme'] = $tools_data->theme;
+        // SETTINGS DATA
+        $settings_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $student_id)->where('user_type', '=', "student")->first();
+        if ( $settings_data !== NULL):
+            $data['settings']['user_role']['id'] = $settings_data->role_id;
+            $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['theme'] = $settings_data->theme;
         endif;
 
         // RENDER VIEW

@@ -737,7 +737,7 @@ class Staff extends Controller {
         endif;
     }
 
-    public function profile() {
+    public function profile($staff_id) {
 
         //CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
@@ -755,6 +755,80 @@ class Staff extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODEL
+        $this->load->model('staff');
+        $this->load->model('staff/type');
+        $this->load->model('staff/subject');
+        $this->load->model('user');
+        $this->load->model('user/role');
+        $this->load->model('religion');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('subject');
+
+        //STUDENT CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        //SUBJECT
+        foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('name')->get() as $key => $element ):
+            $data['subjects'][$key]['id'] = $element->id;
+            $data['subjects'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( USER ROLES )
+        foreach( $this->model_user_role->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->name;
+        endforeach;
+
+        // USER THEMES
+        $data['user']['themes'][1]['name'] = 'Default';
+        $data['user']['themes'][2]['name'] = 'Dark';
+
+        // CHECK EXISTING STAFF
+        $staff = $this->model_staff->where('id', '=', $staff_id)->first();
+
+        // VIEW ERROR IF NO STAFF EXIST
+        if ( $staff == null ){
+            return http_response_code(404);
+        }
+
+        // BIO DATA
+        $data['staff'] = $staff;
+        $data['religion']['name'] = $this->model_religion->select('name')->where('id', '=', $staff->religion_id)->first()->name;
+        $data['staff']['type'] = $this->model_staff_type->select('name')->where('id', '=', $staff->type_id)->first()->name;
+
+        // BIO DATA : TEACHER IN CHARGE
+        $class_data = $this->model_class->select('id','grade_id', 'name')->where('staff_id', '=', $staff_id)->first();
+        if ( $class_data !== NULL):
+            $grade_data = $this->model_grade->select('name')->where('id', '=', $class_data->grade_id)->first();
+            $data['tic']['class']['id'] = $class_data->id;
+            $data['tic']['class']['name'] = $grade_data->name . " - " . $class_data->name;
+        endif;
+
+        // BIO DATA : SUBJECTS
+        $subjects = $this->model_staff_subject->select('subject_id')->where('staff_id', '=', $staff_id);
+        $staff_subject_ids = array();
+        foreach ( $subjects->get() as $key => $element ):
+            array_push($staff_subject_ids, $element->subject_id);
+        endforeach;
+        $data['staff_subjects'] = $staff_subject_ids;
+
+        // SETTINGS DATA
+        $settings_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $staff_id)->where('user_type', '=', "staff")->first();
+        if ( $settings_data !== NULL):
+            $data['settings']['user_role']['id'] = $settings_data->role_id;
+            $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['theme'] = $settings_data->theme;
+        endif;
 
         // RENDER VIEW
         $this->load->view('staff/profile', $data);
