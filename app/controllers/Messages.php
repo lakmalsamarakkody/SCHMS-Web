@@ -36,13 +36,39 @@ class Messages extends Controller {
         $converstations = $this->model_message->select('id', 'sender_id')->where('receiver_id', '=', $_SESSION['user']['id'])->groupBy('sender_id')->orderBy('created_on', 'desc')->get();
         foreach( $converstations as $key => $element ):
 
-            // RESOLVE SENDER
-            $data['converstations'][$key]['user']['username']       = $this->model_user->find($element->sender_id)->username;
-            $data['converstations'][$key]['user']['id']             = $element->sender_id;
+            $user = $this->model_user->find($element->sender_id);
 
-            // echo "<pre>";
-            //     var_dump( $element->sender_id );
-            // echo "</pre>";
+            // $messages = $this->model_message->select('id', 'body')->where('sender_id', $_SESSION['user']['id'])->where('receiver_id', $element->sender_id)->orderBy('created_on', 'desc')->first();
+            // if ( $messages === null ):
+            // $messages = $this->model_message->select('id', 'body')->where('receiver_id', $_SESSION['user']['id'])->where('sender_id', $element->sender_id)->orderBy('created_on', 'desc')->first();
+            // endif;
+
+            $messages = $this->model_message->select('id', 'body');
+            $messages->where(function($query) {
+                $query->orWhere(function ($query) {
+                    $query->where('receiver_id', $_SESSION['user']['id']);
+                });
+                $query->orWhere(function ($query) {
+                    $query->where('sender_id', $_SESSION['user']['id']);
+                });
+            });
+            $messages->where(function($query) use ($element) {
+                $query->orWhere(function ($query) use ($element) {
+                    $query->where('receiver_id', $element->sender_id);
+                });
+                $query->orWhere(function ($query) use ($element) {
+                    $query->where('sender_id', $element->sender_id);
+                });
+            });
+            $messages->orderBy('created_on', 'desc');
+            $messages = $messages->first();
+
+            // RESOLVE SENDER
+            $data['converstations'][$key]['user']['username']           = $user->username;
+            $data['converstations'][$key]['user']['id']                 = $element->sender_id;
+            $data['converstations'][$key]['user']['type']               = $user->user_type;
+            $data['converstations'][$key]['user']['ref_id']             = $user->ref_id;
+            $data['converstations'][$key]['user']['message']['body']    = $messages->body;
 
         endforeach;
 
