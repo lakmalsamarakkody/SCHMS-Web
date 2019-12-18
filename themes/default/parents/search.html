@@ -30,18 +30,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label for="gname">Name</label>
                                             <input type="text" class="form-control" name="gname" value="{{ (form.field.gname) ? form.field.gname }}"/>
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label for="grelation">Relationship</label>
                                             <select class="form-control" name="grelation">
-                                                <option selected disabled> - Select Relationship - </option>
+                                                <option value="" selected> - Select Relationship - </option>
                                                 {% for relationship in student_relations %}
                                                     {% if form.field.grelation == relationship.id %}
                                                     <option value="{{ relationship.id }}" selected>{{ relationship.name }}</option>
@@ -57,15 +57,15 @@
                                         <div class="form-group">
                                             <label for="ggen">Gender</label>
                                             <select class="form-control" name="ggen">
-                                                <option selected disabled> - Select Gender - </option>
+                                                <option value="" selected> - Select Gender - </option>
                                                 {% if form.field.ggen == "Male" %}
                                                 <option value="Male" selected>Male</option>
                                                 <option value="Female">Female</option>
                                                 {% elseif form.field.ggen == "Female" %}
-                                                <option value="Male" selected>Male</option>
+                                                <option value="Male">Male</option>
                                                 <option value="Female" selected>Female</option>
                                                 {% else %}
-                                                <option value="Male" selected>Male</option>
+                                                <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
                                                 {% endif %}
                                             </select>
@@ -76,7 +76,7 @@
                                         <div class="form-group">
                                             <label for="gcity">City</label>
                                             <select class="form-control" name="gcity">
-                                                <option selected disabled> - Select City - </option>
+                                                <option value="" selected> - Select City - </option>
                                                 {% for city in cities %}
                                                     {% if form.field.gcity == city.name %}
                                                     <option value="{{ city.name }}" selected>{{ city.name }}</option>
@@ -92,7 +92,7 @@
                                         <div class="form-group">
                                             <label for="goccu">Occupation</label>
                                             <select class="form-control" name="goccu">
-                                                <option selected disabled> - Select Occupation - </option>
+                                                <option value="" selected> - Select Occupation - </option>
                                                 {% for occupation in occupations %}
                                                     {% if form.field.goccu == occupation.name %}
                                                     <option value="{{ occupation.name }}" selected>{{ occupation.name }}</option>
@@ -106,23 +106,7 @@
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="gpos">Position</label>
-                                            <select class="form-control" name="gpos">
-                                                <option selected disabled> - Select Position - </option>
-                                                {% for position in positions %}
-                                                    {% if form.field.gpos == position.name %}
-                                                    <option value="{{ position.name }}" selected>{{ position.name }}</option>
-                                                    {% else %}
-                                                    <option value="{{ position.name }}">{{ position.name }}</option>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="gincome">Annual Income &gt; </label>
+                                            <label for="gincome">Monthly Income &gt;&equals; </label>
                                             <input type="number" class="form-control" name="gincome" value="{{ (form.field.gincome) ? form.field.gincome }}"/>
                                         </div>   
                                     </div>
@@ -137,18 +121,18 @@
                                         </div>                                        
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label for="sname">Name</label>
                                             <input type="text" class="form-control" name="sname" value="{{ (form.field.sname) ? form.field.sname }}"/>
                                         </div>                                        
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-2">
                                         <div class="form-group">
                                             <label for="sclass">Class</label>
                                             <select class="form-control" name="sclass">
-                                                    <option selected disabled> - Select Class - </option>
+                                                    <option value="" selected> - Select Class - </option>
                                                     {% for class in classes %}
                                                         {% if form.field.sclass == class.id %}
                                                             <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
@@ -160,11 +144,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-2">
                                         <div class="form-group">
                                             <label for="sgrade">Grade</label>
                                             <select class="form-control" name="sgrade">
-                                                    <option selected disabled> - Select Grade - </option>
+                                                    <option value="" selected> - Select Grade - </option>
                                                     {% for grade in grades %}
                                                        {% if form.field.sgrade == grade.id %}
                                                             <option value="{{ grade.id }}" selected> Grade - {{ grade.name }} </option>
@@ -199,8 +183,11 @@
                                     <tr>
                                         <th width="1%" class="text-center" scope="col">ID</th>
                                         <th scope="col">Name</th>
+                                        <th width="10%" class="text-center" scope="col">NIC</th>
                                         <th width="10%" class="text-center" scope="col">DoB</th>
-                                        <th width="5%" class="text-center" scope="col">Gender</th>
+                                        <th width="1%" class="text-center" scope="col">Gender</th>
+                                        <th width="15%" class="text-center" scope="col">Occupation</th>
+                                        <th width="10%" class="text-center" scope="col">Mobile</th>             
                                         <th width="10%" class="text-center" scope="col">City</th>                                 
                                         <th width="12%" class="text-center" scope="col">&nbsp;</th>
                                     </tr>
@@ -211,8 +198,11 @@
                                         <tr>
                                             <th class="text-center" scope="row">{{ parent.id }}</th>
                                             <td> {{ parent.name }}</td>
+                                            <td> {{ parent.nic }}</td>
                                             <td class="text-center">{{ parent.dob }}</td>
                                             <td class="text-center">{{ parent.gender }}</td>
+                                            <td class="text-center">{{ parent.occupation }}</td>
+                                            <td class="text-center">{{ parent.mobile }}</td>
                                             <td class="text-center">{{ parent.city }}</td>                              
                                             <td class="text-right">
                                                 <a href="{{ app.url }}/parent/profile/{{ parent.id }}"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i> View Profile</button></a>

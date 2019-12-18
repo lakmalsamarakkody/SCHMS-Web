@@ -258,7 +258,7 @@ class Staff extends Controller {
         endforeach;
 
         // CITY
-        foreach( $this->model_staff->select('id', 'city')->orderBy('city')->distinct()->get() as $key => $element ):
+        foreach( $this->model_staff->select('id', 'city')->groupBy('city')->orderBy('city')->distinct()->get() as $key => $element ):
             $data['staff_city'][$key]['id'] = $element->id;
             $data['staff_city'][$key]['name'] = $element->city;
         endforeach;
@@ -299,73 +299,117 @@ class Staff extends Controller {
             $data['form']['field']['religion'] = ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ) ? $this->request->post['religion'] : "";
 
             // Eloquent OBJECT
-            $user = $this->model_user;
-        
-            // FILTER ( ROLE ID )
-            if ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ):
-                $user->where(function($query) {
-                    $query->where('role_id', '=', $this->request->post['role_id']);
+            $staff = $this->model_staff->select('id', 'employee_number', 'type_id', 'admission_date', 'nic', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_home' , 'phone_mobile', 'address', 'city', 'district_id', 'religion_id');
+
+            // FILTER ( EMPLOYEE ID )
+            if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
+                $staff->where(function($query) {
+                    $query->where('employee_number', '=', $this->request->post['staff_id']);
                 });
             endif;
 
-            // FILTER ( REFERENCE ID )
-            if ( isset($this->request->post['ref_id']) AND !empty($this->request->post['ref_id']) ):
-                $user->where(function($query) {
-                    $query->where('ref_id', '=', $this->request->post['ref_id']);
+            // FILTER ( ADMISSION DATE )
+            if ( isset($this->request->post['adddate']) AND !empty($this->request->post['adddate']) ):
+                $staff->where(function($query) {
+                    $query->where('admission_date', '=', $this->request->post['adddate']);
                 });
             endif;
 
-            // FILTER ( TYPE )
-            if ( isset($this->request->post['type']) AND !empty($this->request->post['type']) ):
-                $user->where(function($query) {
-                    $query->where('user_type', '=', $this->request->post['type']);
+            // FILTER ( DATE OF BIRTH )
+            if ( isset($this->request->post['dob']) AND !empty($this->request->post['dob']) ):
+                $staff->where(function($query) {
+                    $query->where('dob', '=', $this->request->post['dob']);
                 });
             endif;
 
             // FILTER ( NAME )
-            // if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
-            //     $user->where(function($query) {
-            //         $query->where('class_id', 'LIKE', '%'.$this->request->post['class_id'].'%');
-            //     });
-            // endif;
-
-            // FILTER ( STATUS )
-            if ( isset($this->request->post['status']) AND !empty($this->request->post['status']) ):
-                $user->where(function($query) {
-                    $query->where('status', '=', $this->request->post['status']);
+            if ( isset($this->request->post['name']) AND !empty($this->request->post['name']) ):
+                $staff->where(function($query) {
+                    $query->where('full_name', 'LIKE', '%'.$this->request->post['name'].'%');
                 });
             endif;
 
-            // FILTER ( USERNAME )
-            if ( isset($this->request->post['username']) AND !empty($this->request->post['username']) ):
-                $user->where(function($query) {
-                    $query->where('username', '=', $this->request->post['username']);
+            // FILTER ( GENDER )
+            if ( isset($this->request->post['gender']) AND !empty($this->request->post['gender']) ):
+                $staff->where(function($query) {
+                    $query->where('gender', '=', $this->request->post['gender']);
                 });
             endif;
 
-            // FILTER ( CREATED ON )
-            if ( isset($this->request->post['created_on']) AND !empty($this->request->post['created_on']) ):
-                $user->where(function($query) {
-                    $query->where('created_on', '=', $this->request->post['created_on']);
+            // FILTER ( NIC )
+            if ( isset($this->request->post['nic']) AND !empty($this->request->post['nic']) ):
+                $staff->where(function($query) {
+                    $query->where('nic', '=', $this->request->post['nic']);
+                });
+            endif;
+
+            // FILTER ( STAFF TYPE )
+            if ( isset($this->request->post['staff_type']) AND !empty($this->request->post['staff_type']) ):
+                $staff->where(function($query) {
+                    $query->where('type_id', '=', $this->request->post['staff_type']);
+                });
+            endif;
+
+            // FILTER ( CLASS )
+            if ( isset($this->request->post['class']) AND !empty($this->request->post['class']) ):
+                $tic_id = $this->model_class->select('staff_id')->where('id','=', $this->request->post['class'])->first();
+                if ( $tic_id != NULL):
+                    $staff->where(function($query) use ($tic_id) {
+                        $query->where('id', '=', $tic_id->staff_id);
+                    });
+                endif;
+            endif;
+
+            // FILTER ( SUBJECT )
+            if ( isset($this->request->post['subject']) AND !empty($this->request->post['subject']) ):
+                $subject = $this->model_staff_subject->select('staff_id')->where('subject_id','=', $this->request->post['subject'])->get();
+                if ( $subject != NULL):
+                    $subjects = array();
+                    foreach ( $subject as $key => $element ):
+                        array_push($subjects,$element->staff_id);
+                    endforeach;
+                    $staff->where(function($query) use ($subjects) {
+                        $query->whereIn('id', $subjects);
+                    });
+                endif;
+            endif;
+
+            // FILTER ( RELIGION )
+            if ( isset($this->request->post['religion']) AND !empty($this->request->post['religion']) ):
+                $staff->where(function($query) {
+                    $query->where('religion_id', '=', $this->request->post['religion']);
+                });
+            endif;
+
+            // FILTER ( CITY )
+            if ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ):
+                $staff->where(function($query) {
+                    $query->where('city', '=', $this->request->post['city']);
+                });
+            endif;
+
+            // FILTER ( DISTRICT )
+            if ( isset($this->request->post['district']) AND !empty($this->request->post['district']) ):
+                $staff->where(function($query) {
+                    $query->where('district_id', '=', $this->request->post['district']);
                 });
             endif;
 
             // APPEND DATA TO ARRAY
-            foreach( $user->get() as $key => $value ):
-                $data['users'][$key]['id'] = $value->id;
-                $data['users'][$key]['ref_id'] = $value->ref_id;
-                $data['users'][$key]['type'] = $value->user_type;
-                $data['users'][$key]['username'] = $value->username;
-                $data['users'][$key]['theme'] = $value->theme;
-                $data['users'][$key]['role'] = $value->role_id;
-                $data['users'][$key]['status'] = $value->status;
+            foreach( $staff->get() as $key => $value ):
+                $data['staff']['details'][$key]['id'] = $value->id;
+                $data['staff']['details'][$key]['employee_id'] = $value->employee_number;
+                $data['staff']['details'][$key]['type'] = $this->model_staff_type->select('name')->where('id', '=', $value->type_id)->first()->name;
+                $data['staff']['details'][$key]['nic'] = $value->nic;
+                $data['staff']['details'][$key]['gender'] = $value->gender;
+                $data['staff']['details'][$key]['name'] = $value->initials." ".$value->surname;
+                $data['staff']['details'][$key]['mobile'] = $value->phone_mobile;
             endforeach;
 
         endif;
 
 		// RENDER VIEW
         $this->load->view('staff/search', $data);
-        
     }
     
     public function add() {
@@ -693,7 +737,7 @@ class Staff extends Controller {
         endif;
     }
 
-    public function profile() {
+    public function profile($staff_id) {
 
         //CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
@@ -711,6 +755,80 @@ class Staff extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODEL
+        $this->load->model('staff');
+        $this->load->model('staff/type');
+        $this->load->model('staff/subject');
+        $this->load->model('user');
+        $this->load->model('user/role');
+        $this->load->model('religion');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('subject');
+
+        //STUDENT CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        //SUBJECT
+        foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('name')->get() as $key => $element ):
+            $data['subjects'][$key]['id'] = $element->id;
+            $data['subjects'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( USER ROLES )
+        foreach( $this->model_user_role->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->name;
+        endforeach;
+
+        // USER THEMES
+        $data['user']['themes'][1]['name'] = 'Default';
+        $data['user']['themes'][2]['name'] = 'Dark';
+
+        // CHECK EXISTING STAFF
+        $staff = $this->model_staff->where('id', '=', $staff_id)->first();
+
+        // VIEW ERROR IF NO STAFF EXIST
+        if ( $staff == null ){
+            return http_response_code(404);
+        }
+
+        // BIO DATA
+        $data['staff'] = $staff;
+        $data['religion']['name'] = $this->model_religion->select('name')->where('id', '=', $staff->religion_id)->first()->name;
+        $data['staff']['type'] = $this->model_staff_type->select('name')->where('id', '=', $staff->type_id)->first()->name;
+
+        // BIO DATA : TEACHER IN CHARGE
+        $class_data = $this->model_class->select('id','grade_id', 'name')->where('staff_id', '=', $staff_id)->first();
+        if ( $class_data !== NULL):
+            $grade_data = $this->model_grade->select('name')->where('id', '=', $class_data->grade_id)->first();
+            $data['tic']['class']['id'] = $class_data->id;
+            $data['tic']['class']['name'] = $grade_data->name . " - " . $class_data->name;
+        endif;
+
+        // BIO DATA : SUBJECTS
+        $subjects = $this->model_staff_subject->select('subject_id')->where('staff_id', '=', $staff_id);
+        $staff_subject_ids = array();
+        foreach ( $subjects->get() as $key => $element ):
+            array_push($staff_subject_ids, $element->subject_id);
+        endforeach;
+        $data['staff_subjects'] = $staff_subject_ids;
+
+        // SETTINGS DATA
+        $settings_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $staff_id)->where('user_type', '=', "staff")->first();
+        if ( $settings_data !== NULL):
+            $data['settings']['user_role']['id'] = $settings_data->role_id;
+            $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['theme'] = $settings_data->theme;
+        endif;
 
         // RENDER VIEW
         $this->load->view('staff/profile', $data);

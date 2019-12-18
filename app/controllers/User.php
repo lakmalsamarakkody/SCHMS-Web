@@ -86,8 +86,6 @@ class User extends Controller {
 
         //USER TYPE
         
-        
-
         // SEARCH
         if ( isset($this->request->post['isSubmited'])):
 
@@ -128,13 +126,6 @@ class User extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
-        //CHECK LOGIN STATUS
-		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-
-			header( 'Location:' . $this->config->get('base_url') . '/logout' );
-			exit();
-
-		endif;
 
         // RETRIVE USER_ROLE
         $this->load->model('user/role');
@@ -147,6 +138,39 @@ class User extends Controller {
 		// RENDER VIEW
         $this->load->view('user/permission', $data);
         
+    }
+
+
+    public function ajax_change_theme(){
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        //CHECK LOGIN STATUS
+        if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+            header( 'Location:' . $this->config->get('base_url') . '/logout' );
+            exit();
+        endif;
+
+        $validate = GUMP::is_valid($this->request->post,['theme' => 'required|contains,dark light']);
+        $is_valid_theme_name = GUMP::is_valid($this->request->post, array('theme' => 'required|contains,Dark Default'));
+        
+        if ( $is_valid_theme_name !== true  ){
+            echo json_encode( array( "status" => "error", "error" => "Invalid theme name." ), JSON_PRETTY_PRINT );
+            return;
+        }
+
+        // LOAD MODEL
+        $this->load->model('user');
+
+        // GET LOGGED IN USER'S MODEL
+        $User = $this->model_user->findOrFail($_SESSION['user']['id']);
+        $User->theme = $this->request->post['theme'];
+        $User->save();
+
+        echo json_encode(array("status" => "success"), JSON_PRETTY_PRINT);
+        return;
+
     }
     
 }

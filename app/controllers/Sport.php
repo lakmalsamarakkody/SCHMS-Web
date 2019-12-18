@@ -455,7 +455,7 @@ class Sport extends Controller {
             $data['form']['field']['city'] = ( isset($this->request->post['city']) AND !empty($this->request->post['city']) ) ? $this->request->post['city'] : "";
 
             // Eloquent OBJECT
-            $student = $this->model_student;
+            $student = $this->model_student->select('id', 'admission_no', 'admission_date', 'class_id', 'full_name', 'initials', 'surname', 'dob', 'gender', 'email', 'phone_mobile', 'address', 'city', 'district_id', 'religion_id');
 
             // FILTER ( ADMISSION NO )
             if ( isset($this->request->post['addno']) AND !empty($this->request->post['addno']) ):

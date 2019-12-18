@@ -1,77 +1,107 @@
 {{ template.header|raw }}
 
-<body style="overflow: hidden;">
+<body>
 
-    <div class="container-fluid portal">
+    <div class="container-fluid home">
         <div class="row">
+            
+            {{ template.sidenav|raw }}
 
-			{{ template.sidenav|raw }}
-
-            <div class="col-md-10 content p-0">
-                
+            <!-- START : CONTENT -->
+            <div class="col-md-10 content">               
                 {{ template.topmenu|raw }}
 
-				<div class="col-md-12 mx-auto content">
-					
-					<div class="messages">
+                <div class="messagesinbox">
 
-						<div class="row">
-							<div class="col-md-4 convos-list">
+                    <!-- START : HEALTH SEARCH -->
+                    <h4 class="page-title">Messages</h4>
 
-								<a href="/messages/conversation/26" class="media convo-list-item active">
-									<img class="mr-3" src="https://pbs.twimg.com/profile_images/915314874212868096/pn-v8Ru7_400x400.jpg" alt="Generic placeholder image">
-									<div class="media-body">
-										<h5 class="mt-0">Srivin Prabhash <div class="badge badge-primary ml-2">New</div> </h5>
-										<p class="excerpt">
-											Do eu sunt veniam aute exercitation veniam ..
-										</p>
-									</div>
-								</a>
+                    <div class="btn btn-primary btn-sm mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
 
-								<a href="/messages/conversation/26" class="media convo-list-item">
-									<img class="mr-3" src="https://res.cloudinary.com/practicaldev/image/fetch/s--7Cv2wOOr--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/21568/292135f9-e192-4e4c-8cc6-06c8191c1471.png" alt="Generic placeholder image">
-									<div class="media-body">
-										<h5 class="mt-0">Not Fernando</h5>
-										<p class="excerpt">
-											Do eu sunt veniam aute exercitation veniam ..
-										</p>
-									</div>
-								</a>
-
-								<a href="/messages/conversation/26" class="media convo-list-item">
-									<img class="mr-3" src="data:image/jpeg;base64,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" alt="Generic placeholder image">
-									<div class="media-body">
-										<h5 class="mt-0">Chakablast</h5>
-										<p class="excerpt">
-											Do eu sunt veniam aute exercitation veniam ..
-										</p>
-									</div>
-								</a>
-
-							</div>
-
-							<div class="col-md-8 convo">
+					<ul class="list-group mt-3">
+						
+						<li class="list-group-item">
 							
-								<!-- BODY -->
+							<a href="#">
+								<img src="https://pbs.twimg.com/profile_images/915314874212868096/pn-v8Ru7_400x400.jpg" class="avatar">
 								<div class="body">
-									Convo goes here
+									<h5>
+										Srivin Prabhash
+										<small class="badge badge-primary">NEW</small>
+									</h5>
+									<p>Laboris occaecat excepteur ea elit fugiat elit voluptate in sint id sit in consequat anim veniam sit eu.</p>
 								</div>
-
-								<div class="textarea">
-									<input type="text" class="form-control input-sm" type="text">
-									<button class="btn btn-primary btn-sm">Send</button>
+							</a>
+						</li>
+						
+						<li class="list-group-item">
+							
+							<a href="#">
+								<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7Cv2wOOr--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/21568/292135f9-e192-4e4c-8cc6-06c8191c1471.png" class="avatar">
+								<div class="body">
+									<h5>
+										Srivin Prabhash
+										<small class="badge badge-primary">NEW</small>
+									</h5>
+									<p>Laboris occaecat excepteur ea elit fugiat elit voluptate in sint id sit in consequat anim veniam sit eu.</p>
 								</div>
+							</a>
+						</li>
+						
+						<li class="list-group-item">
+							
+							<a href="#">
+								<img src="data:image/jpeg;base64,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" class="avatar">
+								<div class="body">
+									<h5>
+										Srivin Prabhash
+									</h5>
+									<p>Laboris occaecat excepteur ea elit fugiat elit voluptate in sint id sit in consequat anim veniam sit eu.</p>
+								</div>
+							</a>
+						</li>
 
-							</div>
-						</div>
+					</ul>
+                    <!-- END : HEALTH SEARCH -->
 
-					</div>
+                </div>
+                <!-- END : CONTENT -->
 
-				</div>
-			</div>
-            
+            </div>
         </div>
     </div>
 
-{{ template.footer|raw }}
+    <!-- NEW MESSAGE MODAL -->
+	<div class="modal fade" id="new-message-modal" tabindex="-1" role="dialog" aria-labelledby="new-message-modal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Compose New Message</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="form-group">
+						<label for="to">To</label>
+						<input type="text" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="message">Message</label>
+						<textarea class="form-control" placeholder="Type your message here." style="height: 150px;"></textarea>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-sm"><i class="la la-paper-plane"></i> &nbsp; Send</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    {{ template.footer|raw }}
+
 </body>

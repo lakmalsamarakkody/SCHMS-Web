@@ -1,72 +1,86 @@
-.messages h1 {
-	font-size: 25px;
-	color: #5a5a5a;
+.messagesinbox , .messagessingle{
+	padding: 4rem;
+	background: #DDD;
 }
 
-.messages .convos-list {
-	height: 600px;
-	overflow-y: auto;
-	border: solid 1px #CCC;
-	border-bottom: solid 2px #CCC;
-	padding: 0;
+.messagesinbox a {
+	text-decoration: none;
+	color: inherit;
 }
 
-.messages .convo {
-	height: 600px;
-	overflow-y: auto;
-	padding: 0;
-	overflow-x: hidden;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	border: solid 1px #CCC;
-	border-bottom: solid 2px #CCC;
-}
-
-.messages .convo .body {
-	padding: 15px;
-	overflow-y: auto;
-	flex-grow: 2;
-}
-
-.messages .convo .textarea {
-	border-top: solid 1px #CCC;
-	padding: 5px 10px;
-	width: 100%;
+.messagesinbox li.list-group-item a {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 }
 
-.messages .convo .textarea input {
-	height: 30px;
-	font-size: 14px;
-	margin-right: 10px;
+.messagesinbox li.list-group-item:hover {
+	cursor: pointer;
+	background: #ECECEC;
 }
 
-.messages .convos-list .convo-list-item {
-	padding: 10px 8px;
-	border-bottom: solid 2px #ececec;
-}
-
-.messages .convos-list .convo-list-item:hover, .messages .convos-list .convo-list-item.active {
-	background: #ececec;
-	text-decoration: none;
-}
-
-.messages .convos-list .convo-list-item img {
+.messagesinbox li.list-group-item img.avatar {
 	width: 45px;
 	height: 45px;
-	border-radius: 8px;
+	border-radius: 100%;
+	margin-right: 25px;
 }
 
-.messages .convos-list .convo-list-item h5 {
+.messagesinbox li.list-group-item .body h5 {
 	font-size: 15px;
-	color: #131313;
+	color: #2d2d2d;
 }
 
-.messages .convos-list .convo-list-item .excerpt {
+.messagesinbox li.list-group-item .body p {
 	font-size: 13px;
 	margin-bottom: 0;
-	color: #a7a7a7;
+}
+
+.messagesinbox .btn {
+	cursor: pointer;
+}
+
+.messagessingle .card .card-header {
+	display: flex;
+	align-items: center;
+	border-bottom: solid 1px #ECECEC;
+}
+
+.messagessingle .card .card-header img.avatar {
+	width: 45px;
+	height: 45px;
+	border-radius: 100%;
+	margin-right: 25px;
+}
+
+.messagessingle .card .card-header h5 {
+	margin-bottom: 0;
+}
+
+.messagessingle .card .card-body {
+	height: 600px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.messagessingle .single-msg img.avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+}
+
+.messagessingle .single-msg .media-body {
+	background: #efefef;
+	padding: 10px;
+	border-radius: 15px;
+	margin-bottom: 15px;
+}
+
+.messagessingle .single-msg p {
+	font-size: 14px;
+	margin-bottom: 0;
+}
+
+.messagessingle .single-msg.incoming .media-body {
+	background: #007bff;
+	color: #FFF;
 }

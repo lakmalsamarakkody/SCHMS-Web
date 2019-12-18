@@ -28,21 +28,25 @@
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/dataTables.jquery.min.css" />
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/dataTables.bootstrap4.min.css" />
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/dataTables.buttons.min.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/core-dataTables.css" /> -->
 
 	<!-- ALERTIFY -->
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/alertify.min.css" />
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/alertify.default.min.css" />
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/alertify.semantic.min.css" />
 	<link rel="stylesheet" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/alertify.bootstrap.min.css" />
-	
+
 
 	<!-- CSS : LOCAL -->
 	<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/core.css" />
 
 	<!-- CSS : LOCAL : THEME -->
-	<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/theme-default.css" />
-	<!-- <link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/theme-dark.css" /> -->
-	<!-- <link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/core-dataTables.css" /> -->
+	{% if user.theme == 'Dark' %}
+		<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/theme-dark.css" />
+	{% else %}
+		<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/theme-default.css" />
+	{% endif %}
+
 
 	<!-- CSS : LOCAL : PAGES -->
 	<link rel="stylesheet" type="text/css" href="{{ app.url }}/themes/{{ app.theme }}/assets/css/style-attendance.css" />

@@ -28,35 +28,6 @@
 .stuprofile{
     padding: 4rem;
 }
-/*
-.stuprofile .profile-card img.avatar {
-	width: 150px;
-	border-radius: 100%;
-}
-
-.stuprofile .profile-card h2 {
-	font-size: 18px;
-	color: #000000;
-	margin-bottom: 25px;
-}
-
-.stuprofile .profile-card .data .data-row {
-	display: flex;
-	padding: 0px 25px;
-	justify-content: space-between;
-}
-
-.stuprofile .profile-card .form-group .label {
-	font-size: 14px;
-}
-
-.stuprofile .profile-card .form-group .form-control {
-	padding: 8px;
-	font-size: 13px;
-	background: #FFF;
-	border: dotted 1px #CCC;
-}*/
-
 
 .stuprofile img.avatar {
 	width: 50px;
@@ -85,9 +56,4 @@
 
 .stuprofile .card-body .nav.nav-pills a.nav-link.active {
 	color: #727cf5;
-}
-
-.stuprofile .card-body .form-row .form-group input[readonly='readonly'] {
-	font-size: 13px;
-	padding: 4px 10px;
 }

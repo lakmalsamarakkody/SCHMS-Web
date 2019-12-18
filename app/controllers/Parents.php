@@ -73,6 +73,8 @@ class Parents extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODEL
+        $this->load->model('student');
+        $this->load->model('student/parent');
         $this->load->model('student/relation');
         $this->load->model('parent');
         $this->load->model('class');
@@ -152,9 +154,7 @@ class Parents extends Controller {
              */
 
             // Eloquent OBJECT
-            $parents = $this->model_parent;
-
-            var_dump($this->request->post['gnic']);
+            $parents = $this->model_parent->select('id');
 
             // FILTER ( NIC NO )
             if ( isset($this->request->post['gnic']) AND !empty($this->request->post['gnic']) ):
@@ -163,38 +163,127 @@ class Parents extends Controller {
                 });
             endif;
 
+            // FILTER ( NAME )
+            if ( isset($this->request->post['gname']) AND !empty($this->request->post['gname']) ):
+                $parents->where(function($query) {
+                    $query->where('full_name', 'LIKE', '%'.$this->request->post['gname'].'%');
+                });
+            endif;
+
+            // FILTER ( GENDER )
+            if ( isset($this->request->post['ggen']) AND !empty($this->request->post['ggen']) ):
+                $parents->where(function($query) {
+                    $query->where('gender', '=', $this->request->post['ggen']);
+                });
+            endif;
+
+            // FILTER ( CITY )
+            if ( isset($this->request->post['gcity']) AND !empty($this->request->post['gcity']) ):
+                $parents->where(function($query) {
+                    $query->where('city', '=', $this->request->post['gcity']);
+                });
+            endif;
+
+            // FILTER ( OCCUPATION )
+            if ( isset($this->request->post['goccu']) AND !empty($this->request->post['goccu']) ):
+                $parents->where(function($query) {
+                    $query->where('occupation', '=', $this->request->post['goccu']);
+                });
+            endif;
+
+            // FILTER ( INCOME )
+            if ( isset($this->request->post['gincome']) AND !empty($this->request->post['gincome']) ):
+                $parents->where(function($query) {
+                    $query->where('income', '>=', $this->request->post['gincome']);
+                });
+            endif;
+
+            $parent_ids = array();
+            foreach( $parents->get() as $el ):
+                array_push($parent_ids, $el->id);
+            endforeach;
+
             /**
              * GET RELEVENT STUDENT_ID
              */
 
-            // if ( $student_id ):
-            //     $parents->whereIn('student_d', $students)
-            // endif;
+            // Eloquent OBJECT
+            $students = $this->model_student->select('id');
 
-            // $parents->get();
+            // FILTER ( ADMISSION NO )
+            if ( isset($this->request->post['saddno']) AND !empty($this->request->post['saddno']) ):
+                $students->where(function($query) {
+                    $query->where('admission_no', '=', $this->request->post['saddno']);
+                });
+            endif;
 
-            // APPEND DATA TO ARRAY
-            foreach( $parents->get() as $key => $value ):
+            // FILTER ( NAME )
+            if ( isset($this->request->post['sname']) AND !empty($this->request->post['sname']) ):
+                $students->where(function($query) {
+                    $query->where('full_name', 'LIKE', '%'.$this->request->post['sname'].'%');
+                });
+            endif;
 
-                // $parent_data = DB::table('student')
-                //     ->join('student_has_class', 'student.id', '=', 'student_has_class.student_id')
-                //     ->join('class', 'student_has_class.class_id', '=', 'class.id')
-                //     ->join('grade', 'class.grade_id', '=', 'grade.id')
-                //     ->select('student_has_class.index_no', 'student_has_class.class_id', 'class.name', 'grade.name')
-                //     ->where('student.id', '=', $value->id)->first();
+            // FILTER ( CLASS )
+            if ( isset($this->request->post['sclass']) AND !empty($this->request->post['sclass']) ):
+                $students->where(function($query) {
+                    $query->where('class_id', '=', $this->request->post['sclass']);
+                });
+            endif;
 
-                // foreach ( $this->model_student_sport->where('student_id', '=', $value->id)->get() as $key2 => $el ):
-                //     $data['students'][$key]['sport'][$key2] = $el->sport_id;
-                // endforeach;
+            // FILTER ( GRADE )
+            if ( isset($this->request->post['sgrade']) AND !empty($this->request->post['sgrade']) ):
+                $class = $this->model_class->select('id')->where('grade_id', '=', $this->request->post['sgrade'])->get();
+                if ( $class != NULL ):
+                    $classes = array();
+                    foreach ( $class as $key => $element ):
+                        array_push($classes, $element->id);
+                    endforeach;
+                    $students->where(function($query) use ($classes) {
+                        $query->whereIn('class_id', $classes);
+                    });
+                endif; 
+            endif;
 
-                $data['parents'][$key]['id'] = $value->id;
-                // $data['parents'][$key]['class'] = $parent_data->name;
-                // $data['parents'][$key]['index'] = $parent_data->index_no;
-                $data['parents'][$key]['name'] = $value->initials." ".$value->surname;
-                $data['parents'][$key]['gender'] = $value->gender;
-                $data['parents'][$key]['dob'] = $value->dob;
-                $data['parents'][$key]['city'] = $value->city;
+            $student_ids = array();
+            foreach( $students->get() as $el ):
+                array_push($student_ids, $el->id);
             endforeach;
+
+            // RELATION
+            $parent_relation = $this->model_student_parent->select('id', 'parent_id');
+
+            // FILTER ( RELATION ID )
+            if ( isset($this->request->post['grelation']) AND !empty($this->request->post['grelation']) ):
+                $parent_relation->where(function($query) {
+                    $query->where('relation_id', '=', $this->request->post['grelation']);
+                });
+            endif;
+
+            // CROSS MATCH ( is non empty array )
+            $parent_relation->whereIn('student_id', $student_ids);
+            $parent_relation->whereIn('parent_id', $parent_ids);
+
+            foreach( $parent_relation->get() as $key => $el ):
+
+                /**
+                 * Query details of the parents using the parent table by
+                 * $el->parent_id and append them into the twig buffer
+                 */
+                $parent_data = $this->model_parent->find($el->parent_id);
+
+                // TWIG
+                $data['parents'][$key]['id'] = $parent_data->id;
+                $data['parents'][$key]['nic'] = $parent_data->nic;
+                $data['parents'][$key]['name'] = $parent_data->initials." ".$parent_data->surname;
+                $data['parents'][$key]['gender'] = $parent_data->gender;
+                $data['parents'][$key]['dob'] = $parent_data->dob;
+                $data['parents'][$key]['occupation'] = $parent_data->occupation;
+                $data['parents'][$key]['mobile'] = $parent_data->phone_mobile;
+                $data['parents'][$key]['city'] = $parent_data->city;
+
+            endforeach;
+
         endif;
         
 		// RENDER VIEW
