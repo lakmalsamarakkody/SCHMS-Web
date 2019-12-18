@@ -16,6 +16,35 @@ class Data extends Controller {
         header('Accept-Ranges:bytes');
         readfile($path);
     }
+
+
+
+    // PROFILE PICTURE
+    public function propic($action = null, $id = null) {
+
+        // JPG
+        header('Content-type: image/jpg');
+
+        if ( $action !== null && $id !== null ):
+
+            if ( $action == 'student' ):
+
+                // MODELS
+                $this->load->model('student');
+
+                // CHECK USER
+                $student = $this->model_student->select('id')->where('id', '=', $id)->first();
+                if ( $student !== null ):
+                    $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/students/'.$id.'.jpg');
+                    imagejpeg($image);
+                    $image->destroy();
+                endif;
+
+
+            endif;
+
+        endif;
+    }
 }
 
 ?>
