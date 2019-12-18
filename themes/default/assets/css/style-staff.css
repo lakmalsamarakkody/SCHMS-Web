@@ -58,7 +58,3 @@
 .staffprofile .card-body .nav.nav-pills a.nav-link.active {
 	color: #727cf5;
 }
-
-.staffprofile .card-body .form-row .form-group input[readonly='readonly'] {
-	padding: 4px 10px;
-}
