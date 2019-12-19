@@ -21,11 +21,11 @@
 						{% for converstation in converstations %}
 						<li class="list-group-item">
 							<a href="{{ app.url }}/messages/{{ converstation.user.id }}">
-								<img src="{{ app.url }}/data/propic/{{ converstation.user.type }}/{{ converstation.user.ref_id }}" class="avatar">
+								<img src="{{ app.url }}/data/propic/{{ converstation.image.path }}" class="avatar">
 								<div class="body">
 									<h5>
-										Display Name
-										<small class="badge badge-primary">NEW</small>
+										{{ converstation.user.name }}
+										<small class="badge badge-primary">New</small>
 									</h5>
 									<p>{{ converstation.user.message.body }}</p>
 								</div>

@@ -1,6 +1,5 @@
 .messagesinbox , .messagessingle{
 	padding: 4rem;
-	background: #DDD;
 }
 
 .messagesinbox a {
@@ -40,9 +39,14 @@
 }
 
 .messagessingle .card .card-header {
-	display: flex;
+	/* display: flex; */
+	color: #8f75da;
 	align-items: center;
 	border-bottom: solid 1px #ECECEC;
+}
+
+.messagessingle .card .card-header :hover {
+	text-decoration: none;
 }
 
 .messagessingle .card .card-header img.avatar {
@@ -54,12 +58,14 @@
 
 .messagessingle .card .card-header h5 {
 	margin-bottom: 0;
+	color: #8f75da;
 }
 
 .messagessingle .card .card-body {
-	height: 600px;
+	height: 45vh;
 	overflow-x: hidden;
 	overflow-y: auto;
+	border: 0rem;
 }
 
 .messagessingle .single-msg img.avatar {
@@ -69,10 +75,19 @@
 }
 
 .messagessingle .single-msg .media-body {
-	background: #efefef;
-	padding: 10px;
-	border-radius: 15px;
-	margin-bottom: 15px;
+	/* background-image: linear-gradient(90deg,#8f75da,#727cf5 30%); */
+	background: #727cf5;
+	/* background: #efefef; */
+	padding: 0.5rem 1rem 0.5rem 1rem;
+	border-radius: 2rem;
+	margin-bottom: 1rem;
+	color: #FFF;
+}
+
+.messagessingle .single-msg.incoming .media-body {
+	/* background-image: linear-gradient(90deg,#8f75da,#727cf5 70%); */
+	background: #8f75da;
+	color: #FFF;
 }
 
 .messagessingle .single-msg p {
@@ -80,7 +95,6 @@
 	margin-bottom: 0;
 }
 
-.messagessingle .single-msg.incoming .media-body {
-	background: #007bff;
-	color: #FFF;
+.messagessingle .card .card-footer {
+	border: 0rem;
 }
