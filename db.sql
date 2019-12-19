@@ -396,7 +396,7 @@ CREATE TABLE `message` (
   KEY `sender_id` (`sender_id`),
   CONSTRAINT `message_ibfk_1` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `message_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -405,7 +405,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,3,5,'Thank you for your purchase. We have received your payment for item #13201. Best Ways Shop.\r\n\r\n','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL),(2,5,3,'thank you','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL),(3,3,5,'You are welcome','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL);
+INSERT INTO `message` VALUES (1,3,5,'Thank you for your purchase. We have received your payment for item #13201. Best Ways Shop.\r\n\r\n','2019-12-18 00:02:00','2019-12-18 00:00:00',NULL),(2,5,3,'thank you','2019-12-18 00:05:00','2019-12-18 00:00:00',NULL),(3,3,5,'You are welcome','2019-12-18 00:07:00','2019-12-18 00:00:00',NULL),(9,3,5,'hello, how are you?','2019-12-19 06:21:47','2019-12-19 06:21:47',NULL);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1204,7 +1204,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-12-18 22:38:51',NULL),(5,53,'student',NULL,NULL,'Default',7,'Active','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL);
+INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-12-19 05:25:31',NULL),(5,53,'student',NULL,NULL,'Default',7,'Active','2019-12-18 00:00:00','2019-12-18 00:00:00',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1304,4 +1304,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-18 23:50:36
+-- Dump completed on 2019-12-19  7:10:37
