@@ -40,7 +40,11 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="ref_id">Reference ID</label>
-                                            <input type="number" class="form-control" id="ref_id" value="{{ (form.field.ref_id) ? form.field.ref_id }}"/>
+                                            {% if form.field.ref_id %}
+                                                <input type="number" class="form-control" name="ref_id" value="{{ form.field.ref_id }}"/>
+                                            {% else %}
+                                                <input type="number" class="form-control" name="ref_id"/>
+                                            {% endif %}
                                         </div>
                                     </div>
 
@@ -48,24 +52,13 @@
                                         <div class="form-group">
                                             <label for="type">Type</label>
                                             <select class="form-control" name="type">
-                                                {% for type in user.types %}
-                                                    {% if form.field.type == type.id %}
-                                                        <option value="{{ type.id }}" selected>{{ type.name }}</option>
-                                                    {% else %}
-                                                        <option value="{{ type.id }}">{{ type.name }}</option>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="class_id">Class</label>
-                                            <select class="form-control" name="class_id">
                                                 <option value="" selected>- Select -</option>
-                                                {% for class in classes %}
-                                                <option value="{{ class.id }}">{{ class.class_name }}</option>
+                                                {% for type in user.types %}
+                                                    {% if form.field.type == type.name %}
+                                                        <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                    {% else %}
+                                                        <option value="{{ type.name }}">{{ type.name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -76,8 +69,16 @@
                                             <label for="status">Status</label>
                                             <select class="form-control" name="status">
                                                 <option value="" selected>- Select -</option>
+                                                {% if form.field.status == "Active" %}
+                                                <option value="Active" selected>Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                                {% elseif form.field.status == "Inactive" %}
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive" selected>Inactive</option>
+                                                {% else %}
                                                 <option value="Active">Active</option>
                                                 <option value="Inactive">Inactive</option>
+                                                {% endif %}
                                             </select>
                                         </div>
                                     </div>
@@ -85,14 +86,41 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="username">Username</label>
-                                            <input type="text" class="form-control" name="username"/>
+                                            {% if form.field.username %}
+                                                <input type="text" class="form-control" name="username" value="{{ form.field.username }}"/>
+                                            {% else %}
+                                                <input type="text" class="form-control" name="username"/>
+                                            {% endif %}
                                         </div>
                                     </div>
 
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="created_on">Created on</label>
-                                            <input type="month" class="form-control" name="created_on"/>
+                                            <label for="theme">Theme</label>
+                                            <select class="form-control" name="theme">
+                                                <option value="" selected>- Select -</option>
+                                                {% if form.field.theme == "Default" %}
+                                                <option value="Default" selected>Default</option>
+                                                <option value="Dark">Dark</option>
+                                                {% elseif form.field.theme == "Dark" %}
+                                                <option value="Default">Default</option>
+                                                <option value="Dark" selected>Dark</option>
+                                                {% else %}
+                                                <option value="Default">Default</option>
+                                                <option value="Dark">Dark</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="created_on">Created Month/Year</label>
+                                            {% if form.field.created_on %}
+                                                <input type="month" class="form-control" name="created_on" value="{{ form.field.created_on }}"/>
+                                            {% else %}
+                                                <input type="month" class="form-control" name="created_on"/>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 
@@ -117,13 +145,13 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th width="1%" class="text-center" scope="col">ID</th>
+                                        <th width="1%" class="text-center" scope="col">REF ID</th>
+                                        <th width="10%" class="text-center" scope="col">User type</th>
                                         <th width="10%" class="text-center" scope="col">User role</th>
-                                        <th width="10%" class="text-center" scope="col">Name</th>
-                                        <th width="1%" class="text-center" scope="col">NIC</th>
-                                        <th width="5%" class="text-center" scope="col">Gender</th>
-                                        <th width="5%" class="text-center" scope="col">Telephone</th>
-                                        <th width="5%" class="text-center" scope="col">Email</th>
-                                        <th width="10%" class="text-center" scope="col">City</th>        
+                                        <th width="10%" class="text-center" scope="col">Username</th>
+                                        <th width="5%" class="text-center" scope="col">Status</th>
+                                        <th width="1%" class="text-center" scope="col">Theme</th>
+                                        <th width="5%" class="text-center" scope="col">Created on</th>
                                         <th width="12%" class="text-center" scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
@@ -132,14 +160,14 @@
                                     {% for user in users %}
                                         <tr>
                                             <th class="text-center" scope="row">{{ user.id }}</th>
-                                            <th class="text-center" scope="row">{{ user.role }}</th>
-                                            <td class="text-center">{{ user.staff_name }}</td>
-                                            <td class="text-center">{{ user.nic }}</td>
-                                            <td class="text-center">{{ user.gender }}</td>
-                                            <td class="text-center">{{ user.phone_home }}</td>
-                                            <td class="text-center">{{ user.email }}</td>
-                                            <td class="text-center">{{ user.city }}</td>                                  
-                                            <td class="text-center"><button type="button" class="btn btn-xs btn-success"><i class="la la-user"></i>View Profile</button></td>
+                                            <td class="text-center" scope="row">{{ user.ref_id }}</td>
+                                            <td class="text-center" scope="row">{{ user.user_type }}</td>
+                                            <td class="text-center" scope="row">{{ user.role_name }}</td>
+                                            <td class="text-center" scope="row">{{ user.username }}</td>
+                                            <td class="text-center" scope="row">{{ user.status }}</td>
+                                            <td class="text-center" scope="row">{{ user.theme }}</td>
+                                            <td class="text-center" scope="row">{{ user.created_on }}</td>
+                                            <td class="text-right"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i>View Profile</button></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

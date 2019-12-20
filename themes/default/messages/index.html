@@ -54,9 +54,26 @@
 				</div>
 				<div class="modal-body">
 
+					<!-- SELECT RECIPIENT TYPE -->
+					<div class="form-group">
+						<label for="type">Type</label>
+						<select class="form-control">
+							<option value="" disabled selected>- select -</option>
+							<option value="staff">Staff</option>
+							<option value="student">Student</option>
+							<option value="parent">Parent</option>
+							<option value="coach">Coach</option>
+						</select>
+					</div>
+
+					<!-- SELECT RECIPIENT NAME -->
 					<div class="form-group">
 						<label for="to">To</label>
-						<input type="text" class="form-control">
+						<select class="form-control">
+							<option value="" disabled selected>- select -</option>
+							{% for recipient in recipients %}
+							{% endfor %}
+						</select>
 					</div>
 
 					<div class="form-group">

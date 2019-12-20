@@ -50,7 +50,7 @@
                                             Female -  <i class="la la-female"></i> {{ student.absent.female }}
                                         </p>
                                         <div class="row">
-                                            <a href="{{ app.url}}/student/" class="btn btn-xs btn-primary p-2 mr-3 ml-auto">view details</a>
+                                            <a href="{{ app.url}}/student/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
                                         </div>
                                     </div>
                                         
@@ -92,7 +92,7 @@
                                             Female -  <i class="la la-female"></i> {{ staff.absent.female }}
                                         </p>
                                         <div class="row">
-                                            <a href="{{ app.url}}/staff/" class="btn btn-xs btn-primary p-2 mr-3 ml-auto">view details</a>
+                                            <a href="{{ app.url}}/staff/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
                                         </div>
                                     </div>
                                         
@@ -129,21 +129,29 @@
 
                                 <div class="row card-body pt-0">
 
-                                    <div class="col-6">
-                                        <h6 class="card-title">Upcoming</h6>
-                                        <p class="card-text">
-                                            GCE O/L 2019 <br/> 2019.08.06 - 2019.08.26
-                                        </p>
+                                    <div class="col-6 card m-0 p-0">
+                                        <div class="card-header">
+                                            <span class="text-danger">Upcoming exams</span>
+                                        </div>
+                                        <div class="card-body">
+                                            {% for exam_schedule in exam.upcoming.schedules %}
+                                            <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
+                                            <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b> <br/>Scheduled on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }} @ {{ exam_schedule.exam.venue }}</p>
+                                            {% endfor %}
+                                            <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-danger">view details</a>
+                                        </div>
                                     </div>
 
-                                    <div class="col-6">
-                                        <h6 class="card-title">Recent</h6>
-                                        <p class="card-text">
-                                            GCE A/L 2019 <br/> 2019.08.06 - 2019.08.26
-                                        </p>
-                                        
-                                        <div class="row">
-                                            <a href="{{ app.url}}/exam/" class="btn btn-xs btn-primary p-2 mr-3 ml-auto">view details</a>
+                                    <div class="col-6 card m-0 p-0">
+                                        <div class="card-header">
+                                            Recent exams
+                                        </div>
+                                        <div class="card-body">
+                                            {% for exam_schedule in exam.recent.schedules %}
+                                            <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
+                                            <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b><br/>Held on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }}</p>
+                                            {% endfor %}
+                                            <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-primary">view details</a>
                                         </div>
                                     </div>
                                         
@@ -187,7 +195,7 @@
                                         </p>
 
                                         <div class="row">
-                                            <a href="{{ app.url}}/parent/" class="btn btn-xs btn-primary p-2 mr-3 ml-auto">view details</a>
+                                            <a href="{{ app.url}}/parent/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
                                         </div>
                                     </div>
 
@@ -227,7 +235,7 @@
                                         </p>
 
                                         <div class="row">
-                                            <a href="{{ app.url}}/user/" class="btn btn-xs btn-primary p-2 mr-3 ml-auto">view details</a>
+                                            <a href="{{ app.url}}/user/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
                                         </div>
                                     </div>
                                         
@@ -267,7 +275,7 @@
                                         </p>
 
                                         <div class="row">
-                                            <a href="{{ app.url}}/sport/" class="btn btn-xs btn-primary p-2 mr-3 ml-auto">view details</a>
+                                            <a href="{{ app.url}}/sport/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
                                         </div>
                                     </div>
                                         

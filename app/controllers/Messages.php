@@ -140,6 +140,30 @@ class Messages extends Controller {
 
     }
 
+    public function ajax_retrive_recipient_by_type($type) {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('staff');
+        $this->load->model('student');
+        $this->load->model('parent');
+        $this->load->model('coach');
+
+        // QUERY ( GET ALL USERS BY RELEVENT TYPE )
+        foreach ( $this->model_user->select('id', 'ref_id')->where('user_type', '=', $type)->get() as $key => $element ):
+        endforeach;
+
+    }
+
+
     public function ajax_send_msg(){
 
         //CHECK LOGIN STATUS

@@ -32,6 +32,8 @@ class Home extends Controller {
 		$this->load->model('staff');
 		$this->load->model('staff/attendance');
 		$this->load->model('class');
+		$this->load->model('exam');
+		$this->load->model('exam/schedule');
 		$this->load->model('grade');
 		$this->load->model('parent');
 		$this->load->model('user');
@@ -91,6 +93,60 @@ class Home extends Controller {
 		$data['staff']['absent']['all'] = $data['staff']['total']['all'] - $data['staff']['attendance']['all'];
 		$data['staff']['absent']['male'] = $data['staff']['total']['male'] - $data['staff']['attendance']['male'];
 		$data['staff']['absent']['female'] = $data['staff']['total']['female'] - $data['staff']['attendance']['female'];
+
+		// DATE AND TIME
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // UPCOMING EXAMS
+        foreach ( $this->model_exam_schedule->where('date', '>=', $date_now)->orderBy('date')->get()->take(5) as $key => $element ):
+            $exam_data = DB::table('exam_grade_has_schedule')
+            ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
+            ->join('exam_has_grade', 'exam_grade_has_schedule.exam_grade_id', 'exam_has_grade.id')
+            ->join('exam', 'exam_has_grade.exam_id', 'exam.id')
+            ->join('exam_type', 'exam.type_id', 'exam_type.id')
+            ->join('grade', 'exam_has_grade.grade_id', 'grade.id')
+            ->where('exam_grade_has_schedule.id', '=', $element->id)
+            ->select('exam_type.name as exam_name', 'exam.year as exam_year', 'grade.name as grade_name', 'subject.name as subject_name')
+            ->first();
+
+            $exam_date = Carbon::parse($element->date, 'GMT');
+            $exam_starttime = Carbon::parse($element->start_time, 'GMT');
+            $exam_endtime = Carbon::parse($element->end_time, 'GMT');
+
+            $data['exam']['upcoming']['schedules'][$key]['exam']['name'] = $exam_data->exam_name;
+            $data['exam']['upcoming']['schedules'][$key]['exam']['year'] = $exam_data->exam_year;
+            $data['exam']['upcoming']['schedules'][$key]['exam']['grade'] = $exam_data->grade_name;
+            $data['exam']['upcoming']['schedules'][$key]['exam']['subject'] = $exam_data->subject_name;
+            $data['exam']['upcoming']['schedules'][$key]['exam']['date'] = $exam_date->isoFormat('MMMM Do dddd');
+            $data['exam']['upcoming']['schedules'][$key]['exam']['starttime'] = $exam_starttime->isoFormat('h:mm A');
+            $data['exam']['upcoming']['schedules'][$key]['exam']['endtime'] = $exam_endtime->isoFormat('h:mm A');
+            $data['exam']['upcoming']['schedules'][$key]['exam']['venue'] = $element->venue;
+        endforeach;
+
+        // RECENT EXAMS
+        foreach ( $this->model_exam_schedule->where('date', '<', $date_now)->orderBy('date', 'DESC')->get()->take(5) as $key => $element ):
+            $exam_data = DB::table('exam_grade_has_schedule')
+            ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
+            ->join('exam_has_grade', 'exam_grade_has_schedule.exam_grade_id', 'exam_has_grade.id')
+            ->join('exam', 'exam_has_grade.exam_id', 'exam.id')
+            ->join('exam_type', 'exam.type_id', 'exam_type.id')
+            ->join('grade', 'exam_has_grade.grade_id', 'grade.id')
+            ->where('exam_grade_has_schedule.id', '=', $element->id)
+            ->select('exam_type.name as exam_name', 'exam.year as exam_year', 'grade.name as grade_name', 'subject.name as subject_name')
+            ->first();
+
+            $exam_date = Carbon::parse($element->date, 'GMT');
+            $exam_starttime = Carbon::parse($element->start_time, 'GMT');
+            $exam_endtime = Carbon::parse($element->end_time, 'GMT');
+
+            $data['exam']['recent']['schedules'][$key]['exam']['name'] = $exam_data->exam_name;
+            $data['exam']['recent']['schedules'][$key]['exam']['year'] = $exam_data->exam_year;
+            $data['exam']['recent']['schedules'][$key]['exam']['grade'] = $exam_data->grade_name;
+            $data['exam']['recent']['schedules'][$key]['exam']['subject'] = $exam_data->subject_name;
+            $data['exam']['recent']['schedules'][$key]['exam']['date'] = $exam_date->isoFormat('MMMM Do dddd');
+            $data['exam']['recent']['schedules'][$key]['exam']['starttime'] = $exam_starttime->isoFormat('h:mm A');
+            $data['exam']['recent']['schedules'][$key]['exam']['endtime'] = $exam_endtime->isoFormat('h:mm A');
+        endforeach;
 
 		// PARENT TOTAL CARD
         $data['parent']['total']['all'] = $this->model_parent->select('id')->count();

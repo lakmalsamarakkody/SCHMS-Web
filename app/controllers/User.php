@@ -74,33 +74,102 @@ class User extends Controller {
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
 
-        //STAFF CLASS
-        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
-            $data['classes'][$key]['id'] = $element->id;
-            $data['classes'][$key]['grade']['id'] = $element->grade_id;
-            $data['classes'][$key]['staff']['id'] = $element->staff_id;
-            $data['classes'][$key]['name'] = $element->name;
-            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
-            $data['classes'][$key]['class_name'] = $data['classes'][$key]['grade']['name']." - ". $data['classes'][$key]['name'] = $element->name; ;
-        endforeach;
+        // //STAFF CLASS
+        // foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
+        //     $data['classes'][$key]['id'] = $element->id;
+        //     $data['classes'][$key]['grade']['id'] = $element->grade_id;
+        //     $data['classes'][$key]['staff']['id'] = $element->staff_id;
+        //     $data['classes'][$key]['name'] = $element->name;
+        //     $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        //     $data['classes'][$key]['class_name'] = $data['classes'][$key]['grade']['name']." - ". $data['classes'][$key]['name'] = $element->name; ;
+        // endforeach;
 
         //USER TYPE
+        $data['user']['types'][1]['name'] = "staff";
+        $data['user']['types'][2]['name'] = "student";
+        $data['user']['types'][3]['name'] = "parent";
+        $data['user']['types'][4]['name'] = "coach";
         
         // SEARCH
         if ( isset($this->request->post['isSubmited'])):
 
             // PERSIST DATA
-
-            // PERSIST DATA
             $data['form']['field']['role_id'] = ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ) ? $this->request->post['role_id'] : "";
             $data['form']['field']['ref_id'] = ( isset($this->request->post['ref_id']) AND !empty($this->request->post['ref_id']) ) ? $this->request->post['ref_id'] : "";
             $data['form']['field']['type'] = ( isset($this->request->post['type']) AND !empty($this->request->post['type']) ) ? $this->request->post['type'] : "";
-            $data['form']['field']['class_id'] = ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ) ? $this->request->post['class_id'] : "";
+            // $data['form']['field']['class_id'] = ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ) ? $this->request->post['class_id'] : "";
             $data['form']['field']['status'] = ( isset($this->request->post['status']) AND !empty($this->request->post['status']) ) ? $this->request->post['status'] : "";
             $data['form']['field']['username'] = ( isset($this->request->post['username']) AND !empty($this->request->post['username']) ) ? $this->request->post['username'] : "";
+            $data['form']['field']['theme'] = ( isset($this->request->post['theme']) AND !empty($this->request->post['theme']) ) ? $this->request->post['theme'] : "";
             $data['form']['field']['created_on'] = ( isset($this->request->post['created_on']) AND !empty($this->request->post['created_on']) ) ? $this->request->post['created_on'] : "";
             
         endif;
+
+        // Eloquent OBJECT
+        $user = $this->model_user->select('id', 'ref_id', 'user_type', 'username', 'theme', 'role_id', 'status', 'created_on');
+
+        // FILTER ( ROLE ID )
+        if ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ):
+            $user->where(function($query) {
+                $query->where('role_id', '=', $this->request->post['role_id']);
+            });
+        endif;
+
+        // FILTER ( REF ID )
+        if ( isset($this->request->post['ref_id']) AND !empty($this->request->post['ref_id']) ):
+            $user->where(function($query) {
+                $query->where('ref_id', '=', $this->request->post['ref_id']);
+            });
+        endif;
+
+        // FILTER ( USER TYPE )
+        if ( isset($this->request->post['type']) AND !empty($this->request->post['type']) ):
+            $user->where(function($query) {
+                $query->where('user_type', '=', $this->request->post['type']);
+            });
+        endif;
+
+        // FILTER ( STATUS )
+        if ( isset($this->request->post['status']) AND !empty($this->request->post['status']) ):
+            $user->where(function($query) {
+                $query->where('status', '=', $this->request->post['status']);
+            });
+        endif;
+
+        // FILTER ( USERNAME )
+        if ( isset($this->request->post['username']) AND !empty($this->request->post['username']) ):
+            $user->where(function($query) {
+                $query->where('username', 'LIKE', '%'.$this->request->post['username'].'%');
+            });
+        endif;
+
+        // FILTER ( THEME )
+        if ( isset($this->request->post['theme']) AND !empty($this->request->post['theme']) ):
+            $user->where(function($query) {
+                $query->where('theme', '=', $this->request->post['theme']);
+            });
+        endif;
+
+        // FILTER ( CREATED ON )
+        if ( isset($this->request->post['created_on']) AND !empty($this->request->post['created_on']) ):
+            $user->where(function($query) {
+                $query->where('created_on', '=', $this->request->post['created_on']);
+            });
+        endif;
+
+        // APPEND DATA TO ARRAY
+        foreach( $user->get() as $key => $value ):
+            $data['users'][$key]['id'] = $value->id;
+            $data['users'][$key]['ref_id'] = $value->ref_id;
+            $data['users'][$key]['user_type'] = $value->user_type;
+            $data['users'][$key]['username'] = $value->username;
+            $data['users'][$key]['theme'] = $value->theme;
+            $data['users'][$key]['role_id'] = $value->role_id;
+            $data['users'][$key]['role_name'] = $this->model_user_role->select('name')->where('id', '=', $value->role_id)->first()->name;
+            $data['users'][$key]['status'] = $value->status;
+            $data['users'][$key]['created_on'] = $value->created_on;
+        endforeach;
+
 
 		// RENDER VIEW
         $this->load->view('user/search', $data);
