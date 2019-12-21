@@ -388,6 +388,64 @@ class Sport extends Controller {
         $this->load->view('sport/search_coach', $data);
     }
 
+    public function profile_coach($coach_id) {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODEL
+        $this->load->model('coach');
+        $this->load->model('coach/sport');
+        $this->load->model('user');
+        $this->load->model('user/role');
+
+        // QUERY ( USER ROLES )
+        foreach( $this->model_user_role->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->name;
+        endforeach;
+
+        // USER THEMES
+        $data['user']['themes'][1]['name'] = 'Default';
+        $data['user']['themes'][2]['name'] = 'Dark';
+
+        // CHECK EXISTING STAFF
+        $coach = $this->model_coach->where('id', '=', $coach_id)->first();
+
+        // VIEW ERROR IF NO COACH EXIST
+        if ( $coach == null ){
+            return http_response_code(404);
+        }
+
+        // BIO DATA
+        $data['coach'] = $coach;
+
+        // SETTINGS DATA
+        $settings_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $coach_id)->where('user_type', '=', "coach")->first();
+        if ( $settings_data !== NULL):
+            $data['settings']['user_role']['id'] = $settings_data->role_id;
+            $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['theme'] = $settings_data->theme;
+        endif;
+
+        // RENDER VIEW
+        $this->load->view('sport/profile_coach', $data);
+    }
+
     public function assign() {
 
         //CHECK LOGIN STATUS

@@ -112,7 +112,7 @@
                                             <td class="text-center">{{ coach.email }}</td>
                                             <td class="text-center">{{ coach.phone_mobile }}</td>
                                             <td class="text-center">{{ coach.city }}</td>
-                                            <td class="text-center"><button type="button" class="btn btn-xs btn-success"><i class="la la-user"></i>View Profile</button></td>
+                                            <td class="text-right"><a href="{{ app.url }}/sport/profile_coach/{{ coach.id }}"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i> View Profile</button></a></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

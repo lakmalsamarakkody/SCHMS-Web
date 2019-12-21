@@ -15,6 +15,40 @@
     padding: 4rem;
 }
 
+/* Sport/profile/coach */
+.coachprofile{
+    padding: 4rem;
+}
+
+.coachprofile img.avatar {
+	width: 50px;
+}
+
+.coachprofile .card-body .nav.nav-pills {
+	border-bottom: solid 1px #ececec;
+}
+
+.coachprofile .card-body .nav.nav-pills .nav-link {
+	border-radius: 0;
+}
+
+.coachprofile .card-body .nav.nav-pills a.nav-link {
+	color: #a0a0a0;
+}
+
+.coachprofile .card-body .nav.nav-pills .nav-link.active,.coachprofile .card-body .nav.nav-pills .nav-pills .show>.nav-link {
+	background: #FFFFFF;
+}
+
+.coachprofile .card-body .nav.nav-pills .nav-link.active {
+	border-bottom: solid 2px #727cf5;
+}
+
+
+.coachprofile .card-body .nav.nav-pills a.nav-link.active {
+	color: #727cf5;
+}
+
 
 /* Sport/assign */
 .sportassign{
