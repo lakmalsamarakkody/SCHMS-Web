@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class Sport extends Controller {
@@ -380,6 +381,9 @@ class Sport extends Controller {
                 $data['coaches'][$key]['phone_mobile'] = $value->phone_mobile;
                 $data['coaches'][$key]['address'] = $value->address;
                 $data['coaches'][$key]['city'] = $value->city;
+                
+                $sport_id = $this->model_coach_sport->select('sport_id')->where('coach_id', '=', $value->id)->first()->sport_id;
+                $data['coaches'][$key]['sport'] = $this->model_sport->select('name')->where('id', '=', $sport_id)->first()->name;
             endforeach;
 
         endif;
@@ -410,8 +414,23 @@ class Sport extends Controller {
         // MODEL
         $this->load->model('coach');
         $this->load->model('coach/sport');
+        $this->load->model('sport');
         $this->load->model('user');
         $this->load->model('user/role');
+
+        // SPORT
+		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['sports'][$key]['id'] = $element->id;
+			$data['sports'][$key]['name']= $element->name;
+        endforeach;
+
+        // BIO DATA : SPORTS
+        $sports = $this->model_coach_sport->select('sport_id')->where('coach_id', '=', $coach_id);
+        $coach_sport_ids = array();
+        foreach ( $sports->get() as $key => $element ):
+            array_push($coach_sport_ids, $element->sport_id);
+        endforeach;
+        $data['coach_sports'] = $coach_sport_ids;
 
         // QUERY ( USER ROLES )
         foreach( $this->model_user_role->get() as $key => $element ):
@@ -876,6 +895,9 @@ class Sport extends Controller {
             exit();
         endif;
 
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        $this->model_coach->admission_date = $date_now;
         $this->model_coach->full_name = $this->request->post['full_name'];
         $this->model_coach->initials = $this->request->post['initials'];
         $this->model_coach->surname = $this->request->post['surname'];

@@ -16,7 +16,7 @@
                     <!-- START : STAFF PROFILE  -->
                     <section class="profileview">
 
-                        <h4 class="page-title">Staff Details</h4>
+                        <h4 class="page-title">Coach Details</h4>
 
                         <div class="row mt-5">
                             <div class="col-12">
@@ -26,9 +26,9 @@
                                         <div class="media">
                                             <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/themes/{{ app.theme }}/assets/img/profile-pic.jpg">
                                             <div class="media-body align-self-center">
-                                                <h5 class="my-0">{{ staff.initials }} {{ staff.surname }}</h5>
+                                                <h5 class="my-0">{{ coach.initials }} {{ coach.surname }}</h5>
                                                 <h6 class="my-0 text-secondary">{{ staff.type }}</h6>
-                                                <i class="la la-edit"></i>
+                                                (<i class="la la-edit">Edit</i>)
                                             </div>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
 
                                         <div class="tab-content p-3" id="myTabContent">
                                             
-                                            <!-- ABOUT STAFF -->
+                                            <!-- ABOUT COACH -->
                                             <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
                                                 
                                                 <div class="row">
@@ -62,70 +62,63 @@
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.full_name }}">
+                                                                            <input type="text" class="form-control" value="{{ coach.full_name }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">NIC</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.nic }}">
+                                                                            <input type="text" class="form-control" value="{{ coach.nic }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Gender</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.gender }}">
+                                                                            <input type="text" class="form-control" value="{{ coach.gender }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" value="{{ staff.dob }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Religion</label>
-                                                                            <input type="text" class="form-control" value="{{ religion.name }}">
+                                                                            <input type="date" class="form-control" value="{{ coach.dob }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Landline</label>
-                                                                            <input type="number" class="form-control" value="{{ staff.phone_home }}">
+                                                                            <input type="number" class="form-control" value="{{ coach.phone_home }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                             <div class="form-group">
                                                                                 <label for="">Mobile</label>
-                                                                                <input type="number" class="form-control" value="{{ staff.phone_mobile }}">
+                                                                                <input type="number" class="form-control" value="{{ coach.phone_mobile }}">
                                                                             </div>
                                                                         </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Email</label>
-                                                                            <input type="email" class="form-control" value="{{ staff.email }}">
+                                                                            <input type="email" class="form-control" value="{{ coach.email }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">City</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.city }}">
+                                                                            <input type="text" class="form-control" value="{{ coach.city }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.address }}">
+                                                                            <input type="text" class="form-control" value="{{ coach.address }}">
                                                                         </div>
                                                                     </div>
 
@@ -144,51 +137,27 @@
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Employee No</label>
-                                                                            <input type="number" class="form-control" value="{{ staff.employee_number }}">
+                                                                            <label for="">Coach ID</label>
+                                                                            <input type="number" class="form-control" value="{{ coach.id }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission Date</label>
-                                                                            <input type="date" class="form-control" value="{{ staff.admission_date }}">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Type</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.type }}">
+                                                                            <input type="date" class="form-control" value="{{ coach.admission_date }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="class">Class</label>
-                                                                            <select class="form-control" name="class">
-                                                                                <option value="" selected>- Select -</option>
-                                                                                {% for class in classes %}
-                                                                                    {% if class.id == tic.class.id %}
-                                                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                                            <label for="">Sport</label>
+                                                                            <select class="form-control selectpicker show-tick" name="sport">
+                                                                                {% for sport in sports %}
+                                                                                    {% if sport.id in coach_sports %}
+                                                                                        <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
                                                                                     {% else %}
-                                                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }} </option>
-                                                                                    {% endif %}
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>  
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        
-                                                                        <div class="form-group">
-                                                                            <label for="">Subjects</label>
-                                                                            <select class="form-control selectpicker show-tick" name="subjects" multiple>
-                                                                                {% for subject in subjects %}
-                                                                                    {% if subject.id in staff_subjects %}
-                                                                                        <option value="{{ subject.id }}" selected>{{ subject.name }}</option>
-                                                                                    {% else %}
-                                                                                        <option value="{{ subject.id }}">{{ subject.name }}</option>
+                                                                                        <option value="{{ sport.id }}">{{ sport.name }}</option>
                                                                                     {% endif %}
                                                                                 {% endfor %}
                                                                             </select>
