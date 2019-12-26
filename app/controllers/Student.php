@@ -290,7 +290,9 @@ class Student extends Controller {
                 $data['students'][$key]['name'] = $value->full_name;
                 $data['students'][$key]['gender'] = $value->gender;
                 $data['students'][$key]['dob'] = $value->dob;
-                $data['students'][$key]['class'] = $value->class_id;
+                $class = $this->model_class->select('name', 'grade_id')->where('id', '=', $value->class_id)->first();
+                $grade = $this->model_grade->select('name')->where('id', '=', $class->grade_id)->first();
+                $data['students'][$key]['class'] = $grade->name." - ".$class->name;
                 $data['students'][$key]['city'] = $value->city;
             endforeach;
 
@@ -856,14 +858,37 @@ class Student extends Controller {
         $this->load->model('student');
         $this->load->model('student/parent');
         $this->load->model('student/relation');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('religion');
         $this->load->model('user');
         $this->load->model('user/role');
+
+        //QUERY ( CLASS )
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        // QUERY ( RELIGION )
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['religions'][$key]['id'] = $element->id;
+            $data['religions'][$key]['name'] = $element->name;
+        endforeach;
 
         // QUERY ( USER ROLES )
         foreach( $this->model_user_role->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
+
+        // USER STATUS
+        $data['user']['status'][1]['name'] = 'Active';
+        $data['user']['status'][2]['name'] = 'Inactive';
 
         // USER THEMES
         $data['user']['themes'][1]['name'] = 'Default';
@@ -892,7 +917,7 @@ class Student extends Controller {
         $data['class']['name'] = $class_data->grade_name . " - " . $class_data->class_name;
         $data['religion']['name'] = $class_data->religion;
 
-        // PRENT
+        // PARENT
         $parents = $this->model_student_parent->select('parent_id','relation_id')->where('student_id', '=', $student_id)->get();
         if ( $parents !== null ):
             foreach( $parents as $key => $el ):
@@ -903,15 +928,71 @@ class Student extends Controller {
         endif;
 
         // SETTINGS DATA
-        $settings_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $student_id)->where('user_type', '=', "student")->first();
+        $settings_data = $this->model_user->where('ref_id', '=', $student_id)->where('user_type', '=', "student")->first();
         if ( $settings_data !== NULL):
             $data['settings']['user_role']['id'] = $settings_data->role_id;
             $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['username'] = $settings_data->username;
+            $data['settings']['password'] = $settings_data->password;
             $data['settings']['theme'] = $settings_data->theme;
+            $data['settings']['status'] = $settings_data->status;
         endif;
 
         // RENDER VIEW
         $this->load->view('student/profile', $data);
+    }
+
+    public function ajax_removestudent() {
+        
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('student');
+        $this->load->model('student/exam');
+        $this->load->model('student/health');
+        
+        if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
+            $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);
+
+            if ( $is_valid_student_id->first() !== NULL ):
+
+                // CHECK STUDENT HAS EXAM RESULTS
+                if( $this->model_student_exam->select('id')->where('student_id', '=', $this->request->post['student_id'])->where('marks', '!=', NULL)->first() != NULL ):
+                    echo json_encode( array( "status" => "failed", "message" => "Student have exam results in the system. Please retry after removing results." ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK STUDENT HAS HEALTH RECORDS
+                if( $this->model_student_health->select('id')->where('student_id', '=', $this->request->post['student_id'])->first() != NULL ):
+                    echo json_encode( array( "status" => "failed", "message" => "Student have health records in the system. Please retry after removing." ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // PROCEED TO DELETE
+				if ( $this->model_student->find($this->request->post['student_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "failed", "message" => "Cannot delete this student. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+            else:
+                // NO RECORD FOUND TO DELETE
+				echo json_encode( array( "status" => "failed", "message" => "No student record found" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // STUDENT ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid student record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
     }
     
 }

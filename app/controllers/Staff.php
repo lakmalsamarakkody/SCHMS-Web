@@ -767,7 +767,19 @@ class Staff extends Controller {
         $this->load->model('grade');
         $this->load->model('subject');
 
-        //STUDENT CLASS
+        // QUERY ( RELIGION )
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['religions'][$key]['id'] = $element->id;
+            $data['religions'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( TYPE )
+        foreach( $this->model_staff_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['staff_types'][$key]['id'] = $element->id;
+            $data['staff_types'][$key]['name'] = $element->name;
+        endforeach;
+
+        //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
             $data['classes'][$key]['grade']['id'] = $element->grade_id;
@@ -777,7 +789,7 @@ class Staff extends Controller {
             $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
         endforeach;
 
-        //SUBJECT
+        //QUERY ( SUBJECT )
         foreach( $this->model_subject->select('id', 'name', 'si_name')->orderBy('name')->get() as $key => $element ):
             $data['subjects'][$key]['id'] = $element->id;
             $data['subjects'][$key]['name'] = $element->name;
@@ -788,6 +800,10 @@ class Staff extends Controller {
             $data['user']['roles'][$key]['id'] = $element->id;
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
+
+        // USER STATUS
+        $data['user']['status'][1]['name'] = 'Active';
+        $data['user']['status'][2]['name'] = 'Inactive';
 
         // USER THEMES
         $data['user']['themes'][1]['name'] = 'Default';
@@ -823,15 +839,64 @@ class Staff extends Controller {
         $data['staff_subjects'] = $staff_subject_ids;
 
         // SETTINGS DATA
-        $settings_data = $this->model_user->select('role_id', 'theme')->where('ref_id', '=', $staff_id)->where('user_type', '=', "staff")->first();
+        $settings_data = $this->model_user->where('ref_id', '=', $staff_id)->where('user_type', '=', "staff")->first();
         if ( $settings_data !== NULL):
             $data['settings']['user_role']['id'] = $settings_data->role_id;
             $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['username'] = $settings_data->username;
+            $data['settings']['password'] = $settings_data->password;
             $data['settings']['theme'] = $settings_data->theme;
+            $data['settings']['status'] = $settings_data->status;
         endif;
 
         // RENDER VIEW
         $this->load->view('staff/profile', $data);
+    }
+
+    public function ajax_removestaff() {
+        
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('staff');
+        $this->load->model('class');
+        
+        if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
+            $is_valid_staff_id = $this->model_staff->select('id')->where('id', '=', $this->request->post['staff_id']);
+
+            if ( $is_valid_staff_id->first() !== NULL ):
+
+                // CHECK STAFF HAS CLASS
+                if( $this->model_class->select('id')->where('staff_id', '=', $this->request->post['staff_id'])->first() != NULL ):
+                    echo json_encode( array( "status" => "failed", "message" => "Staff already assigned to a class. Please retry after removing." ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // PROCEED TO DELETE
+				if ( $this->model_staff->find($this->request->post['staff_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "failed", "message" => "Cannot delete this staff. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+            else:
+                // NO RECORD FOUND TO DELETE
+				echo json_encode( array( "status" => "failed", "message" => "No staff record found" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // STAFF ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid staff record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
     }
 }
 ?>

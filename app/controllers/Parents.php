@@ -288,7 +288,6 @@ class Parents extends Controller {
         
 		// RENDER VIEW
         $this->load->view('parents/search', $data);
-        
     }
     
     public function add() {
@@ -673,6 +672,153 @@ class Parents extends Controller {
             endif;
 
         endif;
+    }
+
+    public function profile($parent_id) {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+    
+        // SITE DETAILS
+		$data['app']['url']			= $this->config->get('base_url');
+		$data['app']['title']		= $this->config->get('site_title');
+		$data['app']['theme']		= $this->config->get('app_theme');
+
+		// HEADER / FOOTER
+		$data['template']['header']		= $this->load->controller('common/header', $data);
+        $data['template']['footer']		= $this->load->controller('common/footer', $data);
+        $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+        $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
+
+        // MODEL
+        $this->load->model('parent');
+        $this->load->model('student');
+        $this->load->model('student/parent');
+        $this->load->model('student/relation');
+        $this->load->model('religion');
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('user');
+        $this->load->model('user/role');
+
+        //QUERY ( CLASS )
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        //QUERY ( RELATIONSHIP )
+		foreach( $this->model_student_relation->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['student_relations'][$key]['id'] = $element->id;
+			$data['student_relations'][$key]['name']= $element->name;
+		endforeach;
+
+        // QUERY ( RELIGION )
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['religions'][$key]['id'] = $element->id;
+            $data['religions'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( USER ROLES )
+        foreach( $this->model_user_role->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->name;
+        endforeach;
+
+        // USER STATUS
+        $data['user']['status'][1]['name'] = 'Active';
+        $data['user']['status'][2]['name'] = 'Inactive';
+
+        // USER THEMES
+        $data['user']['themes'][1]['name'] = 'Default';
+        $data['user']['themes'][2]['name'] = 'Dark';
+
+        // CHECK EXISTING STAFF
+        $parent = $this->model_parent->where('id', '=', $parent_id)->first();
+
+        // VIEW ERROR IF NO parent EXIST
+        if ( $parent == null ){
+            return http_response_code(404);
+        }
+
+        // BIO DATA
+        $data['parent'] = $parent;
+
+        // STUDENT DATA
+        foreach ( $this->model_student_parent->where('parent_id', '=', $parent_id)->get() as $key => $element ):
+            $data['students'][$key]['relation_id'] = $element->relation_id;
+            $data['students'][$key]['details'] = $this->model_student->where('id', '=', $element->student_id)->first();
+        endforeach;
+
+        // STUDENT COUNT
+        $data['student']['count'] = $this->model_student_parent->select('id')->where('parent_id', '=', $parent_id)->get()->count();
+
+        // SETTINGS DATA
+        $settings_data = $this->model_user->where('ref_id', '=', $parent_id)->where('user_type', '=', "parent")->first();
+        if ( $settings_data !== NULL):
+            $data['settings']['user_role']['id'] = $settings_data->role_id;
+            $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['username'] = $settings_data->username;
+            $data['settings']['password'] = $settings_data->password;
+            $data['settings']['theme'] = $settings_data->theme;
+            $data['settings']['status'] = $settings_data->status;
+        endif;
+
+        // RENDER VIEW
+        $this->load->view('parents/profile', $data);
+    }
+
+    public function ajax_removeparent() {
+        
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('parent');
+        $this->load->model('student/parent');
+        
+        if ( isset($this->request->post['parent_id']) AND !empty($this->request->post['parent_id']) ):
+            $is_valid_parent_id = $this->model_parent->select('id')->where('id', '=', $this->request->post['parent_id']);
+
+            if ( $is_valid_parent_id->first() !== NULL ):
+
+                // CHECK PARENT HAS STUDENTS
+                if( $this->model_student_parent->select('id')->where('parent_id', '=', $this->request->post['parent_id'])->first() != NULL ):
+                    echo json_encode( array( "status" => "failed", "message" => "Parent already assigned to one or more students. Please retry after removing." ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // PROCEED TO DELETE
+				if ( $this->model_parent->find($this->request->post['parent_id'])->delete() ):
+					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+					exit();
+				else:
+					echo json_encode( array( "status" => "failed", "message" => "Cannot delete this parent. Please contact system administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+				endif;
+            else:
+                // NO RECORD FOUND TO DELETE
+				echo json_encode( array( "status" => "failed", "message" => "No parent record found" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // parent ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid parent record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
     }
 }
 ?>

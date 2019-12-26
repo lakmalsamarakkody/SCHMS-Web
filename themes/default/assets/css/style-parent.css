@@ -18,3 +18,37 @@
 .parentadd .card{
     margin-bottom: 1rem;
 }
+
+/* parent/profile */
+.parentprofile{
+    padding: 4rem;
+}
+
+.parentprofile img.avatar {
+	width: 50px;
+}
+
+.parentprofile .card-body .nav.nav-pills {
+	border-bottom: solid 1px #ececec;
+}
+
+.parentprofile .card-body .nav.nav-pills .nav-link {
+	border-radius: 0;
+}
+
+.parentprofile .card-body .nav.nav-pills a.nav-link {
+	color: #a0a0a0;
+}
+
+.parentprofile .card-body .nav.nav-pills .nav-link.active,.parentprofile .card-body .nav.nav-pills .nav-pills .show>.nav-link {
+	background: #FFFFFF;
+}
+
+.parentprofile .card-body .nav.nav-pills .nav-link.active {
+	border-bottom: solid 2px #727cf5;
+}
+
+
+.parentprofile .card-body .nav.nav-pills a.nav-link.active {
+	color: #727cf5;
+}

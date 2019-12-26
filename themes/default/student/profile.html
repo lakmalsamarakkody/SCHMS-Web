@@ -24,10 +24,12 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="media">
-                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/themes/{{ app.theme }}/assets/img/profile-pic.jpg">
+                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/student/{{ student.id }}">
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ student.initials }} {{ student.surname }}</h5>
-                                                <h6 class="my-0 text-secondary">Class : {{ class.name }}</h6>
+                                                <h6 class="my-0 text-secondary mb-2">( {{ class.name }} )</h6>
+                                                <button class="btn btn-xs btn-warning"><i class="la la-edit"></i>Edit</button>
+                                                <button class="btn btn-xs btn-danger" onclick="remove_student('{{ student.id }}')"><i class="la la-trash"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -71,7 +73,15 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Gender</label>
-                                                                            <input type="text" class="form-control" value="{{ student.gender }}">
+                                                                            <select class="form-control" name="gender">
+                                                                                {% if student.gender == "male" %}
+                                                                                    <option value="Male" selected>Male</option>
+                                                                                    <option value="Female">Female</option>
+                                                                                {% else %}
+                                                                                    <option value="Male">Male</option>
+                                                                                    <option value="Female" selected>Female</option>
+                                                                                {% endif %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
@@ -106,7 +116,15 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Religion</label>
-                                                                            <input type="text" class="form-control" value="{{ religion.name }}">
+                                                                            <select class="form-control" name="religion">
+                                                                                {% for religion in religions %}
+                                                                                    {% if religion.id == student.religion_id %}
+                                                                                        <option value="{{ religion.id }}" selected>{{ religion.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ religion.id }}">{{ religion.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
@@ -147,7 +165,15 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Class</label>
-                                                                            <input type="text" class="form-control" value="{{ class.name }}">
+                                                                            <select class="form-control" name="class">
+                                                                                {% for class in classes %}
+                                                                                    {% if class.id == student.class_id %}
+                                                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>                                                                    
 
@@ -267,10 +293,25 @@
                                                             <div class="card-body">
                                                     
                                                                 <div class="form-row">
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="status">Status</label>
+                                                                            <select class="form-control" name="status">
+                                                                                {% for status in user.status %}
+                                                                                    {% if status.id  == settings.status %}
+                                                                                        <option value="{{ status.id }}" selected>{{ status.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ status.id }}">{{ status.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                     
                                                                     <div class="col-2">
                                                                         <div class="form-group">
-                                                                            <label for="">User Role</label>
+                                                                            <label for="role">User Role</label>
                                                                             <select class="form-control" name="user_role">
                                                                                 <option value="" selected>- select -</option>
                                                                                 {% for role in user.roles %}
@@ -286,7 +327,7 @@
 
                                                                     <div class="col-2">
                                                                         <div class="form-group">
-                                                                            <label for="">Preffered Theme</label>
+                                                                            <label for="theme">Preffered Theme</label>
                                                                             <select class="form-control" name="user_theme">
                                                                                 {% for theme in user.themes %}
                                                                                     {% if theme.name  == settings.theme %}
@@ -296,6 +337,20 @@
                                                                                     {% endif %}
                                                                                 {% endfor %}
                                                                             </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-3">
+                                                                        <div class="form-group">
+                                                                            <label for="username">Username</label>
+                                                                            <input type="text" class="form-control" value="{{ settings.username }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-3">
+                                                                        <div class="form-group">
+                                                                            <label for="password">Password</label>
+                                                                            <input type="text" class="form-control" value="{{ settings.password }}">
                                                                         </div>
                                                                     </div>
 
@@ -315,9 +370,8 @@
 
                             </div>
                         </div>
+                        
                     </section>
-                                
-
                 </div>
 
             </div>
@@ -327,3 +381,41 @@
 
 {{ template.footer|raw }}
 </body>
+
+<script>
+
+    // START : REMOVE STUDENT
+    remove_student = (student_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('student_id', student_id)
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/student/ajax_removestudent",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "Student Record Deleted successfully ... ").set('onok', function() {
+                        window.location.replace("{{ app.url}}/student/search");
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert("Failed", res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : REMOVE STUDENT
+
+</script>

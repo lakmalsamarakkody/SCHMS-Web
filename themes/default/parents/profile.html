@@ -11,12 +11,12 @@
                                
                 {{ template.topmenu|raw }}
 
-                <div class="coachprofile">
+                <div class="parentprofile">
 
-                    <!-- START : STAFF PROFILE  -->
+                    <!-- START : PARENT PROFILE  -->
                     <section class="profileview">
 
-                        <h4 class="page-title">Sport Coach Details</h4>
+                        <h4 class="page-title">Parent Details</h4>
 
                         <div class="row mt-5">
                             <div class="col-12">
@@ -24,12 +24,11 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="media">
-                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/coach/{{ coach.id }}">
+                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/parent/{{ parent.id }}">
                                             <div class="media-body align-self-center">
-                                                <h5 class="my-0">{{ coach.initials }} {{ coach.surname }}</h5>
-                                                <h6 class="my-0 text-secondary mb-2">Sport Coach</h6>
+                                                <h5 class="my-0">{{ parent.initials }} {{ parent.surname }}</h5>
                                                 <button class="btn btn-xs btn-warning"><i class="la la-edit"></i>Edit</button>
-                                                <button class="btn btn-xs btn-danger" onclick="remove_coach('{{ coach.id }}')"><i class="la la-trash"></i></button>
+                                                <button class="btn btn-xs btn-danger" onclick="remove_parent('{{ parent.id }}')"><i class="la la-trash"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -42,13 +41,16 @@
                                                 <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="about" aria-controls="about" aria-selected="true">About</a>
                                             </li>
                                             <li class="nav-item">
+                                                <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false">Students</a>
+                                            </li>
+                                            <li class="nav-item">
                                                 <a class="nav-link" id="tools-tab" data-toggle="tab" href="#tools" role="tab" aria-controls="tools" aria-selected="false">Settings</a>
                                             </li>
                                         </ul>
 
                                         <div class="tab-content p-3" id="myTabContent">
                                             
-                                            <!-- ABOUT COACH -->
+                                            <!-- ABOUT PARENT -->
                                             <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
                                                 
                                                 <div class="row">
@@ -63,22 +65,15 @@
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.full_name }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">NIC</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.nic }}">
+                                                                            <input type="text" class="form-control" value="{{ parent.full_name }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Gender</label>
+                                                                            <label for="gender">Gender</label>
                                                                             <select class="form-control" name="gender">
-                                                                                {% if coach.gender == "male" %}
+                                                                                {% if parent.gender == "male" %}
                                                                                     <option value="Male" selected>Male</option>
                                                                                     <option value="Female">Female</option>
                                                                                 {% else %}
@@ -92,42 +87,42 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" value="{{ coach.dob }}">
+                                                                            <input type="date" class="form-control" value="{{ parent.dob }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Landline</label>
-                                                                            <input type="number" class="form-control" value="{{ coach.phone_home }}">
+                                                                            <input type="number" class="form-control" value="{{ parent.phone_home }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
-                                                                            <div class="form-group">
-                                                                                <label for="">Mobile</label>
-                                                                                <input type="number" class="form-control" value="{{ coach.phone_mobile }}">
-                                                                            </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">Mobile</label>
+                                                                            <input type="number" class="form-control" value="{{ parent.phone_mobile }}">
                                                                         </div>
+                                                                    </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Email</label>
-                                                                            <input type="email" class="form-control" value="{{ coach.email }}">
+                                                                            <input type="email" class="form-control" value="{{ parent.email }}">
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">City</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.city }}">
+                                                                            <input type="text" class="form-control" value="{{ parent.city }}">
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.address }}">
+                                                                            <input type="text" class="form-control" value="{{ parent.address }}">
                                                                         </div>
                                                                     </div>
 
@@ -139,40 +134,24 @@
 
                                                     <div class="col-md-6">
                                                         <div class="card">
-                                                            <div class="card-header">Academic Data</div>
+                                                            <div class="card-header">System Data</div>
                                                             <div class="card-body">
                                                                 
                                                                 <div class="form-row">
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Coach ID</label>
-                                                                            <input type="number" class="form-control" value="{{ coach.id }}">
+                                                                            <label for="">NIC No</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.nic }}">
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Admission Date</label>
-                                                                            <input type="date" class="form-control" value="{{ coach.admission_date }}">
+                                                                            <label for="">No of Students</label>
+                                                                            <input type="text" class="form-control" value="{{ student.count }}" disabled>
                                                                         </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Sport</label>
-                                                                            <select class="form-control selectpicker show-tick" name="sport">
-                                                                                <option value="none" selected>None</option>
-                                                                                {% for sport in sports %}
-                                                                                    {% if sport.id in coach_sports %}
-                                                                                        <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
-                                                                                    {% else %}
-                                                                                        <option value="{{ sport.id }}">{{ sport.name }}</option>
-                                                                                    {% endif %}
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
+                                                                    </div>                                                                    
 
                                                                 </div>
                                                             </div>
@@ -183,7 +162,137 @@
                                             </div>
                                             <!-- END : BIO TAB -->
 
-                                            <!-- START : SETTINGS TAB -->
+                                            <!-- START : STUDENT TAB -->
+                                            <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
+
+                                                <div class="row">
+
+                                                    {% for student in students %}
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-header">{{ student.details.initials }} {{ student.details.surname }}</div>
+                                                            <div class="card-body">
+                                                    
+                                                                <div class="form-row">
+                                                    
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="">Full Name</label>
+                                                                            <input type="text" class="form-control" value="{{ student.details.full_name }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="class">Class</label>
+                                                                            <select class="form-control" name="class" disabled>
+                                                                                {% for class in classes %}
+                                                                                    {% if class.id == student.details.class_id %}
+                                                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="religion">Relation</label>
+                                                                            <select class="form-control" name="relation">
+                                                                                {% for relation in student_relations %}
+                                                                                    {% if relation.id == student.relation_id %}
+                                                                                        <option value="{{ relation.id }}" selected>{{ relation.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ relation.id }}">{{ relation.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="gender">Gender</label>
+                                                                            <select class="form-control" name="gender" disabled>
+                                                                                {% if student.details.gender == "male" %}
+                                                                                    <option value="Male" selected>Male</option>
+                                                                                    <option value="Female">Female</option>
+                                                                                {% else %}
+                                                                                    <option value="Male">Male</option>
+                                                                                    <option value="Female" selected>Female</option>
+                                                                                {% endif %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Date of Birth</label>
+                                                                            <input type="date" class="form-control" value="{{ student.details.dob }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Phone</label>
+                                                                            <input type="number" class="form-control" value="{{ student.details.phone_mobile }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Email</label>
+                                                                            <input type="email" class="form-control" value="{{ student.details.email }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" value="{{ student.details.city }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="religion">Religion</label>
+                                                                            <select class="form-control" name="religion" disabled>
+                                                                                {% for religion in religions %}
+                                                                                    {% if religion.id == student.details.religion_id %}
+                                                                                        <option value="{{ religion.id }}" selected>{{ religion.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ religion.id }}">{{ religion.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="">Address</label>
+                                                                            <input type="text" class="form-control" value="{{ student.details.address }}" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr width="100%">
+                                                    
+                                                                </div>
+                                                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+
+                                                </div>
+
+                                            </div>
+                                            <!-- END : STUDENT TAB -->
+
+                                            <!-- START : TOOLS TAB -->
                                             <div class="tab-pane fade" id="tools" role="tabpanel" aria-labelledby="tools-tab">
 
                                                 <div class="row">
@@ -263,7 +372,6 @@
                                                     
                                                 </div>
                                             </div>
-                                            <!-- END : SETTINGS TAB -->
 
                                         </div>
 
@@ -273,9 +381,8 @@
 
                             </div>
                         </div>
-                    </section>
-                                
 
+                    </section>
                 </div>
 
             </div>
@@ -288,16 +395,16 @@
 
 <script>
 
-    // START : REMOVE COACH
-    remove_coach = (coach_id) => {
+    // START : REMOVE PARENT
+    remove_parent = (parent_id) => {
 
         // PAYLOAD
         var formData = new FormData;
-        formData.append('coach_id', coach_id)
+        formData.append('parent_id', parent_id)
 
         // REQUEST
         $.ajax({
-            url: "{{ app.url }}/sport/ajax_removecoach",
+            url: "{{ app.url }}/parents/ajax_removeparent",
             method: 'POST',
             data: formData,
             processData: false,
@@ -306,8 +413,8 @@
             success: (res) => {
                 
                 if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Coach Record Deleted successfully ... ").set('onok', function() {
-                        window.location.replace("{{ app.url}}/sport/search_coach");
+                    alertify.alert("Success", "Parent Record Deleted successfully ... ").set('onok', function() {
+                        window.location.replace("{{ app.url}}/parents/search");
                     })
                 } else {
                     console.log(res);
@@ -320,6 +427,6 @@
             }
         })
     }
-    // END : REMOVE COACH
+    // END : REMOVE PARENT
 
 </script>
