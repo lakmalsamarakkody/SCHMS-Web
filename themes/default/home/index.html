@@ -25,33 +25,40 @@
                                     <h5 class="card-title">Students</h5>
                                 </div>
 
-                                <div class="row card-body pt-0">
+                                <div class="card-body">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Total - {{ student.total.all }}</h6>
-                                        <p class="card-text">
-                                            Male -  <i class="la la-male"></i> {{ student.total.male }} <br/>
-                                            Female -  <i class="la la-female"></i> {{ student.total.female }}
-                                        </p>
-                                    </div>
+                                    <div class="row">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Attendance - {{ student.attendance.all }}</h6>
-                                        <p class="card-text">
-                                            Male -  <i class="la la-male"></i> {{ student.attendance.male }}<br/>
-                                            Female -  <i class="la la-female"></i> {{ student.attendance.female }}
-                                        </p>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <h6 class="card-title">Absent - {{ student.absent.all }}</h6>
-                                        <p class="card-text">
-                                            Male -  <i class="la la-male"></i> {{ student.absent.male }}<br/>
-                                            Female -  <i class="la la-female"></i> {{ student.absent.female }}
-                                        </p>
-                                        <div class="row">
-                                            <a href="{{ app.url}}/student/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
+                                        <div class="col-4">
+                                            <h6 class="card-title">Total - {{ student.total.all }}</h6>
+                                            <p class="card-text">
+                                                Male -  <i class="la la-male"></i> {{ student.total.male }} <br/>
+                                                Female -  <i class="la la-female"></i> {{ student.total.female }}
+                                            </p>
                                         </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Attendance - {{ student.attendance.all }}</h6>
+                                            <p class="card-text">
+                                                Male -  <i class="la la-male"></i> {{ student.attendance.male }}<br/>
+                                                Female -  <i class="la la-female"></i> {{ student.attendance.female }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Absent - {{ student.absent.all }}</h6>
+                                            <p class="card-text">
+                                                Male -  <i class="la la-male"></i> {{ student.absent.male }}<br/>
+                                                Female -  <i class="la la-female"></i> {{ student.absent.female }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-12 pt-3">
+                                            
+                                            <a href="{{ app.url}}/student/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
+
+                                        </div>
+
                                     </div>
                                         
                                 </div>
@@ -67,33 +74,38 @@
                                     <h5 class="card-title">Staff</h5>
                                 </div>
 
-                                <div class="row card-body pt-0">
+                                <div class="card-body">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Total - {{ staff.total.all }}</h6>
-                                        <p class="card-text">
-                                            Male -  <i class="la la-male"></i> {{ staff.total.male }}<br/>
-                                            Female -  <i class="la la-female"></i> {{ staff.total.female }}
-                                        </p>
-                                    </div>
+                                    <div class="row">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Attendance - {{ staff.attendance.all }}</h6>
-                                        <p class="card-text">
-                                            Male -  <i class="la la-male"></i> {{ staff.attendance.male }}<br/>
-                                            Female -  <i class="la la-female"></i> {{ staff.attendance.female }}
-                                        </p>
-                                    </div>
+                                        <div class="col-4">
+                                            <h6 class="card-title">Total - {{ staff.total.all }}</h6>
+                                            <p class="card-text">
+                                                Male -  <i class="la la-male"></i> {{ staff.total.male }}<br/>
+                                                Female -  <i class="la la-female"></i> {{ staff.total.female }}
+                                            </p>
+                                        </div>
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Absent - {{ staff.absent.all }}</h6>
-                                        <p class="card-text">
-                                            Male -  <i class="la la-male"></i> {{ staff.absent.male }}<br/>
-                                            Female -  <i class="la la-female"></i> {{ staff.absent.female }}
-                                        </p>
-                                        <div class="row">
+                                        <div class="col-4">
+                                            <h6 class="card-title">Attendance - {{ staff.attendance.all }}</h6>
+                                            <p class="card-text">
+                                                Male -  <i class="la la-male"></i> {{ staff.attendance.male }}<br/>
+                                                Female -  <i class="la la-female"></i> {{ staff.attendance.female }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Absent - {{ staff.absent.all }}</h6>
+                                            <p class="card-text">
+                                                Male -  <i class="la la-male"></i> {{ staff.absent.male }}<br/>
+                                                Female -  <i class="la la-female"></i> {{ staff.absent.female }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-12 pt-3">
                                             <a href="{{ app.url}}/staff/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
                                         </div>
+
                                     </div>
                                         
                                 </div>
