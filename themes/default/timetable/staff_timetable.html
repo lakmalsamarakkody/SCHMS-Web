@@ -24,7 +24,7 @@
                                 <h4 class="page-title"> Staff Time Table </h4>
 
                                 <div class="form-group ml-auto col-md-3">
-                                    <select class="selectpicker form-control" data-live-search="true" name="timetable_staff">
+                                    <select class="form-control selectpicker" data-live-search="true" name="timetable_staff">
                                         <option selected disabled>- Select staff name -</option>
                                         {% for staff in staffs %}
                                             {% if staff.id == form.field.timetable_staff %}

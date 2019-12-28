@@ -34,7 +34,13 @@
 }
 
 .table{
-    background-color: var(--white);
+    background-color: var(--main-bg-color);
+    color: var(--white);
+}
+
+.table tbody tr:hover{
+    /* background-color: var(--main-theme-color) !important; */
+    color: var(--white);
 }
 
 .chart-bg{
@@ -52,6 +58,11 @@
 
 .card .card-body{
     background: #262a35;
+    color: var(--white);
+}
+
+.card .card-footer{
+    background: #262a35 !important;
     color: var(--white);
 }
 
