@@ -2,9 +2,17 @@
     <div class="row">
 
         <div class="col-md-12 logo pt-5">
-            <img src="{{ app.url }}/themes/{{ app.theme }}/assets/img/profile-pic.jpg" width="100px" height="100px" class="rounded-circle img-thumbnail"/>
-            <div class="sidenavusername mt-3">John Doe</div>
+            <!-- PROFILE PICTURE -->
+            <a href="{{ app.url }}/{{ user.type }}/profile/{{ user.id }}">
+                <img src="{{ app.url }}/themes/{{ app.theme }}/assets/img/profile-pic.jpg" width="100px" height="100px" class="rounded-circle img-thumbnail"/>
+            </a>
+            <!-- WELCOME TEXT WITH USERNAME -->
+            <div class="sidenavusername mt-3">
+                Welcome <br/> 
+                <a href="{{ app.url }}/{{ user.type }}/profile/{{ user.id }}"><i>{{ user.view_name }}</i></a>
+            </div>
 
+            <!-- DEVIDER -->
             <hr class="hrsidenav mx-auto"/>
 
         </div>

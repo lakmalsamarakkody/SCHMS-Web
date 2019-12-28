@@ -308,14 +308,14 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="status">Status</label>
-                                                                            <select class="form-control" name="status">
-                                                                                {% for status in user.status %}
-                                                                                    {% if status.id  == settings.status %}
-                                                                                        <option value="{{ status.id }}" selected>{{ status.name }}</option>
-                                                                                    {% else %}
-                                                                                        <option value="{{ status.id }}">{{ status.name }}</option>
-                                                                                    {% endif %}
-                                                                                {% endfor %}
+                                                                            <select class="form-control" name="status" id="parent-status" disabled>
+                                                                                {% if settings.status  == "Active" %}
+                                                                                    <option value="Active" selected>Active</option>
+                                                                                    <option value="Deactive">Deactive</option>
+                                                                                {% else %}
+                                                                                <option value="Active">Active</option>
+                                                                                <option value="Deactive" selected>Deactive</option>
+                                                                                {% endif %}
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -339,14 +339,14 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="">Preffered Theme</label>
-                                                                            <select class="form-control" name="user_theme">
-                                                                                {% for theme in user.themes %}
-                                                                                    {% if theme.name  == settings.theme %}
-                                                                                        <option value="{{ theme.name }}" selected>{{ theme.name }}</option>
-                                                                                    {% else %}
-                                                                                        <option value="{{ theme.name }}">{{ theme.name }}</option>
-                                                                                    {% endif %}
-                                                                                {% endfor %}
+                                                                            <select class="form-control" name="user_theme" disabled>
+                                                                                {% if settings.theme  == "Dark" %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark" selected>Dark</option>
+                                                                                {% else %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark">Dark</option>
+                                                                                {% endif %}
                                                                             </select>
                                                                         </div>
                                                                     </div>

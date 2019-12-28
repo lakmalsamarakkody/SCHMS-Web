@@ -179,6 +179,15 @@ h5.page-title{
     text-align: center;
 }
 
+.left-pane .logo .sidenavusername a{
+    text-decoration: none;
+    color: var(--white);
+}
+
+.left-pane .logo .sidenavusername a:hover{
+    color: var(--main-text-color);
+}
+
 .hrsidenav{
     display: block;
     width: 80%; 

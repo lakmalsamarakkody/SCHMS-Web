@@ -28,8 +28,10 @@
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ student.initials }} {{ student.surname }}</h5>
                                                 <h6 class="my-0 text-secondary mb-2">( {{ class.name }} )</h6>
-                                                <button class="btn btn-xs btn-warning"><i class="la la-edit"></i>Edit</button>
-                                                <button class="btn btn-xs btn-danger" onclick="remove_student('{{ student.id }}')"><i class="la la-trash"></i></button>
+                                                <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
+                                                <button class="btn btn-xs btn-success" id="btn-save" onclick="update_student('{{ student.id }}')" hidden><i class="la la-save"></i> Save</button>
+                                                <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
+                                                <button class="btn btn-xs btn-danger" id="btn-remove" onclick="remove_student('{{ student.id }}')"><i class="la la-trash"></i> Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -65,15 +67,29 @@
                                                                     
                                                                     <div class="col-12">
                                                                         <div class="form-group">
-                                                                            <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" value="{{ student.full_name }}">
+                                                                            <label for="full_name">Full Name</label>
+                                                                            <input type="text" class="form-control" id="stu-full_name" value="{{ student.full_name }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-4">
+                                                                        <div class="form-group">
+                                                                            <label for="initials">Initials</label>
+                                                                            <input type="text" class="form-control" id="stu-initials" value="{{ student.initials }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-8">
+                                                                        <div class="form-group">
+                                                                            <label for="surname">Surname</label>
+                                                                            <input type="text" class="form-control" id="stu-surname" value="{{ student.surname }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Gender</label>
-                                                                            <select class="form-control" name="gender">
+                                                                            <label for="gender">Gender</label>
+                                                                            <select class="form-control" id="stu-gender" name="gender" disabled>
                                                                                 {% if student.gender == "male" %}
                                                                                     <option value="Male" selected>Male</option>
                                                                                     <option value="Female">Female</option>
@@ -88,35 +104,36 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" value="{{ student.dob }}">
+                                                                            <input type="date" class="form-control" id="stu-dob" value="{{ student.dob }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Phone</label>
-                                                                            <input type="number" class="form-control" value="{{ student.phone_mobile }}">
+                                                                            <input type="number" class="form-control" id="stu-phone_mobile" value="{{ student.phone_mobile }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Email</label>
-                                                                            <input type="email" class="form-control" value="{{ student.email }}">
+                                                                            <input type="email" class="form-control" id="stu-email" value="{{ student.email }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">City</label>
-                                                                            <input type="text" class="form-control" value="{{ student.city }}">
+                                                                            <input type="text" class="form-control" id="stu-city" value="{{ student.city }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Religion</label>
-                                                                            <select class="form-control" name="religion">
+                                                                            <select class="form-control" id="stu-religion" name="religion" disabled>
+                                                                                <option value="null" selected>- select -</option>
                                                                                 {% for religion in religions %}
                                                                                     {% if religion.id == student.religion_id %}
                                                                                         <option value="{{ religion.id }}" selected>{{ religion.name }}</option>
@@ -131,7 +148,7 @@
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" value="{{ student.address }}">
+                                                                            <input type="text" class="form-control"  id="stu-address" value="{{ student.address }}" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -151,21 +168,21 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission No</label>
-                                                                            <input type="number" class="form-control" value="{{ student.admission_no }}">
+                                                                            <input type="number" class="form-control" id="stu-admission_no" value="{{ student.admission_no }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission Date</label>
-                                                                            <input type="date" class="form-control" value="{{ student.admission_date }}">
+                                                                            <input type="date" class="form-control" id="stu-admission_date" value="{{ student.admission_date }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Class</label>
-                                                                            <select class="form-control" name="class">
+                                                                            <select class="form-control" name="class" id="stu-class" disabled>
                                                                                 {% for class in classes %}
                                                                                     {% if class.id == student.class_id %}
                                                                                         <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
@@ -297,14 +314,14 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="status">Status</label>
-                                                                            <select class="form-control" name="status">
-                                                                                {% for status in user.status %}
-                                                                                    {% if status.id  == settings.status %}
-                                                                                        <option value="{{ status.id }}" selected>{{ status.name }}</option>
-                                                                                    {% else %}
-                                                                                        <option value="{{ status.id }}">{{ status.name }}</option>
-                                                                                    {% endif %}
-                                                                                {% endfor %}
+                                                                            <select class="form-control" name="status" id="stu-status" disabled>
+                                                                                {% if settings.status  == "Active" %}
+                                                                                    <option value="Active" selected>Active</option>
+                                                                                    <option value="Deactive">Deactive</option>
+                                                                                {% else %}
+                                                                                <option value="Active">Active</option>
+                                                                                <option value="Deactive" selected>Deactive</option>
+                                                                                {% endif %}
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -312,7 +329,7 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="role">User Role</label>
-                                                                            <select class="form-control" name="user_role">
+                                                                            <select class="form-control" name="user_role" id="stu-user_role" disabled>
                                                                                 <option value="" selected>- select -</option>
                                                                                 {% for role in user.roles %}
                                                                                     {% if role.id  == settings.user_role.id %}
@@ -328,14 +345,14 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="theme">Preffered Theme</label>
-                                                                            <select class="form-control" name="user_theme">
-                                                                                {% for theme in user.themes %}
-                                                                                    {% if theme.name  == settings.theme %}
-                                                                                        <option value="{{ theme.name }}" selected>{{ theme.name }}</option>
-                                                                                    {% else %}
-                                                                                        <option value="{{ theme.name }}">{{ theme.name }}</option>
-                                                                                    {% endif %}
-                                                                                {% endfor %}
+                                                                            <select class="form-control" name="user_theme" disabled>
+                                                                                {% if settings.theme  == "Dark" %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark" selected>Dark</option>
+                                                                                {% else %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark">Dark</option>
+                                                                                {% endif %}
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -343,14 +360,14 @@
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.username }}">
+                                                                            <input type="text" class="form-control" id="stu-username" value="{{ settings.username }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.password }}">
+                                                                            <input type="text" class="form-control" id="stu-password" placeholder="{{ settings.password }}" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -384,16 +401,81 @@
 
 <script>
 
-    // START : REMOVE STUDENT
-    remove_student = (student_id) => {
+    // EDIT MODE ON
+    edit_mode = () => {
+
+        // MENU BUTTONS
+        $('#btn-edit').attr('hidden', true);
+        $('#btn-save').attr('hidden', false);
+        $('#btn-cancel').attr('hidden', false);
+        $('#btn-remove').attr('hidden', true);
+
+        // BIO
+        $('#stu-full_name').attr('disabled', false);
+        $('#stu-initials').attr('disabled', false);
+        $('#stu-surname').attr('disabled', false);
+        $('#stu-gender').attr('disabled', false);
+        $('#stu-dob').attr('disabled', false);
+        $('#stu-phone_mobile').attr('disabled', false);
+        $('#stu-email').attr('disabled', false);
+        $('#stu-city').attr('disabled', false);
+        $('#stu-religion').attr('disabled', false);
+        $('#stu-address').attr('disabled', false);
+
+        // ACADEMIC
+        $('#stu-admission_no').attr('disabled', false);
+        $('#stu-admission_date').attr('disabled', false);
+        $('#stu-class').attr('disabled', false);
+
+        // SETTINGS
+        $('#stu-status').attr('disabled', false);
+        $('#stu-user_role').attr('disabled', false);
+        $('#stu-username').attr('disabled', false);
+        $('#stu-password').attr('disabled', false);
+    }
+
+    // CANCEL EDIT
+    cancel_edit_mode = () => {
+        alertify.confirm('Confirm', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+            function(){ location.reload(); },
+            function(){ alertify.success('Continue editing..')}
+            // function(){ alertify.error('Cancel')}
+        );
+    }
+
+    // START : UPDATE STUDENT
+    update_student = (student_id) => {
 
         // PAYLOAD
         var formData = new FormData;
+
+        // BIO DATA
         formData.append('student_id', student_id)
+        formData.append('full_name', $("#stu-full_name").val())
+        formData.append('initials', $("#stu-initials").val())
+        formData.append('surname', $("#stu-surname").val())
+        formData.append('gender', $("#stu-gender").val())
+        formData.append('dob', $("#stu-dob").val())
+        formData.append('phone_mobile', $("#stu-phone_mobile").val())
+        formData.append('email', $("#stu-email").val())
+        formData.append('city', $("#stu-city").val())
+        formData.append('religion', $("#stu-religion").val())
+        formData.append('address', $("#stu-address").val())
+
+        // ACADEMIC
+        formData.append('admission_no', $("#stu-admission_no").val())
+        formData.append('admission_date', $("#stu-admission_date").val())
+        formData.append('class_id', $("#stu-class").val())
+
+        // SETTINGS
+        formData.append('status', $("#stu-status").val())
+        formData.append('user_role', $("#stu-user_role").val())
+        formData.append('username', $("#stu-username").val())
+        formData.append('password', $("#stu-password").val())
 
         // REQUEST
         $.ajax({
-            url: "{{ app.url }}/student/ajax_removestudent",
+            url: "{{ app.url }}/student/ajax_updatestudent",
             method: 'POST',
             data: formData,
             processData: false,
@@ -402,8 +484,8 @@
             success: (res) => {
                 
                 if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Student Record Deleted successfully ... ").set('onok', function() {
-                        window.location.replace("{{ app.url}}/student/search");
+                    alertify.alert("Success", "Student Details Updated successfully ... ").set('onok', function() {
+                        location.reload();
                     })
                 } else {
                     console.log(res);
@@ -415,6 +497,47 @@
                 console.log(e.responseText)
             }
         })
+    }
+    // END : UPDATE STUDENT
+
+    // START : REMOVE STUDENT
+    remove_student = (student_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('student_id', student_id)
+
+        alertify.confirm('Caution', 'Are you sure you want to Delete...? All data related to this student will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/student/ajax_removestudent",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Student Record Deleted successfully ... ").set('onok', function() {
+                                window.location.replace("{{ app.url}}/student/search");
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+            },
+            function(){ alertify.error('Student deletion process cancelled')}
+            // function(){ alertify.error('Cancel')}
+        );
     }
     // END : REMOVE STUDENT
 

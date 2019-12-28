@@ -886,14 +886,6 @@ class Student extends Controller {
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
 
-        // USER STATUS
-        $data['user']['status'][1]['name'] = 'Active';
-        $data['user']['status'][2]['name'] = 'Inactive';
-
-        // USER THEMES
-        $data['user']['themes'][1]['name'] = 'Default';
-        $data['user']['themes'][2]['name'] = 'Dark';
-
         // CHECK EXISTING STUDENT
         $student = $this->model_student->where('id', '=', $student_id)->first();
 
@@ -905,17 +897,30 @@ class Student extends Controller {
         // BIO DATA
         $data['student'] = $student;
 
-        $class_data = DB::table('student')
-        ->join('class', 'student.class_id', 'class.id')
-        ->join('grade', 'class.grade_id', 'grade.id')
-        ->join('religion', 'student.religion_id', 'religion.id')
-        ->where('student.id', '=', $student->id)
-        ->select('class.name as class_name', 'grade.name as grade_name', 'religion.name as religion')
-        ->first();
-        $data['grade']['name'] = $class_data->grade_name;
-        $data['class']['letter'] = $class_data->class_name;
-        $data['class']['name'] = $class_data->grade_name . " - " . $class_data->class_name;
-        $data['religion']['name'] = $class_data->religion;
+        if ( $student->religion_id !== NULL ):
+
+            $class_data = DB::table('student')
+            ->join('class', 'student.class_id', 'class.id')
+            ->join('grade', 'class.grade_id', 'grade.id')
+            ->join('religion', 'student.religion_id', 'religion.id')
+            ->where('student.id', '=', $student->id)
+            ->select('class.name as class_name', 'grade.name as grade_name', 'religion.name as religion')
+            ->first();
+            $data['grade']['name'] = $class_data->grade_name;
+            $data['class']['letter'] = $class_data->class_name;
+            $data['class']['name'] = $class_data->grade_name . " - " . $class_data->class_name;
+            $data['religion']['name'] = $class_data->religion;
+        else:
+            $class_data = DB::table('student')
+            ->join('class', 'student.class_id', 'class.id')
+            ->join('grade', 'class.grade_id', 'grade.id')
+            ->where('student.id', '=', $student->id)
+            ->select('class.name as class_name', 'grade.name as grade_name')
+            ->first();
+            $data['grade']['name'] = $class_data->grade_name;
+            $data['class']['letter'] = $class_data->class_name;
+            $data['class']['name'] = $class_data->grade_name . " - " . $class_data->class_name;
+        endif;
 
         // PARENT
         $parents = $this->model_student_parent->select('parent_id','relation_id')->where('student_id', '=', $student_id)->get();
@@ -933,13 +938,236 @@ class Student extends Controller {
             $data['settings']['user_role']['id'] = $settings_data->role_id;
             $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
             $data['settings']['username'] = $settings_data->username;
-            $data['settings']['password'] = $settings_data->password;
+            ( $settings_data->password !== NULL ) ? $data['settings']['password'] = "Password exists" : $data['settings']['password'] = "No password";
             $data['settings']['theme'] = $settings_data->theme;
             $data['settings']['status'] = $settings_data->status;
         endif;
 
         // RENDER VIEW
         $this->load->view('student/profile', $data);
+    }
+
+    public function ajax_updatestudent() {
+        
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('student');
+        $this->load->model('student/class');
+        $this->load->model('user');
+        
+        if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
+            $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);
+
+            if ( $is_valid_student_id->first() !== NULL ):
+
+                // IS CHANGED ADMISSION NUMBER
+                $current_admission_no = $this->model_student->select('admission_no')->where('id', '=', $this->request->post['student_id'])->first();
+                if ( $current_admission_no->admission_no != $this->request->post['admission_no']):
+                    // ADMISSION NUMBER IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_student->select('id')->where('admission_no', '=', $this->request->post['admission_no'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "this admission number already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // IS CHANGED EMAIL
+                $current_email = $this->model_student->select('email')->where('id', '=', $this->request->post['student_id'])->first();
+                if ( $current_email->email != $this->request->post['email']):
+                    // EMAIL IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_student->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "this email already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // IS CHANGED USERNAME
+                $current_username = $this->model_user->select('username')->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->first();
+                if ( $current_username->username != $this->request->post['username']):
+                    // USERNAME IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "this username already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // VALIDATION : full_name
+                $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
+                if ( $is_valid_full_name !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter valid full name" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : initials
+                $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
+                if ( $is_valid_initials !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter student initials" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : surname
+                $is_valid_surname = GUMP::is_valid($this->request->post, array('surname' => 'required|valid_name|max_len,30'));
+                if ( $is_valid_surname !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid surname" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : dob
+                $is_valid_dob = GUMP::is_valid($this->request->post, array('dob' => 'required|date'));
+                if ( $is_valid_dob !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter student Date of Birth" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : gender
+                $is_valid_gender = GUMP::is_valid($this->request->post, array('gender' => 'required|contains_list,Male;Female'));
+                if ( $is_valid_gender !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a gender" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : email
+                $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'valid_email'));
+                if ( $is_valid_email !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid email" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : phone_mobile
+                $is_valid_phone_mobile = GUMP::is_valid($this->request->post, array('phone_mobile' => 'numeric|exact_len,10'));
+                if ( $is_valid_phone_mobile !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid 10 digit mobile number" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : city
+                $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
+                if ( $is_valid_city !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid city name" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : religion
+                $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|max_len,2'));
+                if ( $is_valid_religion !== true AND $this->request->post['religion'] != "null" ):
+                    echo json_encode( array("status" => "failed", "message" => "Invalid religion" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+                
+                if ( $this->request->post['religion'] == "null" ):
+                    $this->request->post['religion'] = NULL;
+                endif;
+
+                // VALIDATION : address
+                $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|street_address|max_len,50'));
+                if ( $is_valid_address !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid address" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : admission_no
+                $is_valid_admission_no = GUMP::is_valid($this->request->post, array('admission_no' => 'required|numeric|max_len,6'));
+                if ( $is_valid_admission_no !== true ):
+                    echo json_encode( array( "status" => "failed", "message" => "Please enter a valid number less or equal to six digits" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : admission_date
+                $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
+                if ( $is_valid_admission_date !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid admission date" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : class_id
+                $is_valid_class_id = GUMP::is_valid($this->request->post, array('class_id' => 'required|numeric|min_len,1|max_len,3'));
+                if ( $is_valid_class_id !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid class" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : status
+                $is_valid_status = GUMP::is_valid($this->request->post, array('status' => 'required|contains_list,Active;Deactive'));
+                if ( $is_valid_status !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid user account status" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : role_id
+                $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'numeric|min_len,1|max_len,2'));
+                if ( $is_valid_role_id !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid user role" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : username
+                $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_username !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid username of minimum 6 characters" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // UPDATE PROCESS
+                try {
+                    $this->model_student->find($this->request->post['student_id'])->update([
+                        // UPDATE BIO
+                        'full_name' => $this->request->post['full_name'],
+                        'initials' => $this->request->post['initials'],
+                        'surname' => $this->request->post['surname'],
+                        'gender' => $this->request->post['gender'],
+                        'dob' => $this->request->post['dob'],
+                        'phone_mobile' => $this->request->post['phone_mobile'],
+                        'email' => $this->request->post['email'],
+                        'city' => $this->request->post['city'],
+                        'religion_id' => $this->request->post['religion'],
+                        'address' => $this->request->post['address'],
+
+                        // UPDATE ACADEMIC
+                        'admission_no' => $this->request->post['admission_no'],
+                        'admission_date' => $this->request->post['admission_date'],
+                        'class_id' => $this->request->post['class_id'],
+                    ]);
+
+                    // UPDATE STUDENT HAS CLASS
+                    $this->model_student_class->where('student_id', '=', $this->request->post['student_id'])->update(['class_id' => $this->request->post['class_id']]);
+
+                    // UPDATE SETTINGS
+                    $this->model_user->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->update([
+                        'status' => $this->request->post['status'],
+                        'role_id' => $this->request->post['user_role'],
+                        'username' => $this->request->post['username'],
+                    ]);
+
+                    // UPDATE PASSWORD
+                    if (isset( $this->request->post['password']) == TRUE AND !empty( $this->request->post['password']) == TRUE ):
+                        $this->model_user->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->update(['password' => password_hash($this->request->post['password'], PASSWORD_DEFAULT)]);
+                    endif;
+
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to edit student. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+            else:
+                // NO RECORD FOUND TO UPDATE
+				echo json_encode( array( "status" => "failed", "message" => "No student record found to modify" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // STUDENT ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid student record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
     }
 
     public function ajax_removestudent() {
@@ -993,7 +1221,6 @@ class Student extends Controller {
 			echo json_encode( array( "status" => "failed", "message" => "Please select a valid student record" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
-    }
-    
+    }    
 }
 ?>
