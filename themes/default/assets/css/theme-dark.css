@@ -30,6 +30,7 @@
 .content{
     color: var(--main-text-color);
     background-color: var(--main-bg-color);
+    min-height: 100vh;
 }
 
 .table{
@@ -38,6 +39,10 @@
 
 .chart-bg{
     background-color: var(--main-bg-color);
+}
+
+.card {
+    border: none;
 }
 
 .card .card-header {
@@ -76,7 +81,8 @@ h5.page-title{
 /* common/topmenu */
 .topmenu{
     color: var(--white);
-    background:var(--main-bg-color);
+    /*background:var(--main-bg-color);*/
+    background: #262a35;
 }
 
 .topmenu .heading-link{
@@ -115,7 +121,8 @@ h5.page-title{
 /* common/sidenav */
 .left-pane{
     /* background-image: linear-gradient(135deg,#8f75da 0,#727cf5 60%); */
-    background: var(--main-bg-color);
+    /*background: var(--main-bg-color);*/
+    background: #262a35;
 }
 
 .left-pane .logo .sidenavusername{
@@ -152,4 +159,63 @@ h5.page-title{
 
 .sidenav li.sub-menu:hover{
     color: var(--white);
+}
+
+/* INPUTS */
+.form-control, .form-control:focus , .form-control:disabled, .form-control[readonly]{
+    background: var(--main-bg-color);
+    color: #b9bfce;
+    border-color: #050506;
+}
+
+
+/* PROFILE NAV PILLS */
+
+.stuprofile .card-body .nav.nav-pills {
+    border-bottom-color: #262a35!important;
+}
+
+.stuprofile .card-body .nav.nav-pills .nav-link.active,.stuprofile .card-body .nav.nav-pills .nav-pills .show>.nav-link {
+    background: #262a35 !important;
+}
+
+
+/* DATA TABLES */
+table.dataTable tbody tr {
+    background: #262a35;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    border-color: #171a23;
+    color: #dadada;
+}
+
+.table-hover tbody tr:hover {
+    background: #1a1d25;
+}
+
+/* MESSAGES */
+.messagesinbox ul.list-group li.list-group-item {
+    background: #262a35;
+}
+
+.messagesinbox li.list-group-item .body h5 {
+    color: #e1e1e3!important;
+}
+
+#new-message-modal .modal-content {
+    background: #262a35;
+}
+
+#new-message-modal .modal-header {
+    background: #262a35;
+    color: #e1e1e3;
+}
+
+#new-message-modal .modal-content label {
+    color: #e1e1e3;
+}
+
+.messagessingle .card-footer {
+    background: #1f232b;
 }
