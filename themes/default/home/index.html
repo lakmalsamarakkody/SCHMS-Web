@@ -139,32 +139,36 @@
                                     <h5 class="card-title">Exams</h5>
                                 </div>
 
-                                <div class="row card-body pt-0">
+                                <div class="card-body pt-0">
 
-                                    <div class="col-6 card m-0 p-0">
-                                        <div class="card-header">
-                                            <span class="text-danger">Upcoming exams</span>
-                                        </div>
-                                        <div class="card-body">
-                                            {% for exam_schedule in exam.upcoming.schedules %}
-                                            <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
-                                            <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b> <br/>Scheduled on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }} @ {{ exam_schedule.exam.venue }}</p>
-                                            {% endfor %}
-                                            <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-danger">view details</a>
-                                        </div>
-                                    </div>
+                                    <div class="row">
 
-                                    <div class="col-6 card m-0 p-0">
-                                        <div class="card-header">
-                                            Recent exams
+                                        <div class="col-6 card m-0 p-0">
+                                            <div class="card-header">
+                                                <span class="text-danger">Upcoming exams</span>
+                                            </div>
+                                            <div class="card-body">
+                                                {% for exam_schedule in exam.upcoming.schedules %}
+                                                <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
+                                                <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b> <br/>Scheduled on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }} @ {{ exam_schedule.exam.venue }}</p>
+                                                {% endfor %}
+                                                <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-danger">view details</a>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            {% for exam_schedule in exam.recent.schedules %}
-                                            <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
-                                            <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b><br/>Held on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }}</p>
-                                            {% endfor %}
-                                            <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-primary">view details</a>
+
+                                        <div class="col-6 card m-0 p-0">
+                                            <div class="card-header">
+                                                Recent exams
+                                            </div>
+                                            <div class="card-body">
+                                                {% for exam_schedule in exam.recent.schedules %}
+                                                <!-- <h5 class="card-title">{{ exam_schedule.exam.name }} {{ exam_schedule.exam.year }}</h5> -->
+                                                <p class="card-text"><b>Grade - {{ exam_schedule.exam.grade }} {{ exam_schedule.exam.subject }}</b><br/>Held on {{ exam_schedule.exam.date }} {{ exam_schedule.exam.starttime }} - {{ exam_schedule.exam.endtime }}</p>
+                                                {% endfor %}
+                                                <a href="{{ app.url }}/exam/search" class="btn btn-sm btn-primary">view details</a>
+                                            </div>
                                         </div>
+
                                     </div>
                                         
                                 </div>
@@ -184,31 +188,35 @@
                                     <h5 class="card-title">Parents</h5>
                                 </div>
 
-                                <div class="row card-body pt-0">
+                                <div class="card-body">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Total</h6>
-                                        <p class="card-text">
-                                            {{ parent.total.all }}
-                                        </p>
-                                    </div>
+                                    <div class="row">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Male</h6>
-                                        <p class="card-text">
-                                            {{ parent.total.male }}
-                                        </p>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <h6 class="card-title">Female</h6>
-                                        <p class="card-text">
-                                            {{ parent.total.female }}
-                                        </p>
-
-                                        <div class="row">
-                                            <a href="{{ app.url}}/parent/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
+                                        <div class="col-4">
+                                            <h6 class="card-title">Total</h6>
+                                            <p class="card-text">
+                                                {{ parent.total.all }}
+                                            </p>
                                         </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Male</h6>
+                                            <p class="card-text">
+                                                {{ parent.total.male }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Female</h6>
+                                            <p class="card-text">
+                                                {{ parent.total.female }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <a href="{{ app.url}}/parent/" class="btn btn-sm btn-primary mt-4">view details</a>
+                                        </div>
+
                                     </div>
 
                                 </div>
@@ -224,31 +232,35 @@
                                     <h5 class="card-title">Users</h5>
                                 </div>
 
-                                <div class="row card-body pt-0">
+                                <div class="card-body">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Total</h6>
-                                        <p class="card-text">
-                                            {{ user.total.all }}
-                                        </p>
-                                    </div>
+                                    <div class="row">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Active</h6>
-                                        <p class="card-text">
-                                            {{ user.total.active }}
-                                        </p>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <h6 class="card-title">Disabled</h6>
-                                        <p class="card-text">
-                                            {{ user.total.disabled }}
-                                        </p>
-
-                                        <div class="row">
-                                            <a href="{{ app.url}}/user/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
+                                        <div class="col-4">
+                                            <h6 class="card-title">Total</h6>
+                                            <p class="card-text">
+                                                {{ user.total.all }}
+                                            </p>
                                         </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Active</h6>
+                                            <p class="card-text">
+                                                {{ user.total.active }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Disabled</h6>
+                                            <p class="card-text">
+                                                {{ user.total.disabled }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <a href="{{ app.url}}/user/" class="btn btn-sm btn-primary mr-3 mt-4">view details</a>
+                                        </div>
+
                                     </div>
                                         
                                 </div>
@@ -264,31 +276,35 @@
                                     <h5 class="card-title">Sports</h5>
                                 </div>
 
-                                <div class="row card-body pt-0">
+                                <div class="card-body">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Total</h6>
-                                        <p class="card-text">
-                                            {{ sport.total.all }}
-                                        </p>
-                                    </div>
+                                    <div class="row">
 
-                                    <div class="col-4">
-                                        <h6 class="card-title">Coaches</h6>
-                                        <p class="card-text">
-                                            {{ coach.total.all }}
-                                        </p>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <h6 class="card-title">Students</h6>
-                                        <p class="card-text">
-                                            {{ sport.student.total.all }}
-                                        </p>
-
-                                        <div class="row">
-                                            <a href="{{ app.url}}/sport/" class="btn btn-sm btn-primary mr-3 ml-auto">view details</a>
+                                        <div class="col-4">
+                                            <h6 class="card-title">Total</h6>
+                                            <p class="card-text">
+                                                {{ sport.total.all }}
+                                            </p>
                                         </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Coaches</h6>
+                                            <p class="card-text">
+                                                {{ coach.total.all }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <h6 class="card-title">Students</h6>
+                                            <p class="card-text">
+                                                {{ sport.student.total.all }}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <a href="{{ app.url}}/sport/" class="btn btn-sm btn-primary mt-4">view details</a>
+                                        </div>
+
                                     </div>
                                         
                                 </div>
