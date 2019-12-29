@@ -598,7 +598,7 @@ class Sport extends Controller {
         foreach( $sports as $key => $element ):
 
             try{
-                // CHECK ANY SPORT TO SAVE
+                // CHECK IS SPORT EXISTS
                 $is_exist_sport = $this->model_sport->where('id', '=', $element)->first();
                 if ( $is_exist_sport !== NULL ):
                     // CREATE STUDENT HAS SPORT RECORD
@@ -606,6 +606,9 @@ class Sport extends Controller {
                         'student_id' => $this->request->post['student_id'],
                         'sport_id' => $element
                     ]);
+                else:
+                    echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    exit();
                 endif;
             }catch (Exception $e){
                 echo json_encode( array( "status" => "failed" , "message" => "Sport assign process failed. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
@@ -962,13 +965,338 @@ class Sport extends Controller {
             $data['settings']['user_role']['id'] = $settings_data->role_id;
             $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
             $data['settings']['username'] = $settings_data->username;
-            $data['settings']['password'] = $settings_data->password;
+            ( $settings_data->password !== NULL ) ? $data['settings']['password'] = "Password exists" : $data['settings']['password'] = "No password";
             $data['settings']['theme'] = $settings_data->theme;
             $data['settings']['status'] = $settings_data->status;
         endif;
 
         // RENDER VIEW
         $this->load->view('sport/profile_coach', $data);
+    }
+
+    public function ajax_updatecoach(){
+
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('coach');
+        $this->load->model('coach/sport');
+        $this->load->model('sport');
+        $this->load->model('user');
+
+        if ( isset($this->request->post['coach_id']) AND !empty($this->request->post['coach_id']) ):
+            $is_valid_coach_id = $this->model_coach->select('id')->where('id', '=', $this->request->post['coach_id']);
+
+            if ( $is_valid_coach_id->first() !== NULL ):
+
+                // IS CHANGED NIC
+                $current_nic = $this->model_coach->select('nic')->where('id', '=', $this->request->post['coach_id'])->first();
+                if ( $current_nic->nic != $this->request->post['nic']):
+                    // NIC IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_coach->select('id')->where('nic', '=', $this->request->post['nic'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "This NIC already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // IS CHANGED EMAIL
+                $current_email = $this->model_coach->select('email')->where('id', '=', $this->request->post['coach_id'])->first();
+                if ( $current_email->email != $this->request->post['email']):
+                    // EMAIL IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_coach->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "This email already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // VALIDATION : full_name
+                $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
+                if ( $is_valid_full_name !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter valid full name" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : initials
+                $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
+                if ( $is_valid_initials !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter student initials" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : surname
+                $is_valid_surname = GUMP::is_valid($this->request->post, array('surname' => 'required|valid_name|max_len,30'));
+                if ( $is_valid_surname !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid surname" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : nic
+                $is_valid_nic = GUMP::is_valid($this->request->post, array('nic' => "required"));
+                if ( $is_valid_nic === true ):
+                    if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['nic']) == false ):
+                        echo json_encode( array("status" => "failed", "error" => "Wrong NIC Format. Please enter a valid NIC" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                else:
+                    echo json_encode( array("status" => "failed", "error" => "Please enter a valid NIC number for guardian" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : dob
+                $is_valid_dob = GUMP::is_valid($this->request->post, array('dob' => 'required|date'));
+                if ( $is_valid_dob !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter student Date of Birth" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : gender
+                $is_valid_gender = GUMP::is_valid($this->request->post, array('gender' => 'required|contains_list,Male;Female'));
+                if ( $is_valid_gender !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a gender" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : email
+                $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'valid_email'));
+                if ( $is_valid_email !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid email" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : phone_mobile
+                $is_valid_phone_mobile = GUMP::is_valid($this->request->post, array('phone_mobile' => 'numeric|exact_len,10'));
+                if ( $is_valid_phone_mobile !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid 10 digit mobile number" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : phone_home
+                $is_valid_phone_home = GUMP::is_valid($this->request->post, array('phone_home' => 'numeric|exact_len,10'));
+                if ( $is_valid_phone_home !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid 10 digit landline number" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : city
+                $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
+                if ( $is_valid_city !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid city name" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : district
+                $is_valid_district = GUMP::is_valid($this->request->post, array('district_id' => 'numeric|max_len,2'));
+                if ( $is_valid_district !== true AND $this->request->post['district_id'] != "null" ):
+                    echo json_encode( array("status" => "failed", "message" => "Invalid district" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+                
+                if ( $this->request->post['district_id'] == "null" ):
+                    $this->request->post['district_id'] = NULL;
+                endif;
+
+                // VALIDATION : address
+                $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|street_address|max_len,50'));
+                if ( $is_valid_address !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid address" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : admission_date
+                $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
+                if ( $is_valid_admission_date !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid admission date" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : status
+                $is_valid_status = GUMP::is_valid($this->request->post, array('status' => 'required|contains_list,Active;Deactive'));
+                if ( $is_valid_status !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid user account status" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : role_id
+                $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'numeric|min_len,1|max_len,2'));
+                if ( $is_valid_role_id !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid user role" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : username
+                $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_username !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid username of minimum 6 characters" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : password
+                $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'alpha_dash|min_len,6|max_len,20'));
+                if ( $is_valid_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK ANY USER AVAILABLE
+                $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'coach')->where('ref_id', '=', $this->request->post['coach_id']);
+                if ( $is_available_user->first() != NULL):
+                     // IS CHANGED USERNAME
+                    $current_username = $this->model_user->select('username')->where('user_type', '=', 'coach')->where('ref_id', '=', $this->request->post['coach_id'])->first();
+                    if ( $current_username->username != $this->request->post['username']):
+                        // USERNAME IS CHANGED : CHECK FOR DUPLICATE
+                        if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                            echo json_encode( array( "status" => "failed", "message" => "this username already exists" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+                    endif;
+                endif;
+
+                // var_dump($this->request->post['admission_date']);
+                // exit();
+
+                // UPDATE PROCESS
+                try {
+                    $this->model_coach->find($this->request->post['coach_id'])->update([
+
+                        // UPDATE ACADEMIC
+                        'admission_date' => $this->request->post['admission_date'],
+
+                        // UPDATE BIO
+                        'full_name' => $this->request->post['full_name'],
+                        'initials' => $this->request->post['initials'],
+                        'surname' => $this->request->post['surname'],
+                        'nic' => $this->request->post['nic'],
+                        'gender' => $this->request->post['gender'],
+                        'dob' => $this->request->post['dob'],
+                        'phone_mobile' => $this->request->post['phone_mobile'],
+                        'phone_home' => $this->request->post['phone_home'],
+                        'email' => $this->request->post['email'],
+                        'city' => $this->request->post['city'],
+                        'address' => $this->request->post['address'],
+                        'district_id' => $this->request->post['district_id'],
+                    ]);
+
+                    // START : UPDATE COACH HAS SPORTS
+
+                        // REMOVE CURRENT RECORDS
+                        if ( $this->model_coach_sport->where('coach_id', '=', $this->request->post['coach_id'])->first() !== NULL ):
+                            if ($this->model_coach_sport->where('coach_id', '=', $this->request->post['coach_id'])->delete() == FALSE ):
+                                echo json_encode( array( "status" => "failed", "message" => "Couldn't Remove Current Sports. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                                exit();
+                            endif;
+                        endif;
+
+                        // SEPERATE DATA BY COMMAS TO ARRAY
+                        $sport_ids = explode(",", $this->request->post['sport_ids']);
+
+                        // LOOP SPORT IDS
+                        foreach( $sport_ids as $key => $element ):
+
+                            // CHECK IS SPORT EXISTS
+                            $is_exist_sport = $this->model_sport->where('id', '=', $element)->first();
+                            if ( $is_exist_sport !== NULL ):
+
+                                // CREATE COACH HAS SPORT RECORD
+                                $this->model_coach_sport->create([
+                                    'coach_id' => $this->request->post['coach_id'],
+                                    'sport_id' => $element
+                                ]);
+                            else:
+                                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                                exit();
+                            endif;
+                        endforeach;
+
+                    // END : UPDATE COACH HAS SPORTS
+
+                    // UPDATE SETTINGS IF AVAILABLE USER FOUND
+                    $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'coach')->where('ref_id', '=', $this->request->post['coach_id']);
+                    if ( $is_available_user->first() != NULL):
+
+                        // UPDATE STATUS,ROLE,USERNAME
+                        $this->model_user->where('user_type', '=', 'coach')->where('ref_id', '=', $this->request->post['coach_id'])->update([
+                            'status' => $this->request->post['status'],
+                            'role_id' => $this->request->post['role_id'],
+                            'username' => $this->request->post['username'],
+                        ]);
+
+                        // UPDATE PASSWORD
+                        if ( isset($this->request->post['password']) == TRUE AND !empty( $this->request->post['password']) == TRUE ):
+                            $this->model_user->where('user_type', '=', 'coach')->where('ref_id', '=', $this->request->post['coach_id'])->update(['password' => password_hash($this->request->post['password'], PASSWORD_DEFAULT)]);
+                        endif;
+
+                    // CREATE A USER IF STATUS IS ACTIVE
+                    elseif ( $this->request->post['status'] == "Active" ):
+
+                        // VALIDATION : role_id
+                        $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'required|numeric|min_len,1|max_len,2'));
+                        if ( $is_valid_role_id !== true ):
+                            echo json_encode( array("status" => "failed", "message" => "Please select a valid user role" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+
+                        // VALIDATION : username
+                        $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                        if ( $is_valid_username !== true ):
+                            echo json_encode( array("status" => "failed", "message" => "Please select a valid username of minimum 6 characters" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+
+                        // USERNAME ASSIGNED : CHECK FOR DUPLICATE
+                        if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                            echo json_encode( array( "status" => "failed", "message" => "this username already exists" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+
+                        // VALIDATION : password
+                        $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'required|alpha_dash|min_len,6|max_len,20'));
+                        if ( $is_valid_password !== true ):
+                            echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;                        
+
+                        // INITIATE : USER RECORD
+                        $this->model_user->user_type = "coach";
+                        $this->model_user->ref_id = $this->request->post['coach_id'];
+                        $this->model_user->role_id = $this->request->post['role_id'];
+                        $this->model_user->username = $this->request->post['username'];
+                        $this->model_user->password = password_hash($this->request->post['password'], PASSWORD_DEFAULT);
+
+                        // CHECK : USER RECORD QUERY
+                        if ( $this->model_user->save() ):
+                            echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                            exit();
+                        else:
+                            echo json_encode( array( "status" => "failed", "message" => "Unable create user. Please set username and password" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+                    endif;
+
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to edit coach. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+            else:
+                // NO RECORD FOUND TO UPDATE
+				echo json_encode( array( "status" => "failed", "message" => "No coach record found to modify" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // COACH ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid coach record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
     }
 
     public function ajax_removecoach() {

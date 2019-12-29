@@ -958,7 +958,7 @@ class Student extends Controller {
                 if ( $current_admission_no->admission_no != $this->request->post['admission_no']):
                     // ADMISSION NUMBER IS CHANGED : CHECK FOR DUPLICATE
                     if ( $this->model_student->select('id')->where('admission_no', '=', $this->request->post['admission_no'])->first() != NULL ):
-                        echo json_encode( array( "status" => "failed", "message" => "this admission number already exists" ), JSON_PRETTY_PRINT );
+                        echo json_encode( array( "status" => "failed", "message" => "This admission number already exists" ), JSON_PRETTY_PRINT );
                         exit();
                     endif;
                 endif;
@@ -968,7 +968,7 @@ class Student extends Controller {
                 if ( $current_email->email != $this->request->post['email']):
                     // EMAIL IS CHANGED : CHECK FOR DUPLICATE
                     if ( $this->model_student->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
-                        echo json_encode( array( "status" => "failed", "message" => "this email already exists" ), JSON_PRETTY_PRINT );
+                        echo json_encode( array( "status" => "failed", "message" => "This email already exists" ), JSON_PRETTY_PRINT );
                         exit();
                     endif;
                 endif;
@@ -1113,6 +1113,7 @@ class Student extends Controller {
                 // UPDATE PROCESS
                 try {
                     $this->model_student->find($this->request->post['student_id'])->update([
+
                         // UPDATE BIO
                         'full_name' => $this->request->post['full_name'],
                         'initials' => $this->request->post['initials'],
@@ -1141,7 +1142,7 @@ class Student extends Controller {
                         // UPDATE STATUS,ROLE,USERNAME
                         $this->model_user->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->update([
                             'status' => $this->request->post['status'],
-                            'role_id' => $this->request->post['user_role'],
+                            'role_id' => $this->request->post['role_id'],
                             'username' => $this->request->post['username'],
                         ]);
 
@@ -1153,9 +1154,9 @@ class Student extends Controller {
                     // CREATE A USER IF STATUS IS ACTIVE
                     elseif ( $this->request->post['status'] == "Active" ):
 
-                        // VALIDATION : user_role
-                        $is_valid_user_role = GUMP::is_valid($this->request->post, array('user_role' => 'required|numeric|min_len,1|max_len,2'));
-                        if ( $is_valid_user_role !== true ):
+                        // VALIDATION : role_id
+                        $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'required|numeric|min_len,1|max_len,2'));
+                        if ( $is_valid_role_id !== true ):
                             echo json_encode( array("status" => "failed", "message" => "Please select a valid user role" ), JSON_PRETTY_PRINT );
                             exit();
                         endif;
@@ -1183,7 +1184,7 @@ class Student extends Controller {
                         // INITIATE : USER RECORD
                         $this->model_user->user_type = "student";
                         $this->model_user->ref_id = $this->request->post['student_id'];
-                        $this->model_user->role_id = $this->request->post['user_role'];
+                        $this->model_user->role_id = $this->request->post['role_id'];
                         $this->model_user->username = $this->request->post['username'];
                         $this->model_user->password = password_hash($this->request->post['password'], PASSWORD_DEFAULT);
 
@@ -1201,7 +1202,7 @@ class Student extends Controller {
                     exit();
 
                 } catch (\Illuminate\Database\QueryException $e) {
-                    var_dump( $e->errorInfo );
+                    // var_dump( $e->errorInfo );
                     echo json_encode( array( "status" => "failed", "message" => "Unable to edit student. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
                     exit();
                 }

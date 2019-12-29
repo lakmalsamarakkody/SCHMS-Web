@@ -329,7 +329,7 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="role">User Role</label>
-                                                                            <select class="form-control" name="user_role" id="stu-user_role" disabled>
+                                                                            <select class="form-control" name="role_id" id="stu-role_id" disabled>
                                                                                 <option value="" selected>- select -</option>
                                                                                 {% for role in user.roles %}
                                                                                     {% if role.id  == settings.user_role.id %}
@@ -429,7 +429,7 @@
 
         // SETTINGS
         $('#stu-status').attr('disabled', false);
-        $('#stu-user_role').attr('disabled', false);
+        $('#stu-role_id').attr('disabled', false);
         $('#stu-username').attr('disabled', false);
         $('#stu-password').attr('disabled', false);
     }
@@ -469,7 +469,7 @@
 
         // SETTINGS
         formData.append('status', $("#stu-status").val())
-        formData.append('user_role', $("#stu-user_role").val())
+        formData.append('role_id', $("#stu-role_id").val())
         formData.append('username', $("#stu-username").val())
         formData.append('password', $("#stu-password").val())
 

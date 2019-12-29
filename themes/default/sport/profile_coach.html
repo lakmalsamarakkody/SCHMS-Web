@@ -29,9 +29,9 @@
                                                 <h5 class="my-0">{{ coach.initials }} {{ coach.surname }}</h5>
                                                 <h6 class="my-0 text-secondary mb-2">Sport Coach</h6>
                                                 <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
-                                                <button class="btn btn-xs btn-success" id="btn-save" onclick="update_student('{{ coach.id }}')" hidden><i class="la la-save"></i> Save</button>
+                                                <button class="btn btn-xs btn-success" id="btn-save" onclick="update_coach('{{ coach.id }}')" hidden><i class="la la-save"></i> Save</button>
                                                 <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
-                                                <button class="btn btn-xs btn-danger" onclick="remove_coach('{{ coach.id }}')"><i class="la la-trash"></i></button>
+                                                <button class="btn btn-xs btn-danger" onclick="remove_coach('{{ coach.id }}')"><i class="la la-trash"></i> Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="">User Role</label>
-                                                                            <select class="form-control" id="coach-user_role"  name="user_role" disabled>
+                                                                            <select class="form-control" id="coach-role_id"  name="role_id" disabled>
                                                                                 <option value="" selected>- select -</option>
                                                                                 {% for role in user.roles %}
                                                                                     {% if role.id  == settings.user_role.id %}
@@ -283,7 +283,7 @@
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
-                                                                            <input type="text" class="form-control" id="coach-password"  value="{{ settings.password }}" disabled>
+                                                                            <input type="text" class="form-control" id="coach-password"  placeholder="{{ settings.password }}" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -339,20 +339,88 @@
         $('#coach-phone_home').attr('disabled', false);
         $('#coach-email').attr('disabled', false);
         $('#coach-city').attr('disabled', false);
-        $('#coach-religion').attr('disabled', false);
         $('#coach-address').attr('disabled', false);
         $('#coach-district').attr('disabled', false);
 
         // ACADEMIC
         $('#coach-admission_date').attr('disabled', false);
-        $('#coach-sport').attr('disabled', false);
+        // $('#coach-sport').attr('disabled', false);
+        $('#coach-sport').prop('disabled', false);
+        $('#coach-sport').selectpicker('refresh');
 
         // SETTINGS
         $('#coach-status').attr('disabled', false);
-        $('#coach-user_role').attr('disabled', false);
+        $('#coach-role_id').attr('disabled', false);
         $('#coach-username').attr('disabled', false);
         $('#coach-password').attr('disabled', false);
     }
+
+    // CANCEL EDIT
+    cancel_edit_mode = () => {
+        alertify.confirm('Confirm', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+            function(){ location.reload(); },
+            function(){ alertify.success('Continue editing..')}
+            // function(){ alertify.error('Cancel')}
+        );
+    }
+
+    // START : UPDATE COACH
+    update_coach = (coach_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+
+        // BIO DATA
+        formData.append('coach_id', coach_id)
+        formData.append('full_name', $("#coach-full_name").val())
+        formData.append('initials', $("#coach-initials").val())
+        formData.append('surname', $("#coach-surname").val())
+        formData.append('nic', $("#coach-nic").val())
+        formData.append('gender', $("#coach-gender").val())
+        formData.append('dob', $("#coach-dob").val())
+        formData.append('phone_mobile', $("#coach-phone_mobile").val())
+        formData.append('phone_home', $("#coach-phone_home").val())
+        formData.append('email', $("#coach-email").val())
+        formData.append('city', $("#coach-city").val())
+        formData.append('address', $("#coach-address").val())
+        formData.append('district_id', $("#coach-district").val())
+
+        // ACADEMIC
+        formData.append('admission_date', $("#coach-admission_date").val())
+        formData.append('sport_ids', $("#coach-sport").val())
+
+        // SETTINGS
+        formData.append('status', $("#coach-status").val())
+        formData.append('role_id', $("#coach-role_id").val())
+        formData.append('username', $("#coach-username").val())
+        formData.append('password', $("#coach-password").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/sport/ajax_updatecoach",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "Coach Details Updated successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert("Failed", res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : UPDATE COACH
 
     // START : REMOVE COACH
     remove_coach = (coach_id) => {
