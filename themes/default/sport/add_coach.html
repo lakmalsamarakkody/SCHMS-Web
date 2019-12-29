@@ -36,7 +36,7 @@
 
                                         <div class="form-row">
                                             
-                                            <div class="col-8">
+                                            <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="fn">Full Name</label>
                                                     <input type="text" class="form-control" id="fn"/>
@@ -44,7 +44,15 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-4">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="admission_date">Admission Date</label>
+                                                    <input type="date" class="form-control" id="admission_date"/>
+                                                    <small id="admission_dateHelp" class="form-text text-muted">will be assigned automatically if not entered</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
                                                     <div class="form-group">
                                                         <label for="coach_sports">Sports</label>
                                                         <select class="form-control selectpicker show-tick" id="coach_sports" multiple>
@@ -256,6 +264,7 @@
 
         // COACH DATA
         formData.append('full_name', $("#fn").val())
+        formData.append('admission_date', $("#admission_date").val())
         formData.append('coach_sports', $("#coach_sports").val())
         formData.append('initials', $("#initials").val())
         formData.append('surname', $("#sn").val())

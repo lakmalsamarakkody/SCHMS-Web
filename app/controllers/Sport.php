@@ -693,12 +693,22 @@ class Sport extends Controller {
         $this->load->model('coach/sport');
         $this->load->model('sport');
 
-        // VALIDATION : COACH
         // VALIDATION : full_name
         $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
         if ( $is_valid_full_name !== true ):
             echo json_encode( array( "error" => "Please enter coach full name" ), JSON_PRETTY_PRINT );
             exit();
+        endif;
+
+        // VALIDATION : admission_date
+        $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'date'));
+        if ( $is_valid_admission_date !== true AND $this->request->post['admission_date'] != "" ):
+            echo json_encode( array( "error" => "Invalid admission date" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+        // SET CURRENT DATE IF ADMISSION DATE NOT INSERTED
+        if ( $this->request->post['admission_date'] == "" ):
+            $this->request->post['admission_date'] = Carbon::now()->isoFormat('YYYY-MM-DD');
         endif;
 
         // VALIDATION : SPORT IDS
@@ -821,10 +831,8 @@ class Sport extends Controller {
             echo json_encode( array( "error" => "Invalid district name" ), JSON_PRETTY_PRINT );
             exit();
         endif;
-
-        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
-
-        $this->model_coach->admission_date = $date_now;
+        
+        $this->model_coach->admission_date = $this->request->post['admission_date'];
         $this->model_coach->full_name = $this->request->post['full_name'];
         $this->model_coach->initials = $this->request->post['initials'];
         $this->model_coach->surname = $this->request->post['surname'];
@@ -862,7 +870,6 @@ class Sport extends Controller {
             echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
             exit();
         endif;
-
     }
 
     public function ajax_retrive_province_by_district($id) {
@@ -883,7 +890,6 @@ class Sport extends Controller {
         $province_id = $this->model_district->select('province_id')->where('id', '=', $id)->first()->province_id;
 
         echo json_encode(array( "status" => "success", "data" => $this->model_province->select('id', 'name')->where('id', '=', $province_id)->first() ));
-
     }
 
     public function profile_coach($coach_id) {
@@ -909,6 +915,7 @@ class Sport extends Controller {
         $this->load->model('coach');
         $this->load->model('coach/sport');
         $this->load->model('sport');
+        $this->load->model('district');
         $this->load->model('user');
         $this->load->model('user/role');
 
@@ -916,6 +923,12 @@ class Sport extends Controller {
 		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['sports'][$key]['id'] = $element->id;
 			$data['sports'][$key]['name']= $element->name;
+        endforeach;
+
+        // QUERY ( DISTRICT )
+        foreach( $this->model_district->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['districts'][$key]['id'] = $element->id;
+            $data['districts'][$key]['name'] = $element->name;
         endforeach;
 
         // BIO DATA : SPORTS
@@ -931,14 +944,6 @@ class Sport extends Controller {
             $data['user']['roles'][$key]['id'] = $element->id;
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
-
-        // USER STATUS
-        $data['user']['status'][1]['name'] = 'Active';
-        $data['user']['status'][2]['name'] = 'Inactive';
-
-        // USER THEMES
-        $data['user']['themes'][1]['name'] = 'Default';
-        $data['user']['themes'][2]['name'] = 'Dark';
 
         // CHECK EXISTING STAFF
         $coach = $this->model_coach->where('id', '=', $coach_id)->first();

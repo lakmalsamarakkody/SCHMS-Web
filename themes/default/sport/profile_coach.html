@@ -28,7 +28,9 @@
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ coach.initials }} {{ coach.surname }}</h5>
                                                 <h6 class="my-0 text-secondary mb-2">Sport Coach</h6>
-                                                <button class="btn btn-xs btn-warning"><i class="la la-edit"></i>Edit</button>
+                                                <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
+                                                <button class="btn btn-xs btn-success" id="btn-save" onclick="update_student('{{ coach.id }}')" hidden><i class="la la-save"></i> Save</button>
+                                                <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
                                                 <button class="btn btn-xs btn-danger" onclick="remove_coach('{{ coach.id }}')"><i class="la la-trash"></i></button>
                                             </div>
                                         </div>
@@ -63,21 +65,35 @@
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.full_name }}">
+                                                                            <input type="text" class="form-control" id="coach-full_name" value="{{ coach.full_name }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-4">
+                                                                        <div class="form-group">
+                                                                            <label for="initials">Initials</label>
+                                                                            <input type="text" class="form-control" id="coach-initials" value="{{ coach.initials }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-8">
+                                                                        <div class="form-group">
+                                                                            <label for="surname">Surname</label>
+                                                                            <input type="text" class="form-control" id="coach-surname" value="{{ coach.surname }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">NIC</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.nic }}">
+                                                                            <input type="text" class="form-control" id="coach-nic" value="{{ coach.nic }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Gender</label>
-                                                                            <select class="form-control" name="gender">
+                                                                            <select class="form-control" id="coach-gender" name="gender" disabled>
                                                                                 {% if coach.gender == "male" %}
                                                                                     <option value="Male" selected>Male</option>
                                                                                     <option value="Female">Female</option>
@@ -92,42 +108,58 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" value="{{ coach.dob }}">
+                                                                            <input type="date" class="form-control" id="coach-dob" value="{{ coach.dob }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Email</label>
+                                                                            <input type="email" class="form-control" id="coach-email" value="{{ coach.email }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Landline</label>
-                                                                            <input type="number" class="form-control" value="{{ coach.phone_home }}">
+                                                                            <input type="number" class="form-control" id="coach-phone_home" value="{{ coach.phone_home }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
-                                                                            <div class="form-group">
-                                                                                <label for="">Mobile</label>
-                                                                                <input type="number" class="form-control" value="{{ coach.phone_mobile }}">
-                                                                            </div>
-                                                                        </div>
-
-                                                                    <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Email</label>
-                                                                            <input type="email" class="form-control" value="{{ coach.email }}">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">City</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.city }}">
+                                                                            <label for="">Mobile</label>
+                                                                            <input type="number" class="form-control" id="coach-phone_mobile" value="{{ coach.phone_mobile }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" value="{{ coach.address }}">
+                                                                            <input type="text" class="form-control" id="coach-address" value="{{ coach.address }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" id="coach-city" value="{{ coach.city }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="coach-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == coach.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
@@ -146,23 +178,22 @@
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Coach ID</label>
-                                                                            <input type="number" class="form-control" value="{{ coach.id }}">
+                                                                            <label for="coach_id">Coach ID</label>
+                                                                            <input type="number" class="form-control" id="coach-id" value="{{ coach.id }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Admission Date</label>
-                                                                            <input type="date" class="form-control" value="{{ coach.admission_date }}">
+                                                                            <label for="admission_date">Admission Date</label>
+                                                                            <input type="date" class="form-control" id="coach-admission_date"  value="{{ coach.admission_date }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Sport</label>
-                                                                            <select class="form-control selectpicker show-tick" name="sport">
-                                                                                <option value="none" selected>None</option>
+                                                                            <label for="sport">Sports</label>
+                                                                            <select class="form-control selectpicker show-tick" id="coach-sport" name="sport" multiple disabled>
                                                                                 {% for sport in sports %}
                                                                                     {% if sport.id in coach_sports %}
                                                                                         <option value="{{ sport.id }}" selected>{{ sport.name }}</option>
@@ -214,7 +245,7 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="">User Role</label>
-                                                                            <select class="form-control" name="user_role">
+                                                                            <select class="form-control" id="coach-user_role"  name="user_role" disabled>
                                                                                 <option value="" selected>- select -</option>
                                                                                 {% for role in user.roles %}
                                                                                     {% if role.id  == settings.user_role.id %}
@@ -245,14 +276,14 @@
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.username }}">
+                                                                            <input type="text" class="form-control" id="coach-username"  value="{{ settings.username }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.password }}">
+                                                                            <input type="text" class="form-control" id="coach-password"  value="{{ settings.password }}" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -287,6 +318,41 @@
 </body>
 
 <script>
+
+    // EDIT MODE ON
+    edit_mode = () => {
+
+        // MENU BUTTONS
+        $('#btn-edit').attr('hidden', true);
+        $('#btn-save').attr('hidden', false);
+        $('#btn-cancel').attr('hidden', false);
+        $('#btn-remove').attr('hidden', true);
+
+        // BIO
+        $('#coach-full_name').attr('disabled', false);
+        $('#coach-initials').attr('disabled', false);
+        $('#coach-surname').attr('disabled', false);
+        $('#coach-nic').attr('disabled', false);
+        $('#coach-gender').attr('disabled', false);
+        $('#coach-dob').attr('disabled', false);
+        $('#coach-phone_mobile').attr('disabled', false);
+        $('#coach-phone_home').attr('disabled', false);
+        $('#coach-email').attr('disabled', false);
+        $('#coach-city').attr('disabled', false);
+        $('#coach-religion').attr('disabled', false);
+        $('#coach-address').attr('disabled', false);
+        $('#coach-district').attr('disabled', false);
+
+        // ACADEMIC
+        $('#coach-admission_date').attr('disabled', false);
+        $('#coach-sport').attr('disabled', false);
+
+        // SETTINGS
+        $('#coach-status').attr('disabled', false);
+        $('#coach-user_role').attr('disabled', false);
+        $('#coach-username').attr('disabled', false);
+        $('#coach-password').attr('disabled', false);
+    }
 
     // START : REMOVE COACH
     remove_coach = (coach_id) => {

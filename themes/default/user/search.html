@@ -167,7 +167,9 @@
                                             <td class="text-center" scope="row">{{ user.status }}</td>
                                             <td class="text-center" scope="row">{{ user.theme }}</td>
                                             <td class="text-center" scope="row">{{ user.created_on }}</td>
-                                            <td class="text-right"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i>View Profile</button></td>
+                                            <td class="text-right">
+                                                <a href="{{ app.url }}/{{ user.user_type }}/profile/{{ user.ref_id }}"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i>View Profile</button></a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -199,6 +201,11 @@
     {{ template.footer|raw }}
 
     <script>
+
+        // DATA TABLE
+        $(document).ready(function() {
+            $('#table_user_search').DataTable();
+        } );
         
         //  CLEAR FORM
         function clearForm(oForm) {
