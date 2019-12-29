@@ -154,7 +154,7 @@ CREATE TABLE `coach` (
 
 LOCK TABLES `coach` WRITE;
 /*!40000 ALTER TABLE `coach` DISABLE KEYS */;
-INSERT INTO `coach` VALUES (3,'2019-12-17','Madura Sangeeth Gunathilake','H K M S','Gunathilake','951232308V','1995-04-11','male','madura.sangeeth@gmail.com','0332285624','0715217896','121, Keenawala road','Kubaloluwa',7,'2019-10-05 08:15:35','2019-10-05 08:15:35',NULL),(4,'2019-12-19','Rivindu Wickramarachchi','D B','Wickramarachchi','951423214V','1995-04-26','male',NULL,NULL,NULL,'267/10, Nagahakotuwa Road','Gampaha',NULL,'2019-10-06 02:58:11','2019-10-06 02:58:11',NULL);
+INSERT INTO `coach` VALUES (3,'2019-12-17','Madura Sangeeth Gunathilake','H K M Seeee','Gunathilakeee','951232305V','1995-04-12','female','madura.sangeeth@gmail.comm','0332285625','0715217895','121, Keenawala roaddd','Kubaloluwaaa',7,'2019-10-05 08:15:35','2019-12-29 21:27:56',NULL),(4,'2019-12-19','Rivindu Wickramarachchi','D B','Wickramarachchi','951423214V','1995-04-26','male','rivi.wiki@gmail.com',NULL,NULL,'267/10, Nagahakotuwa Road','Gampaha',NULL,'2019-10-06 02:58:11','2019-10-06 02:58:11',NULL);
 /*!40000 ALTER TABLE `coach` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +178,7 @@ CREATE TABLE `coach_has_sport` (
   KEY `coach_id` (`coach_id`),
   CONSTRAINT `coach_has_sport_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `coach_has_sport_ibfk_2` FOREIGN KEY (`coach_id`) REFERENCES `coach` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `coach_has_sport` (
 
 LOCK TABLES `coach_has_sport` WRITE;
 /*!40000 ALTER TABLE `coach_has_sport` DISABLE KEYS */;
-INSERT INTO `coach_has_sport` VALUES (1,3,4,'2019-10-05 08:15:35','2019-10-05 08:15:35',NULL),(3,4,1,'2019-10-06 02:58:11','2019-10-06 02:58:11',NULL),(5,3,7,'2019-12-29 00:00:00','2019-12-29 00:00:00',NULL);
+INSERT INTO `coach_has_sport` VALUES (3,4,1,'2019-10-06 02:58:11','2019-10-06 02:58:11',NULL),(66,3,4,'2019-12-29 21:27:56','2019-12-29 21:27:56',NULL),(67,3,7,'2019-12-29 21:27:56','2019-12-29 21:27:56',NULL);
 /*!40000 ALTER TABLE `coach_has_sport` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -846,7 +846,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (52,1,'2019-09-19',15,'Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','male','lakmalsamarakkody@gmail.com','0774924351','144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,7,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(53,187895,'2019-09-19',21,'Shyamin Ayesh Fernando','S A','Fernando','1992-12-30','male','me@shyamin.com','0775621458','no 10 gorakadeniya','Attanagalla',NULL,7,2,'2019-09-26 18:36:24','2019-12-29 03:35:45',NULL),(64,15,'2019-11-22',21,'Fonseka Appuhamige Lakmali Fonseka','F A L','Fonseka','1995-07-05','female','lakmalifonseka@gmail.com','0778944951','144/5A, 3rd Lane, Plamgrove Estate','Veyangoda','Ragama',7,1,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(66,16,'2019-11-06',17,'Shehan Rajitha jayasekara','S R','Jayasekara','2002-08-05','female','rajithajayasekara@gmail.com','0775924351','144/5A, 3rd Lane, Plamgrove Estate','Negombo','Negombo',7,2,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL),(67,17,'2019-12-04',47,'Rivindu Rukshan Wickramarachchi','R R','Wickramarachchi','1995-04-09','male','rivndu@gmail.com','0714578652','5A, Rose Lane,','Gampaha','Gampaha',7,1,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
+INSERT INTO `student` VALUES (52,2561,'2019-09-19',15,'Samarakkody Arachchige Lakmal Samarakkody','S A L','Samarakkody','1995-12-30','male','lakmalsamarakkody@gmail.com','0774924351','144/5A, 3rd Lane, Palmgrove Estate','Veyangoda',NULL,7,1,'2019-09-23 09:33:17','2019-12-29 21:01:41',NULL),(53,187895,'2019-09-19',21,'Shyamin Ayesh Fernando','S A','Fernando','1992-12-30','male','me@shyamin.com','0775621458','no 10 gorakadeniya','Attanagalla',NULL,7,2,'2019-09-26 18:36:24','2019-12-29 03:35:45',NULL),(64,15,'2019-11-22',21,'Fonseka Appuhamige Lakmali Fonseka','F A L','Fonseka','1995-07-05','female','lakmalifonseka@gmail.com','0778944951','144/5A, 3rd Lane, Plamgrove Estate','Veyangoda','Ragama',7,1,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(66,16,'2019-11-06',17,'Shehan Rajitha jayasekara','S R','Jayasekara','2002-08-05','female','rajithajayasekara@gmail.com','0775924351','144/5A, 3rd Lane, Plamgrove Estate','Negombo','Negombo',7,2,'2019-11-24 02:58:26','2019-11-24 02:58:26',NULL),(67,17,'2019-12-04',47,'Rivindu Rukshan Wickramarachchi','R R','Wickramarachchi','1995-04-09','male','rivndu@gmail.com','0714578652','5A, Rose Lane,','Gampaha','Gampaha',7,1,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -940,7 +940,7 @@ CREATE TABLE `student_has_class` (
 
 LOCK TABLES `student_has_class` WRITE;
 /*!40000 ALTER TABLE `student_has_class` DISABLE KEYS */;
-INSERT INTO `student_has_class` VALUES (12,52,15,1,'2019-09-23 09:33:17','2019-09-23 09:33:17',NULL),(13,53,21,1,'2019-09-26 18:36:24','2019-12-29 03:35:45',NULL),(16,64,21,2,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(18,66,17,1,'2019-11-24 02:58:27','2019-11-24 02:58:27',NULL),(19,67,47,1,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
+INSERT INTO `student_has_class` VALUES (12,52,15,1,'2019-09-23 09:33:17','2019-12-29 21:01:41',NULL),(13,53,21,1,'2019-09-26 18:36:24','2019-12-29 03:35:45',NULL),(16,64,21,2,'2019-11-22 18:35:43','2019-11-22 18:35:43',NULL),(18,66,17,1,'2019-11-24 02:58:27','2019-11-24 02:58:27',NULL),(19,67,47,1,'2019-12-04 04:08:41','2019-12-04 04:08:41',NULL);
 /*!40000 ALTER TABLE `student_has_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1031,7 +1031,7 @@ CREATE TABLE `student_has_sport` (
   KEY `student_has_sport_student_id_fk` (`student_id`),
   CONSTRAINT `student_has_sport_sport_id_fk` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_has_sport_student_id_fk` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1184,7 +1184,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(7) NOT NULL AUTO_INCREMENT,
   `ref_id` int(6) DEFAULT NULL,
-  `user_type` enum('staff','student','parent','') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_type` enum('staff','student','parent','coach') COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `theme` enum('Default','Dark') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Default',
@@ -1195,9 +1195,10 @@ CREATE TABLE `user` (
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `stu_staff_parent_id` (`ref_id`,`role_id`),
+  UNIQUE KEY `ref_id` (`ref_id`,`user_type`),
   KEY `user_user_role_id_fk` (`role_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1206,7 +1207,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-12-29 04:32:23',NULL),(5,53,'student','shyamin','$2y$10$fVlV9Umvj9M8Xpk8IrtRk.rwJRhEx7FWVfJCMle5.iNwaX5B7q7PW','Dark',7,'Active','2019-12-18 00:00:00','2019-12-29 03:35:45',NULL);
+INSERT INTO `user` VALUES (3,1,'staff','lakmal','$2y$10$0eN9so5Lv903qDKASkGarO9gfmxjZYbD1ejbfnh.aV0fEveidJbBi','Default',1,'Active','2019-10-08 00:00:00','2019-12-29 04:32:23',NULL),(5,53,'student','shyamin','$2y$10$fVlV9Umvj9M8Xpk8IrtRk.rwJRhEx7FWVfJCMle5.iNwaX5B7q7PW','Dark',7,'Active','2019-12-18 00:00:00','2019-12-29 03:35:45',NULL),(7,52,'student','stulakmal','$2y$10$.jLcTxrYLJUd0CKIWvYnQulqVb4B7egrJI0SIwtKvOmrMPE0TpePa','Default',7,'Deactive','2019-12-29 18:31:16','2019-12-29 21:01:41',NULL),(8,3,'coach','sangeeth','$2y$10$dVL711S6lHNivFYk3Vtg9eX6gp8yuhtl7e5ObCHLcmRz62TSuU24K','Default',8,'Deactive','2019-12-29 21:22:18','2019-12-29 21:27:56',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1253,7 +1254,7 @@ CREATE TABLE `user_role` (
   `deleted_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1262,7 +1263,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,'System Administrator','This user has full access to this system','2019-09-02 00:00:00','2019-12-09 20:24:26',NULL),(2,'Database Administrator',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(3,'Principal',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(4,'Academic Staff',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(7,'Student',NULL,'2019-12-18 00:00:00','2019-12-18 00:00:00',NULL);
+INSERT INTO `user_role` VALUES (1,'System Administrator','This user has full access to this system','2019-09-02 00:00:00','2019-12-09 20:24:26',NULL),(2,'Database Administrator',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(3,'Principal',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(4,'Academic Staff',NULL,'2019-11-23 00:00:00','2019-11-23 00:00:00',NULL),(7,'Student',NULL,'2019-12-18 00:00:00','2019-12-18 00:00:00',NULL),(8,'Coach','This user has access to sport fields of this system','2019-12-29 21:17:11','2019-12-29 21:17:11',NULL);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1306,4 +1307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-29 17:12:49
+-- Dump completed on 2019-12-29 21:31:16
