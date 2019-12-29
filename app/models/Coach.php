@@ -11,7 +11,7 @@ class Coach_Model extends EloquentModel {
 
 	// PARENT PROPERTIES
 	protected $table = 'coach';
-	protected $fillable = [ 'id', 'full_name', 'initials', 'surname', 'nic', 'dob', 'gender', 'email', 'phone_home', 'phone_mobile', 'address', 'city' ];
+	protected $fillable = [ 'id', 'admission_date', 'full_name', 'initials', 'surname', 'nic', 'dob', 'gender', 'email', 'phone_home', 'phone_mobile', 'address', 'city' ];
 }
 
 ?>
