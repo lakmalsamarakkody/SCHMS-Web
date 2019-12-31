@@ -27,8 +27,10 @@
                                             <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/parent/{{ parent.id }}">
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ parent.initials }} {{ parent.surname }}</h5>
-                                                <button class="btn btn-xs btn-warning"><i class="la la-edit"></i>Edit</button>
-                                                <button class="btn btn-xs btn-danger" onclick="remove_parent('{{ parent.id }}')"><i class="la la-trash"></i></button>
+                                                <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
+                                                <button class="btn btn-xs btn-success" id="btn-save" onclick="update_parent('{{ parent.id }}')" hidden><i class="la la-save"></i> Save</button>
+                                                <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
+                                                <button class="btn btn-xs btn-danger" onclick="remove_parent('{{ parent.id }}')"><i class="la la-trash"></i> Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -65,14 +67,28 @@
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" value="{{ parent.full_name }}">
+                                                                            <input type="text" class="form-control" value="{{ parent.full_name }}" id="parent-full_name" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Initials</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.initials }}" id="parent-initials" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Surname</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.surname }}" id="parent-surname" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="gender">Gender</label>
-                                                                            <select class="form-control" name="gender">
+                                                                            <select class="form-control" name="gender" id="parent-gender" disabled>
                                                                                 {% if parent.gender == "male" %}
                                                                                     <option value="Male" selected>Male</option>
                                                                                     <option value="Female">Female</option>
@@ -87,42 +103,79 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" value="{{ parent.dob }}">
+                                                                            <input type="date" class="form-control" value="{{ parent.dob }}" id="parent-dob" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Landline</label>
-                                                                            <input type="number" class="form-control" value="{{ parent.phone_home }}">
+                                                                            <input type="number" class="form-control" value="{{ parent.phone_home }}" id="parent-phone_home" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Mobile</label>
-                                                                            <input type="number" class="form-control" value="{{ parent.phone_mobile }}">
+                                                                            <input type="number" class="form-control" value="{{ parent.phone_mobile }}" id="parent-phone_mobile" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Occupation</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.occupation }}" id="parent-occupation" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Position</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.position }}" id="parent-position" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Monthly Income</label>
+                                                                            <input type="number" class="form-control" value="{{ parent.income }}" id="parent-income" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Email</label>
-                                                                            <input type="email" class="form-control" value="{{ parent.email }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">City</label>
-                                                                            <input type="text" class="form-control" value="{{ parent.city }}">
+                                                                            <input type="email" class="form-control" value="{{ parent.email }}" id="parent-email" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" value="{{ parent.address }}">
+                                                                            <input type="text" class="form-control" value="{{ parent.address }}" id="parent-address" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.city }}" id="parent-city" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="parent-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == parent.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
@@ -134,7 +187,7 @@
 
                                                     <div class="col-md-6">
                                                         <div class="card">
-                                                            <div class="card-header">System Data</div>
+                                                            <div class="card-header">System</div>
                                                             <div class="card-body">
                                                                 
                                                                 <div class="form-row">
@@ -142,7 +195,7 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">NIC No</label>
-                                                                            <input type="text" class="form-control" value="{{ parent.nic }}">
+                                                                            <input type="text" class="form-control" value="{{ parent.nic }}" id="parent-nic" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
@@ -182,6 +235,34 @@
                                                                         </div>
                                                                     </div>
 
+                                                                    <div class="col-4">
+                                                                        <div class="form-group">
+                                                                            <label for="initials">Initials</label>
+                                                                            <input type="text" class="form-control" value="{{ student.details.initials }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-8">
+                                                                        <div class="form-group">
+                                                                            <label for="surname">Surname</label>
+                                                                            <input type="text" class="form-control" value="{{ student.details.surname }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Admission No</label>
+                                                                            <input type="number" class="form-control" value="{{ student.details.admission_no }}" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Admission Date</label>
+                                                                            <input type="date" class="form-control" value="{{ student.details.admission_date }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="class">Class</label>
@@ -200,7 +281,7 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="religion">Relation</label>
-                                                                            <select class="form-control" name="relation">
+                                                                            <select class="form-control" name="relation" id="parent-relation_id" disabled>
                                                                                 {% for relation in student_relations %}
                                                                                     {% if relation.id == student.relation_id %}
                                                                                         <option value="{{ relation.id }}" selected>{{ relation.name }}</option>
@@ -323,7 +404,7 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="">User Role</label>
-                                                                            <select class="form-control" name="role_id">
+                                                                            <select class="form-control" name="role_id" id="parent-role_id" disabled>
                                                                                 <option value="" selected>- select -</option>
                                                                                 {% for role in user.roles %}
                                                                                     {% if role.id  == settings.user_role.id %}
@@ -354,14 +435,14 @@
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.username }}">
+                                                                            <input type="text" class="form-control" id="parent-username" value="{{ settings.username }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.password }}">
+                                                                            <input type="text" class="form-control" id="parent-password" placeholder="{{ settings.password }}" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -395,16 +476,85 @@
 
 <script>
 
-    // START : REMOVE PARENT
-    remove_parent = (parent_id) => {
+    // EDIT MODE ON
+    edit_mode = () => {
+
+        // MENU BUTTONS
+        $('#btn-edit').attr('hidden', true);
+        $('#btn-save').attr('hidden', false);
+        $('#btn-cancel').attr('hidden', false);
+        $('#btn-remove').attr('hidden', true);
+
+        // BIO
+        $('#parent-full_name').attr('disabled', false);
+        $('#parent-initials').attr('disabled', false);
+        $('#parent-surname').attr('disabled', false);
+        $('#parent-gender').attr('disabled', false);
+        $('#parent-dob').attr('disabled', false);
+        $('#parent-phone_mobile').attr('disabled', false);
+        $('#parent-phone_home').attr('disabled', false);
+        $('#parent-occupation').attr('disabled', false);
+        $('#parent-position').attr('disabled', false);
+        $('#parent-income').attr('disabled', false);
+        $('#parent-email').attr('disabled', false);
+        $('#parent-address').attr('disabled', false);
+        $('#parent-city').attr('disabled', false);
+        $('#parent-district').attr('disabled', false);        
+
+        // SYSTEM
+        $('#parent-nic').attr('disabled', false);
+
+        // SETTINGS
+        $('#parent-status').attr('disabled', false);
+        $('#parent-role_id').attr('disabled', false);
+        $('#parent-username').attr('disabled', false);
+        $('#parent-password').attr('disabled', false);
+    }
+
+    // CANCEL EDIT
+    cancel_edit_mode = () => {
+        alertify.confirm('<span class="text-warning"><i class="la la-exclamation-circle"></i> Confirm</span>', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+            function(){ location.reload(); },
+            function(){ alertify.success('Continue editing..')}
+            // function(){ alertify.error('Cancel')}
+        );
+    }
+
+    // START : UPDATE PARENT
+    update_parent = (parent_id) => {
 
         // PAYLOAD
         var formData = new FormData;
+
+        // BIO DATA
         formData.append('parent_id', parent_id)
+        formData.append('full_name', $("#parent-full_name").val())
+        formData.append('initials', $("#parent-initials").val())
+        formData.append('surname', $("#parent-surname").val())
+        formData.append('gender', $("#parent-gender").val())
+        formData.append('dob', $("#parent-dob").val())        
+        formData.append('phone_mobile', $("#parent-phone_mobile").val())
+        formData.append('phone_home', $("#parent-phone_home").val())
+        formData.append('occupation', $("#parent-occupation").val())
+        formData.append('position', $("#parent-position").val())
+        formData.append('income', $("#parent-income").val())
+        formData.append('email', $("#parent-email").val())
+        formData.append('address', $("#parent-address").val())
+        formData.append('city', $("#parent-city").val())
+        formData.append('district_id', $("#parent-district").val())
+
+        // SYSTEM
+        formData.append('nic', $("#parent-nic").val())
+
+        // SETTINGS
+        formData.append('status', $("#parent-status").val())
+        formData.append('role_id', $("#parent-role_id").val())
+        formData.append('username', $("#parent-username").val())
+        formData.append('password', $("#parent-password").val())
 
         // REQUEST
         $.ajax({
-            url: "{{ app.url }}/parents/ajax_removeparent",
+            url: "{{ app.url }}/parents/ajax_updateparent",
             method: 'POST',
             data: formData,
             processData: false,
@@ -413,19 +563,60 @@
             success: (res) => {
                 
                 if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Parent Record Deleted successfully ... ").set('onok', function() {
-                        window.location.replace("{{ app.url}}/parents/search");
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Parent Details Updated successfully ... ").set('onok', function() {
+                        location.reload();
                     })
                 } else {
                     console.log(res);
-                    alertify.alert("Failed", res.message);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
                 }
             },
             error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
                 console.log(e.responseText)
             }
         })
+    }
+    // END : UPDATE PARENT
+
+    // START : REMOVE PARENT
+    remove_parent = (parent_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('parent_id', parent_id)
+
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this parent will be deleted.', 
+            function(){
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/parents/ajax_removeparent",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Parent Record Deleted successfully ... ").set('onok', function() {
+                                window.location.replace("{{ app.url}}/parents/search");
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+            },
+            function(){ alertify.error('Parent deletion process cancelled')}
+            // function(){ alertify.error('Cancel')}
+        );
     }
     // END : REMOVE PARENT
 

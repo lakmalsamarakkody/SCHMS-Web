@@ -763,6 +763,7 @@ class Staff extends Controller {
         $this->load->model('user');
         $this->load->model('user/role');
         $this->load->model('religion');
+        $this->load->model('district');
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('subject');
@@ -771,6 +772,12 @@ class Staff extends Controller {
         foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['religions'][$key]['id'] = $element->id;
             $data['religions'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( DISTRICT )
+        foreach( $this->model_district->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['districts'][$key]['id'] = $element->id;
+            $data['districts'][$key]['name'] = $element->name;
         endforeach;
 
         // QUERY ( TYPE )
@@ -844,7 +851,7 @@ class Staff extends Controller {
             $data['settings']['user_role']['id'] = $settings_data->role_id;
             $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
             $data['settings']['username'] = $settings_data->username;
-            $data['settings']['password'] = $settings_data->password;
+            ( $settings_data->password !== NULL ) ? $data['settings']['password'] = "Password exists" : $data['settings']['password'] = "No password";
             $data['settings']['theme'] = $settings_data->theme;
             $data['settings']['status'] = $settings_data->status;
         endif;

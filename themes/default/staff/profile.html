@@ -28,7 +28,9 @@
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ staff.initials }} {{ staff.surname }}</h5>
                                                 <h6 class="my-0 text-secondary mb-2">{{ staff.type }}</h6>
-                                                <button class="btn btn-xs btn-warning"><i class="la la-edit"></i>Edit</button>
+                                                <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
+                                                <button class="btn btn-xs btn-success" id="btn-save" onclick="update_staff('{{ staff.id }}')" hidden><i class="la la-save"></i> Save</button>
+                                                <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
                                                 <button class="btn btn-xs btn-danger" onclick="remove_staff('{{ staff.id }}')"><i class="la la-trash"></i></button>
                                             </div>
                                         </div>
@@ -62,22 +64,36 @@
                                                                     
                                                                     <div class="col-12">
                                                                         <div class="form-group">
-                                                                            <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.full_name }}">
+                                                                            <label for="full_name">Full Name</label>
+                                                                            <input type="text" class="form-control" id="staff-full_name" value="{{ staff.full_name }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="initials">Initials</label>
+                                                                            <input type="text" class="form-control" id="staff-initials" value="{{ staff.initials }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="surname">Surname</label>
+                                                                            <input type="text" class="form-control" id="staff-surname" value="{{ staff.surname }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">NIC</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.nic }}">
+                                                                            <input type="text" class="form-control" id="staff-nic" value="{{ staff.nic }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Gender</label>
-                                                                            <select class="form-control" name="gender">
+                                                                            <select class="form-control" name="gender" id="staff-gender" disabled>
                                                                                 {% if staff.gender == "Male" %}
                                                                                     <option value="Male" selected>Male</option>
                                                                                     <option value="Female">Female</option>
@@ -92,14 +108,14 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" value="{{ staff.dob }}">
+                                                                            <input type="date" class="form-control" id="staff-dob" value="{{ staff.dob }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Religion</label>
-                                                                            <select class="form-control" name="religion">
+                                                                            <select class="form-control" name="religion" id="staff-religion" disabled>
                                                                                 {% for religion in religions %}
                                                                                     {% if religion.id == staff.religion_id %}
                                                                                         <option value="{{ religion.id }}" selected>{{ religion.name }}</option>
@@ -114,35 +130,51 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Landline</label>
-                                                                            <input type="number" class="form-control" value="{{ staff.phone_home }}">
+                                                                            <input type="number" class="form-control" id="staff-phone_home" value="{{ staff.phone_home }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                             <div class="form-group">
                                                                                 <label for="">Mobile</label>
-                                                                                <input type="number" class="form-control" value="{{ staff.phone_mobile }}">
+                                                                                <input type="number" class="form-control" id="staff-phone_mobile" value="{{ staff.phone_mobile }}" disabled>
                                                                             </div>
                                                                         </div>
 
-                                                                    <div class="col-6">
+                                                                    <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Email</label>
-                                                                            <input type="email" class="form-control" value="{{ staff.email }}">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">City</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.city }}">
+                                                                            <input type="email" class="form-control" id="staff-email" value="{{ staff.email }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" value="{{ staff.address }}">
+                                                                            <input type="text" class="form-control" id="staff-address" value="{{ staff.address }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" id="staff-city" value="{{ staff.city }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="staff-district" name="district" id="staff-district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == staff.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
@@ -162,21 +194,21 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Employee No</label>
-                                                                            <input type="number" class="form-control" value="{{ staff.employee_number }}">
+                                                                            <input type="number" class="form-control" id="staff-employee_number" value="{{ staff.employee_number }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission Date</label>
-                                                                            <input type="date" class="form-control" value="{{ staff.admission_date }}">
+                                                                            <input type="date" class="form-control" id="staff-admission_date" value="{{ staff.admission_date }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Type</label>
-                                                                            <select class="form-control" name="religion">
+                                                                            <select class="form-control" name="type" id="staff-type" disabled>
                                                                                 {% for type in staff_types %}
                                                                                     {% if type.id == staff.type_id %}
                                                                                         <option value="{{ type.id }}" selected>{{ type.name }}</option>
@@ -191,8 +223,8 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="class">Class</label>
-                                                                            <select class="form-control" name="class">
-                                                                                <option value="" selected>- Select -</option>
+                                                                            <select class="form-control" name="class" id="staff-class" disabled>
+                                                                                <option value="null" selected>- Select -</option>
                                                                                 {% for class in classes %}
                                                                                     {% if class.id == tic.class.id %}
                                                                                         <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
@@ -208,7 +240,7 @@
                                                                         
                                                                         <div class="form-group">
                                                                             <label for="">Subjects</label>
-                                                                            <select class="form-control selectpicker show-tick" name="subjects" multiple>
+                                                                            <select class="form-control selectpicker show-tick" name="subjects" id="staff-subjects" multiple disabled>
                                                                                 {% for subject in subjects %}
                                                                                     {% if subject.id in staff_subjects %}
                                                                                         <option value="{{ subject.id }}" selected>{{ subject.name }}</option>
@@ -260,7 +292,7 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="">User Role</label>
-                                                                            <select class="form-control" name="role_id">
+                                                                            <select class="form-control" name="role_id" id="staff-role_id" disabled>
                                                                                 <option value="" selected>- select -</option>
                                                                                 {% for role in user.roles %}
                                                                                     {% if role.id  == settings.user_role.id %}
@@ -291,14 +323,14 @@
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.username }}">
+                                                                            <input type="text" class="form-control" id="staff-username" value="{{ settings.username }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-3">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
-                                                                            <input type="text" class="form-control" value="{{ settings.password }}">
+                                                                            <input type="text" class="form-control" id="staff-password" placeholder="{{ settings.password }}" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -334,37 +366,92 @@
 
 <script>
 
+    // EDIT MODE ON
+    edit_mode = () => {
+
+        // MENU BUTTONS
+        $('#btn-edit').attr('hidden', true);
+        $('#btn-save').attr('hidden', false);
+        $('#btn-cancel').attr('hidden', false);
+        $('#btn-remove').attr('hidden', true);
+
+        // BIO
+        $('#staff-full_name').attr('disabled', false);
+        $('#staff-initials').attr('disabled', false);
+        $('#staff-surname').attr('disabled', false);
+        $('#staff-nic').attr('disabled', false);
+        $('#staff-gender').attr('disabled', false);
+        $('#staff-dob').attr('disabled', false);
+        $('#staff-phone_home').attr('disabled', false);
+        $('#staff-phone_mobile').attr('disabled', false);
+        $('#staff-email').attr('disabled', false);
+        $('#staff-religion').attr('disabled', false);
+        $('#staff-address').attr('disabled', false);
+        $('#staff-city').attr('disabled', false);
+        $('#staff-district').attr('disabled', false);
+
+        // ACADEMIC
+        $('#staff-employee_number').attr('disabled', false);
+        $('#staff-admission_date').attr('disabled', false);
+        $('#staff-class').attr('disabled', false);
+        $('#staff-type').attr('disabled', false);
+        $('#staff-subjects').prop('disabled', false);
+        $('#staff-subjects').selectpicker('refresh');
+
+        // SETTINGS
+        $('#staff-status').attr('disabled', false);
+        $('#staff-role_id').attr('disabled', false);
+        $('#staff-username').attr('disabled', false);
+        $('#staff-password').attr('disabled', false);
+    }
+
+    // CANCEL EDIT
+    cancel_edit_mode = () => {
+        alertify.confirm('<span class="text-warning"><i class="la la-exclamation-circle"></i> Confirm</span>', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+            function(){ location.reload(); },
+            function(){ alertify.success('Continue editing..')}
+            // function(){ alertify.error('Cancel')}
+        );
+    }
+
     // START : REMOVE STAFF
     remove_staff = (staff_id) => {
 
-        // PAYLOAD
-        var formData = new FormData;
-        formData.append('staff_id', staff_id)
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this staff will be deleted.', 
+            function(){
 
-        // REQUEST
-        $.ajax({
-            url: "{{ app.url }}/staff/ajax_removestaff",
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: (res) => {
-                
-                if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Staff Record Deleted successfully ... ").set('onok', function() {
-                        window.location.replace("{{ app.url}}/staff/search");
-                    })
-                } else {
-                    console.log(res);
-                    alertify.alert("Failed", res.message);
-                }
+                // PAYLOAD
+                var formData = new FormData;
+                formData.append('staff_id', staff_id)
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/staff/ajax_removestaff",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Staff Record Deleted successfully ... ").set('onok', function() {
+                                window.location.replace("{{ app.url}}/staff/search");
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
             },
-            error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
-                console.log(e.responseText)
-            }
-        })
+            function(){ alertify.error('Staff deletion process cancelled')}
+            // function(){ alertify.error('Cancel')}
+        );
     }
     // END : REMOVE STAFF
 

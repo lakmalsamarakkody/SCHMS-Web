@@ -861,6 +861,7 @@ class Student extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('religion');
+        $this->load->model('district');
         $this->load->model('user');
         $this->load->model('user/role');
 
@@ -878,6 +879,12 @@ class Student extends Controller {
         foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['religions'][$key]['id'] = $element->id;
             $data['religions'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( DISTRICT )
+        foreach( $this->model_district->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['districts'][$key]['id'] = $element->id;
+            $data['districts'][$key]['name'] = $element->name;
         endforeach;
 
         // QUERY ( USER ROLES )
@@ -1030,7 +1037,7 @@ class Student extends Controller {
                 endif;
 
                 // VALIDATION : religion
-                $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|max_len,2'));
+                $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|min_len,1|max_len,2'));
                 if ( $is_valid_religion !== true AND $this->request->post['religion'] != "null" ):
                     echo json_encode( array("status" => "failed", "message" => "Invalid religion" ), JSON_PRETTY_PRINT );
                     exit();
@@ -1125,6 +1132,7 @@ class Student extends Controller {
                         'city' => $this->request->post['city'],
                         'religion_id' => $this->request->post['religion'],
                         'address' => $this->request->post['address'],
+                        'district_id' => $this->request->post['district'],
 
                         // UPDATE ACADEMIC
                         'admission_no' => $this->request->post['admission_no'],
@@ -1152,7 +1160,7 @@ class Student extends Controller {
                         endif;
 
                     // CREATE A USER IF STATUS IS ACTIVE
-                    elseif ( $this->request->post['status'] == "Active" ):
+                    elseif ( $this->request->post['status'] == "Active" OR !empty($this->request->post['username']) ):
 
                         // VALIDATION : role_id
                         $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'required|numeric|min_len,1|max_len,2'));
@@ -1187,6 +1195,7 @@ class Student extends Controller {
                         $this->model_user->role_id = $this->request->post['role_id'];
                         $this->model_user->username = $this->request->post['username'];
                         $this->model_user->password = password_hash($this->request->post['password'], PASSWORD_DEFAULT);
+                        $this->model_user->status = $this->request->post['status'];
 
                         // CHECK : USER RECORD QUERY
                         if ( $this->model_user->save() ):

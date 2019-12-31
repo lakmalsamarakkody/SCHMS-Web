@@ -357,7 +357,7 @@
 
     // CANCEL EDIT
     cancel_edit_mode = () => {
-        alertify.confirm('Confirm', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+        alertify.confirm('<span class="text-warning"><i class="la la-exclamation-circle"></i> Confirm</span>', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
             function(){ location.reload(); },
             function(){ alertify.success('Continue editing..')}
             // function(){ alertify.error('Cancel')}
@@ -406,16 +406,16 @@
             success: (res) => {
                 
                 if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Coach Details Updated successfully ... ").set('onok', function() {
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Coach Details Updated successfully ... ").set('onok', function() {
                         location.reload();
                     })
                 } else {
                     console.log(res);
-                    alertify.alert("Failed", res.message);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
                 }
             },
             error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
                 console.log(e.responseText)
             }
         })
@@ -429,30 +429,37 @@
         var formData = new FormData;
         formData.append('coach_id', coach_id)
 
-        // REQUEST
-        $.ajax({
-            url: "{{ app.url }}/sport/ajax_removecoach",
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: (res) => {
-                
-                if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Coach Record Deleted successfully ... ").set('onok', function() {
-                        window.location.replace("{{ app.url}}/sport/search_coach");
-                    })
-                } else {
-                    console.log(res);
-                    alertify.alert("Failed", res.message);
-                }
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this coach will be deleted.', 
+            function(){
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/sport/ajax_removecoach",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Coach Record Deleted successfully ... ").set('onok', function() {
+                                window.location.replace("{{ app.url}}/sport/search_coach");
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
             },
-            error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
-                console.log(e.responseText)
-            }
-        })
+            function(){ alertify.error('Parent deletion process cancelled')}
+            // function(){ alertify.error('Cancel')}
+        );
     }
     // END : REMOVE COACH
 

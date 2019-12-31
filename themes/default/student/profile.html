@@ -124,14 +124,7 @@
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">City</label>
-                                                                            <input type="text" class="form-control" id="stu-city" value="{{ student.city }}" disabled>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Religion</label>
+                                                                            <label for="religion">Religion</label>
                                                                             <select class="form-control" id="stu-religion" name="religion" disabled>
                                                                                 <option value="null" selected>- select -</option>
                                                                                 {% for religion in religions %}
@@ -149,6 +142,29 @@
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
                                                                             <input type="text" class="form-control"  id="stu-address" value="{{ student.address }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" id="stu-city" value="{{ student.city }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="stu-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == student.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
@@ -272,7 +288,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-6">
+                                                                    <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
                                                                             <input type="text" class="form-control" readonly="readonly" value="{{ parent.address }}">
@@ -283,6 +299,22 @@
                                                                         <div class="form-group">
                                                                             <label for="">City</label>
                                                                             <input type="text" class="form-control" readonly="readonly" value="{{ parent.city }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="stu-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == parent.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                     
@@ -418,9 +450,10 @@
         $('#stu-dob').attr('disabled', false);
         $('#stu-phone_mobile').attr('disabled', false);
         $('#stu-email').attr('disabled', false);
-        $('#stu-city').attr('disabled', false);
         $('#stu-religion').attr('disabled', false);
         $('#stu-address').attr('disabled', false);
+        $('#stu-city').attr('disabled', false);
+        $('#stu-district').attr('disabled', false);
 
         // ACADEMIC
         $('#stu-admission_no').attr('disabled', false);
@@ -436,7 +469,7 @@
 
     // CANCEL EDIT
     cancel_edit_mode = () => {
-        alertify.confirm('Confirm', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+        alertify.confirm('<span class="text-warning"><i class="la la-exclamation-circle"></i> Confirm</span>', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
             function(){ location.reload(); },
             function(){ alertify.success('Continue editing..')}
             // function(){ alertify.error('Cancel')}
@@ -458,9 +491,10 @@
         formData.append('dob', $("#stu-dob").val())
         formData.append('phone_mobile', $("#stu-phone_mobile").val())
         formData.append('email', $("#stu-email").val())
-        formData.append('city', $("#stu-city").val())
         formData.append('religion', $("#stu-religion").val())
         formData.append('address', $("#stu-address").val())
+        formData.append('city', $("#stu-city").val())
+        formData.append('district', $("#stu-district").val())
 
         // ACADEMIC
         formData.append('admission_no', $("#stu-admission_no").val())
@@ -484,16 +518,16 @@
             success: (res) => {
                 
                 if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Student Details Updated successfully ... ").set('onok', function() {
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Student Details Updated successfully ... ").set('onok', function() {
                         location.reload();
                     })
                 } else {
                     console.log(res);
-                    alertify.alert("Failed", res.message);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
                 }
             },
             error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
                 console.log(e.responseText)
             }
         })
@@ -507,7 +541,7 @@
         var formData = new FormData;
         formData.append('student_id', student_id)
 
-        alertify.confirm('Caution', 'Are you sure you want to Delete...? All data related to this student will be deleted.', 
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this student will be deleted.', 
             function(){ 
 
                 // REQUEST
@@ -526,11 +560,11 @@
                             })
                         } else {
                             console.log(res);
-                            alertify.alert("Failed", res.message);
+                            alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
                         }
                     },
                     error: (e) => {
-                        alertify.alert("Error", "Something went wrong ... ");
+                        alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
                         console.log(e.responseText)
                     }
                 })

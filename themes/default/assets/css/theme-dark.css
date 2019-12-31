@@ -182,11 +182,11 @@ h5.page-title{
 
 /* PROFILE NAV PILLS */
 
-.stuprofile .card-body .nav.nav-pills {
+.card-body .nav.nav-pills {
     border-bottom-color: #262a35!important;
 }
 
-.stuprofile .card-body .nav.nav-pills .nav-link.active,.stuprofile .card-body .nav.nav-pills .nav-pills .show>.nav-link {
+.card-body .nav.nav-pills .nav-link.active, .card-body .nav.nav-pills .nav-pills .show>.nav-link {
     background: #262a35 !important;
 }
 
