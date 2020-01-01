@@ -860,6 +860,377 @@ class Staff extends Controller {
         $this->load->view('staff/profile', $data);
     }
 
+    public function ajax_updatestaff() {
+        
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('staff');
+        $this->load->model('staff/subject');
+        $this->load->model('class');
+        $this->load->model('subject');
+        $this->load->model('user');
+        
+        if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
+            $is_valid_staff_id = $this->model_staff->select('id')->where('id', '=', $this->request->post['staff_id']);
+
+            if ( $is_valid_staff_id->first() !== NULL ):
+
+                // IS CHANGED EMPLOYEE NUMBER
+                $current_employee_number = $this->model_staff->select('employee_number')->where('id', '=', $this->request->post['staff_id'])->first();
+                if ( $current_employee_number->employee_number != $this->request->post['employee_number']):
+                    // ADMISSION NUMBER IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_staff->select('id')->where('employee_number', '=', $this->request->post['employee_number'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "This employee number already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // IS CHANGED NIC
+                $current_nic = $this->model_staff->select('nic')->where('id', '=', $this->request->post['staff_id'])->first();
+                if ( $current_nic->nic != $this->request->post['nic']):
+                    // NIC IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_staff->select('id')->where('nic', '=', $this->request->post['nic'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "This NIC already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // IS CHANGED EMAIL
+                $current_email = $this->model_staff->select('email')->where('id', '=', $this->request->post['staff_id'])->first();
+                if ( $current_email->email != $this->request->post['email']):
+                    // EMAIL IS CHANGED : CHECK FOR DUPLICATE
+                    if ( $this->model_staff->select('id')->where('email', '=', $this->request->post['email'])->first() != NULL ):
+                        echo json_encode( array( "status" => "failed", "message" => "This email already exists" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // VALIDATION : full_name
+                $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
+                if ( $is_valid_full_name !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter valid full name" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : initials
+                $is_valid_initials = GUMP::is_valid($this->request->post, array('initials' => 'required|alpha_space|max_len,20'));
+                if ( $is_valid_initials !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter staff initials" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : surname
+                $is_valid_surname = GUMP::is_valid($this->request->post, array('surname' => 'required|valid_name|max_len,30'));
+                if ( $is_valid_surname !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid surname" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : nic
+                $is_valid_nic = GUMP::is_valid($this->request->post, array('nic' => "required"));
+                if ( $is_valid_nic === true ):
+                    if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['nic']) == false ):
+                        echo json_encode( array("status" => "failed", "error" => "Wrong NIC Format. Please enter a valid NIC" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                else:
+                    echo json_encode( array("status" => "failed", "error" => "Please enter a valid NIC number for guardian" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : gender
+                $is_valid_gender = GUMP::is_valid($this->request->post, array('gender' => 'required|contains_list,Male;Female'));
+                if ( $is_valid_gender !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a gender" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : dob
+                $is_valid_dob = GUMP::is_valid($this->request->post, array('dob' => 'required|date'));
+                if ( $is_valid_dob !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter staff Date of Birth" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : phone_home
+                $is_valid_phone_home = GUMP::is_valid($this->request->post, array('phone_home' => 'numeric|exact_len,10'));
+                if ( $is_valid_phone_home !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid 10 digit landline number" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : phone_mobile
+                $is_valid_phone_mobile = GUMP::is_valid($this->request->post, array('phone_mobile' => 'numeric|exact_len,10'));
+                if ( $is_valid_phone_mobile !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid 10 digit mobile number" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : email
+                $is_valid_email = GUMP::is_valid($this->request->post, array('email' => 'valid_email'));
+                if ( $is_valid_email !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid email" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : religion
+                $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|min_len,1|max_len,2'));
+                if ( $is_valid_religion !== true AND $this->request->post['religion'] != "null" ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid religion " ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+                
+                if ( $this->request->post['religion_id'] == "null" ):
+                    $this->request->post['religion_id'] = NULL;
+                endif;
+
+                // VALIDATION : address
+                $is_valid_address = GUMP::is_valid($this->request->post, array('address' => 'required|street_address|max_len,50'));
+                if ( $is_valid_address !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid address" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : city
+                $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
+                if ( $is_valid_city !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid city name" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : employee_number
+                $is_valid_employee_number = GUMP::is_valid($this->request->post, array('employee_number' => 'required|numeric|max_len,6'));
+                if ( $is_valid_employee_number !== true ):
+                    echo json_encode( array( "status" => "failed", "message" => "Please enter a valid number less or equal to six digits" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : admission_date
+                $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
+                if ( $is_valid_admission_date !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid admission date" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : type_id
+                $is_valid_type_id = GUMP::is_valid($this->request->post, array('type_id' => 'required|numeric|min_len,1|max_len,3'));
+                if ( $is_valid_type_id !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid staff type" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : class_id
+                $is_valid_class_id = GUMP::is_valid($this->request->post, array('class_id' => 'numeric|min_len,1|max_len,3'));
+                if ( $is_valid_class_id !== true AND $this->request->post['religion'] != "null" ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid class" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : status
+                $is_valid_status = GUMP::is_valid($this->request->post, array('status' => 'required|contains_list,Active;Deactive'));
+                if ( $is_valid_status !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid user account status" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : role_id
+                $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'numeric|min_len,1|max_len,2'));
+                if ( $is_valid_role_id !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid user role" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : username
+                $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_username !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid username of minimum 6 characters" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : password
+                $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'alpha_dash|min_len,6|max_len,20'));
+                if ( $is_valid_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK ANY USER AVAILABLE
+                $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'staff')->where('ref_id', '=', $this->request->post['staff_id']);
+                if ( $is_available_user->first() != NULL):
+                     // IS CHANGED USERNAME
+                    $current_username = $this->model_user->select('username')->where('user_type', '=', 'staff')->where('ref_id', '=', $this->request->post['staff_id'])->first();
+                    if ( $current_username->username != $this->request->post['username']):
+                        // USERNAME IS CHANGED : CHECK FOR DUPLICATE
+                        if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                            echo json_encode( array( "status" => "failed", "message" => "this username already exists" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+                    endif;
+                endif;
+
+                // UPDATE PROCESS
+                try {
+                    $this->model_staff->find($this->request->post['staff_id'])->update([
+
+                        // UPDATE BIO
+                        'full_name' => $this->request->post['full_name'],
+                        'initials' => $this->request->post['initials'],
+                        'surname' => $this->request->post['surname'],
+                        'nic' => $this->request->post['nic'],
+                        'gender' => $this->request->post['gender'],
+                        'dob' => $this->request->post['dob'],
+                        'phone_home' => $this->request->post['phone_home'],
+                        'phone_mobile' => $this->request->post['phone_mobile'],
+                        'email' => $this->request->post['email'],
+                        'city' => $this->request->post['city'],
+                        'religion_id' => $this->request->post['religion_id'],
+                        'address' => $this->request->post['address'],
+                        'district_id' => $this->request->post['district_id'],
+
+                        // UPDATE ACADEMIC
+                        'employee_number' => $this->request->post['employee_number'],
+                        'admission_date' => $this->request->post['admission_date'],
+                        'type_id' => $this->request->post['type_id'],
+                    ]);
+
+                    // CHECK IS CHANGED STAFF CLASS
+                    $current_class_id = $this->model_class->select('id')->where('staff_id', '=', $this->request->post['staff_id'])->first();
+                    if ( $current_class_id->id != $this->request->post['class_id']):
+                        // CHECK EXISTING STAFF ID FOR SELECTED CLASS
+                        $is_exist_staff_id = $this->model_class->select('staff_id')->where('id', '=', $this->request->post['class_id'])->where('staff_id', '!=', NULL)->first();
+                        if ( $is_exist_staff_id !== NULL ):
+                            echo json_encode( array( "status" => "failed", "message" => "Selected class already assigned a staff memeber. Please remove before assigning a new staff member" ), JSON_PRETTY_PRINT );
+                            exit();
+                        else:
+                            // REMOVE EXISTING STAFF CLASS
+                            $this->model_class->where('staff_id', '=', $this->request->post['staff_id'])->update(['staff_id' => NULL]);
+                            // UPDATE STAFF CLASS
+                            $this->model_class->where('id', '=', $this->request->post['class_id'])->update(['staff_id' => $this->request->post['staff_id']]);
+                        endif;
+                    endif;
+
+                    // START : UPDATE STAFF HAS SUBJECTS
+
+                        // REMOVE CURRENT RECORDS
+                        if ( $this->model_staff_subject->where('staff_id', '=', $this->request->post['staff_id'])->first() !== NULL ):
+                            if ($this->model_staff_subject->where('staff_id', '=', $this->request->post['staff_id'])->delete() == FALSE ):
+                                echo json_encode( array( "status" => "failed", "message" => "Couldn't Remove existing subjects. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                                exit();
+                            endif;
+                        endif;
+
+                        // SEPERATE DATA BY COMMAS TO ARRAY
+                        $subject_ids = explode(",", $this->request->post['subject_ids']);
+
+                        // LOOP SUBJECT IDS
+                        foreach( $subject_ids as $key => $element ):
+
+                            // CHECK IS SUBJECT EXISTS
+                            $is_exist_subject = $this->model_subject->where('id', '=', $element)->first();
+                            if ( $is_exist_subject !== NULL ):
+
+                                // CREATE STAFF HAS SUBJECT RECORD
+                                $this->model_staff_subject->create([
+                                    'staff_id' => $this->request->post['staff_id'],
+                                    'subject_id' => $element
+                                ]);
+                            endif;
+                        endforeach;
+
+                    // END : UPDATE STAFF HAS SUBJECTS
+
+                    // UPDATE SETTINGS IF AVAILABLE USER FOUND
+                    $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'staff')->where('ref_id', '=', $this->request->post['staff_id']);
+                    if ( $is_available_user->first() != NULL):
+
+                        // UPDATE STATUS,ROLE,USERNAME
+                        $this->model_user->where('user_type', '=', 'staff')->where('ref_id', '=', $this->request->post['staff_id'])->update([
+                            'status' => $this->request->post['status'],
+                            'role_id' => $this->request->post['role_id'],
+                            'username' => $this->request->post['username'],
+                        ]);
+
+                        // UPDATE PASSWORD
+                        if ( isset($this->request->post['password']) == TRUE AND !empty( $this->request->post['password']) == TRUE ):
+                            $this->model_user->where('user_type', '=', 'staff')->where('ref_id', '=', $this->request->post['staff_id'])->update(['password' => password_hash($this->request->post['password'], PASSWORD_DEFAULT)]);
+                        endif;
+
+                    // CREATE A USER IF STATUS IS ACTIVE
+                    elseif ( $this->request->post['status'] == "Active" OR !empty($this->request->post['username']) ):
+
+                        // VALIDATION : role_id
+                        $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'required|numeric|min_len,1|max_len,2'));
+                        if ( $is_valid_role_id !== true ):
+                            echo json_encode( array("status" => "failed", "message" => "Please select a valid user role" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+
+                        // VALIDATION : username
+                        $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                        if ( $is_valid_username !== true ):
+                            echo json_encode( array("status" => "failed", "message" => "Please select a valid username of minimum 6 characters" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+
+                        // USERNAME ASSIGNED : CHECK FOR DUPLICATE
+                        if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                            echo json_encode( array( "status" => "failed", "message" => "this username already exists" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+
+                        // VALIDATION : password
+                        $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'required|alpha_dash|min_len,6|max_len,20'));
+                        if ( $is_valid_password !== true ):
+                            echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;                        
+
+                        // INITIATE : USER RECORD
+                        $this->model_user->user_type = "staff";
+                        $this->model_user->ref_id = $this->request->post['staff_id'];
+                        $this->model_user->role_id = $this->request->post['role_id'];
+                        $this->model_user->username = $this->request->post['username'];
+                        $this->model_user->password = password_hash($this->request->post['password'], PASSWORD_DEFAULT);
+                        $this->model_user->status = $this->request->post['status'];
+
+                        // CHECK : USER RECORD QUERY
+                        if ( $this->model_user->save() ):
+                            echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                            exit();
+                        else:
+                            echo json_encode( array( "status" => "failed", "message" => "Unable create user. Please set username and password" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+                    endif;
+
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to edit staff. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+            else:
+                // NO RECORD FOUND TO UPDATE
+				echo json_encode( array( "status" => "failed", "message" => "No staff record found to modify" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // staff ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid staff record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+    }
+
     public function ajax_removestaff() {
         
         // CHECK LOGIN STATUS

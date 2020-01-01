@@ -36,3 +36,28 @@
     text-decoration: none;
     color: var(--white);
 }
+
+.login .nav.nav-pills {
+	border-bottom: solid 1px #ececec;
+}
+
+.login .nav.nav-pills .nav-link {
+	border-radius: 0;
+}
+
+.login .nav.nav-pills a.nav-link {
+	color: #ffffff83;
+}
+
+.login .nav.nav-pills .nav-link.active,.login .nav.nav-pills .nav-pills .show>.nav-link {
+	background: rgba(255, 255, 255, 0);
+}
+
+.login .nav.nav-pills .nav-link.active {
+	border-bottom: solid 2px #727cf5;
+}
+
+
+.login .nav.nav-pills a.nav-link.active {
+	color: #ffffff;
+}

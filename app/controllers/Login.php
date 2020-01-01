@@ -20,22 +20,20 @@ class Login extends Controller {
 
 		// STAFF LOGIN
 		if (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "staff" ):
-			$validate = GUMP::is_valid($this->request->post,['username' => 'required']);
-			if($validate == true):
+			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
+			if($validate == TRUE):
 
 				// CHECK ANY USER FOR THIS USERNAME
-				$User = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'staff')->first();
-				if($User != null):
+				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'staff')->first();
+				if($user != NULL):
 
 					// CHECK USER IS ACTIVE
-					$is_active = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'staff')->where('status', '=', 'Active');
-					if($is_active != null):
-
+					if( $user->status == "Active" ):
 						// CHECK PASSWORD IS CORRECT
-						if(password_verify ($this->request->post['password'],$User->password)):
+						if(password_verify ($this->request->post['password'],$user->password)):
 							// PROCESS TO LOGIN
-							$_SESSION['user']['is_login'] = true;
-							$_SESSION['user']['id'] = $User->id;
+							$_SESSION['user']['is_login'] = TRUE;
+							$_SESSION['user']['id'] = $user->id;
 							$_SESSION['user']['type'] = 'staff';
 							header('Location:' . $this->config->get('base_url') . '/home');
 							exit();
@@ -49,14 +47,14 @@ class Login extends Controller {
 					endif;
 				else:
 					// CHECK FOR EXISTING STAFF MEMEBER
-					$User = $this->model_staff->where('employee_number',$this->request->post['username'])->where('nic', '=', $this->request->post['password'])->first();
+					$user = $this->model_staff->where('employee_number',$this->request->post['username'])->where('nic', '=', $this->request->post['password'])->first();
 
-					if($User != null):
+					if($user != NULL):
 						// DISPLAY MESSAGE USER IS FOUND
 						$data['msg'] = "Available Staff detected";
 					else:
 						// DISPLAY MESSAGE STAFF IS NOT FOUND
-						$data['msg'] = "No Staff is registered to match these details";
+						$data['msg'] = "User not found";
 					endif;
 				endif;
 			
@@ -70,13 +68,13 @@ class Login extends Controller {
 
 			if($validate == true):
 
-				$User = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'student')->first();
+				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'student')->first();
 
-				if($User != null):
+				if($user != null):
 
-					if(password_verify ($this->request->post['password'],$User->password)):
+					if(password_verify ($this->request->post['password'],$user->password)):
 						$_SESSION['user']['is_login'] = true;
-						$_SESSION['user']['id'] = $User->id;
+						$_SESSION['user']['id'] = $user->id;
 						header('Location:' . $this->config->get('base_url') . '/home');
 						exit();
 					else:
@@ -85,14 +83,14 @@ class Login extends Controller {
 
 				else:
 
-					$User = DB::table('student')
+					$user = DB::table('student')
 					->join('student_has_parent', 'student.id', 'student_has_parent.student_id')
 					->join('parent', 'student_has_parent.parent_id', 'parent.id')
 					->where('student.admission_no',$this->request->post['username'])
 					->where('parent.nic', '=', $this->request->post['password'])
 					->select('student.id')->first();
 
-					if($User != null):
+					if($user != null):
 						$data['msg'] = "Available Student detected";
 					else:
 						$data['msg'] = "No Student is enrolled to match these details";
@@ -109,13 +107,13 @@ class Login extends Controller {
 
 			if($validate == true):
 
-				$User = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'parent')->first();
+				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'parent')->first();
 
-				if($User != null):
+				if($user != null):
 
-					if(password_verify ($this->request->post['password'],$User->password)):
+					if(password_verify ($this->request->post['password'],$user->password)):
 						$_SESSION['user']['is_login'] = true;
-						$_SESSION['user']['id'] = $User->id;
+						$_SESSION['user']['id'] = $user->id;
 						header('Location:' . $this->config->get('base_url') . '/home');
 						exit();
 					else:
@@ -124,14 +122,14 @@ class Login extends Controller {
 
 				else:
 
-					$User = DB::table('parent')
+					$user = DB::table('parent')
 					->join('student_has_parent', 'parent.id', 'student_has_parent.parent_id')
 					->join('student', 'student_has_parent.student_id', 'student.id')
 					->where('parent.nic',$this->request->post['username'])
 					->where('student.admission_no', '=', $this->request->post['password'])
 					->select('parent.id')->first();
 
-					if($User != null):
+					if($user != null):
 						$data['msg'] = "Available parent detected";
 					else:
 						$data['msg'] = "No Parent is enrolled to match these details";
@@ -165,13 +163,13 @@ class Login extends Controller {
 
 			if($validate == true):
 
-				$User = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'staff')->first();
+				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'staff')->first();
 
-				if($User != null):
+				if($user != null):
 
-					if(password_verify ($this->request->post['password'],$User->password)):
+					if(password_verify ($this->request->post['password'],$user->password)):
 						$_SESSION['user']['is_login'] = true;
-						$_SESSION['user']['id'] = $User->id;
+						$_SESSION['user']['id'] = $user->id;
 						header('Location:' . $this->config->get('base_url') . '/home');
 						// $login['location']['url'] = $this->config->get('base_url')."/home";
 						exit();
@@ -181,9 +179,9 @@ class Login extends Controller {
 
 				else:
 
-					$User = $this->model_staff->where('employee_number',$this->request->post['username'])->where('nic', '=', $this->request->post['password'])->first();
+					$user = $this->model_staff->where('employee_number',$this->request->post['username'])->where('nic', '=', $this->request->post['password'])->first();
 
-					if($User != null):
+					if($user != null):
 						$data['msg'] = "Available Staff detected";
 					else:
 						$data['msg'] = "No Staff is registered to match these details";
@@ -199,13 +197,13 @@ class Login extends Controller {
 
 			if($validate == true):
 
-				$User = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'student')->first();
+				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'student')->first();
 
-				if($User != null):
+				if($user != null):
 
-					if(password_verify ($this->request->post['password'],$User->password)):
+					if(password_verify ($this->request->post['password'],$user->password)):
 						$_SESSION['user']['is_login'] = true;
-						$_SESSION['user']['id'] = $User->id;
+						$_SESSION['user']['id'] = $user->id;
 						header('Location:' . $this->config->get('base_url') . '/home');
 						exit();
 					else:
@@ -214,13 +212,13 @@ class Login extends Controller {
 
 				else:
 
-					$User = DB::table('student')
+					$user = DB::table('student')
 					->join('student_has_parent', 'student.id', 'student_has_parent.student_id')
 					->join('parent', 'student_has_parent.parent_id', 'parent.id')
 					->where('student.admission_no',$this->request->post['username'])
 					->where('parent.nic', '=', $this->request->post['password'])->first();
 
-					if($User != null):
+					if($user != null):
 						$data['msg'] = "Available Student detected";
 					else:
 						$data['msg'] = "No Student is enrolled to match these details";
@@ -236,13 +234,13 @@ class Login extends Controller {
 
 			if($validate == true):
 
-				$User = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'parent')->first();
+				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'parent')->first();
 
-				if($User != null):
+				if($user != null):
 
-					if(password_verify ($this->request->post['password'],$User->password)):
+					if(password_verify ($this->request->post['password'],$user->password)):
 						$_SESSION['user']['is_login'] = true;
-						$_SESSION['user']['id'] = $User->id;
+						$_SESSION['user']['id'] = $user->id;
 						header('Location:' . $this->config->get('base_url') . '/home');
 						exit();
 					else:
@@ -251,13 +249,13 @@ class Login extends Controller {
 
 				else:
 
-					$User = DB::table('parent')
+					$user = DB::table('parent')
 					->join('student_has_parent', 'parent.id', 'student_has_parent.parent_id')
 					->join('student', 'student_has_parent.student_id', 'student.id')
 					->where('parent.nic',$this->request->post['username'])
 					->where('student.admission_no', '=', $this->request->post['password'])->first();
 
-					if($User != null):
+					if($user != null):
 						$data['msg'] = "Available parent detected";
 					else:
 						$data['msg'] = "No Parent is enrolled to match these details";

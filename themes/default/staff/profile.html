@@ -31,7 +31,7 @@
                                                 <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
                                                 <button class="btn btn-xs btn-success" id="btn-save" onclick="update_staff('{{ staff.id }}')" hidden><i class="la la-save"></i> Save</button>
                                                 <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
-                                                <button class="btn btn-xs btn-danger" onclick="remove_staff('{{ staff.id }}')"><i class="la la-trash"></i></button>
+                                                <button class="btn btn-xs btn-danger" onclick="remove_staff('{{ staff.id }}')"><i class="la la-trash"></i> Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -116,6 +116,7 @@
                                                                         <div class="form-group">
                                                                             <label for="">Religion</label>
                                                                             <select class="form-control" name="religion" id="staff-religion" disabled>
+                                                                                    <option value="null" selected>- select -</option>
                                                                                 {% for religion in religions %}
                                                                                     {% if religion.id == staff.religion_id %}
                                                                                         <option value="{{ religion.id }}" selected>{{ religion.name }}</option>
@@ -293,7 +294,7 @@
                                                                         <div class="form-group">
                                                                             <label for="">User Role</label>
                                                                             <select class="form-control" name="role_id" id="staff-role_id" disabled>
-                                                                                <option value="" selected>- select -</option>
+                                                                                <option value="null" selected>- select -</option>
                                                                                 {% for role in user.roles %}
                                                                                     {% if role.id  == settings.user_role.id %}
                                                                                         <option value="{{ role.id }}" selected>{{ role.name }}</option>
@@ -413,6 +414,68 @@
             // function(){ alertify.error('Cancel')}
         );
     }
+
+    // START : UPDATE STAFF
+    update_staff = (staff_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+
+        // BIO DATA
+        formData.append('staff_id', staff_id)
+        formData.append('full_name', $("#staff-full_name").val())
+        formData.append('initials', $("#staff-initials").val())
+        formData.append('surname', $("#staff-surname").val())
+        formData.append('nic', $("#staff-nic").val())
+        formData.append('gender', $("#staff-gender").val())
+        formData.append('dob', $("#staff-dob").val())        
+        formData.append('phone_mobile', $("#staff-phone_mobile").val())
+        formData.append('phone_home', $("#staff-phone_home").val())
+        formData.append('email', $("#staff-email").val())
+        formData.append('religion_id', $("#staff-religion").val())
+        formData.append('address', $("#staff-address").val())
+        formData.append('city', $("#staff-city").val())
+        formData.append('district_id', $("#staff-district").val())
+
+        // SYSTEM
+        formData.append('employee_number', $("#staff-employee_number").val())
+        formData.append('admission_date', $("#staff-admission_date").val())
+        formData.append('class_id', $("#staff-class").val())
+        formData.append('type_id', $("#staff-type").val())
+        formData.append('subject_ids', $("#staff-subjects").val())
+
+        // SETTINGS
+        formData.append('status', $("#staff-status").val())
+        formData.append('role_id', $("#staff-role_id").val())
+        formData.append('username', $("#staff-username").val())
+        formData.append('password', $("#staff-password").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/staff/ajax_updatestaff",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Staff Details Updated successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : UPDATE STAFF
 
     // START : REMOVE STAFF
     remove_staff = (staff_id) => {

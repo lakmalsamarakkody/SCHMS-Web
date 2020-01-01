@@ -1185,7 +1185,7 @@ class Sport extends Controller {
                         // REMOVE CURRENT RECORDS
                         if ( $this->model_coach_sport->where('coach_id', '=', $this->request->post['coach_id'])->first() !== NULL ):
                             if ($this->model_coach_sport->where('coach_id', '=', $this->request->post['coach_id'])->delete() == FALSE ):
-                                echo json_encode( array( "status" => "failed", "message" => "Couldn't Remove Current Sports. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                                echo json_encode( array( "status" => "failed", "message" => "Couldn't Remove existing Sports. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
                                 exit();
                             endif;
                         endif;
@@ -1205,9 +1205,6 @@ class Sport extends Controller {
                                     'coach_id' => $this->request->post['coach_id'],
                                     'sport_id' => $element
                                 ]);
-                            else:
-                                echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
-                                exit();
                             endif;
                         endforeach;
 
