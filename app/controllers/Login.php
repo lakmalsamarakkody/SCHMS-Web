@@ -46,55 +46,44 @@ class Login extends Controller {
 						$data['msg'] = "Sorry, your account is disabled. please contact your system administrator";
 					endif;
 				else:
-					// CHECK FOR EXISTING STAFF MEMEBER
-					$user = $this->model_staff->where('employee_number',$this->request->post['username'])->where('nic', '=', $this->request->post['password'])->first();
-
-					if($user != NULL):
-						// DISPLAY MESSAGE USER IS FOUND
-						$data['msg'] = "Available Staff detected";
-					else:
-						// DISPLAY MESSAGE STAFF IS NOT FOUND
-						$data['msg'] = "User not found";
-					endif;
+					// DISPLAY MESSAGE USER NOT FOUND
+					$data['msg'] = "User not found";
 				endif;
 			
 			else:
 				$data['msg'] = "Enter your Username";
 			endif;
-		
+
 		// STUDENT LOGIN
 		elseif (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "student" ):
-			$validate = GUMP::is_valid($this->request->post,['username' => 'required']);
+			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
+			if($validate == TRUE):
 
-			if($validate == true):
-
+				// CHECK ANY USER FOR THIS USERNAME
 				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'student')->first();
+				if($user != NULL):
 
-				if($user != null):
-
-					if(password_verify ($this->request->post['password'],$user->password)):
-						$_SESSION['user']['is_login'] = true;
-						$_SESSION['user']['id'] = $user->id;
-						header('Location:' . $this->config->get('base_url') . '/home');
-						exit();
+					// CHECK USER IS ACTIVE
+					if( $user->status == "Active" ):
+						// CHECK PASSWORD IS CORRECT
+						if(password_verify ($this->request->post['password'],$user->password)):
+							// PROCESS TO LOGIN
+							$_SESSION['user']['is_login'] = TRUE;
+							$_SESSION['user']['id'] = $user->id;
+							$_SESSION['user']['type'] = 'student';
+							header('Location:' . $this->config->get('base_url') . '/home');
+							exit();
+						else:
+							// DISPLAY MESSAGE PASSWORD IS INCORRECT
+							$data['msg'] = "Incorrect Password";
+						endif;
 					else:
-						$data['msg'] = "Incorrect Password";
+						// DISPLAY MESSAGE USER IS DEACTIVE
+						$data['msg'] = "Sorry, your account is disabled. please contact your system administrator";
 					endif;
-
 				else:
-
-					$user = DB::table('student')
-					->join('student_has_parent', 'student.id', 'student_has_parent.student_id')
-					->join('parent', 'student_has_parent.parent_id', 'parent.id')
-					->where('student.admission_no',$this->request->post['username'])
-					->where('parent.nic', '=', $this->request->post['password'])
-					->select('student.id')->first();
-
-					if($user != null):
-						$data['msg'] = "Available Student detected";
-					else:
-						$data['msg'] = "No Student is enrolled to match these details";
-					endif;
+					// DISPLAY MESSAGE USER NOT FOUND
+					$data['msg'] = "User not found";
 				endif;
 			
 			else:
@@ -103,37 +92,70 @@ class Login extends Controller {
 
 		// PARENT LOGIN
 		elseif (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "parent" ):
-			$validate = GUMP::is_valid($this->request->post,['username' => 'required']);
+			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
+			if($validate == TRUE):
 
-			if($validate == true):
-
+				// CHECK ANY USER FOR THIS USERNAME
 				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'parent')->first();
+				if($user != NULL):
 
-				if($user != null):
-
-					if(password_verify ($this->request->post['password'],$user->password)):
-						$_SESSION['user']['is_login'] = true;
-						$_SESSION['user']['id'] = $user->id;
-						header('Location:' . $this->config->get('base_url') . '/home');
-						exit();
+					// CHECK USER IS ACTIVE
+					if( $user->status == "Active" ):
+						// CHECK PASSWORD IS CORRECT
+						if(password_verify ($this->request->post['password'],$user->password)):
+							// PROCESS TO LOGIN
+							$_SESSION['user']['is_login'] = TRUE;
+							$_SESSION['user']['id'] = $user->id;
+							$_SESSION['user']['type'] = 'parent';
+							header('Location:' . $this->config->get('base_url') . '/home');
+							exit();
+						else:
+							// DISPLAY MESSAGE PASSWORD IS INCORRECT
+							$data['msg'] = "Incorrect Password";
+						endif;
 					else:
-						$data['msg'] = "Incorrect Password";
+						// DISPLAY MESSAGE USER IS DEACTIVE
+						$data['msg'] = "Sorry, your account is disabled. please contact your system administrator";
 					endif;
-
 				else:
+					// DISPLAY MESSAGE USER NOT FOUND
+					$data['msg'] = "User not found";
+				endif;
+			
+			else:
+				$data['msg'] = "Enter your Username";
+			endif;
 
-					$user = DB::table('parent')
-					->join('student_has_parent', 'parent.id', 'student_has_parent.parent_id')
-					->join('student', 'student_has_parent.student_id', 'student.id')
-					->where('parent.nic',$this->request->post['username'])
-					->where('student.admission_no', '=', $this->request->post['password'])
-					->select('parent.id')->first();
+		// COACH LOGIN
+		elseif (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "coach" ):
+			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
+			if($validate == TRUE):
 
-					if($user != null):
-						$data['msg'] = "Available parent detected";
+				// CHECK ANY USER FOR THIS USERNAME
+				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'coach')->first();
+				if($user != NULL):
+
+					// CHECK USER IS ACTIVE
+					if( $user->status == "Active" ):
+						// CHECK PASSWORD IS CORRECT
+						if(password_verify ($this->request->post['password'],$user->password)):
+							// PROCESS TO LOGIN
+							$_SESSION['user']['is_login'] = TRUE;
+							$_SESSION['user']['id'] = $user->id;
+							$_SESSION['user']['type'] = 'coach';
+							header('Location:' . $this->config->get('base_url') . '/home');
+							exit();
+						else:
+							// DISPLAY MESSAGE PASSWORD IS INCORRECT
+							$data['msg'] = "Incorrect Password";
+						endif;
 					else:
-						$data['msg'] = "No Parent is enrolled to match these details";
+						// DISPLAY MESSAGE USER IS DEACTIVE
+						$data['msg'] = "Sorry, your account is disabled. please contact your system administrator";
 					endif;
+				else:
+					// DISPLAY MESSAGE USER NOT FOUND
+					$data['msg'] = "User not found";
 				endif;
 			
 			else:

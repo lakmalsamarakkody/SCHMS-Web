@@ -19,10 +19,10 @@
 
                 <div class="col-4 offset-2 mx-auto my-auto loginform pt-5">
 
-                    <div class="tab-content px-4" id="myTabContent">
+                    <div class="tab-content px-3">
 
                         <!-- LOGIN TAB -->
-                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
                             <form name="loginform" method="post">
 
                                 <!-- OUTPUT MESSAGES -->
@@ -58,6 +58,7 @@
                                                 <option value="" selected hidden>Login as</option>
                                                 <option value="student">Student</option>
                                                 <option value="parent">Parent</option>
+                                                <option value="coach">Coach</option>
                                                 <option value="staff">Staff</option>
                                             </select>
                                         </div>
@@ -80,7 +81,7 @@
                         </div>
 
                         <!-- REGISTER TAB -->
-                        <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                        <div class="tab-pane fade" id="register" role="tabpanel">
                             HI
                         </div>
                     </div>
@@ -91,13 +92,13 @@
 
                             <div class="col-6 p-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="login" aria-controls="login" aria-selected="true">Login</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#login" role="tab" >Login</a>
                                 </li>
                             </div>
 
                             <div class="col-6 p-0">
                                 <li class="nav-item">
-                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                    <a class="nav-link" data-toggle="tab" href="#register" role="tab" >Register</a>
                                 </li>
                             </div>
                         </ul>
