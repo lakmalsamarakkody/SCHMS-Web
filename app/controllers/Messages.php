@@ -103,7 +103,7 @@ class Messages extends Controller {
              * user have at a given time. Conversations will be sorted
              * using the message table with the help of grouping SQL.
              */
-            $converstations = $this->model_message->select('id', 'sender_id', 'receiver_id')->where('receiver_id', '=', $_SESSION['user']['id'])->orwhere('sender_id', '=', $_SESSION['user']['id'])->distinct('sender_id', 'receiver_id')->orderBy('created_on', 'DESC')->get();
+            $converstations = $this->model_message->select('id', 'sender_id', 'receiver_id')->where('receiver_id', '=', $_SESSION['user']['id'])->orwhere('sender_id', '=', $_SESSION['user']['id'])->groupBy('sender_id', 'receiver_id')->orderBy('created_on', 'DESC')->get();
             foreach( $converstations as $key => $element ):
 
                 // SELECTING IS PARTICIPANT SENDER OR RECEIVER
