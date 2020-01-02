@@ -11,119 +11,125 @@
                 
                 {{ template.topmenu|raw }}
 
-                <div class="timetablesearch">
+                <div class="timetablecreate">
 
-                    <!-- START : CLASS TIMETABLE SECTION -->
-                    <section class="classtimetable mt-4">
+                    <h4 class="page-title"> Create Time Table </h4>
 
-                        <!-- START : SELECT CLASS -->
+                    <section class="selectowner">
+
                         <form method="post">
 
-                            <div class="form-row mr-1">
+                            <div class="form-row">
 
-                                <h4 class="page-title mb-0 pb-0"> Class Time Table </h4>
-
-                                <div class="form-group col-md-1 ml-auto p-0">
+                                <div class="form-group col-md-1 ml-auto">
                                     <label for="timetable_class"> Select Class </label>
-                                    <select class="form-control" name="timetable_class">
-                                        <option selected disabled>- Select -</option>
-                                        {% for class in classes %}
-                                            {% if class.id == form.field.timetable_class %}
-                                                <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                            {% else %}
-                                                <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                            {% endif %}
-                                        {% endfor %}
+                                    <select class="form-control" name="timetable_class">                                    
+                                    {% for class in classes %}
+                                        {% if class.id == form.field.timetable_class %}
+                                            <option selected value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                        {% else %}
+                                            <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
+                                        {% endif %}
+                                    {% endfor %}
                                     </select>
                                 </div>
 
-                                <div class="form-group ml-1">
-                                    <label> &nbsp; </label>
-                                    <input type="hidden" name="isSubmitedClassTimeTable" value="true"/>
-                                    <button type="submit" class="form-control btn btn-primary"> View </button>
+                            
+                                <div class="form-group">
+                                    <label for="timetable_class"> &nbsp; </label>
+                                    <input type="hidden" name="isSubmited" value="true"/>
+                                    <button type="submit" class="form-control btn btn-primary">Select</button>
                                 </div>
                             </div>
 
                         </form>
-                        <!-- END : SELECT CLASS -->
-
-                        <!-- START : CLASS TIME TABLE -->
-                        {% if class.id %}
-                            <section class="timetable">
-                                
-                                <table class="table table-bordered table-responsive-md">
-
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th width="1%" class="text-center" scope="col">Period</th>
-                                            <th width="20%" class="text-center" scope="col">Monday</th>
-                                            <th width="20%" class="text-center" scope="col">Tuesday</th>
-                                            <th width="20%" class="text-center" scope="col">Wednesday</th>
-                                            <th width="20%" class="text-center" scope="col">Thursday</th>
-                                            <th width="20%" class="text-center" scope="col">Friday</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                        {% set period = 1 %}
-
-                                        {% for row in 1..9 %}
-
-                                            {% if row != 5 %}
-                                            
-                                                <tr>
-                                                    <th scope="row" class="text-center">{{ period }}</th>
-                                                    {% for cols in 1..5 %}
-                                                    <td class="text-center">
-                                                        {% if timetables[cols].period.id == period %}
-                                                        <span>{{ timetables[cols].period.subject_name }}</span>
-                                                        <br>
-                                                        <span>{{ timetables[cols].period.staff_name }}</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    {% endfor %}
-                                                </tr>
-                                                {% set period = period + 1 %}
-
-                                            {% else %}
-
-                                                <tr class="thead-dark">
-                                                    <th class="text-center" colspan="6">I N T E R V A L</th>
-                                                </tr>
-
-                                            {% endif %}
-
-                                        {% endfor %}
-
-                                    </tbody>
-                                </table>
-
-                                <input id="classId" type="hidden" value="{{ class.id }}" />
-
-                            </section>
-                        {% else %}
-
-                            <table class="table table-responsive-md">
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">No records to Display. Please select a class to View Class Timetable</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        {% endif %}
-                        <!-- END : CLASS TIME TABLE -->
 
                     </section>
-                    <!-- END : CLASS TIMETABLE SECTION -->                    
+
+                    <!-- START : CLASS TIME TABLE -->
+                    {% if class.id %}
+
+                        <section class="timetable">
+                            
+                            <table class="table table-bordered table-responsive-md">
+    
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="1%" class="text-center" scope="col">Period</th>
+                                        <th width="20%" class="text-center" scope="col">Monday</th>
+                                        <th width="20%" class="text-center" scope="col">Tuesday</th>
+                                        <th width="20%" class="text-center" scope="col">Wednesday</th>
+                                        <th width="20%" class="text-center" scope="col">Thursday</th>
+                                        <th width="20%" class="text-center" scope="col">Friday</th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+
+                                    {% set period = 1 %}
+    
+                                    {% for row in 1..9 %}
+                                        {% if row != 5 %}
+    
+                                        <tr>
+                                            <th scope="row" class="text-center">{{ period }}</th>
+                                            {% for cols in 1..5 %}
+                                            <td class="text-center">
+
+                                                {% for subject in subject %}
+                                                    {% if timetable[cols][period].subject_id == subject.id %}
+                                                    <span>{{ subject.name }}</span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <br>
+                                                {% for staff in staffs %}
+                                                    {% if timetable[cols][period].staff_id == staff.id %}
+                                                    <span>{{ staff.initials }} {{ staff.surname }}</span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% set period = period + 1 %}
+                                        {% else %}
+                                        <tr class="thead-dark">
+                                            <th class="text-center" colspan="6">I N T E R V A L</th>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+    
+                                    <!-- {% for sub in subject %}
+                                    {{ loop.index }} - {{ dump(sub) }}
+                                    <br><br><br>
+                                    {% endfor %} -->
+                                
+                                </tbody>
+                            </table>
+    
+                            <input id="classId" type="hidden" value="{{ class.id }}" />
+    
+                        </section>
+                    {% else %}
+
+                        <table class="table table-responsive-md">
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">No records to Display. Please select a class to Add / Edit Timetable</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+                    
+                    <!-- END : CLASS TIME TABLE -->
 
                 </div>
-
+                
             </div>
             
         </div>
     </div>
 
 {{ template.footer|raw }}
+
 </body>
