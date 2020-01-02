@@ -119,7 +119,7 @@ class Backup extends Controller {
         $this->load->model("backup");
 
         // QUERY BACKUP
-        $backup = $this->model_backup->find($this->request->post['backup.id']);
+        $backup = $this->model_backup->find($this->request->post['backup_id']);
 
         // REMOVE FILE
         // unlink( ABS_PATH.'/data/backups/'.$backup->name );

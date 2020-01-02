@@ -59,7 +59,7 @@
                                         <th scope="col">Description</th>
                                         <th class="text-center" width="20%" scope="col">Date & Time</th>
                                         <th class="text-center" width="10%" scope="col">File size</th>
-                                        <th width="15%" class="text-center" scope="col">&nbsp;</th>
+                                        <th width="15%" class="text-right" scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
 
@@ -71,7 +71,10 @@
                                             <td>{{ backup.description }}</td>
                                             <td class="text-center">{{ backup.date_time }}</td>
                                             <td class="text-center">{{ backup.file_size }} KB</td>
-                                            <td width="1%" class="text-center"><button class="btn btn-danger" onClick="remove('{{ backup.id }}')">Remove</button></td>
+                                            <td width="15%" class="text-right">
+                                                <a href="{{ app.url }}/data/backups/{{ backup.name }}" download="{{ backup.name }}"><button class="btn btn-sm btn-primary"><i class="la la-cloud-download"></i> Download</button></a>
+                                                <button class="btn btn-sm btn-danger" onClick="remove('{{ backup.id }}')"><i class="la la-trash"></i></button>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -148,7 +151,7 @@
 
             // PAYLOAD
             let formData = new FormData()
-            formData.append("backup.id", id)
+            formData.append("backup_id", id)
 
             // AJAX
             $.ajax({
