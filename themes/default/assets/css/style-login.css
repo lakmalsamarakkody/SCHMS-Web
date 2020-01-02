@@ -9,14 +9,41 @@
     height: 100vh;
 }
 
+.login .website{
+    text-decoration: none;
+    color: var(--white);
+}
+
 .login .title{
     position: static;
+}
+
+.login .card {
+    background: none;
+    border-radius: 1rem;
+    border-bottom: solid 2px #ffffff49;
+}
+
+.login .card .card-header{
+    background:none;
+}
+
+.login .card .card-header .nav.nav-pills{
+    background: none;
+}
+
+.login .card .card-header .nav.nav-pills .nav-item{
+    background: none;    
+}
+
+.login .card .card-header .nav.nav-pills .nav-item .nav-link.active{
+    background: none;    
 }
 
 .login .loginform{
     position: static;
     background-color: #ffffff13;
-    border-radius: 1rem;;
+    border-radius: 1rem;
 }
 
 .login .title h1{
@@ -32,40 +59,35 @@
     color: var(--white);
 }
 
-.login .website{
-    text-decoration: none;
-    color: var(--white);
-}
-/*
-.login .nav.nav-pills {
-	border-bottom: solid 1px #ececec;
-}
 
-.login .nav.nav-pills .nav-link {
+/* .login .nav.nav-pills {
+	border-bottom: solid 1px #ececec;
+} */
+
+/* .login .nav.nav-pills .nav-link {
 	border-radius: 0;
+} */
+
+/* .login .nav.nav-pills .nav-link.active,.login .nav.nav-pills .nav-pills .show>.nav-link {
+	background: rgba(255, 255, 255, 0);
+} */
+
+/* .login .nav.nav-pills .nav-link.active {
+	border-bottom: solid 1px #727cf5;
+} */
+
+/* .login .nav.nav-pills .nav-item {
+    background: #474747;
+} */
+
+.login .nav.nav-pills a.nav-link.active {
+    color: #ffffff;
+    font-style: normal;
+    
 }
 
 .login .nav.nav-pills a.nav-link {
-	color: #ffffff83;
+    color: #ffffff83;
+    font-style: oblique;
 }
 
-.login .nav.nav-pills .nav-link.active,.login .nav.nav-pills .nav-pills .show>.nav-link {
-	background: rgba(255, 255, 255, 0);
-}
-
-.login .nav.nav-pills .nav-link.active {
-	border-bottom: solid 1px #727cf5;
-}
-
-
-.login .nav.nav-pills a.nav-link.active {
-	color: #ffffff;
-}*/
-
-.login .nav.nav-pills .nav-item {
-    background: #e8e8e8;
-}
-
-.login .nav.nav-pills a.nav-link.active {
-    background: #585dc1;
-}

@@ -17,23 +17,25 @@
                     <h3 class="login-sub-title mb-5"> David De Silva College <br/> Minuwangoda - Negombo </h3>
                 </div>
 
-                <div class="col-4 offset-2 mx-auto my-auto loginform p-0">
-                    <div class="card">
-                        <div class="card-header p-0">
+                <div class="col-4 offset-2 loginform mx-auto my-auto">
+
+                    <div class="card row mt-2">
+                        <div class="card-header col-12 p-0 m-0">
                             <ul class="nav nav-pills w-100" id="myTab" role="tablist">
                                 <li class="nav-item w-50 text-center">
-                                    <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true" style="border-radius: 0;">Login</a>
+                                    <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true" style="border-radius: 0;"><h5>Login</h5></a>
                                 </li>
                                 <li class="nav-item w-50 text-center">
-                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false" style="border-radius: 0;">Register</a>
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false" style="border-radius: 0;"><h5>Register</h5></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="tab-content px-3">
+                    <div class="tab-content p-3 pb-4">
 
                         <div class="tab-content">
+
                             <div class="tab-pane fade show active pt-3" id="login" role="tabpanel" aria-labelledby="login-tab">
                                 <form name="loginform" method="post">
 
@@ -55,10 +57,8 @@
                                         <input class="form-control" type="password" id="password" name="password" placeholder="Password" required/>
                                     </div>
 
-                                    <hr width="100%"/>
-
                                     <!-- REMEMBER ME / LOGIN AS -->
-                                    <div class="form-group ml-4 mt-3 remember">
+                                    <div class="form-group ml-4 mt-4 remember">
                                         <div class="row">
                                             <div class="col-6 pr-0">
                                                 <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
@@ -79,21 +79,25 @@
                                     </div>
 
                                     <!-- LOGIN BUTTON -->
-                                    <div class="row col-12 p-0 mx-auto mt-4">
-                                        <div class="col-4">
+                                    <div class="col-12 mt-5 p-0">
+                                        <div class="row">
                                             <input type="hidden" name="is_submit" value="true"/>
-                                            <button class="btn btn-secondary px-4" type="reset" name="reset">Clear</button>
-                                        </div>
-                                        <div class="col-8">
-                                            <button class="btn btn-primary px-5" type="submit"><i class="la la-sign-in"></i> Login</button>
+                                            <div class="col-4 p-0 mx-auto">
+                                                <button class="btn btn-secondary btn-block" type="reset" name="reset">Clear</button>
+                                            </div>
+                                            <div class="col-6 p-0 mx-auto">
+                                                <button class="btn btn-primary btn-block" type="submit"><i class="la la-sign-in"></i> Login</button>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </form>
                             </div>
+
                             <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="register-tab">
                                 Hi
                             </div>
+
                         </div>
 
                     </div>
@@ -105,43 +109,5 @@
     </div>
     {{ template.footer|raw }}
     </body>
-
-    <!-- <script>
-        // START : LOGIN
-        login = () => {
-
-            // PAYLOAD
-            var formData = new FormData;
-            formData.append('username', $("#username").val())
-            formData.append('password', $("#password").val())
-            formData.append('login_as', $("#login_as").val())
-
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_login",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Login Successful... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
-                    }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
-        }
-        // END : LOGIN
-    </script> -->
 
 </html>
