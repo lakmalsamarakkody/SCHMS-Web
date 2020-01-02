@@ -125,7 +125,7 @@
                                             {% if student.disabled %}
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_addparent" disabled>Add</button>
                                             {% else %}
-                                            <button onclick="selectStudent({{ student.id }});" type="button" class="btn btn-primary">Add</button>
+                                            <button onclick="selectStudent('{{ student.id }}');" type="button" class="btn btn-primary">Add</button>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -421,7 +421,7 @@
             })
         }
 
-        //VIEW PROVINCE BY DISTRICT
+        // VIEW PROVINCE BY DISTRICT
         $("#g1dist").on('change', function () {
 
             var id = $("#g1dist").val()
@@ -445,7 +445,7 @@
 
         })
 
-        //VIEW PROVINCE BY DISTRICT
+        // VIEW PROVINCE BY DISTRICT
         $("#g2dist").on('change', function () {
 
             var id = $("#g2dist").val()
@@ -469,7 +469,7 @@
 
         })
 
-
+        // OPEN PARENT ADD MODAL
         selectStudent = (studentId) => {
             console.log(studentId)
             $("#student_id").val(studentId);

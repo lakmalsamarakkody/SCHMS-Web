@@ -13,27 +13,29 @@
 
                 <div class="messagesinbox">
 
-                    <!-- START : HEALTH SEARCH -->
-                    <h4 class="page-title">Messages</h4>
-                    <div class="btn btn-primary btn-sm mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
+                    <!-- START : CONVERSATIONS -->
+                    <h4 class="page-title">Inbox</h4>
+                    <div class="btn btn-sm btn-primary mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
 
 					<ul class="list-group mt-3">
-						{% for converstation in converstations %}
+						{% for conversation in conversations %}
 						<li class="list-group-item">
-							<a href="{{ app.url }}/messages/{{ converstation.user.id }}">
-								<img src="{{ app.url }}/data/propic/{{ converstation.image.path }}" class="avatar">
+							<a href="{{ app.url }}/messages/{{ conversation.user.id }}">
+								<img src="{{ app.url }}/data/propic/{{ conversation.image.path }}" class="avatar">
 								<div class="body">
 									<h5>
-										{{ converstation.user.name }}
-										<small class="badge badge-primary">New</small>
+										{{ conversation.user.name }}
+										{% if conversation.user.message.created_on == conversation.user.message.updated_on and conversation.user.message.receiver %}
+											<small class="badge badge-warning">New</small>
+										{% endif %}
 									</h5>
-									<p>{{ converstation.user.message.body }}</p>
+									<p>{{ conversation.user.message.body }}</p>
 								</div>
 							</a>
 						</li>
 						{% endfor %}
 					</ul>
-                    <!-- END : HEALTH SEARCH -->
+                    <!-- END : CONVERSATIONS -->
 
                 </div>
                 <!-- END : CONTENT -->
@@ -54,11 +56,11 @@
 				</div>
 				<div class="modal-body">
 
-					<!-- SELECT RECIPIENT TYPE -->
+					<!-- SELECT RECEIVER TYPE -->
 					<div class="form-group">
 						<label for="type">Type</label>
-						<select class="form-control">
-							<option value="" disabled selected>- select -</option>
+						<select class="form-control" id="receiver_type">
+							<option disabled selected>- select -</option>
 							<option value="staff">Staff</option>
 							<option value="student">Student</option>
 							<option value="parent">Parent</option>
@@ -66,24 +68,22 @@
 						</select>
 					</div>
 
-					<!-- SELECT RECIPIENT NAME -->
+					<!-- SELECT RECEIVER NAME -->
 					<div class="form-group">
 						<label for="to">To</label>
-						<select class="form-control">
-							<option value="" disabled selected>- select -</option>
-							{% for recipient in recipients %}
-							{% endfor %}
+						<select class="form-control selectpicker show-tick" data-live-search="true" id="receiver">
+							<option disabled selected>- select -</option>
 						</select>
 					</div>
 
 					<div class="form-group">
 						<label for="message">Message</label>
-						<textarea class="form-control" placeholder="Type your message here." style="height: 150px;"></textarea>
+						<textarea class="form-control" id="message_body" placeholder="Type your message here.." style="height: 150px;"></textarea>
 					</div>
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary btn-sm"><i class="la la-paper-plane"></i> &nbsp; Send</button>
+					<button type="button" class="btn btn-primary btn-sm" onclick="compose_new_msg()"><i class="la la-paper-plane"></i> &nbsp; Send</button>
 				</div>
 			</div>
 		</div>
@@ -93,3 +93,69 @@
     {{ template.footer|raw }}
 
 </body>
+
+<script>
+
+	// START : SCRIPT : COMPOSE NEW MESSAGE
+	compose_new_msg = () => {
+
+		// PAYLOAD
+		var formData = new FormData;
+
+		// ADD MESSAGE DATA
+		formData.append('receiver_type', $("#receiver_type").val())
+		formData.append('receiver_id', $("#receiver").val())
+		formData.append('message_body', $("#message_body").val())
+
+		// REQUEST
+		$.ajax({
+			url: "{{ app.url }}/messages/ajax_compose_new_msg",
+			method: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			dataType: 'json',
+			success: (Response) => {
+				if ( Response.status == "success" ) {
+					alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Message sent successfully.").set('onok', function() {
+						location.reload();
+					})
+				} else {
+					alertify.alert('<span class="text-warning"><i class="la la-exclamation-triangle"></i> Warning</span>', Response.message);
+				}
+			},
+			error: (e) => {
+				alertify.alert("Error", "Something went wrong ... ");
+				console.log(e.responseText)
+			}
+		})
+	}
+	// END : SCRIPT : COMPOSE NEW MESSAGE
+
+	//VIEW NAME LIST BY RECEIVER TYPE
+	$("#receiver_type").on('change', function () {
+
+		var type = $("#receiver_type").val()
+
+		$.ajax({
+			url: '{{ app.url }}/messages/ajax_retrive_receiver_by_type/' + type,
+			processData: false,
+			contentType: false,
+			success: (res) => {
+				$("#receiver").find('option').remove()
+				$("#receiver").find('option').end().append('<option value = "null">-select-</option>')
+				// APPEND ALL NAMES
+				$.each(res.data, function( id, receiver ) {
+					$("#receiver").find('option').end().append('<option value='+ receiver.id +'>' + receiver.full_name + '</option>')
+					// console.log(receiver.id)
+				});
+				$('#receiver').selectpicker('refresh');
+			},
+			error: (e) => {
+				alertify.alert("Error", "Something went wrong ... ")
+				console.log(e.responseText)
+			}
+		})
+	})
+	
+</script>
