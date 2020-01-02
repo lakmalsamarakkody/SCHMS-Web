@@ -36,7 +36,7 @@
     text-decoration: none;
     color: var(--white);
 }
-
+/*
 .login .nav.nav-pills {
 	border-bottom: solid 1px #ececec;
 }
@@ -60,4 +60,12 @@
 
 .login .nav.nav-pills a.nav-link.active {
 	color: #ffffff;
+}*/
+
+.login .nav.nav-pills .nav-item {
+    background: #e8e8e8;
+}
+
+.login .nav.nav-pills a.nav-link.active {
+    background: #585dc1;
 }
