@@ -36,6 +36,7 @@
 
                         <div class="tab-content">
 
+                            <!-- LOGIN FORM -->
                             <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
                                 <form name="loginform" method="post">
 
@@ -93,8 +94,9 @@
                                 </form>
                             </div>
 
+                            <!-- REGISTRATION FORM -->
                             <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                <form name="loginform" method="post">
+                                <form name="registrationform" method="post">
 
                                     <!-- OUTPUT MESSAGES -->
                                     {% if msg %}
@@ -102,29 +104,29 @@
                                         <hr width="100%"/>
                                     {% endif %}
 
-                                    <!-- USERNAME -->
+                                    <!-- ADMISSION NO -->
                                     <div class="form-group">
-                                        <label>Username</label>
-                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username" required/>
+                                        <label>Admission/Employee No</label>
+                                        <input class="form-control" type="text" id="admission" name="admission" placeholder="Admission number" required/>
                                     </div>
                             
-                                    <!-- PASSWORD -->
+                                    <!-- NIC -->
                                     <div class="form-group mt-3">
-                                        <label>Password</label>
-                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password" required/>
+                                        <label>Yours/Parents NIC</label>
+                                        <input class="form-control" type="text" id="nic" name="nic" placeholder="NIC" required/>
                                     </div>
 
                                     <!-- REMEMBER ME / LOGIN AS -->
                                     <div class="form-group ml-4 mt-4 remember">
                                         <div class="row">
                                             <div class="col-6 pr-0">
-                                                <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
-                                                <label>Remember me</label>
+                                                <!-- <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                                                <label>Remember me</label> -->
                                             </div>
 
                                             <div class="col-6 ml-auto login-as">
                                                 <select class="form-control form-control-sm selectpicker show-tick" id="login_as" name="login_as" required>
-                                                    <option value="" selected hidden>Login as</option>
+                                                    <option value="" selected hidden>Register as</option>
                                                     <option value="student">Student</option>
                                                     <option value="parent">Parent</option>
                                                     <option value="staff">Staff</option>
@@ -137,12 +139,12 @@
                                     <!-- LOGIN BUTTON -->
                                     <div class="col-12 mt-5 p-0">
                                         <div class="row">
-                                            <input type="hidden" name="is_submit" value="true"/>
+                                            <input type="hidden" name="is_register" value="true"/>
                                             <div class="col-4 p-0 mx-auto">
                                                 <button class="btn btn-secondary btn-block" type="reset" name="reset">Clear</button>
                                             </div>
                                             <div class="col-6 p-0 mx-auto">
-                                                <button class="btn btn-primary btn-block" type="submit"><i class="la la-sign-in"></i> Login</button>
+                                                <button class="btn btn-primary btn-block" type="submit"><i class="la la-sign-in"></i> Register</button>
                                             </div>
                                         </div>
                                     </div>
