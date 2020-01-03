@@ -19,7 +19,8 @@ class Login extends Controller {
 		$this->load->model('staff');
 
 		// STAFF LOGIN
-		if (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "staff" ):
+		if (isset($this->request->post['is_login']) AND $this->request->post['login_as'] == "staff" ):
+
 			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
 			if($validate == TRUE):
 
@@ -55,7 +56,7 @@ class Login extends Controller {
 			endif;
 
 		// STUDENT LOGIN
-		elseif (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "student" ):
+		elseif (isset($this->request->post['is_login']) AND $this->request->post['login_as'] == "student" ):
 			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
 			if($validate == TRUE):
 
@@ -91,7 +92,7 @@ class Login extends Controller {
 			endif;
 
 		// PARENT LOGIN
-		elseif (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "parent" ):
+		elseif (isset($this->request->post['is_login']) AND $this->request->post['login_as'] == "parent" ):
 			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
 			if($validate == TRUE):
 
@@ -107,42 +108,6 @@ class Login extends Controller {
 							$_SESSION['user']['is_login'] = TRUE;
 							$_SESSION['user']['id'] = $user->id;
 							$_SESSION['user']['type'] = 'parent';
-							header('Location:' . $this->config->get('base_url') . '/home');
-							exit();
-						else:
-							// DISPLAY MESSAGE PASSWORD IS INCORRECT
-							$data['msg'] = "Incorrect Password";
-						endif;
-					else:
-						// DISPLAY MESSAGE USER IS DEACTIVE
-						$data['msg'] = "Sorry, your account is disabled. please contact your system administrator";
-					endif;
-				else:
-					// DISPLAY MESSAGE USER NOT FOUND
-					$data['msg'] = "User not found";
-				endif;
-			
-			else:
-				$data['msg'] = "Enter your Username";
-			endif;
-
-		// COACH LOGIN
-		elseif (isset($this->request->post['is_submit']) AND $this->request->post['login_as'] == "coach" ):
-			$validate = GUMP::is_valid($this->request->post,['username' => 'required|alpha_numeric|min_len,6|max_len,20']);
-			if($validate == TRUE):
-
-				// CHECK ANY USER FOR THIS USERNAME
-				$user = $this->model_user->where('username',$this->request->post['username'])->where('user_type', '=', 'coach')->first();
-				if($user != NULL):
-
-					// CHECK USER IS ACTIVE
-					if( $user->status == "Active" ):
-						// CHECK PASSWORD IS CORRECT
-						if(password_verify ($this->request->post['password'],$user->password)):
-							// PROCESS TO LOGIN
-							$_SESSION['user']['is_login'] = TRUE;
-							$_SESSION['user']['id'] = $user->id;
-							$_SESSION['user']['type'] = 'coach';
 							header('Location:' . $this->config->get('base_url') . '/home');
 							exit();
 						else:
