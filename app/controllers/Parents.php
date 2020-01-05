@@ -904,10 +904,26 @@ class Parents extends Controller {
                     exit();
                 endif;
 
+                if ( $this->request->post['district_id'] == "null" ):
+                    $this->request->post['district_id'] = NULL;
+                endif;
+                
                 // VALIDATION : disrict_id
                 $is_valid_disrict_id = GUMP::is_valid($this->request->post, array('disrict_id' => 'numeric|min_len,1|max_len,2'));
                 if ( $is_valid_disrict_id !== true AND $this->request->post['disrict_id'] != "null" ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid disrict" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : nic
+                $is_valid_nic = GUMP::is_valid($this->request->post, array('nic' => "required"));
+                if ( $is_valid_nic === true ):
+                    if ( preg_match("/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/", $this->request->post['nic']) == false ):
+                        echo json_encode( array( "error" => "Please enter valid NIC number" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                else:
+                    echo json_encode( array( "error" => "Please enter a NIC number" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 
@@ -916,6 +932,10 @@ class Parents extends Controller {
                 if ( $is_valid_status !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid user account status" ), JSON_PRETTY_PRINT );
                     exit();
+                endif;
+
+                if ( $this->request->post['role_id'] == "null" ):
+                    $this->request->post['role_id'] = NULL;
                 endif;
 
                 // VALIDATION : role_id
@@ -936,6 +956,19 @@ class Parents extends Controller {
                 $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'alpha_dash|min_len,6|max_len,20'));
                 if ( $is_valid_password !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : confirm_password
+                $is_valid_confirm_password = GUMP::is_valid($this->request->post, array('confirm_password' => 'alpha_dash|min_len,6|max_len,20'));
+                if ( $is_valid_confirm_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid confirmation password as same as the password" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK : PASSWORD = CONFIRM PASSWORD
+                if ( $this->request->post['confirm_password'] != $this->request->post['password'] ):
+                    echo json_encode( array("status" => "failed", "message" => "Password and confirm pssword doesn't match" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 

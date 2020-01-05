@@ -376,7 +376,7 @@
 
                                                                     <div class="col-2">
                                                                         <div class="form-group">
-                                                                            <label for="theme">Preffered Theme</label>
+                                                                            <label for="theme">Theme</label>
                                                                             <select class="form-control" name="user_theme" disabled>
                                                                                 {% if settings.theme  == "Dark" %}
                                                                                     <option value="Default">Default</option>
@@ -389,17 +389,24 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-3">
+                                                                    <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
                                                                             <input type="text" class="form-control" id="stu-username" value="{{ settings.username }}" disabled>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-3">
+                                                                    <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
                                                                             <input type="text" class="form-control" id="stu-password" placeholder="{{ settings.password }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="confirm_password">Confirm Password</label>
+                                                                            <input type="text" class="form-control" id="stu-confirm_password" placeholder="Retype if changed" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -465,6 +472,7 @@
         $('#stu-role_id').attr('disabled', false);
         $('#stu-username').attr('disabled', false);
         $('#stu-password').attr('disabled', false);
+        $('#stu-confirm_password').attr('disabled', false);
     }
 
     // CANCEL EDIT
@@ -506,6 +514,7 @@
         formData.append('role_id', $("#stu-role_id").val())
         formData.append('username', $("#stu-username").val())
         formData.append('password', $("#stu-password").val())
+        formData.append('confirm_password', $("#stu-confirm_password").val())
 
         // REQUEST
         $.ajax({

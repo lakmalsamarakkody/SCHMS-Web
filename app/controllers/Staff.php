@@ -849,7 +849,7 @@ class Staff extends Controller {
         $settings_data = $this->model_user->where('ref_id', '=', $staff_id)->where('user_type', '=', "staff")->first();
         if ( $settings_data !== NULL):
             $data['settings']['user_role']['id'] = $settings_data->role_id;
-            $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['user_role']['name'] = $this->model_user_role->select('name')->where('id', '=', $settings_data->role_id)->first()->name;
             $data['settings']['username'] = $settings_data->username;
             ( $settings_data->password !== NULL ) ? $data['settings']['password'] = "Password exists" : $data['settings']['password'] = "No password";
             $data['settings']['theme'] = $settings_data->theme;
@@ -981,15 +981,15 @@ class Staff extends Controller {
                     exit();
                 endif;
 
+                if ( $this->request->post['religion_id'] == "null" ):
+                    $this->request->post['religion_id'] = NULL;
+                endif;
+
                 // VALIDATION : religion
                 $is_valid_religion = GUMP::is_valid($this->request->post, array('religion' => 'numeric|min_len,1|max_len,2'));
                 if ( $is_valid_religion !== true AND $this->request->post['religion'] != "null" ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid religion " ), JSON_PRETTY_PRINT );
                     exit();
-                endif;
-                
-                if ( $this->request->post['religion_id'] == "null" ):
-                    $this->request->post['religion_id'] = NULL;
                 endif;
 
                 // VALIDATION : address
@@ -1003,6 +1003,17 @@ class Staff extends Controller {
                 $is_valid_city = GUMP::is_valid($this->request->post, array('city' => 'required|alpha|max_len,20'));
                 if ( $is_valid_city !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please enter a valid city name" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                if ( $this->request->post['district_id'] == "null" ):
+                    $this->request->post['district_id'] = NULL;
+                endif;
+
+                // VALIDATION : district_id
+                $is_valid_district_id = GUMP::is_valid($this->request->post, array('district_id' => 'numeric|min_len,1|max_len,2'));
+                if ( $is_valid_district_id !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid district" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 
@@ -1027,9 +1038,13 @@ class Staff extends Controller {
                     exit();
                 endif;
 
+                if ( $this->request->post['class_id'] == "null" ):
+                    $this->request->post['class_id'] = NULL;
+                endif;
+
                 // VALIDATION : class_id
                 $is_valid_class_id = GUMP::is_valid($this->request->post, array('class_id' => 'numeric|min_len,1|max_len,3'));
-                if ( $is_valid_class_id !== true AND $this->request->post['religion'] != "null" ):
+                if ( $is_valid_class_id !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid class" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
@@ -1039,6 +1054,10 @@ class Staff extends Controller {
                 if ( $is_valid_status !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid user account status" ), JSON_PRETTY_PRINT );
                     exit();
+                endif;
+
+                if ( $this->request->post['role_id'] == "null" ):
+                    $this->request->post['role_id'] = NULL;
                 endif;
 
                 // VALIDATION : role_id
@@ -1059,6 +1078,19 @@ class Staff extends Controller {
                 $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'alpha_dash|min_len,6|max_len,20'));
                 if ( $is_valid_password !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : confirm_password
+                $is_valid_confirm_password = GUMP::is_valid($this->request->post, array('confirm_password' => 'alpha_dash|min_len,6|max_len,20'));
+                if ( $is_valid_confirm_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid confirmation password as same as the password" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK : PASSWORD = CONFIRM PASSWORD
+                if ( $this->request->post['confirm_password'] != $this->request->post['password'] ):
+                    echo json_encode( array("status" => "failed", "message" => "Password and confirm pssword doesn't match" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 
@@ -1103,17 +1135,19 @@ class Staff extends Controller {
 
                     // CHECK IS CHANGED STAFF CLASS
                     $current_class_id = $this->model_class->select('id')->where('staff_id', '=', $this->request->post['staff_id'])->first();
-                    if ( $current_class_id->id != $this->request->post['class_id']):
-                        // CHECK EXISTING STAFF ID FOR SELECTED CLASS
-                        $is_exist_staff_id = $this->model_class->select('staff_id')->where('id', '=', $this->request->post['class_id'])->where('staff_id', '!=', NULL)->first();
-                        if ( $is_exist_staff_id !== NULL ):
-                            echo json_encode( array( "status" => "failed", "message" => "Selected class already assigned a staff memeber. Please remove before assigning a new staff member" ), JSON_PRETTY_PRINT );
-                            exit();
-                        else:
-                            // REMOVE EXISTING STAFF CLASS
-                            $this->model_class->where('staff_id', '=', $this->request->post['staff_id'])->update(['staff_id' => NULL]);
-                            // UPDATE STAFF CLASS
-                            $this->model_class->where('id', '=', $this->request->post['class_id'])->update(['staff_id' => $this->request->post['staff_id']]);
+                    if( $current_class_id != NULL ):
+                        if ( $current_class_id->id != $this->request->post['class_id']):
+                            // CHECK EXISTING STAFF ID FOR SELECTED CLASS
+                            $is_exist_staff_id = $this->model_class->select('staff_id')->where('id', '=', $this->request->post['class_id'])->where('staff_id', '!=', NULL)->first();
+                            if ( $is_exist_staff_id !== NULL ):
+                                echo json_encode( array( "status" => "failed", "message" => "Selected class already assigned a staff memeber. Please remove before assigning a new staff member" ), JSON_PRETTY_PRINT );
+                                exit();
+                            else:
+                                // REMOVE EXISTING STAFF CLASS
+                                $this->model_class->where('staff_id', '=', $this->request->post['staff_id'])->update(['staff_id' => NULL]);
+                                // UPDATE STAFF CLASS
+                                $this->model_class->where('id', '=', $this->request->post['class_id'])->update(['staff_id' => $this->request->post['staff_id']]);
+                            endif;
                         endif;
                     endif;
 
@@ -1191,7 +1225,7 @@ class Staff extends Controller {
                         if ( $is_valid_password !== true ):
                             echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
                             exit();
-                        endif;                        
+                        endif;
 
                         // INITIATE : USER RECORD
                         $this->model_user->user_type = "staff";
@@ -1206,7 +1240,7 @@ class Staff extends Controller {
                             echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
                             exit();
                         else:
-                            echo json_encode( array( "status" => "failed", "message" => "Unable create user. Please set username and password" ), JSON_PRETTY_PRINT );
+                            echo json_encode( array( "status" => "failed", "message" => "Unable to create user. Please set username and password" ), JSON_PRETTY_PRINT );
                             exit();
                         endif;
                     endif;

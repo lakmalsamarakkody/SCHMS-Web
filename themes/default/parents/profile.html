@@ -432,17 +432,24 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-3">
+                                                                    <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
                                                                             <input type="text" class="form-control" id="parent-username" value="{{ settings.username }}" disabled>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-3">
+                                                                    <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
                                                                             <input type="text" class="form-control" id="parent-password" placeholder="{{ settings.password }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="confirm_password">Confirm Password</label>
+                                                                            <input type="text" class="form-control" id="parent-confirm_password" placeholder="Retype if changed" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -499,7 +506,8 @@
         $('#parent-email').attr('disabled', false);
         $('#parent-address').attr('disabled', false);
         $('#parent-city').attr('disabled', false);
-        $('#parent-district').attr('disabled', false);        
+        $('#parent-district').attr('disabled', false);    
+        $('#parent-confirm_password').attr('disabled', false);    
 
         // SYSTEM
         $('#parent-nic').attr('disabled', false);
@@ -551,6 +559,7 @@
         formData.append('role_id', $("#parent-role_id").val())
         formData.append('username', $("#parent-username").val())
         formData.append('password', $("#parent-password").val())
+        formData.append('confirm_password', $("#parent-confirm_password").val())
 
         // REQUEST
         $.ajax({

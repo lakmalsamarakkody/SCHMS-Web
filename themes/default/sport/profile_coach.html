@@ -273,17 +273,24 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-3">
+                                                                    <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
                                                                             <input type="text" class="form-control" id="coach-username"  value="{{ settings.username }}" disabled>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-3">
+                                                                    <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
                                                                             <input type="text" class="form-control" id="coach-password"  placeholder="{{ settings.password }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="confirm_password">Confirm Password</label>
+                                                                            <input type="text" class="form-control" id="coach-confirm_password" placeholder="Retype if changed" disabled>
                                                                         </div>
                                                                     </div>
 
@@ -353,6 +360,7 @@
         $('#coach-role_id').attr('disabled', false);
         $('#coach-username').attr('disabled', false);
         $('#coach-password').attr('disabled', false);
+        $('#coach-confirm_password').attr('disabled', false);
     }
 
     // CANCEL EDIT
@@ -394,6 +402,7 @@
         formData.append('role_id', $("#coach-role_id").val())
         formData.append('username', $("#coach-username").val())
         formData.append('password', $("#coach-password").val())
+        formData.append('confirm_password', $("#coach-confirm_password").val())
 
         // REQUEST
         $.ajax({

@@ -71,13 +71,13 @@
                                                 <option value="" selected>- Select -</option>
                                                 {% if form.field.status == "Active" %}
                                                 <option value="Active" selected>Active</option>
-                                                <option value="Inactive">Inactive</option>
-                                                {% elseif form.field.status == "Inactive" %}
+                                                <option value="Deactive">Deactive</option>
+                                                {% elseif form.field.status == "Deactive" %}
                                                 <option value="Active">Active</option>
-                                                <option value="Inactive" selected>Inactive</option>
+                                                <option value="Deactive" selected>Deactive</option>
                                                 {% else %}
                                                 <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
+                                                <option value="Deactive">Deactive</option>
                                                 {% endif %}
                                             </select>
                                         </div>

@@ -1091,15 +1091,15 @@ class Sport extends Controller {
                     exit();
                 endif;
 
+                if ( $this->request->post['district_id'] == "null" ):
+                    $this->request->post['district_id'] = NULL;
+                endif;
+
                 // VALIDATION : district
                 $is_valid_district = GUMP::is_valid($this->request->post, array('district_id' => 'numeric|max_len,2'));
                 if ( $is_valid_district !== true AND $this->request->post['district_id'] != "null" ):
                     echo json_encode( array("status" => "failed", "message" => "Invalid district" ), JSON_PRETTY_PRINT );
                     exit();
-                endif;
-                
-                if ( $this->request->post['district_id'] == "null" ):
-                    $this->request->post['district_id'] = NULL;
                 endif;
 
                 // VALIDATION : address
@@ -1122,6 +1122,10 @@ class Sport extends Controller {
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid user account status" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
+                
+                if ( $this->request->post['role_id'] == "null" ):
+                    $this->request->post['role_id'] = NULL;
+                endif;
 
                 // VALIDATION : role_id
                 $is_valid_role_id = GUMP::is_valid($this->request->post, array('role_id' => 'numeric|min_len,1|max_len,2'));
@@ -1141,6 +1145,19 @@ class Sport extends Controller {
                 $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'alpha_dash|min_len,6|max_len,20'));
                 if ( $is_valid_password !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : confirm_password
+                $is_valid_confirm_password = GUMP::is_valid($this->request->post, array('confirm_password' => 'alpha_dash|min_len,6|max_len,20'));
+                if ( $is_valid_confirm_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter a valid confirmation password as same as the password" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK : PASSWORD = CONFIRM PASSWORD
+                if ( $this->request->post['confirm_password'] != $this->request->post['password'] ):
+                    echo json_encode( array("status" => "failed", "message" => "Password and confirm pssword doesn't match" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 

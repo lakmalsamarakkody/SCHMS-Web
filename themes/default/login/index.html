@@ -72,6 +72,7 @@
                                                     <option value="student">Student</option>
                                                     <option value="parent">Parent</option>
                                                     <option value="staff">Staff</option>
+                                                    <option value="coach">Coach</option>
                                                 </select>
                                             </div>
 
@@ -96,60 +97,46 @@
 
                             <!-- REGISTRATION FORM -->
                             <div class="tab-pane fade show" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                <form name="registrationform" method="post">
 
-                                    <!-- OUTPUT MESSAGES -->
-                                    {% if msg %}
-                                        <div class="alert alert-danger">{{ msg }}</div>
-                                        <hr width="100%"/>
-                                    {% endif %}
+                                <!-- ADMISSION NO -->
+                                <div class="form-group">
+                                    <label>Admission/Employee No</label>
+                                    <input class="form-control" type="text" id="unique_id" name="unique_id" placeholder="Number" required/>
+                                </div>
+                        
+                                <!-- NIC -->
+                                <div class="form-group mt-3">
+                                    <label>Yours/Parents NIC</label>
+                                    <input class="form-control" type="text" id="nic" name="nic" placeholder="NIC" required/>
+                                </div>
 
-                                    <!-- ADMISSION NO -->
-                                    <div class="form-group">
-                                        <label>Admission/Employee No</label>
-                                        <input class="form-control" type="text" id="admission" name="admission" placeholder="Admission number" required/>
-                                    </div>
-                            
-                                    <!-- NIC -->
-                                    <div class="form-group mt-3">
-                                        <label>Yours/Parents NIC</label>
-                                        <input class="form-control" type="text" id="nic" name="nic" placeholder="NIC" required/>
-                                    </div>
-
-                                    <!-- REMEMBER ME / LOGIN AS -->
-                                    <div class="form-group ml-4 mt-4 remember">
-                                        <div class="row">
-                                            <div class="col-6 pr-0">
-                                                <!-- <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
-                                                <label>Remember me</label> -->
-                                            </div>
-
-                                            <div class="col-6 ml-auto login-as">
-                                                <select class="form-control form-control-sm selectpicker show-tick" id="login_as" name="login_as" required>
-                                                    <option value="" selected hidden>Register as</option>
-                                                    <option value="student">Student</option>
-                                                    <option value="parent">Parent</option>
-                                                    <option value="staff">Staff</option>
-                                                </select>
-                                            </div>
-
+                                <!-- REMEMBER ME / LOGIN AS -->
+                                <div class="form-group ml-4 mt-4 remember">
+                                    <div class="row">
+                                        <div class="col-6 ml-auto login-as">
+                                            <select class="form-control form-control-sm selectpicker show-tick" id="register_as" name="register_as" required>
+                                                <option selected hidden>Register as</option>
+                                                <option value="student">Student</option>
+                                                <option value="parent">Parent</option>
+                                                <option value="staff">Staff</option>
+                                                <option value="coach">Coach</option>
+                                            </select>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <!-- LOGIN BUTTON -->
-                                    <div class="col-12 mt-5 p-0">
-                                        <div class="row">
-                                            <input type="hidden" name="is_register" value="true"/>
-                                            <div class="col-4 p-0 mx-auto">
-                                                <button class="btn btn-secondary btn-block" type="reset" name="reset">Clear</button>
-                                            </div>
-                                            <div class="col-6 p-0 mx-auto">
-                                                <button class="btn btn-primary btn-block" type="submit"><i class="la la-sign-in"></i> Register</button>
-                                            </div>
+                                <!-- LOGIN BUTTON -->
+                                <div class="col-12 mt-5 p-0">
+                                    <div class="row">
+                                        <input type="hidden" id="is_register" name="is_register" value="true"/>
+                                        <div class="col-4 p-0 mx-auto">
+                                            <button class="btn btn-secondary btn-block" type="reset" name="reset">Clear</button>
+                                        </div>
+                                        <div class="col-6 p-0 mx-auto">
+                                            <button class="btn btn-primary btn-block" onclick="register()"><i class="la la-sign-in"></i>Register</button>
                                         </div>
                                     </div>
-
-                                </form>
+                                </div>
                             </div>
 
                         </div>
@@ -162,6 +149,165 @@
         </div>
     </div>
     {{ template.footer|raw }}
+
+    <!-- START : MODAL CREATE USER -->
+    <div class="modal fade" id="modal-create_user" tabindex="-1" role="dialog" aria-labelledby="modal-create_user-title" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title"> USER REGISTRATION </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <form method="post">
+                        <input type="hidden" id="modal_create_user_nic"/>
+
+                        <div class="form-row">
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <label for="type">Type </label>
+                                    <input type="text" class="form-control" id="modal_create_user_type" disabled/>
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="type"> Employee/Admission ID </label>
+                                    <input type="number" class="form-control" id="modal_create_user_unique_id" disabled/>
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="modal_create_username" placeholder="Type a username">
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="modal_create_password" placeholder="Type a new password">
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirm Password</label>
+                                    <input type="password" class="form-control" id="modal_create_confirm_password" placeholder="Retype your password">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" onclick="create_user()">Create user</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL CREATE USER -->
     </body>
+
+    <script>
+
+        // FORMDATA REGISTERING
+        register = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // GUARDIAN 2ND DATA
+            formData.append('unique_id', $("#unique_id").val())
+            formData.append('nic', $("#nic").val())
+            formData.append('register_as', $("#register_as").val())
+            formData.append('is_register', $("#is_register").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/login/ajax_register",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.confirm('<span class="text-success"><i class="la la-exclamation-circle"></i> Available Staff Found</span>', 'Do you want to proceed to user creation process..?', 
+                            function(){
+                                // INVOKE USER CREATE MODAL
+                                $("#modal_create_user_unique_id").val($("#unique_id").val())
+                                $("#modal_create_user_nic").val($("#nic").val())
+                                $("#modal_create_user_type").val($("#register_as").val())
+                                $("#modal-create_user").modal("show")
+                            },
+                            function(){ alertify.error('User creation process aborted!')}
+                        );
+                    } else {
+                        console.log(res);
+                        alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+
+        // FORMDATA REGISTERING
+        create_user = () => {
+
+            // PAYLOAD
+            var formData = new FormData;
+
+            // GUARDIAN 2ND DATA
+            formData.append('unique_id', $("#modal_create_user_unique_id").val())
+            formData.append('nic', $("#modal_create_user_nic").val())
+            formData.append('user_type', $("#modal_create_user_type").val())
+            formData.append('username', $("#modal_create_username").val())
+            formData.append('password', $("#modal_create_password").val())
+            formData.append('confirm_password', $("#modal_create_confirm_password").val())
+
+            // CONSOLE LOG
+            console.log("unique_id : " + $("#modal_create_user_unique_id").val())
+            console.log("nic : " + $("#modal_create_user_nic").val())
+            console.log("type : " + $("#modal_create_user_type").val())
+            console.log("username : " + $("#modal_create_username").val())
+            console.log("password : " + $("#modal_create_confirm_password").val())
+
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/login/ajax_create_user",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+
+                    if ( res.status == 'success' ) {
+                        alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "User created successfully ... ").set('onok', function() {
+                            location.reload();
+                        })
+                    } else {
+                        console.log(res.message);
+                        alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                    }
+                },
+                error: (e) => {
+                    alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+        }
+
+    </script>
 
 </html>
