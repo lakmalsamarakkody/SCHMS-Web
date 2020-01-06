@@ -2,7 +2,36 @@
 	background: #FFF;
 }
 
-.stuprofile.stuportal {
+.portal .student {
 	padding: 0;
 	margin-top: 50px;
+}
+
+.portal .student img.avatar {
+	width: 50px;
+}
+
+.portal .student .card-body .nav.nav-pills {
+	border-bottom: solid 1px #ececec;
+}
+
+.portal .student .card-body .nav.nav-pills .nav-link {
+	border-radius: 0;
+}
+
+.portal .student .card-body .nav.nav-pills a.nav-link {
+	color: #a0a0a0;
+}
+
+.portal .student .card-body .nav.nav-pills .nav-link.active,.portal .student .card-body .nav.nav-pills .nav-pills .show>.nav-link {
+	background: #FFFFFF;
+}
+
+.portal .student .card-body .nav.nav-pills .nav-link.active {
+	border-bottom: solid 2px #727cf5;
+}
+
+
+.portal .student .card-body .nav.nav-pills a.nav-link.active {
+	color: #727cf5;
 }

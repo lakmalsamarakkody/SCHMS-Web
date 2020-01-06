@@ -6,14 +6,12 @@
         <div class="row">
 
             <div class="col-md-12">
-                
                 {{ template.topmenu|raw }}
             </div>
 
             <div class="col-md-8 mx-auto content">
-                               
 
-                <div class="stuprofile stuportal">
+                <div class="student">
 
                     <!-- START : STUDENT PROFILE  -->
                     <section class="profileview">
@@ -24,10 +22,10 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="media">
-                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/themes/{{ app.theme }}/assets/img/profile-pic.jpg">
+                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/student/{{ student.id }}">
                                             <div class="media-body align-self-center">
-                                                <h5 class="my-0">Srivin Prabhash</h5>
-                                                <h6 class="my-0 text-secondary">11 A</h6>
+                                                <h5 class="my-0">{{ student.initials }} {{ student.surname }}</h5>
+                                                <h6 class="my-0 text-secondary">( {{ class.name }} )</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -37,25 +35,23 @@
                                         
                                         <ul class="nav nav-pills" id="myTab" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link active" id="exam-schedule-tab" data-toggle="tab" href="#exam-schedule" role="exam-schedule" aria-controls="exam-schedule" aria-selected="true">Exam Schedule</a>
+                                                <a class="nav-link" id="exam-schedule-tab" data-toggle="tab" href="#exam-schedule" role="exam-schedule" aria-controls="exam-schedule" aria-selected="true">Exam Schedule</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" id="bio-tab" data-toggle="tab" href="#bio" role="bio" aria-controls="bio" aria-selected="true">About</a>
-                                            </li>
-                                            <!-- <li class="nav-item">
                                                 <a class="nav-link" id="parents-tab" data-toggle="tab" href="#parents" role="tab" aria-controls="parents" aria-selected="false">Parents</a>
-                                            </li> -->
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="about" aria-controls="about" aria-selected="true">Info</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="account-tab" data-toggle="tab" href="#account" role="account" aria-controls="account" aria-selected="true">Account</a>
+                                            </li>
                                         </ul>
 
                                         <div class="tab-content p-3" id="myTabContent">
 
-                                            <!-- EXAM SCHEDULES : START -->
-                                            <div class="tab-pane fade show" id="exam-schedule" role="tabpanel" aria-labelledby="exam-schedule-tab">
-                                            </div>
-                                            <!-- EXAM SCHEDULES : END -->
-                                            
-                                            <!-- BIO STUDENT -->
-                                            <div class="tab-pane fade show" id="bio" role="tabpanel" aria-labelledby="bio-tab">
+                                            <!-- ABOUT STUDENT -->
+                                            <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
                                                 
                                                 <div class="row">
 
@@ -66,66 +62,106 @@
                                                                 
                                                                 <div class="form-row">
                                                                     
-                                                                    <div class="col-6">
+                                                                    <div class="col-12">
                                                                         <div class="form-group">
-                                                                            <label for="">Name with Initials</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.initials }} {{ student.surname }}">
+                                                                            <label for="full_name">Full Name</label>
+                                                                            <input type="text" class="form-control" id="stu-full_name" value="{{ student.full_name }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-4">
+                                                                        <div class="form-group">
+                                                                            <label for="initials">Initials</label>
+                                                                            <input type="text" class="form-control" id="stu-initials" value="{{ student.initials }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-8">
+                                                                        <div class="form-group">
+                                                                            <label for="surname">Surname</label>
+                                                                            <input type="text" class="form-control" id="stu-surname" value="{{ student.surname }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Full Name</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.full_name }}">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Gender</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.gender }}">
+                                                                            <label for="gender">Gender</label>
+                                                                            <select class="form-control" id="stu-gender" name="gender" disabled>
+                                                                                {% if student.gender == "male" %}
+                                                                                    <option value="Male" selected>Male</option>
+                                                                                    <option value="Female">Female</option>
+                                                                                {% else %}
+                                                                                    <option value="Male">Male</option>
+                                                                                    <option value="Female" selected>Female</option>
+                                                                                {% endif %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" readonly="readonly" value="{{ student.dob }}">
+                                                                            <input type="date" class="form-control" id="stu-dob" value="{{ student.dob }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Phone</label>
-                                                                            <input type="number" class="form-control" readonly="readonly" value="{{ student.phone_mobile }}">
+                                                                            <input type="number" class="form-control" id="stu-phone_mobile" value="{{ student.phone_mobile }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Email</label>
-                                                                            <input type="email" class="form-control" readonly="readonly" value="{{ student.email }}">
+                                                                            <input type="email" class="form-control" id="stu-email" value="{{ student.email }}" disabled>
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="col-6">
                                                                         <div class="form-group">
+                                                                            <label for="religion">Religion</label>
+                                                                            <select class="form-control" id="stu-religion" name="religion" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for religion in religions %}
+                                                                                    {% if religion.id == student.religion_id %}
+                                                                                        <option value="{{ religion.id }}" selected>{{ religion.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ religion.id }}">{{ religion.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
                                                                             <label for="">Address</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.address }}">
+                                                                            <input type="text" class="form-control"  id="stu-address" value="{{ student.address }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">City</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ student.city }}">
+                                                                            <input type="text" class="form-control" id="stu-city" value="{{ student.city }}" disabled>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-6">
                                                                         <div class="form-group">
-                                                                            <label for="">Religion</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ religion.name }}">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="stu-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == student.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
 
@@ -145,28 +181,29 @@
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission No</label>
-                                                                            <input type="number" class="form-control" readonly="readonly" value="{{ student.admission_no }}">
+                                                                            <input type="number" class="form-control" id="stu-admission_no" value="{{ student.admission_no }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Admission Date</label>
-                                                                            <input type="date" class="form-control" readonly="readonly" value="{{ student.admission_date }}">
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Grade</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ grade.name }}">
+                                                                            <input type="date" class="form-control" id="stu-admission_date" value="{{ student.admission_date }}" disabled>
                                                                         </div>
                                                                     </div>
                                                                     
                                                                     <div class="col-6">
                                                                         <div class="form-group">
                                                                             <label for="">Class</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ class.letter }}">
+                                                                            <select class="form-control" name="class" id="stu-class" disabled>
+                                                                                {% for class in classes %}
+                                                                                    {% if class.id == student.class_id %}
+                                                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
                                                                         </div>
                                                                     </div>                                                                    
 
@@ -180,7 +217,7 @@
                                             <!-- END : BIO TAB -->
 
                                             <!-- START : PARENT TAB -->
-                                            <!-- <div class="tab-pane fade" id="parents" role="tabpanel" aria-labelledby="parents-tab">
+                                            <div class="tab-pane fade" id="parents" role="tabpanel" aria-labelledby="parents-tab">
 
                                                 <div class="row">
 
@@ -248,7 +285,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-6">
+                                                                    <div class="col-12">
                                                                         <div class="form-group">
                                                                             <label for="">Address</label>
                                                                             <input type="text" class="form-control" readonly="readonly" value="{{ parent.address }}">
@@ -261,6 +298,22 @@
                                                                             <input type="text" class="form-control" readonly="readonly" value="{{ parent.city }}">
                                                                         </div>
                                                                     </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="stu-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == parent.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                     
                                                                 </div>
                                                     
@@ -271,8 +324,97 @@
 
                                                 </div>
 
-                                            </div> -->
+                                            </div>
                                             <!-- END : PARENT TAB -->
+
+                                            <!-- START : ACCOUNT TAB -->
+                                            <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
+
+                                                <div class="row">
+
+                                                    
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-header">Account</div>
+                                                            <div class="card-body">
+                                                    
+                                                                <div class="form-row">
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="status">Status</label>
+                                                                            <select class="form-control" name="status" id="stu-status" disabled>
+                                                                                {% if settings.status  == "Active" %}
+                                                                                    <option value="Active" selected>Active</option>
+                                                                                    <option value="Deactive">Deactive</option>
+                                                                                {% else %}
+                                                                                <option value="Active">Active</option>
+                                                                                <option value="Deactive" selected>Deactive</option>
+                                                                                {% endif %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                    
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="role">User Role</label>
+                                                                            <select class="form-control" name="role_id" id="stu-role_id" disabled>
+                                                                                <option value="" selected>- select -</option>
+                                                                                {% for role in user.roles %}
+                                                                                    {% if role.id  == settings.user_role.id %}
+                                                                                        <option value="{{ role.id }}" selected>{{ role.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="theme">Theme</label>
+                                                                            <select class="form-control" name="user_theme" disabled>
+                                                                                {% if settings.theme  == "Dark" %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark" selected>Dark</option>
+                                                                                {% else %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark">Dark</option>
+                                                                                {% endif %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="username">Username</label>
+                                                                            <input type="text" class="form-control" id="stu-username" value="{{ settings.username }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="password">Password</label>
+                                                                            <input type="text" class="form-control" id="stu-password" placeholder="{{ settings.password }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="confirm_password">Confirm Password</label>
+                                                                            <input type="text" class="form-control" id="stu-confirm_password" placeholder="Retype if changed" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <!-- END : ACCOUNT TAB -->
 
                                         </div>
 

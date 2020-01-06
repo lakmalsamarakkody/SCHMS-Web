@@ -1,0 +1,125 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid portal">
+        <div class="row">
+            
+			<div class="col-md-12">
+				{{ template.topmenu|raw }}
+			</div>
+
+			<div class="col-md-8 mx-auto messages">
+
+				<div class="messagessingle">
+
+					<!-- START : SINGLE CONVERSATION -->
+					<a href="{{ app.url }}/messages"><button class="btn btn-xs btn-secondary"><i class="la la-comments"></i> Conversations</button></a>
+					<button class="btn btn-xs btn-primary" onclick="location.reload();"><i class="la la-refresh"></i> Refresh</button>
+
+					<div class="card mt-2">
+						<div class="card-header">
+							<div class="row">
+								<div class="ml-3">
+									<a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}">
+										<img src="{{ app.url }}/data/propic/{{ participant.image.path }}" class="avatar">
+									</a>
+								</div>
+								<div class="mr-auto">
+									<a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}">
+										<h5>{{ participant.name }}</h5>
+									</a>
+									<h6 class="text-secondary">{{ participant.type }}</h6>
+								</div>
+							</div>
+						</div>
+
+						<div id="messages-wrapper" class="card-body">
+							
+							{% for message in messages %}
+								{% if message.owner == false %}
+								<div class="media single-msg incoming">
+									<a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}">
+										<img class="avatar mr-3" src="{{ app.url }}/data/propic/{{ participant.image.path }}" alt="profile_pic" />
+									</a>
+									<div class="media-body col-6">
+										<p>{{ message.body }}</p>
+									</div>
+								</div>
+								{% else %}
+								<div class="media single-msg">
+									<div class="media-body col-4 ml-auto">
+										<p class="text-right">{{ message.body }}</p>
+									</div>
+									<a href="{{ app.url }}/{{ your.type }}/profile/{{ your.id }}">
+										<img class="avatar ml-3" src="{{ app.url }}/data/propic/{{ your.image.path }}" alt="profile_pic" />
+									</a>
+								</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+
+						<!-- CARD FOOTER -->
+						<div class="card-footer p-0 mt-3">
+							<div class="form-group mt-1">
+								<textarea class="form-control" id="msg"></textarea>
+								<button type="button" class="btn btn-primary mt-1" onclick="send_msg('{{ participant.user_id }}')"><i class="la la-paper-plane"></i> Send</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+        </div>
+    </div>
+
+    {{ template.footer|raw }}
+
+    <script>
+		
+		// SCROLL TO BOTTOM ON PAGE LOAD
+		jQuery(document).ready(function($) {
+			$("#messages-wrapper").scrollTop($('#messages-wrapper')[0].scrollHeight)
+		});
+
+		// START : SEND A MESSAGE
+        send_msg = (participant_id) => {
+
+		// PAYLOAD
+		var formData = new FormData;
+
+		// ADD MESSAGE DATA
+		formData.append('participant_id', participant_id)
+		formData.append('message', $("#msg").val())
+
+		// REQUEST
+		$.ajax({
+			url: "{{ app.url }}/messages/ajax_send_msg",
+			method: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			dataType: 'json',
+			success: (res) => {
+				
+				if ( res.status == 'success' ) {
+					alertify.alert("Success", "Message sent successfully ... ").set('onok', function() {
+						location.reload();
+					})
+				} else {
+					console.log(res);
+					alertify.alert("Failed", res.message);
+				}
+			},
+			error: (e) => {
+				alertify.alert("Error", "Something went wrong ... ");
+				console.log(e.responseText)
+			}
+		})
+		}
+		// END : ADD A CLASS
+
+    </script>
+
+</body>

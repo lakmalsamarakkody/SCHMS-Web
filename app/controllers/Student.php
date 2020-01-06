@@ -835,12 +835,6 @@ class Student extends Controller {
     }
 
     public function profile($student_id) {
-
-        //CHECK LOGIN STATUS
-		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-			header( 'Location:' . $this->config->get('base_url') . '/logout' );
-			exit();
-        endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -864,6 +858,12 @@ class Student extends Controller {
         $this->load->model('district');
         $this->load->model('user');
         $this->load->model('user/role');
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
 
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):

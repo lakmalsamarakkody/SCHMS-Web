@@ -23,7 +23,6 @@ class Messages extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
-
         // MODELS
         $this->load->model('user');
         $this->load->model('message');

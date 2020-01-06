@@ -1,0 +1,50 @@
+<div class="row topmenu" style="display: flex; justify-content: space-between; align-items: center; height: auto;">
+
+    <div class="title"><a class="heading-link" href="https://davidsilvacollege.lakmal.xyz/" target="_blank">David De Silva College <br/> Minuwangoda </a></div>
+
+    <div class="time">{{ date_now }} <br/> <div class="digital-clock">{{ time_now }}</div> </div>
+
+    <div>
+
+        <div class="d-flex justify-content-space-between">
+
+            <a href="{{ app.url }}/portal/messages" class="text-white" style="text-decoration: none;">
+                <i class="la la-comments"></i>
+            </a>
+            
+            <div class="notifications">
+                <i class="la la-bell" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownNotificationsButton">
+                    <p> <i class="la la-globe"></i> portal notifications </p>
+                </div>
+            </div>
+
+            <div class="settings">        
+                
+                <i class="la la-cog" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ app.url }}/portal/{{ user.type }}/{{ user.id }}"> <i class="la la-user"></i>My Account</a></li>
+                    <li class="dropdown-item">
+                        <div class="row">
+                            <div class="col align-self-center"><i class="la la-adjust"></i>Dark Mode</div>
+                            <div class="col">
+                                {% if user.theme == 'Dark' %}
+                                <input id="theme-mode-toggle" type="checkbox" data-toggle="toggle" data-style="ios" data-onstyle="dark" data-offstyle="info" checked="checked" />
+                                {% else %}
+                                <input id="theme-mode-toggle" type="checkbox" data-toggle="toggle" data-style="ios" data-onstyle="dark" data-offstyle="info" />
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                    <li><a class="dropdown-item" href="{{ app.url }}/logout"> <i class="la la-sign-out"></i>Logout</a></li>
+                </ul>
+
+            </div>
+            
+        </div>
+
+    </div>
+
+</div>

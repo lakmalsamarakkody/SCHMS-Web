@@ -205,7 +205,18 @@ table.dataTable tbody th, table.dataTable tbody td {
     background: #1a1d25;
 }
 
+/* PORTAL */
+.portal , .portal .col-md-8.content, .portal .content .student, .portal .content .col-12{
+    color: var(--white);
+    background: #262a35;
+}
+
 /* MESSAGES */
+.portal .messages{
+    color: var(--white);
+    background: #262a35;
+}
+
 .messagesinbox ul.list-group li.list-group-item {
     background: #262a35;
 }

@@ -1,0 +1,159 @@
+{{ template.header|raw }}
+	<body>
+
+		<div class="container-fluid portal">
+			<div class="row">
+				<div class="col-md-12">
+					{{ template.topmenu|raw }}
+				</div>
+
+				<div class="col-md-8 mx-auto messages">
+
+					<div class="messagesinbox">
+
+						<!-- START : CONVERSATIONS -->
+						<h4 class="page-title">Inbox</h4>
+						<div class="btn btn-sm btn-primary mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
+
+						<ul class="list-group mt-3">
+							{% for conversation in conversations %}
+							<li class="list-group-item">
+								<a href="{{ app.url }}/messages/{{ conversation.user.id }}">
+									<img src="{{ app.url }}/data/propic/{{ conversation.image.path }}" class="avatar">
+									<div class="body">
+										<h5>
+											{{ conversation.user.name }}
+											{% if conversation.user.message.created_on == conversation.user.message.updated_on and conversation.user.message.receiver %}
+												<small class="badge badge-warning">New</small>
+											{% endif %}
+										</h5>
+										<p>{{ conversation.user.message.body }}</p>
+									</div>
+								</a>
+							</li>
+							{% endfor %}
+						</ul>
+						<!-- END : CONVERSATIONS -->
+
+					</div>
+				</div>
+				<!-- END : CONTENT -->
+			</div>
+		</div>
+
+		<!-- NEW MESSAGE MODAL -->
+		<div class="modal fade" id="new-message-modal" tabindex="-1" role="dialog" aria-labelledby="new-message-modal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Compose New Message</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<!-- SELECT RECEIVER TYPE -->
+						<div class="form-group">
+							<label for="type">Type</label>
+							<select class="form-control" id="receiver_type">
+								<option disabled selected>- select -</option>
+								<option value="staff">Staff</option>
+								<option value="student">Student</option>
+								<option value="parent">Parent</option>
+								<option value="coach">Coach</option>
+							</select>
+						</div>
+
+						<!-- SELECT RECEIVER NAME -->
+						<div class="form-group">
+							<label for="to">To</label>
+							<select class="form-control selectpicker show-tick" data-live-search="true" id="receiver">
+								<option disabled selected>- select -</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="message">Message</label>
+							<textarea class="form-control" id="message_body" placeholder="Type your message here.." style="height: 150px;"></textarea>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary btn-sm" onclick="compose_new_msg()"><i class="la la-paper-plane"></i> &nbsp; Send</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		{{ template.footer|raw }}
+
+	</body>
+</html>
+
+<script>
+
+	// START : SCRIPT : COMPOSE NEW MESSAGE
+	compose_new_msg = () => {
+
+		// PAYLOAD
+		var formData = new FormData;
+
+		// ADD MESSAGE DATA
+		formData.append('receiver_type', $("#receiver_type").val())
+		formData.append('receiver_id', $("#receiver").val())
+		formData.append('message_body', $("#message_body").val())
+
+		// REQUEST
+		$.ajax({
+			url: "{{ app.url }}/messages/ajax_compose_new_msg",
+			method: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			dataType: 'json',
+			success: (Response) => {
+				if ( Response.status == "success" ) {
+					alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Message sent successfully.").set('onok', function() {
+						location.reload();
+					})
+				} else {
+					alertify.alert('<span class="text-warning"><i class="la la-exclamation-triangle"></i> Warning</span>', Response.message);
+				}
+			},
+			error: (e) => {
+				alertify.alert("Error", "Something went wrong ... ");
+				console.log(e.responseText)
+			}
+		})
+	}
+	// END : SCRIPT : COMPOSE NEW MESSAGE
+
+	//VIEW NAME LIST BY RECEIVER TYPE
+	$("#receiver_type").on('change', function () {
+
+		var type = $("#receiver_type").val()
+
+		$.ajax({
+			url: '{{ app.url }}/messages/ajax_retrive_receiver_by_type/' + type,
+			processData: false,
+			contentType: false,
+			success: (res) => {
+				$("#receiver").find('option').remove()
+				$("#receiver").find('option').end().append('<option value = "null">-select-</option>')
+				// APPEND ALL NAMES
+				$.each(res.data, function( id, receiver ) {
+					$("#receiver").find('option').end().append('<option value='+ receiver.id +'>' + receiver.full_name + '</option>')
+					// console.log(receiver.id)
+				});
+				$('#receiver').selectpicker('refresh');
+			},
+			error: (e) => {
+				alertify.alert("Error", "Something went wrong ... ")
+				console.log(e.responseText)
+			}
+		})
+	})
+	
+</script>
