@@ -3,3 +3,13 @@
 .schoolindex{
     padding: 4rem;
 }
+
+.card {
+    margin-bottom: 25px;;
+}
+
+.card .card-body {
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
