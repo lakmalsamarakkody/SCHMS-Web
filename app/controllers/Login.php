@@ -107,7 +107,7 @@ class Login extends Controller {
 							$_SESSION['user']['is_login'] = TRUE;
 							$_SESSION['user']['id'] = $user->id;
 							$_SESSION['user']['type'] = 'parent';
-							header('Location:' . $this->config->get('base_url') . '/home');
+							header('Location:' . $this->config->get('base_url') . '/portal/parent/'. $user->ref_id);
 							exit();
 						else:
 							// DISPLAY MESSAGE PASSWORD IS INCORRECT

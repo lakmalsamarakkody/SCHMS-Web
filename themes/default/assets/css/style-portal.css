@@ -2,6 +2,7 @@
 	background: #FFF;
 }
 
+/* PORTAL/STUDENT */
 .portal .student {
 	padding: 0;
 	margin-top: 50px;
@@ -33,5 +34,40 @@
 
 
 .portal .student .card-body .nav.nav-pills a.nav-link.active {
+	color: #727cf5;
+}
+
+/* PORTAL/PARENT */
+.portal .parent {
+	padding: 0;
+	margin-top: 50px;
+}
+
+.portal .parent img.avatar {
+	width: 50px;
+}
+
+.portal .parent .card-body .nav.nav-pills {
+	border-bottom: solid 1px #ececec;
+}
+
+.portal .parent .card-body .nav.nav-pills .nav-link {
+	border-radius: 0;
+}
+
+.portal .parent .card-body .nav.nav-pills a.nav-link {
+	color: #a0a0a0;
+}
+
+.portal .parent .card-body .nav.nav-pills .nav-link.active,.portal .parent .card-body .nav.nav-pills .nav-pills .show>.nav-link {
+	background: #FFFFFF;
+}
+
+.portal .parent .card-body .nav.nav-pills .nav-link.active {
+	border-bottom: solid 2px #727cf5;
+}
+
+
+.portal .parent .card-body .nav.nav-pills a.nav-link.active {
 	color: #727cf5;
 }
