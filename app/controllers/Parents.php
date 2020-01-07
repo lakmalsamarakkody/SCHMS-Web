@@ -953,14 +953,14 @@ class Parents extends Controller {
                 endif;
 
                 // VALIDATION : password
-                $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'alpha_dash|min_len,6|max_len,20'));
+                $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'alpha_numeric|min_len,6|max_len,20'));
                 if ( $is_valid_password !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 
                 // VALIDATION : confirm_password
-                $is_valid_confirm_password = GUMP::is_valid($this->request->post, array('confirm_password' => 'alpha_dash|min_len,6|max_len,20'));
+                $is_valid_confirm_password = GUMP::is_valid($this->request->post, array('confirm_password' => 'alpha_numeric|min_len,6|max_len,20'));
                 if ( $is_valid_confirm_password !== true ):
                     echo json_encode( array("status" => "failed", "message" => "Please enter a valid confirmation password as same as the password" ), JSON_PRETTY_PRINT );
                     exit();
@@ -968,7 +968,7 @@ class Parents extends Controller {
 
                 // CHECK : PASSWORD = CONFIRM PASSWORD
                 if ( $this->request->post['confirm_password'] != $this->request->post['password'] ):
-                    echo json_encode( array("status" => "failed", "message" => "Password and confirm pssword doesn't match" ), JSON_PRETTY_PRINT );
+                    echo json_encode( array("status" => "failed", "message" => "Password and confirm password doesn't match" ), JSON_PRETTY_PRINT );
                     exit();
                 endif;
 
@@ -1053,7 +1053,7 @@ class Parents extends Controller {
                         endif;
 
                         // VALIDATION : password
-                        $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'required|alpha_dash|min_len,6|max_len,20'));
+                        $is_valid_password = GUMP::is_valid($this->request->post, array('password' => 'required|alpha_numeric|min_len,6|max_len,20'));
                         if ( $is_valid_password !== true ):
                             echo json_encode( array("status" => "failed", "message" => "Please select a valid password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
                             exit();

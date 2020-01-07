@@ -208,7 +208,7 @@
                                 
                                                     <thead class="thead-dark">
                                                         <tr>
-                                                            <th scope="col">ID</th>
+                                                            <th scope="col" width="1%">Sport ID</th>
                                                             <th scope="col">Sport</th>
                                                             <th scope="col">Coach</th>
                                                         </tr>
@@ -216,7 +216,7 @@
                                                     <tbody>
                                                         {% for sport in sports %}
                                                         <tr>
-                                                            <td scope="row">{{ sport.id }}</td>
+                                                            <td scope="row" width="10%">{{ sport.id }}</td>
                                                             <td>{{ sport.name }}</td>
                                                             <td>{{ sport.coach.name }}</td>
                                                         </tr>
@@ -565,21 +565,18 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
-                                                                            <input type="text" class="form-control" id="stu-username" value="{{ settings.username }}" disabled>
+                                                                            <input type="text" class="form-control" id="student-username" value="{{ settings.username }}" disabled>
+                                                                            <small class="form-text text-muted" id="btn-edit" onclick="edit_mode()"><i class="la la-user"></i> change username</small>
+                                                                            <small class="form-text text-success" id="btn-save" onclick="update_student('{{ student.id }}')" hidden><i class="la la-save"></i> Save</small>
+                                                                            <small class="form-text text-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</small>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
-                                                                            <input type="text" class="form-control" id="stu-password" placeholder="{{ settings.password }}" disabled>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-2">
-                                                                        <div class="form-group">
-                                                                            <label for="confirm_password">Confirm Password</label>
-                                                                            <input type="text" class="form-control" id="stu-confirm_password" placeholder="Retype if changed" disabled>
+                                                                            <input type="text" class="form-control" id="student-password" placeholder="{{ settings.password }}" disabled>
+                                                                            <small class="form-text text-muted" id="btn-password" onclick="invokePasswordEditModal('{{student.id}}')"><i class="la la-key"></i> change password</small>
                                                                         </div>
                                                                     </div>
 
@@ -611,4 +608,155 @@
     </div>
 
 {{ template.footer|raw }}
+
+<!-- START : MODAL : EDIT PASSWORD -->
+<div class="modal fade" id="modal_edit-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Change your password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="modal-edit-password-student_id" />
+                <form method="post">
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="cp">Your Current Password</label>
+                            <input type="password" class="form-control" id="modal-edit-password-current_password"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="np">Your New Password</label>
+                            <input type="password" class="form-control" id="modal-edit-password-new_password"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="cnp">Retype your New Password</label>
+                            <input type="password" class="form-control" id="modal-edit-password-confirm_new_password"/>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onClick="update_password();">Change password</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END : MODAL : EDIT PASSWORD -->
 </body>
+
+<script>
+
+    // EDIT MODE ON
+    edit_mode = () => {
+
+        // MENU BUTTONS
+        $('#btn-edit').attr('hidden', true);
+        $('#btn-save').attr('hidden', false);
+        $('#btn-cancel').attr('hidden', false);
+        $('#btn-remove').attr('hidden', true);
+
+        // ACCOUNT
+        $('#student-username').attr('disabled', false);
+    }
+
+    // CANCEL EDIT
+    cancel_edit_mode = () => {
+        alertify.confirm('<span class="text-warning"><i class="la la-exclamation-circle"></i> Confirm</span>', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+            function(){ location.reload(); },
+            function(){ alertify.success('Continue editing..')}
+            // function(){ alertify.error('Cancel')}
+        );
+    }
+
+    // START : UPDATE STUDENT
+    update_student = (student_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('student_id', student_id)
+        formData.append('username', $("#student-username").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/portal/ajax_updatestudent",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Username updated successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : UPDATE STUDENT
+
+    // INVOKE PASSWORD EDIT MODAL
+    invokePasswordEditModal = (student_id) => {
+        $("#modal-edit-password-student_id").val(student_id)
+        $("#modal_edit-password").modal("show")
+    }
+
+    // START : UPDATE PASSWORD
+    update_password = () => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('student_id', $("#modal-edit-password-student_id").val())
+        formData.append('current_password', $("#modal-edit-password-current_password").val())
+        formData.append('new_password', $("#modal-edit-password-new_password").val())
+        formData.append('confirm_new_password', $("#modal-edit-password-confirm_new_password").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/portal/ajax_update_student_password",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Password updated successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : UPDATE PASSWORD
+</script>

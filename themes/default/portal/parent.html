@@ -86,24 +86,24 @@
                                                         <div class="tab-content p-3" id="studentDetailsTabContent-{{ student.details.id }}">
 
                                                             <!-- START : RESULT STUDENT -->
-                                                            <div class="tab-pane fade" id="result-{{ student.details.id }}" role="tabpanel" aria-labelledby="result-tab">
-                                                                <div id="accordionResults">
+                                                            <div class="tab-pane fade" id="result-{{ student.details.id }}" role="tabpanel" aria-labelledby="result-tab--{{ student.details.id }}">
+                                                                <div id="accordionResults-{{ student.details.id }}">
 
                                                                     {% for exam in student.exams %}
                                                                     <div class="card mt-4">
                                             
-                                                                        <div class="card-header" id="headingResults" data-toggle="collapse" data-target="#collapseResults" aria-expanded="true" aria-controls="collapseResults">
+                                                                        <div class="card-header" id="headingResults-{{ student.details.id }}" data-toggle="collapse" data-target="#collapseResults-{{ student.details.id }}" aria-expanded="true" aria-controls="collapseResults--{{ student.details.id }}">
                                                                             {{ exam.name }} - {{ exam.year }} : Grade {{ exam.grade }}
                                                                         </div>
                                                                     
-                                                                        <div id="collapseResults" class="collapse show" aria-labelledby="headingResults" data-parent="#accordionResults">
+                                                                        <div id="collapseResults-{{ student.details.id }}" class="collapse show" aria-labelledby="headingResults--{{ student.details.id }}" data-parent="#accordionResults-{{ student.details.id }}">
                                                                             <div class="card-body">
                                                                                 <table class="table table-borderless table-responsive-md">
                                                                                     <tbody>
-                                                                                        {% for subject in student.exam.subjects %}
+                                                                                        {% for subject_marks in exam.subjects %}
                                                                                         <tr>
-                                                                                            <th scope="row">{{ subject.name }}</th>
-                                                                                            <td scope="row">{{ subject.marks }}</td>
+                                                                                            <th scope="row">{{ subject_marks.name }}</th>
+                                                                                            <td scope="row">{{ subject_marks.marks }}</td>
                                                                                         </tr>
                                                                                         {% endfor %}
                                                                                     </tbody>
@@ -115,12 +115,148 @@
                                                                 </div>
                                                             </div>
                                                             <!-- END : RESULT STUDENT -->
+
+                                                            <!-- START : TIMETABLE STUDENT -->
+                                                            <div class="tab-pane fade" id="timetable-{{ student.details.id }}" role="tabpanel" aria-labelledby="timetable-tab">
+                                                                <div class="row">
+                                                                    <section class="col-12 timetable">
+                                            
+                                                                        <table class="table table-bordered table-responsive-md">
+                                                
+                                                                            <thead class="thead-dark">
+                                                                                <tr>
+                                                                                    <th width="1%" class="text-center" scope="col">Period</th>
+                                                                                    <th width="20%" class="text-center" scope="col">Monday</th>
+                                                                                    <th width="20%" class="text-center" scope="col">Tuesday</th>
+                                                                                    <th width="20%" class="text-center" scope="col">Wednesday</th>
+                                                                                    <th width="20%" class="text-center" scope="col">Thursday</th>
+                                                                                    <th width="20%" class="text-center" scope="col">Friday</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                
+                                                                            <tbody>
+                                            
+                                                                                {% set period = 1 %}
+                                                
+                                                                                {% for row in 1..9 %}
+                                                                                    {% if row != 5 %}
+                                                
+                                                                                    <tr>
+                                                                                        <th scope="row" class="text-center">{{ period }}</th>
+                                                                                        {% for cols in 1..5 %}
+                                                                                        <td class="text-center">
+                                            
+                                                                                            {% for subject in student.subjects %}
+                                                                                                {% if student.timetable[cols][period].subject_id == subject.id %}
+                                                                                                <span><b>{{ subject.name }}</b></span>
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
+                                                                                            <br>
+                                                                                            {% for staff in student.staffs %}
+                                                                                                {% if student.timetable[cols][period].staff_id == staff.id %}
+                                                                                                <span>{{ staff.initials }} {{ staff.surname }}</span>
+                                                                                                {% endif %}
+                                                                                            {% endfor %}
+                                                                                        </td>
+                                                                                        {% endfor %}
+                                                                                    </tr>
+                                                                                    {% set period = period + 1 %}
+                                                                                    {% else %}
+                                                                                    <tr class="thead-dark">
+                                                                                        <th class="text-center" colspan="6">I N T E R V A L</th>
+                                                                                    </tr>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            
+                                                                            </tbody>
+                                                                        </table>
+                                                
+                                                                        <input id="classId" type="hidden" value="{{ class.id }}" />
+                                                
+                                                                    </section>
+                                                                </div>
+                                                            </div>
+                                                            <!-- END : TIMETABLE STUDENT -->
+
+                                                            <!-- START : HEALTH STUDENT -->
+                                                            <div class="tab-pane fade" id="health-{{ student.details.id }}" role="tabpanel" aria-labelledby="health-tab">
+                                                                <caption>Last updated on : {{ student.health.date }}</caption>
+                                                                <table class="table table-borderless table-responsive-md">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">Height</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.height }} cm</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">Weight</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.weight }} kg</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">BMI index</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.bmi }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">Blood Group</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.blood_group }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">Heart Rate</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.heart_rate }} bpm</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">Blood Pressure</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.blood_pressure }} mmHg</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">Vaccinations</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.vaccination }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th width="20%" scope="col">Specialities</th>
+                                                                            <th width="10%" scope="col">:</th>
+                                                                            <td scope="row">{{ student.health.speciality }}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- END : HEALTH STUDENT -->
+
+                                                            <!-- START : SPORT TAB -->
+                                                            <div class="tab-pane fade" id="sport-{{ student.details.id }}" role="tabpanel" aria-labelledby="sports-tab">
+                                                                <table class="table table-bordered table-responsive-md">
+                                                
+                                                                    <thead class="thead-dark">
+                                                                        <tr>
+                                                                            <th scope="col" width="10%">Sport ID</th>
+                                                                            <th scope="col">Sport</th>
+                                                                            <th scope="col">Coach</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% for sport in student.sports %}
+                                                                        <tr>
+                                                                            <td scope="row" width="1%">{{ sport.id }}</td>
+                                                                            <td>{{ sport.name }}</td>
+                                                                            <td>{{ sport.coach.name }}</td>
+                                                                        </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- END : SPORT TAB -->
                                             
                                                             <!-- START : ABOUT STUDENT -->
                                                             <div class="tab-pane fade show active" id="about-{{ student.details.id }}" role="tabpanel" aria-labelledby="about-tab">
                                                                 <div class="row">
 
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-12">
                                                                         <div class="card">
                                                                             <div class="card-header">{{ student.details.initials }} {{ student.details.surname }}</div>
                                                                             <div class="card-body">
@@ -503,21 +639,18 @@
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="username">Username</label>
-                                                                            <input type="text" class="form-control" id="stu-username" value="{{ settings.username }}" disabled>
+                                                                            <input type="text" class="form-control" id="parent-username" value="{{ settings.username }}" disabled>
+                                                                            <small class="form-text text-muted" id="btn-edit" onclick="edit_mode()"><i class="la la-user"></i> change username</small>
+                                                                            <small class="form-text text-success" id="btn-save" onclick="update_parent('{{ parent.id }}')" hidden><i class="la la-save"></i> Save</small>
+                                                                            <small class="form-text text-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</small>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col-2">
                                                                         <div class="form-group">
                                                                             <label for="password">Password</label>
-                                                                            <input type="text" class="form-control" id="stu-password" placeholder="{{ settings.password }}" disabled>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-2">
-                                                                        <div class="form-group">
-                                                                            <label for="confirm_password">Confirm Password</label>
-                                                                            <input type="text" class="form-control" id="stu-confirm_password" placeholder="Retype if changed" disabled>
+                                                                            <input type="text" class="form-control" id="parent-password" placeholder="{{ settings.password }}" disabled>
+                                                                            <small class="form-text text-muted" id="btn-password" onclick="invokePasswordEditModal('{{parent.id}}')"><i class="la la-key"></i> change password</small>
                                                                         </div>
                                                                     </div>
 
@@ -549,4 +682,155 @@
     </div>
 
 {{ template.footer|raw }}
+
+    <!-- START : MODAL : EDIT PASSWORD -->
+    <div class="modal fade" id="modal_edit-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Change your password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="modal-edit-password-parent_id" />
+                    <form method="post">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="cp">Your Current Password</label>
+                                <input type="password" class="form-control" id="modal-edit-password-current_password"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="np">Your New Password</label>
+                                <input type="password" class="form-control" id="modal-edit-password-new_password"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="cnp">Retype your New Password</label>
+                                <input type="password" class="form-control" id="modal-edit-password-confirm_new_password"/>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" onClick="update_password();">Change password</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END : MODAL : EDIT PASSWORD -->
 </body>
+
+<script>
+
+    // EDIT MODE ON
+    edit_mode = () => {
+
+        // MENU BUTTONS
+        $('#btn-edit').attr('hidden', true);
+        $('#btn-save').attr('hidden', false);
+        $('#btn-cancel').attr('hidden', false);
+        $('#btn-remove').attr('hidden', true);
+
+        // ACCOUNT
+        $('#parent-username').attr('disabled', false);
+    }
+
+    // CANCEL EDIT
+    cancel_edit_mode = () => {
+        alertify.confirm('<span class="text-warning"><i class="la la-exclamation-circle"></i> Confirm</span>', 'Are you sure you want to cancel...? All Unsaved changes will be lost.', 
+            function(){ location.reload(); },
+            function(){ alertify.success('Continue editing..')}
+            // function(){ alertify.error('Cancel')}
+        );
+    }
+
+    // START : UPDATE PARENT
+    update_parent = (parent_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('parent_id', parent_id)
+        formData.append('username', $("#parent-username").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/portal/ajax_updateparent",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Username updated successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : UPDATE PARENT
+
+    // INVOKE PASSWORD EDIT MODAL
+    invokePasswordEditModal = (parent_id) => {
+        $("#modal-edit-password-parent_id").val(parent_id)
+        $("#modal_edit-password").modal("show")
+    }
+
+    // START : UPDATE PASSWORD
+    update_password = () => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('parent_id', $("#modal-edit-password-parent_id").val())
+        formData.append('current_password', $("#modal-edit-password-current_password").val())
+        formData.append('new_password', $("#modal-edit-password-new_password").val())
+        formData.append('confirm_new_password', $("#modal-edit-password-confirm_new_password").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/portal/ajax_update_parent_password",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Password updated successfully ... ").set('onok', function() {
+                        location.reload();
+                    })
+                } else {
+                    console.log(res);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : UPDATE PASSWORD
+</script>

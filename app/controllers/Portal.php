@@ -206,6 +206,180 @@ class Portal extends Controller {
         $this->load->view('portal/student', $data);
     }
 
+    public function ajax_updatestudent() {
+        
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('student');
+        $this->load->model('user');
+
+        if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
+            $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);
+
+            if ( $is_valid_student_id->first() !== NULL ):
+
+                // VALIDATION : username
+                $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_username !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid username of minimum 6 characters" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK ANY USER AVAILABLE
+                $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id']);
+                if ( $is_available_user->first() != NULL):
+                     // IS CHANGED USERNAME
+                    $current_username = $this->model_user->select('username')->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->first();
+                    if ( $current_username->username != $this->request->post['username']):
+                        // USERNAME IS CHANGED : CHECK FOR DUPLICATE
+                        if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                            echo json_encode( array( "status" => "failed", "message" => "This username already exists" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+                    endif;
+                endif;
+
+                // UPDATE PROCESS
+                try {
+                    // UPDATE SETTINGS IF AVAILABLE USER FOUND
+                    $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id']);
+                    if ( $is_available_user->first() != NULL):
+
+                        // UPDATE STATUS,ROLE,USERNAME
+                        $this->model_user->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->update([
+                            'username' => $this->request->post['username']
+                        ]);
+                    endif;
+
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to edit username. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+            else:
+                // NO RECORD FOUND TO UPDATE
+				echo json_encode( array( "status" => "failed", "message" => "No Student record found to modify" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // STUDENT ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid Student record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+    }
+
+    public function ajax_update_student_password(){
+
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('student');
+        $this->load->model('user');
+
+        if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
+            $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);
+
+            if ( $is_valid_student_id->first() !== NULL ):
+
+                // var_dump($this->request->post['new_password']);
+                // exit();
+
+                // VALIDATION : current_password
+                $is_valid_current_password = GUMP::is_valid($this->request->post, array('current_password' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_current_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter your current password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK ANY USER AVAILABLE
+                $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id']);
+                if ( $is_available_user->first() != NULL):
+                    // IS CURRENT PASSWORD IS TRUE
+                    $current_password = $this->model_user->select('password')->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->first();
+                    if ( password_verify ($this->request->post['current_password'], $current_password->password) == FALSE ):
+                        echo json_encode( array( "status" => "failed", "message" => "Your current password is invalid" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // VALIDATION : new_password
+                $is_valid_new_password = GUMP::is_valid($this->request->post, array('new_password' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_new_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter your new password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK : NEW PASSWORD != CURRENT PASSWORD
+                if ( $this->request->post['new_password'] == $this->request->post['current_password'] ):
+                    echo json_encode( array("status" => "failed", "message" => "Your New Password and Current password cannot be same" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : confirm_new_password
+                $is_valid_confirm_new_password = GUMP::is_valid($this->request->post, array('confirm_new_password' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_confirm_new_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please retype your valid confirmation password as same as the password" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK : PASSWORD = CONFIRM PASSWORD
+                if ( $this->request->post['new_password'] != $this->request->post['confirm_new_password'] ):
+                    echo json_encode( array("status" => "failed", "message" => "Password and confirm password doesn't match" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // UPDATE PROCESS
+                try {
+                    // UPDATE SETTINGS IF AVAILABLE USER FOUND
+                    $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id']);
+                    if ( $is_available_user->first() != NULL):
+
+                        // UPDATE STATUS,ROLE,USERNAME
+                        $this->model_user->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->update([
+                            'password' => password_hash($this->request->post['new_password'], PASSWORD_DEFAULT)
+                        ]);
+                    endif;
+
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to update password. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+
+            else:
+                // NO RECORD FOUND TO UPDATE
+				echo json_encode( array( "status" => "failed", "message" => "No student record found to modify" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // STUDENT ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid student record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+
+    }
+
     public function parent($parent_id){
 
         //CHECK LOGIN STATUS
@@ -303,15 +477,17 @@ class Portal extends Controller {
 
         // STUDENT DATA
         foreach ( $this->model_student_parent->where('parent_id', '=', $parent_id)->get() as $key => $element ):
+
             // ABOUT TAB
             $data['students'][$key]['relation_id'] = $element->relation_id;
             $data['students'][$key]['details'] = $this->model_student->where('id', '=', $element->student_id)->first();
+            $student = $this->model_student->where('id', '=', $element->student_id)->first();
 
             // RESULT TAB
             $all_exams = DB::table('student_has_exam_schedule')
             ->join('exam_grade_has_schedule', 'student_has_exam_schedule.exam_schedule_id', 'exam_grade_has_schedule.id')
             ->join('exam_has_grade', 'exam_grade_has_schedule.exam_grade_id', 'exam_has_grade.id')
-            ->where('student_has_exam_schedule.student_id', '=', $element->student_id)
+            ->where('student_has_exam_schedule.student_id', '=', $student->id)
             ->groupBy('exam_has_grade.exam_id')
             ->orderBy('student_has_exam_schedule.created_on', 'DESC')
             ->select('exam_has_grade.id as exam_grade_id');
@@ -335,12 +511,42 @@ class Portal extends Controller {
                 ->join('grade', 'exam_has_grade.grade_id', 'grade.id')
                 ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
                 ->where('student_has_exam_schedule.student_id', '=', $student->id)
-                ->where('exam_has_grade.id', '=', $value->exam_grade_id)
+                ->where('exam_has_grade.id', '=', $value2->exam_grade_id)
                 ->select('subject.name as subject_name', 'student_has_exam_schedule.marks');
                 foreach ($exam_result->get() as $key3 => $value3  ):
                     $data['students'][$key]['exams'][$key2]['subjects'][$key3]['name'] = $value3->subject_name;
                     $data['students'][$key]['exams'][$key2]['subjects'][$key3]['marks'] = $value3->marks;
-                endforeach;
+                endforeach;                
+            endforeach;
+
+            // TIMETABLE TAB
+            //STUDENT CLASSID
+            $class_id = $student->class_id;
+            // SUBJECTS
+            $data['students'][$key]['subjects'] = $this->model_subject->select('id', 'name', 'si_name')->orderBy('id')->get();
+            // STAFF
+            $data['students'][$key]['staffs'] = $this->model_staff->select('id', 'initials', 'surname')->orderBy('surname')->get();
+            // GET TIMETABLE OF CLASS
+            foreach ( $this->model_class_timetable->select('id', 'class_id', 'day', 'period', 'subject_id', 'staff_id')->where('class_id', '=', $class_id)->get() as $key2 => $element ):
+                $data['students'][$key]['timetable'][$element->day][$element->period] = array(
+                    'subject_id' => $element->subject_id,
+                    'staff_id' => $element->staff_id
+                );
+            endforeach;
+
+            // HEALTH TAB
+            $data['students'][$key]['health'] = $this->model_student_health->where('student_id', '=', $student->id)->first();
+
+            // SPORTS TAB
+            foreach ( $this->model_student_sport->where('student_id', '=', $student->id)->orderBy('sport_id')->get() as $key2 => $element ):
+                if( $element != NULL ):
+                    $data['students'][$key]['sports'][$key2]['id'] = $element->sport_id;
+                    $data['students'][$key]['sports'][$key2]['name'] = $this->model_sport->select('name')->where('id', '=', $element->sport_id)->first()->name;
+                    $coach = $this->model_coach_sport->select('coach_id')->where('sport_id', '=', $element->sport_id)->first();
+                    if ( $coach != NULL ):
+                        $data['students'][$key]['sports'][$key2]['coach']['name'] = $this->model_coach->select('full_name')->where('id', '=', $coach->coach_id)->first()->full_name;
+                    endif;
+                endif;
             endforeach;
 
         endforeach;
@@ -361,6 +567,179 @@ class Portal extends Controller {
 
         // RENDER VIEW
         $this->load->view('portal/parent', $data);
+    }
+
+    public function ajax_updateparent() {
+        
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('parent');
+        $this->load->model('user');
+
+        if ( isset($this->request->post['parent_id']) AND !empty($this->request->post['parent_id']) ):
+            $is_valid_parent_id = $this->model_parent->select('id')->where('id', '=', $this->request->post['parent_id']);
+
+            if ( $is_valid_parent_id->first() !== NULL ):
+
+                // VALIDATION : username
+                $is_valid_username = GUMP::is_valid($this->request->post, array('username' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_username !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please select a valid username of minimum 6 characters" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK ANY USER AVAILABLE
+                $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id']);
+                if ( $is_available_user->first() != NULL):
+                     // IS CHANGED USERNAME
+                    $current_username = $this->model_user->select('username')->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id'])->first();
+                    if ( $current_username->username != $this->request->post['username']):
+                        // USERNAME IS CHANGED : CHECK FOR DUPLICATE
+                        if ( $this->model_user->select('id')->where('username', '=', $this->request->post['username'])->first() != NULL ):
+                            echo json_encode( array( "status" => "failed", "message" => "This username already exists" ), JSON_PRETTY_PRINT );
+                            exit();
+                        endif;
+                    endif;
+                endif;
+
+                // UPDATE PROCESS
+                try {
+                    // UPDATE SETTINGS IF AVAILABLE USER FOUND
+                    $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id']);
+                    if ( $is_available_user->first() != NULL):
+
+                        // UPDATE STATUS,ROLE,USERNAME
+                        $this->model_user->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id'])->update([
+                            'username' => $this->request->post['username']
+                        ]);
+                    endif;
+
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to edit username. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+            else:
+                // NO RECORD FOUND TO UPDATE
+				echo json_encode( array( "status" => "failed", "message" => "No Parent record found to modify" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // PARENT ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid Parent record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+    }
+
+    public function ajax_update_parent_password(){
+
+        // CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('parent');
+        $this->load->model('user');
+
+        if ( isset($this->request->post['parent_id']) AND !empty($this->request->post['parent_id']) ):
+            $is_valid_parent_id = $this->model_parent->select('id')->where('id', '=', $this->request->post['parent_id']);
+
+            if ( $is_valid_parent_id->first() !== NULL ):
+
+                // var_dump($this->request->post['new_password']);
+                // exit();
+
+                // VALIDATION : current_password
+                $is_valid_current_password = GUMP::is_valid($this->request->post, array('current_password' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_current_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter your current password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK ANY USER AVAILABLE
+                $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id']);
+                if ( $is_available_user->first() != NULL):
+                    // IS CURRENT PASSWORD IS TRUE
+                    $current_password = $this->model_user->select('password')->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id'])->first();
+                    if ( password_verify ($this->request->post['current_password'], $current_password->password) == FALSE ):
+                        echo json_encode( array( "status" => "failed", "message" => "Your current password is invalid" ), JSON_PRETTY_PRINT );
+                        exit();
+                    endif;
+                endif;
+
+                // VALIDATION : new_password
+                $is_valid_new_password = GUMP::is_valid($this->request->post, array('new_password' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_new_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please enter your new password of minimum 6 characters without any special characters and spaces except dash(-),underscore(_)" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK : NEW PASSWORD != CURRENT PASSWORD
+                if ( $this->request->post['new_password'] == $this->request->post['current_password'] ):
+                    echo json_encode( array("status" => "failed", "message" => "Your New Password and Current password cannot be same" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // VALIDATION : confirm_new_password
+                $is_valid_confirm_new_password = GUMP::is_valid($this->request->post, array('confirm_new_password' => 'required|alpha_numeric|min_len,6|max_len,20'));
+                if ( $is_valid_confirm_new_password !== true ):
+                    echo json_encode( array("status" => "failed", "message" => "Please retype your valid confirmation password as same as the password" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // CHECK : PASSWORD = CONFIRM PASSWORD
+                if ( $this->request->post['new_password'] != $this->request->post['confirm_new_password'] ):
+                    echo json_encode( array("status" => "failed", "message" => "Password and confirm password doesn't match" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+
+                // UPDATE PROCESS
+                try {
+                    // UPDATE SETTINGS IF AVAILABLE USER FOUND
+                    $is_available_user = $this->model_user->select('id')->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id']);
+                    if ( $is_available_user->first() != NULL):
+
+                        // UPDATE STATUS,ROLE,USERNAME
+                        $this->model_user->where('user_type', '=', 'parent')->where('ref_id', '=', $this->request->post['parent_id'])->update([
+                            'password' => password_hash($this->request->post['new_password'], PASSWORD_DEFAULT)
+                        ]);
+                    endif;
+
+                    echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // var_dump( $e->errorInfo );
+                    echo json_encode( array( "status" => "failed", "message" => "Unable to update password. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+                    exit();
+                }
+
+            else:
+                // NO RECORD FOUND TO UPDATE
+				echo json_encode( array( "status" => "failed", "message" => "No Parent record found to modify" ), JSON_PRETTY_PRINT );
+				exit();
+			endif;
+        else:
+            // PARENT ID IS NOT SET
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid Parent record" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
     }
 
     public function messages($id = null){
