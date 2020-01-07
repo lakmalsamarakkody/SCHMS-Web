@@ -92,7 +92,7 @@ h5.page-title{
 /* common/topmenu */
 .topmenu{
     color: var(--white);
-    /*background:var(--main-bg-color);*/
+    /* background: var(--main-bg-color); */
     background: #262a35;
 }
 
@@ -173,7 +173,7 @@ h5.page-title{
 }
 
 /* INPUTS */
-.form-control, .form-control:focus , .form-control:disabled, .form-control[readonly]{
+.form-control, .form-control:focus , .form-control:disabled, .form-control[readonly], .bootstrap-select{
     background: var(--main-bg-color);
     color: #b9bfce;
     border-color: #050506;
@@ -212,9 +212,27 @@ table.dataTable tbody th, table.dataTable tbody td {
 }
 
 /* MESSAGES */
+.portal .row{
+    background: #262a35;
+}
+
+.portal .topmenu{
+    color: var(--white);
+    background: var(--main-bg-color);
+    /* background: #262a35; */
+}
+
+.portal .card {
+    background-color: var(--main-bg-color);
+}
+
 .portal .messages{
     color: var(--white);
     background: #262a35;
+}
+
+.portal .messages .messagesinbox .list-group .list-group-item:hover{
+	background: #2a2d36;
 }
 
 .messagesinbox ul.list-group li.list-group-item {

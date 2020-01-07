@@ -768,6 +768,11 @@ class Portal extends Controller {
         $this->load->model('parent');
         $this->load->model('coach');
 
+        // BACK
+        $user = $this->model_user->where('id', '=', $_SESSION['user']['id'])->where('user_type', '=', $_SESSION['user']['type'])->first();
+        $data['user']['ref_id'] = $user->ref_id;
+        $data['user']['type'] = $_SESSION['user']['type'];
+
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
         $time_now = Carbon::now();
 
@@ -831,7 +836,7 @@ class Portal extends Controller {
             $data['your']['type'] = $receiver_data->user_type;
             $data['your']['image']['path'] = $receiver_data->user_type."/".$receiver_data->ref_id;
 
-            $this->load->view('portal/messages', $data);
+            $this->load->view('portal/single', $data);
         else:
             
             /**
@@ -839,7 +844,30 @@ class Portal extends Controller {
              * user have at a given time. Conversations will be sorted
              * using the message table with the help of grouping SQL.
              */
-            $converstations = $this->model_message->select('id', 'sender_id', 'receiver_id')->where('receiver_id', '=', $_SESSION['user']['id'])->orwhere('sender_id', '=', $_SESSION['user']['id'])->groupBy('sender_id', 'receiver_id')->orderBy('created_on', 'DESC')->get();
+            // $converstations = $this->model_message->select('id', 'sender_id', 'receiver_id')->where('receiver_id', '=', $_SESSION['user']['id'])->orwhere('sender_id', '=', $_SESSION['user']['id'])->groupBy('sender_id', 'receiver_id')->orderBy('created_on', 'DESC')->get();
+            
+            $id = $_SESSION['user']['id'];
+            
+            $converstations = DB::select('
+            SELECT t1.*
+            FROM message AS t1
+            INNER JOIN
+            (
+                SELECT
+                    LEAST(sender_id, receiver_id) AS sender_id,
+                    GREATEST(sender_id, receiver_id) AS receiver_id,
+                    MAX(id) AS max_id
+                FROM message
+                GROUP BY
+                    LEAST(sender_id, receiver_id),
+                    GREATEST(sender_id, receiver_id)
+            ) AS t2
+                ON LEAST(t1.sender_id, t1.receiver_id) = t2.sender_id AND
+                   GREATEST(t1.sender_id, t1.receiver_id) = t2.receiver_id AND
+                   t1.id = t2.max_id
+                WHERE t1.sender_id = ? OR t1.receiver_id = ?
+            ', [$id, $id]);
+
             foreach( $converstations as $key => $element ):
 
                 // SELECTING IS PARTICIPANT SENDER OR RECEIVER
@@ -908,8 +936,164 @@ class Portal extends Controller {
 
             endforeach;
 
-            $this->load->view('portal/single', $data);
+            $this->load->view('portal/messages', $data);
         endif;
+    }
+
+    public function ajax_retrive_receiver_by_type($type) {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODEL
+        $this->load->model('staff');
+        $this->load->model('student');
+        $this->load->model('parent');
+        $this->load->model('coach');
+
+        $receiver_model = "model_".$type;
+
+        echo json_encode(array( "status" => "success", "data" => $this->$receiver_model->select('id', 'full_name')->get() ));
+    }
+
+    public function ajax_compose_new_msg(){
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- receiver_type, receiver_id, message_body
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+        
+		//  MODEL
+        $this->load->model('user');
+        $this->load->model('message');
+
+		// VALIDATION : receiver_type
+		$is_valid_receiver_type = GUMP::is_valid($this->request->post, array('receiver_type' => 'required|contains_list,staff;student;parent;coach'));
+		if ( $is_valid_receiver_type !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid receiver type" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
+
+        // VALIDATION : receiver_id
+		$is_valid_receiver_id = GUMP::is_valid($this->request->post, array('receiver_id' => 'required|numeric|min_len,1|max_len,8'));
+		if ( $is_valid_receiver_id !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid receiver" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
+
+        // IS EXIST : receiver_id
+		$user = $this->model_user->select('id')->where('ref_id', '=', $this->request->post['receiver_id'])->where('user_type', '=', $this->request->post['receiver_type'])->where('status', '=', "Active")->first();
+		if( $user == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Person you are trying to send this message is not an active user" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+        
+        // VALIDATION : message
+		$is_valid_message = GUMP::is_valid($this->request->post, array('message_body' => 'required'));
+		if ( $is_valid_message !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please type a message" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
+
+        $this->model_message->sender_id = $_SESSION['user']['id'];
+        $this->model_message->receiver_id = $user->id;
+        $this->model_message->body = $this->request->post['message_body'];
+		
+		// SUBMIT
+		if ( $this->model_message->save() ):
+            echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+            exit();
+		else:
+            echo json_encode( array( "status" => "failed", "message" => "Message sending failed. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
+    }
+
+
+    public function ajax_send_msg(){
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+		/**
+		  * This method will receive ajax request from
+		  * the front end with the payload
+		  * 
+		  *	- participant_id, msg
+		  * 
+		  * We need to validate the data and then perform
+		  * the following tasks.
+		  *    - validate
+		  *    - CRUD
+		  *    - response ( JSON )
+		  */
+ 
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+        
+		//  MODEL
+        $this->load->model('user');
+        $this->load->model('message');
+
+		// VALIDATION : participant_id
+		$is_valid_participant_id = GUMP::is_valid($this->request->post, array('participant_id' => 'required|numeric|min_len,1|max_len,8'));
+		if ( $is_valid_participant_id !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please select a valid conversation" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
+
+        // IS EXIST : participant_id
+		$is_exist = $this->model_user->select('id')->where('id', '=', $this->request->post['participant_id'])->first();
+		if( $is_exist == NULL ):
+			echo json_encode( array( "status" => "failed", "message" => "Message sending failed. user doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
+        
+        // VALIDATION : message
+		$is_valid_message = GUMP::is_valid($this->request->post, array('message' => 'required'));
+		if ( $is_valid_message !== true ):
+			echo json_encode( array( "status" => "failed", "message" => "Please type a message" ), JSON_PRETTY_PRINT );
+			exit();
+        endif;
+
+        $this->model_message->sender_id = $_SESSION['user']['id'];
+        $this->model_message->receiver_id = $this->request->post['participant_id'];
+        $this->model_message->body = $this->request->post['message'];
+		
+		// SUBMIT
+		if ( $this->model_message->save() ):
+            echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+            exit();
+		else:
+            echo json_encode( array( "status" => "failed", "message" => "Message sending failed. Please contact your System Administrator" ), JSON_PRETTY_PRINT );
+            exit();
+		endif;
     }
 
 }

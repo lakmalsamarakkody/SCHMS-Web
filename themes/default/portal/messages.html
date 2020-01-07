@@ -12,13 +12,14 @@
 					<div class="messagesinbox">
 
 						<!-- START : CONVERSATIONS -->
-						<h4 class="page-title">Inbox</h4>
-						<div class="btn btn-sm btn-primary mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
+						<h4 class="page-title">Your Conversations</h4>
+						<div class="btn btn-sm btn-warning mt-5"><a href="{{ app.url }}/portal/{{ user.type }}/{{ user.ref_id }}"> <i class="la la-home"></i> Back to Portal</a></div>
+						<div class="btn btn-sm btn-success mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
 
 						<ul class="list-group mt-3">
 							{% for conversation in conversations %}
 							<li class="list-group-item">
-								<a href="{{ app.url }}/messages/{{ conversation.user.id }}">
+								<a href="{{ app.url }}/portal/messages/{{ conversation.user.id }}">
 									<img src="{{ app.url }}/data/propic/{{ conversation.image.path }}" class="avatar">
 									<div class="body">
 										<h5>
@@ -107,7 +108,7 @@
 
 		// REQUEST
 		$.ajax({
-			url: "{{ app.url }}/messages/ajax_compose_new_msg",
+			url: "{{ app.url }}/portal/ajax_compose_new_msg",
 			method: 'POST',
 			data: formData,
 			processData: false,
@@ -123,7 +124,7 @@
 				}
 			},
 			error: (e) => {
-				alertify.alert("Error", "Something went wrong ... ");
+				alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
 				console.log(e.responseText)
 			}
 		})
@@ -136,7 +137,7 @@
 		var type = $("#receiver_type").val()
 
 		$.ajax({
-			url: '{{ app.url }}/messages/ajax_retrive_receiver_by_type/' + type,
+			url: '{{ app.url }}/portal/ajax_retrive_receiver_by_type/' + type,
 			processData: false,
 			contentType: false,
 			success: (res) => {
@@ -150,7 +151,7 @@
 				$('#receiver').selectpicker('refresh');
 			},
 			error: (e) => {
-				alertify.alert("Error", "Something went wrong ... ")
+				alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ")
 				console.log(e.responseText)
 			}
 		})

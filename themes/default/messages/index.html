@@ -14,8 +14,9 @@
                 <div class="messagesinbox">
 
                     <!-- START : CONVERSATIONS -->
-                    <h4 class="page-title">Inbox</h4>
-                    <div class="btn btn-sm btn-primary mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
+					<h4 class="page-title">Inbox</h4>
+					<a href="{{ app.url }}/" ><div class="btn btn-sm btn-warning mt-5"><i class="la la-home"></i> Home</div></a>
+                    <div class="btn btn-sm btn-success mt-5" data-toggle="modal" data-target="#new-message-modal"><i class="la la-plus"></i> Compose New</div>
 
 					<ul class="list-group mt-3">
 						{% for conversation in conversations %}

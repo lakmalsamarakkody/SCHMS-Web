@@ -1,5 +1,15 @@
-.portal .content {
-	background: #FFF;
+.portal {
+	color: var(--main-text-color);
+    background-color: var(--main-bg-color);
+    min-height: 100vh;
+}
+
+.portal .card {
+    min-height: 80vh;
+}
+
+.portal .messages .messagesinbox{
+	min-height: 100vh;
 }
 
 /* PORTAL/STUDENT */

@@ -14,21 +14,21 @@
 				<div class="messagessingle">
 
 					<!-- START : SINGLE CONVERSATION -->
-					<a href="{{ app.url }}/messages"><button class="btn btn-xs btn-secondary"><i class="la la-comments"></i> Conversations</button></a>
+					<a href="{{ app.url }}/portal/messages"><button class="btn btn-xs btn-secondary"><i class="la la-comments"></i> Back to Conversations</button></a>
 					<button class="btn btn-xs btn-primary" onclick="location.reload();"><i class="la la-refresh"></i> Refresh</button>
 
 					<div class="card mt-2">
 						<div class="card-header">
 							<div class="row">
 								<div class="ml-3">
-									<a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}">
+									<!-- <a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}"> -->
 										<img src="{{ app.url }}/data/propic/{{ participant.image.path }}" class="avatar">
-									</a>
+									<!-- </a> -->
 								</div>
 								<div class="mr-auto">
-									<a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}">
+									<!-- <a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}"> -->
 										<h5>{{ participant.name }}</h5>
-									</a>
+									<!-- </a> -->
 									<h6 class="text-secondary">{{ participant.type }}</h6>
 								</div>
 							</div>
@@ -39,9 +39,9 @@
 							{% for message in messages %}
 								{% if message.owner == false %}
 								<div class="media single-msg incoming">
-									<a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}">
+									<!-- <a href="{{ app.url }}/{{ participant.type }}/profile/{{ participant.id }}"> -->
 										<img class="avatar mr-3" src="{{ app.url }}/data/propic/{{ participant.image.path }}" alt="profile_pic" />
-									</a>
+									<!-- </a> -->
 									<div class="media-body col-6">
 										<p>{{ message.body }}</p>
 									</div>
@@ -51,9 +51,9 @@
 									<div class="media-body col-4 ml-auto">
 										<p class="text-right">{{ message.body }}</p>
 									</div>
-									<a href="{{ app.url }}/{{ your.type }}/profile/{{ your.id }}">
+									<!-- <a href="{{ app.url }}/{{ your.type }}/profile/{{ your.id }}"> -->
 										<img class="avatar ml-3" src="{{ app.url }}/data/propic/{{ your.image.path }}" alt="profile_pic" />
-									</a>
+									<!-- </a> -->
 								</div>
 								{% endif %}
 							{% endfor %}
@@ -95,7 +95,7 @@
 
 		// REQUEST
 		$.ajax({
-			url: "{{ app.url }}/messages/ajax_send_msg",
+			url: "{{ app.url }}/portal/ajax_send_msg",
 			method: 'POST',
 			data: formData,
 			processData: false,
@@ -104,21 +104,21 @@
 			success: (res) => {
 				
 				if ( res.status == 'success' ) {
-					alertify.alert("Success", "Message sent successfully ... ").set('onok', function() {
+					alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Message sent successfully.").set('onok', function() {
 						location.reload();
 					})
 				} else {
 					console.log(res);
-					alertify.alert("Failed", res.message);
+					alertify.alert('<span class="text-warning"><i class="la la-exclamation-triangle"></i> Warning</span>', res.message);
 				}
 			},
 			error: (e) => {
-				alertify.alert("Error", "Something went wrong ... ");
+				alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
 				console.log(e.responseText)
 			}
 		})
 		}
-		// END : ADD A CLASS
+		// END : SEND A MESSAGE
 
     </script>
 

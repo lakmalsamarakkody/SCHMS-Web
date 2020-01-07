@@ -124,7 +124,7 @@ class Messages extends Controller {
                    GREATEST(t1.sender_id, t1.receiver_id) = t2.receiver_id AND
                    t1.id = t2.max_id
                 WHERE t1.sender_id = ? OR t1.receiver_id = ?
-            ', [$id, $id]);            
+            ', [$id, $id]);
 
             foreach( $converstations as $key => $element ):
 
