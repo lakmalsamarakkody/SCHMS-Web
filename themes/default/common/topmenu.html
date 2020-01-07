@@ -13,10 +13,23 @@
             </a>
             
             <div class="notifications">
-                <i class="la la-bell" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                <i class="la la-bell dropdown-toggle" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
-                <div class="dropdown-menu" aria-labelledby="dropdownNotificationsButton">
-                    <p> <i class="la la-globe"></i> No Notifications </p>
+                <div class="dropdown-container dropdown-menu"  style="width: 500px;;">
+                    <ul class="list-group">
+
+                        <li id="notification-1" class="list-group-item notification-each" style="display: flex; flex-direction: column;">
+                           <div style="display: flex;justify-content: space-between;align-items: center;">
+                                <div class="title">This is a efing title.</div>
+                                <i class="la la-check" title="Mark as Read"></i>
+                           </div>
+                            <div style="display: flex;justify-content: space-between;align-items: center;">
+                                <p class="text">Consectetur nisi sint ea nulla Lorem velit.</p>
+                                <i class="la la-trash" title="Delete Notification" onclick="deleteNotification(1)"></i>
+                            </div>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
 
@@ -48,3 +61,11 @@
     </div>
 
 </div>
+
+<script>
+
+function deleteNotification(id){
+    $("#notification-"+id).addClass('d-none');
+}
+
+</script>

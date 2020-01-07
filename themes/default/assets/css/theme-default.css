@@ -88,9 +88,31 @@
     color: var(--white);
 }
 
-.topmenu .notifications p{
-    background-color: var(--main-theme-color);
-    color: var(--white);
+.topmenu .notifications ul.list-group li.list-group-item.notification-each {
+    background: transparent;
+    border: 0;
+    font-size: 14px;
+    padding-bottom: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.topmenu .notifications ul.list-group li.list-group-item.notification-each:hover {
+    background: #6a72de;
+}
+
+.topmenu .notifications ul.list-group li.list-group-item.notification-each .title {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.topmenu .notifications ul.list-group li.list-group-item.notification-each .text {
+    font-size: 14px;
+}
+.topmenu .notifications ul.list-group li.list-group-item.notification-each i.la {
+    font-size: 13px;
+    margin: 0;
 }
 
 .topmenu .settings .dropdown-menu{
