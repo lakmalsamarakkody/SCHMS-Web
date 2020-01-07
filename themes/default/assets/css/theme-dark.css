@@ -206,7 +206,7 @@ table.dataTable tbody th, table.dataTable tbody td {
 }
 
 /* PORTAL */
-.portal , .portal .col-md-8.content, .portal .content .student, .portal .content .col-12{
+.portal , .portal .col-md-8.content, .portal .content .student, .portal , .portal .col-md-8.content, .portal .content .parent, .portal .content .col-12{
     color: var(--white);
     background: #262a35;
 }

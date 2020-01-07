@@ -747,7 +747,7 @@ class Parents extends Controller {
         $data['user']['themes'][1]['name'] = 'Default';
         $data['user']['themes'][2]['name'] = 'Dark';
 
-        // CHECK EXISTING STAFF
+        // CHECK EXISTING PARENT
         $parent = $this->model_parent->where('id', '=', $parent_id)->first();
 
         // VIEW ERROR IF NO parent EXIST

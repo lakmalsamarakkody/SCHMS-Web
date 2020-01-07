@@ -1,0 +1,343 @@
+{{ template.header|raw }}
+
+<body>
+
+    <div class="container-fluid portal">
+        <div class="row">
+
+            <div class="col-md-12">
+                {{ template.topmenu|raw }}
+            </div>
+
+            <div class="col-md-8 mx-auto content">
+
+                <div class="parent">
+
+                    <!-- START : PARENT PROFILE  -->
+                    <section class="profileview">
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="media">
+                                            <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/parent/{{ parent.id }}">
+                                            <div class="media-body align-self-center">
+                                                <h5 class="my-0">{{ parent.initials }} {{ parent.surname }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- CARD BODY -->
+                                    <div class="card-body px-0">
+                                        
+                                        <ul class="nav nav-pills" id="myTab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">Student Details</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="about" aria-controls="about" aria-selected="true">Info</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="account-tab" data-toggle="tab" href="#account" role="account" aria-controls="account" aria-selected="true">Account</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content pt-1" id="myTabContent">
+
+                                            <!-- START : STUDENT TAB -->
+                                            <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
+
+                                                <ul class="nav nav-pills" id="studentTabs" role="tablist">
+                                                    {% for student in students %}
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="student-{{ student.details.id }}-tab" data-toggle="tab" href="#student-{{ student.details.id }}" role="tab" aria-controls="student" aria-selected="false">{{ student.details.initials }} {{ student.details.surname }}</a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+
+                                                <div class="tab-content p-3" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="student1" role="tabpanel" aria-labelledby="student1-tab">
+                                                        <div class="btn btn-primary">Fuck</div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="student2" role="tabpanel" aria-labelledby="student2-tab">
+                                                        <div class="btn btn-primary">Fuck 2</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- END : STUDENT TAB -->
+
+                                            <!-- START : ABOUT TAB -->
+                                            <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                                
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-header">Bio Data</div>
+                                                            <div class="card-body">
+                                                                
+                                                                <div class="form-row">
+                                                                    
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="">Full Name</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.full_name }}" id="parent-full_name" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Initials</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.initials }}" id="parent-initials" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Surname</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.surname }}" id="parent-surname" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="gender">Gender</label>
+                                                                            <select class="form-control" name="gender" id="parent-gender" disabled>
+                                                                                {% if parent.gender == "male" %}
+                                                                                    <option value="Male" selected>Male</option>
+                                                                                    <option value="Female">Female</option>
+                                                                                {% else %}
+                                                                                    <option value="Male">Male</option>
+                                                                                    <option value="Female" selected>Female</option>
+                                                                                {% endif %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Date of Birth</label>
+                                                                            <input type="date" class="form-control" value="{{ parent.dob }}" id="parent-dob" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Landline</label>
+                                                                            <input type="number" class="form-control" value="{{ parent.phone_home }}" id="parent-phone_home" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Mobile</label>
+                                                                            <input type="number" class="form-control" value="{{ parent.phone_mobile }}" id="parent-phone_mobile" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Occupation</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.occupation }}" id="parent-occupation" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Position</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.position }}" id="parent-position" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Monthly Income</label>
+                                                                            <input type="number" class="form-control" value="{{ parent.income }}" id="parent-income" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Email</label>
+                                                                            <input type="email" class="form-control" value="{{ parent.email }}" id="parent-email" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="">Address</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.address }}" id="parent-address" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.city }}" id="parent-city" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="parent-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == parent.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>                                                        
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-header">System Data</div>
+                                                            <div class="card-body">
+                                                                
+                                                                <div class="form-row">
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">NIC No</label>
+                                                                            <input type="text" class="form-control" value="{{ parent.nic }}" id="parent-nic" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">No of Students</label>
+                                                                            <input type="text" class="form-control" value="{{ student.count }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- END : ABOUT TAB -->
+
+                                            <!-- START : ACCOUNT TAB -->
+                                            <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
+
+                                                <div class="row">
+
+                                                    
+                                                    <div class="col-md-12">
+                                                        <div class="card">
+                                                            <div class="card-header">Account</div>
+                                                            <div class="card-body">
+                                                    
+                                                                <div class="form-row">
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="status">Status</label>
+                                                                            <select class="form-control" name="status" id="stu-status" disabled>
+                                                                                {% if settings.status  == "Active" %}
+                                                                                    <option value="Active" selected>Active</option>
+                                                                                    <option value="Deactive">Deactive</option>
+                                                                                {% else %}
+                                                                                <option value="Active">Active</option>
+                                                                                <option value="Deactive" selected>Deactive</option>
+                                                                                {% endif %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                    
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="role">User Role</label>
+                                                                            <select class="form-control" name="role_id" id="stu-role_id" disabled>
+                                                                                <option value="" selected>- select -</option>
+                                                                                {% for role in user.roles %}
+                                                                                    {% if role.id  == settings.user_role.id %}
+                                                                                        <option value="{{ role.id }}" selected>{{ role.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="theme">Theme</label>
+                                                                            <select class="form-control" name="user_theme" disabled>
+                                                                                {% if settings.theme  == "Dark" %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark" selected>Dark</option>
+                                                                                {% else %}
+                                                                                    <option value="Default">Default</option>
+                                                                                    <option value="Dark">Dark</option>
+                                                                                {% endif %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="username">Username</label>
+                                                                            <input type="text" class="form-control" id="stu-username" value="{{ settings.username }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="password">Password</label>
+                                                                            <input type="text" class="form-control" id="stu-password" placeholder="{{ settings.password }}" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-2">
+                                                                        <div class="form-group">
+                                                                            <label for="confirm_password">Confirm Password</label>
+                                                                            <input type="text" class="form-control" id="stu-confirm_password" placeholder="Retype if changed" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <!-- END : ACCOUNT TAB -->
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                                
+
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+{{ template.footer|raw }}
+</body>

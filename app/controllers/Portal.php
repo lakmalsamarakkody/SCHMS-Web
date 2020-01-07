@@ -7,6 +7,12 @@ class Portal extends Controller {
     
     public function student($student_id){
 
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+
         // SITE DETAILS
         $data['app']['url']         = $this->config->get('base_url');
         $data['app']['title']       = $this->config->get('site_title');
@@ -40,12 +46,6 @@ class Portal extends Controller {
         $this->load->model('subject');
         $this->load->model('user');
         $this->load->model('user/role');
-
-        //CHECK LOGIN STATUS
-		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-			header( 'Location:' . $this->config->get('base_url') . '/logout' );
-			exit();
-        endif;
 
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -204,6 +204,125 @@ class Portal extends Controller {
 
         // RENDER VIEW
         $this->load->view('portal/student', $data);
+    }
+
+    public function parent($parent_id){
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+
+        // SITE DETAILS
+        $data['app']['url']         = $this->config->get('base_url');
+        $data['app']['title']       = $this->config->get('site_title');
+        $data['app']['theme']       = $this->config->get('app_theme');
+
+        // HEADER/FOOTER
+        $data['template']['header'] = $this->load->controller('common/header', $data);
+        $data['template']['topmenu'] = $this->load->controller('common/portal_topmenu', $data);
+        $data['template']['footer'] = $this->load->controller('common/footer', $data);
+
+        // MODEL
+        $this->load->model('class');
+        $this->load->model('class/timetable');
+        $this->load->model('coach');
+        $this->load->model('coach/sport');
+        $this->load->model('district');
+        $this->load->model('exam');
+        $this->load->model('exam/grade');
+        $this->load->model('exam/schedule');
+        $this->load->model('exam/type');
+        $this->load->model('grade');
+        $this->load->model('parent');
+        $this->load->model('religion');
+        $this->load->model('student');
+        $this->load->model('student/exam');
+        $this->load->model('student/health');
+        $this->load->model('student/parent');
+        $this->load->model('student/relation');
+        $this->load->model('student/sport');
+        $this->load->model('sport');
+        $this->load->model('subject');
+        $this->load->model('user');
+        $this->load->model('user/role');
+
+        //QUERY ( CLASS )
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+        //QUERY ( RELATIONSHIP )
+		foreach( $this->model_student_relation->select('id', 'name')->orderBy('id')->get() as $key => $element ):
+			$data['student_relations'][$key]['id'] = $element->id;
+			$data['student_relations'][$key]['name']= $element->name;
+		endforeach;
+
+        // QUERY ( RELIGION )
+        foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['religions'][$key]['id'] = $element->id;
+            $data['religions'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( DISTRICT )
+        foreach( $this->model_district->select('id', 'name')->orderBy('name')->get() as $key => $element ):
+            $data['districts'][$key]['id'] = $element->id;
+            $data['districts'][$key]['name'] = $element->name;
+        endforeach;
+
+        // QUERY ( USER ROLES )
+        foreach( $this->model_user_role->get() as $key => $element ):
+            $data['user']['roles'][$key]['id'] = $element->id;
+            $data['user']['roles'][$key]['name'] = $element->name;
+        endforeach;
+
+        // USER STATUS
+        $data['user']['status'][1]['name'] = 'Active';
+        $data['user']['status'][2]['name'] = 'Inactive';
+
+        // USER THEMES
+        $data['user']['themes'][1]['name'] = 'Default';
+        $data['user']['themes'][2]['name'] = 'Dark';
+
+        // CHECK EXISTING PARENT
+        $parent = $this->model_parent->where('id', '=', $parent_id)->first();
+
+        // VIEW ERROR IF NO PARENT EXIST
+        if ( $parent == null ){
+            return http_response_code(404);
+        }
+
+        // BIO DATA
+        $data['parent'] = $parent;
+
+        // STUDENT DATA
+        foreach ( $this->model_student_parent->where('parent_id', '=', $parent_id)->get() as $key => $element ):
+            $data['students'][$key]['relation_id'] = $element->relation_id;
+            $data['students'][$key]['details'] = $this->model_student->where('id', '=', $element->student_id)->first();
+        endforeach;
+
+        // SYSTEM DATA
+        $data['student']['count'] = $this->model_student_parent->select('id')->where('parent_id', '=', $parent_id)->get()->count();
+
+        // SETTINGS DATA
+        $settings_data = $this->model_user->where('ref_id', '=', $parent_id)->where('user_type', '=', "parent")->first();
+        if ( $settings_data !== NULL):
+            $data['settings']['user_role']['id'] = $settings_data->role_id;
+            $data['settings']['user_role']['name'] = $this->model_user_role->where('id', '=', $settings_data->role_id)->first()->name;
+            $data['settings']['username'] = $settings_data->username;
+            ( $settings_data->password !== NULL ) ? $data['settings']['password'] = "Password exists" : $data['settings']['password'] = "No password";
+            $data['settings']['theme'] = $settings_data->theme;
+            $data['settings']['status'] = $settings_data->status;
+        endif;
+
+        // RENDER VIEW
+        $this->load->view('portal/parent', $data);
     }
 
     public function messages($id = null){
