@@ -4,11 +4,11 @@
     padding: 4rem;
 }
 
-.card {
+.schoolindex .card {
     margin-bottom: 25px;;
 }
 
-.card .card-body {
+.schoolindex .card .card-body {
     height: 300px;
     overflow-x: hidden;
     overflow-y: auto;
