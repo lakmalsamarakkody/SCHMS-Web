@@ -17,17 +17,22 @@
                     <div class="card">
                         <div class="card-header">Assign User Permissions</div>
                         <div class="card-body">
-                            <form method="post">
 
+                            <form action="" method="POST">
+                            
                                 <div class="form-row">
                                     
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="role_id">User Role</label>
-                                            <select class="form-control" name="role_id">
+                                            <select id="role_id" class="form-control" name="role">
                                                 <option value="" selected>- Select -</option>
                                                 {% for user_role in user.roles %}
-                                                <option value="{{ user_role.id }}">{{ user_role.name }}</option>
+                                                    {% if role_id and role_id == user_role.id %}
+                                                    <option value="{{ user_role.id }}" selected>{{ user_role.name }}</option>
+                                                    {% else %}
+                                                    <option value="{{ user_role.id }}">{{ user_role.name }}</option>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -36,20 +41,59 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="role_id">&nbsp;</label> <br/>
-                                            <button class="btn btn-success pl-5 pr-5" type="submit">Save</button>
+                                            <input type="hidden" name="is_submit" value="true">
+                                            <button class="btn btn-success pl-5 pr-5" type="submit">Search</button>
                                             <button class="btn btn-secondary" type="button" onclick="clearForm(this.form);">Clear</button>
                                         </div>
                                     </div>
 
                                     
                                 </div>
-                            </form>
 
                             </form>
     
                         </div>
                     </div>
                     <!-- END : USER SEARCH FORM -->
+
+                    {% if permissions %}
+
+                    <!-- START : LIST PERMISSIONS -->
+                    <div class="card mt-3">
+                        <div class="card-header">Permissions</div>
+                        <div class="card-body">
+                            
+                            <div class="form-row">
+
+                                {% for permission in permissions %}
+
+                                    {% if permission.id in rolepermissions %}
+                                    <div class="col-md-3">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="{{ permission.id }}" onclick="addOrRemovePermission({{ permission.id }})" checked>
+                                            <label class="custom-control-label" for="{{ permission.id }}">{{ permission.name }}</label>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    
+                                    <div class="col-md-3">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="{{ permission.id }}" onclick="addOrRemovePermission({{ permission.id }})">
+                                            <label class="custom-control-label" for="{{ permission.id }}">{{ permission.name }}</label>
+                                        </div>
+                                    </div>
+
+                                    {% endif %}
+
+                                {% endfor %}
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- END : LIST PERMISSIONS -->
+
+                    {% endif %}
+
                 </div>
             </div>
             
@@ -59,6 +103,36 @@
     {{ template.footer|raw }}
 
     <script>
+
+        function addOrRemovePermission(permission_id){
+            
+            var role_id = $("#role_id").val();
+
+            var formData = new FormData;
+            formData.append('role_id', role_id);
+            formData.append('permission_id', permission_id);
+
+            $.ajax({
+                url: '{{ app.url }}/permission/ajax_add_or_remove_permission_to_role',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+
+                   if ( res.status == 'success'){
+                       location.reload();
+                   }
+                   
+                },
+                error: (e) => {
+                    alertify.alert("Error", "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+
+        }
         
         //  CLEAR FORM
         function clearForm(oForm) {
