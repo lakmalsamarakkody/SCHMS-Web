@@ -67,19 +67,19 @@
                                                     <div class="card mt-4">
                             
                                                         <div class="card-header" id="headingResults" data-toggle="collapse" data-target="#collapseResults" aria-expanded="true" aria-controls="collapseResults">
-                                                            {{ exam.exam_type_name }} - {{ exam.exam_year }} Grade {{ exam.grade_name }}
+                                                            {{ exam.name }} - {{ exam.year }} : Grade {{ exam.grade }}
                                                         </div>
                                                     
                                                         <div id="collapseResults" class="collapse show" aria-labelledby="headingResults" data-parent="#accordionResults">
                                                             <div class="card-body">
                                                                 <table class="table table-borderless table-responsive-md">
                                                                     <tbody>
+                                                                        {% for subject in exam.subjects %}
                                                                         <tr>
-                                                                            <td scope="row">{{ exam.subject_name }}</td>
-                                                                            <td scope="row">{{ exam.marks }}</td>
-                                                                            <td scope="row"></td>
-                                                                            <td scope="row"></td>
+                                                                            <th scope="row">{{ subject.name }}</th>
+                                                                            <td scope="row">{{ subject.marks }}</td>
                                                                         </tr>
+                                                                        {% endfor %}
                                                                     </tbody>
                                                                 </table>
                                                             </div>

@@ -84,19 +84,19 @@ class Portal extends Controller {
         }
 
         // RESULT TAB
-        $all_exams_old = $this->model_student_exam->select('exam_schedule_id', 'marks')->where('student_id', '=', $student->id)->orderBy('created_on', 'DESC');
-        foreach ( $all_exams_old->get() as $key => $element ):
-            // GET ALL EXAM SCHEULES
-            $exam_schedule = $this->model_exam_schedule->select('exam_grade_id', 'subject_id')->where('id', '=', $element->exam_schedule_id)->first();
-            $data['exams'][$key]['subject']['name'] = $this->model_subject->select('name')->where('id', '=', $exam_schedule->subject_id)->first()->name;
-            $data['exams'][$key]['subject']['marks'] = $element->marks;
-            // GET EXAM AND GRADE
-            $exam_name_grade = $this->model_exam_grade->select('exam_id', 'grade_id')->where('id', '=', $exam_schedule->exam_grade_id)->first();
-            $data['exams'][$key]['grade']['name'] = "Grade - ".$this->model_grade->select('name')->where('id', '=', $exam_name_grade->grade_id)->first()->name;
-            // GET EXAM TYPE
-            $exam_type_year = $this->model_exam->select('type_id', 'year')->where('id', '=', $exam_name_grade->exam_id)->first();
-            $data['exams'][$key]['exam']['name'] = $this->model_exam_type->select('name')->where('id', '=', $exam_type_year->type_id)->first()->name." - ".$exam_type_year->year;
-        endforeach;
+        // $all_exams_old = $this->model_student_exam->select('exam_schedule_id', 'marks')->where('student_id', '=', $student->id)->orderBy('created_on', 'DESC');
+        // foreach ( $all_exams_old->get() as $key => $element ):
+        //     // GET ALL EXAM SCHEULES
+        //     $exam_schedule = $this->model_exam_schedule->select('exam_grade_id', 'subject_id')->where('id', '=', $element->exam_schedule_id)->first();
+        //     $data['exams'][$key]['subject']['name'] = $this->model_subject->select('name')->where('id', '=', $exam_schedule->subject_id)->first()->name;
+        //     $data['exams'][$key]['subject']['marks'] = $element->marks;
+        //     // GET EXAM AND GRADE
+        //     $exam_name_grade = $this->model_exam_grade->select('exam_id', 'grade_id')->where('id', '=', $exam_schedule->exam_grade_id)->first();
+        //     $data['exams'][$key]['grade']['name'] = "Grade - ".$this->model_grade->select('name')->where('id', '=', $exam_name_grade->grade_id)->first()->name;
+        //     // GET EXAM TYPE
+        //     $exam_type_year = $this->model_exam->select('type_id', 'year')->where('id', '=', $exam_name_grade->exam_id)->first();
+        //     $data['exams'][$key]['exam']['name'] = $this->model_exam_type->select('name')->where('id', '=', $exam_type_year->type_id)->first()->name." - ".$exam_type_year->year;
+        // endforeach;
 
 
         $all_exams = DB::table('student_has_exam_schedule')
@@ -104,32 +104,36 @@ class Portal extends Controller {
             ->join('exam_has_grade', 'exam_grade_has_schedule.exam_grade_id', 'exam_has_grade.id')
             ->where('student_has_exam_schedule.student_id', '=', $student->id)
             ->groupBy('exam_has_grade.exam_id')
+            ->orderBy('student_has_exam_schedule.created_on', 'DESC')
             ->select('exam_has_grade.id as exam_grade_id');
-        $data['all_exams'] = $all_exams;
 
         foreach ( $all_exams->get() as $key => $value ):
-        //     $data['exams'] = DB::table('student_has_exam_schedule')
-        //     ->join('exam_grade_has_schedule', 'student_has_exam_schedule.exam_schedule_id', 'exam_grade_has_schedule.id')
-        //     ->join('exam_has_grade', 'exam_grade_has_schedule.exam_grade_id', 'exam_has_grade.id')
-        //     ->join('exam', 'exam_has_grade.exam_id', 'exam.id')
-        //     ->join('exam_type', 'exam.type_id', 'exam_type.id')
-        //     ->join('grade', 'exam_has_grade.grade_id', 'grade.id')
-        //     ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
-        //     ->where('student_has_exam_schedule.student_id', '=', $student->id)
-        //     ->where('exam_has_grade.id', '=', $value->id)
-        //     ->select('exam_type.name as exam_type_name', 'exam.year as exam_year', 'grade.name as grade_name', 'subject.name as subject_name', 'student_has_exam_schedule.marks')
-        //     ->get();
-        var_dump($value->exam_grade_id);
+
+            // EXAM ID AND GRADE
+            $exam_id_grade = $this->model_exam_grade->select('exam_id', 'grade_id')->where('id', '=', $value->exam_grade_id)->first();
+            $data['exams'][$key]['grade'] = $this->model_grade->select('name')->where('id', '=', $exam_id_grade->grade_id)->first()->name;
+
+            // GET EXAM NAME
+            $exam_type_year = $this->model_exam->select('type_id', 'year')->where('id', '=', $exam_id_grade->exam_id)->first();
+            $data['exams'][$key]['name'] = $this->model_exam_type->select('name')->where('id', '=', $exam_type_year->type_id)->first()->name;
+            $data['exams'][$key]['year'] = $exam_type_year->year;
+
+            // GET RESULTS OF SAME EXAM
+            $exam_result = DB::table('student_has_exam_schedule')
+            ->join('exam_grade_has_schedule', 'student_has_exam_schedule.exam_schedule_id', 'exam_grade_has_schedule.id')
+            ->join('exam_has_grade', 'exam_grade_has_schedule.exam_grade_id', 'exam_has_grade.id')
+            ->join('exam', 'exam_has_grade.exam_id', 'exam.id')
+            ->join('exam_type', 'exam.type_id', 'exam_type.id')
+            ->join('grade', 'exam_has_grade.grade_id', 'grade.id')
+            ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
+            ->where('student_has_exam_schedule.student_id', '=', $student->id)
+            ->where('exam_has_grade.id', '=', $value->exam_grade_id)
+            ->select('subject.name as subject_name', 'student_has_exam_schedule.marks');
+            foreach ($exam_result->get() as $key2 => $value2  ):
+                $data['exams'][$key]['subjects'][$key2]['name'] = $value2->subject_name;
+                $data['exams'][$key]['subjects'][$key2]['marks'] = $value2->marks;
+            endforeach;
         endforeach;
-
-        // ->join('exam', 'exam_has_grade.exam_id', 'exam.id')
-        // ->join('exam_type', 'exam.type_id', 'exam_type.id')
-        // ->join('grade', 'exam_has_grade.grade_id', 'grade.id')
-        // ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
-        
-
-        // $data['exams'] = $all_exams;
-        // $data['exams_old'] = $all_exams_old;
 
         // TIMETABLE TAB
         //STUDENT CLASSID
