@@ -32,6 +32,7 @@
                                     <!-- CARD BODY -->
                                     <div class="card-body px-0">
                                         
+                                        <!-- MAIN MENU -->
                                         <ul class="nav nav-pills" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">Student Details</a>
@@ -49,21 +50,198 @@
                                             <!-- START : STUDENT TAB -->
                                             <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
 
+                                                <!-- STUDENT NAMES MENU -->
                                                 <ul class="nav nav-pills" id="studentTabs" role="tablist">
                                                     {% for student in students %}
                                                         <li class="nav-item">
-                                                            <a class="nav-link active" id="student-{{ student.details.id }}-tab" data-toggle="tab" href="#student-{{ student.details.id }}" role="tab" aria-controls="student" aria-selected="false">{{ student.details.initials }} {{ student.details.surname }}</a>
+                                                            <a class="nav-link" id="student-{{ student.details.id }}-tab" data-toggle="tab" href="#student-{{ student.details.id }}" role="tab" aria-controls="student" aria-selected="false">{{ student.details.initials }} {{ student.details.surname }}</a>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
 
-                                                <div class="tab-content p-3" id="myTabContent">
-                                                    <div class="tab-pane fade show active" id="student1" role="tabpanel" aria-labelledby="student1-tab">
-                                                        <div class="btn btn-primary">Fuck</div>
+                                                
+                                                <div class="tab-content p-3" id="myTabContent-{{ student.details.id }}">
+                                                    {% for student in students %}
+                                                    <div class="tab-pane fade" id="student-{{ student.details.id }}" role="tabpanel" aria-labelledby="student-{{ student.details.id }}-tab">
+
+                                                        <!-- STUDENT DETAIL MENU -->
+                                                        <ul class="nav nav-pills" id="student-menu-Tab" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="false">Exam Results</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" id="timetable-tab" data-toggle="tab" href="#timetable" role="tab" aria-controls="timetable" aria-selected="false">Class Timetable</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link active" id="health-tab" data-toggle="tab" href="#health" role="health" aria-controls="health" aria-selected="true">Health</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" id="sport-tab" data-toggle="tab" href="#sport" role="sport" aria-controls="sport" aria-selected="true">Sports</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="about" aria-controls="about" aria-selected="true">About</a>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div class="tab-content p-3" id="studentDetailsTabContent">
+                                            
+                                                            <!-- START : ABOUT STUDENT -->
+                                                            <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                                                <div class="row">
+
+                                                                    <div class="col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="card-header">{{ student.details.initials }} {{ student.details.surname }}</div>
+                                                                            <div class="card-body">
+                                                                    
+                                                                                <div class="form-row">
+                                                                    
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Full Name</label>
+                                                                                            <input type="text" class="form-control" value="{{ student.details.full_name }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-4">
+                                                                                        <div class="form-group">
+                                                                                            <label for="initials">Initials</label>
+                                                                                            <input type="text" class="form-control" value="{{ student.details.initials }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-8">
+                                                                                        <div class="form-group">
+                                                                                            <label for="surname">Surname</label>
+                                                                                            <input type="text" class="form-control" value="{{ student.details.surname }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Admission No</label>
+                                                                                            <input type="number" class="form-control" value="{{ student.details.admission_no }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Admission Date</label>
+                                                                                            <input type="date" class="form-control" value="{{ student.details.admission_date }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="class">Class</label>
+                                                                                            <select class="form-control" name="class" disabled>
+                                                                                                {% for class in classes %}
+                                                                                                    {% if class.id == student.details.class_id %}
+                                                                                                        <option value="{{ class.id }}" selected>{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                                    {% else %}
+                                                                                                        <option value="{{ class.id }}">{{ class.grade.name }} - {{ class.name }}</option>
+                                                                                                    {% endif %}
+                                                                                                {% endfor %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="religion">Relation</label>
+                                                                                            <select class="form-control" name="relation" id="parent-relation_id" disabled>
+                                                                                                {% for relation in student_relations %}
+                                                                                                    {% if relation.id == student.relation_id %}
+                                                                                                        <option value="{{ relation.id }}" selected>{{ relation.name }}</option>
+                                                                                                    {% else %}
+                                                                                                        <option value="{{ relation.id }}">{{ relation.name }}</option>
+                                                                                                    {% endif %}
+                                                                                                {% endfor %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                
+                
+                                                                                    
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="gender">Gender</label>
+                                                                                            <select class="form-control" name="gender" disabled>
+                                                                                                {% if student.details.gender == "male" %}
+                                                                                                    <option value="Male" selected>Male</option>
+                                                                                                    <option value="Female">Female</option>
+                                                                                                {% else %}
+                                                                                                    <option value="Male">Male</option>
+                                                                                                    <option value="Female" selected>Female</option>
+                                                                                                {% endif %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Date of Birth</label>
+                                                                                            <input type="date" class="form-control" value="{{ student.details.dob }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Phone</label>
+                                                                                            <input type="number" class="form-control" value="{{ student.details.phone_mobile }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Email</label>
+                                                                                            <input type="email" class="form-control" value="{{ student.details.email }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">City</label>
+                                                                                            <input type="text" class="form-control" value="{{ student.details.city }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-6">
+                                                                                        <div class="form-group">
+                                                                                            <label for="religion">Religion</label>
+                                                                                            <select class="form-control" name="religion" disabled>
+                                                                                                {% for religion in religions %}
+                                                                                                    {% if religion.id == student.details.religion_id %}
+                                                                                                        <option value="{{ religion.id }}" selected>{{ religion.name }}</option>
+                                                                                                    {% else %}
+                                                                                                        <option value="{{ religion.id }}">{{ religion.name }}</option>
+                                                                                                    {% endif %}
+                                                                                                {% endfor %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Address</label>
+                                                                                            <input type="text" class="form-control" value="{{ student.details.address }}" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr width="100%">
+                                                                    
+                                                                                </div>
+                                                                    
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                
+                                                                </div>
+                                                            </div>
+                                                            <!-- END : ABOUT STUDENT -->
+                                                        </div>
+
                                                     </div>
-                                                    <div class="tab-pane fade" id="student2" role="tabpanel" aria-labelledby="student2-tab">
-                                                        <div class="btn btn-primary">Fuck 2</div>
-                                                    </div>
+                                                    {% endfor %}
                                                 </div>
 
                                             </div>
