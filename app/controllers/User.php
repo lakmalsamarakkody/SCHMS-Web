@@ -198,11 +198,28 @@ class User extends Controller {
 
         // RETRIVE USER_ROLE
         $this->load->model('user/role');
+        $this->load->model('user/permission');
+        $this->load->model('user/rolepermission');
 
         foreach( $this->model_user_role->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
+
+        if ( isset($this->request->post['is_submit']) ):
+            
+            $data['role_id'] = $this->request->post['role'];
+            
+            foreach ($this->model_user_permission->all() as $key => $value ):
+                $data['permissions'][$key]['id'] = $value->id;
+                $data['permissions'][$key]['name'] = $value->name;
+            endforeach;
+
+            foreach( $this->model_user_rolepermission->where('role_id', $this->request->post['role'] )->get() as $key => $value):
+                $data['rolepermissions'][$key] = $value->permission_id;
+            endforeach;
+
+        endif;
 
 		// RENDER VIEW
         $this->load->view('user/permission', $data);
@@ -241,6 +258,39 @@ class User extends Controller {
         return;
 
     }
+
+
+    // public function ajax_get_roles_permissions(){
+
+    //     // SET JSON HEADER
+    //     header('Content-Type: application/json');
+
+    //     $validate = GUMP::is_valid($this->request->post, ['role_id' => 'required']);
+        
+    //     if ( $validate !== true ){
+    //         echo json_encode(array("status" => "error", "error" => "Invalid role id."));
+    //         return;
+    //     }
+
+    //     $this->load->model('user/role');
+    //     $this->load->model('user/rolepermission');
+    //     $this->load->model('user/permission');
+        
+    //     $Role = $this->model_user_role->findOrFail($this->request->post['role_id']);
+        
+    //     $RoleHasPermission = $this->model_user_rolepermission->where('role_id', $Role->id)->get();
+
+    //     // return var_dump($RoleHasPermission->first()->permission_id);
+
+    //     foreach( $RoleHasPermission as $key => $value ){
+    //         $RoleHasPermission[$key]['permission'] = $this->model_user_permission->where('id', $value->permission_id)->first();
+    //     }
+
+    //     echo json_encode(array('status' => 'success', 'data' => $RoleHasPermission));
+    //     return;
+
+    // }
+
     
 }
 ?>
