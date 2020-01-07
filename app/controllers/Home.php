@@ -14,6 +14,17 @@ class Home extends Controller {
 
 		endif;
 
+		// FIND USER
+		$this->load->model('user');
+		$AuthUser = $this->model_user->where('id', $_SESSION['user']['id'])->first();
+		
+		// if ( $AuthUser->redirectIfNotPermitted('edit_users') ):
+			// HAS PERMISSION
+		// endif;
+		
+		// $data['authUser'] = $AuthUser;
+		
+
 		// SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
 		$data['app']['title']		= $this->config->get('site_title');
