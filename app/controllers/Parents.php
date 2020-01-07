@@ -264,7 +264,7 @@ class Parents extends Controller {
             $parent_relation->whereIn('student_id', $student_ids);
             $parent_relation->whereIn('parent_id', $parent_ids);
 
-            foreach( $parent_relation->get() as $key => $el ):
+            foreach( $parent_relation->groupBy('parent_id')->get() as $key => $el ):
 
                 /**
                  * Query details of the parents using the parent table by

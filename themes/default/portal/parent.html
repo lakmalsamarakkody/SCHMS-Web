@@ -67,26 +67,57 @@
                                                         <!-- STUDENT DETAIL MENU -->
                                                         <ul class="nav nav-pills" id="student-menu-Tab" role="tablist">
                                                             <li class="nav-item">
-                                                                <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="false">Exam Results</a>
+                                                                <a class="nav-link" id="result-tab-{{ student.details.id }}" data-toggle="tab" href="#result-{{ student.details.id }}" role="tab" aria-controls="result" aria-selected="false">Exam Results</a>
                                                             </li>
                                                             <li class="nav-item">
-                                                                <a class="nav-link" id="timetable-tab" data-toggle="tab" href="#timetable" role="tab" aria-controls="timetable" aria-selected="false">Class Timetable</a>
+                                                                <a class="nav-link" id="timetable-tab-{{ student.details.id }}" data-toggle="tab" href="#timetable-{{ student.details.id }}" role="tab" aria-controls="timetable" aria-selected="false">Class Timetable</a>
                                                             </li>
                                                             <li class="nav-item">
-                                                                <a class="nav-link active" id="health-tab" data-toggle="tab" href="#health" role="health" aria-controls="health" aria-selected="true">Health</a>
+                                                                <a class="nav-link" id="health-tab-{{ student.details.id }}" data-toggle="tab" href="#health-{{ student.details.id }}" role="health" aria-controls="health" aria-selected="true">Health</a>
                                                             </li>
                                                             <li class="nav-item">
-                                                                <a class="nav-link" id="sport-tab" data-toggle="tab" href="#sport" role="sport" aria-controls="sport" aria-selected="true">Sports</a>
+                                                                <a class="nav-link" id="sport-tab-{{ student.details.id }}" data-toggle="tab" href="#sport-{{ student.details.id }}" role="sport" aria-controls="sport" aria-selected="true">Sports</a>
                                                             </li>
                                                             <li class="nav-item">
-                                                                <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="about" aria-controls="about" aria-selected="true">About</a>
+                                                                <a class="nav-link active" id="about-tab-{{ student.details.id }}" data-toggle="tab" href="#about-{{ student.details.id }}" role="about" aria-controls="about" aria-selected="true">About</a>
                                                             </li>
                                                         </ul>
 
-                                                        <div class="tab-content p-3" id="studentDetailsTabContent">
+                                                        <div class="tab-content p-3" id="studentDetailsTabContent-{{ student.details.id }}">
+
+                                                            <!-- START : RESULT STUDENT -->
+                                                            <div class="tab-pane fade" id="result-{{ student.details.id }}" role="tabpanel" aria-labelledby="result-tab">
+                                                                <div id="accordionResults">
+
+                                                                    {% for exam in student.exams %}
+                                                                    <div class="card mt-4">
+                                            
+                                                                        <div class="card-header" id="headingResults" data-toggle="collapse" data-target="#collapseResults" aria-expanded="true" aria-controls="collapseResults">
+                                                                            {{ exam.name }} - {{ exam.year }} : Grade {{ exam.grade }}
+                                                                        </div>
+                                                                    
+                                                                        <div id="collapseResults" class="collapse show" aria-labelledby="headingResults" data-parent="#accordionResults">
+                                                                            <div class="card-body">
+                                                                                <table class="table table-borderless table-responsive-md">
+                                                                                    <tbody>
+                                                                                        {% for subject in student.exam.subjects %}
+                                                                                        <tr>
+                                                                                            <th scope="row">{{ subject.name }}</th>
+                                                                                            <td scope="row">{{ subject.marks }}</td>
+                                                                                        </tr>
+                                                                                        {% endfor %}
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                            <!-- END : RESULT STUDENT -->
                                             
                                                             <!-- START : ABOUT STUDENT -->
-                                                            <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                                            <div class="tab-pane fade show active" id="about-{{ student.details.id }}" role="tabpanel" aria-labelledby="about-tab">
                                                                 <div class="row">
 
                                                                     <div class="col-md-6">
