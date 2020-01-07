@@ -35,10 +35,19 @@
                                         
                                         <ul class="nav nav-pills" id="myTab" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link" id="exam-schedule-tab" data-toggle="tab" href="#exam-schedule" role="exam-schedule" aria-controls="exam-schedule" aria-selected="true">Exam Schedule</a>
+                                                <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="result" aria-controls="result" aria-selected="true">Exam Results</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" id="parents-tab" data-toggle="tab" href="#parents" role="tab" aria-controls="parents" aria-selected="false">Parents</a>
+                                                <a class="nav-link" id="timetable-tab" data-toggle="tab" href="#timetable" role="timetable" aria-controls="timetable" aria-selected="true">Class Timetable</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="health-tab" data-toggle="tab" href="#health" role="health" aria-controls="health" aria-selected="true">Health</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="sport-tab" data-toggle="tab" href="#sport" role="sport" aria-controls="sport" aria-selected="true">Sports</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="parent-tab" data-toggle="tab" href="#parent" role="tab" aria-controls="parent" aria-selected="false">Parents</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="about" aria-controls="about" aria-selected="true">Info</a>
@@ -50,7 +59,285 @@
 
                                         <div class="tab-content p-3" id="myTabContent">
 
-                                            <!-- ABOUT STUDENT -->
+                                            <!-- START : RESULT TAB -->
+                                            <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
+                                                <div id="accordionResults">
+
+                                                    {% for exam in exams %}
+                                                    <div class="card mt-4">
+                            
+                                                        <div class="card-header" id="headingResults" data-toggle="collapse" data-target="#collapseResults" aria-expanded="true" aria-controls="collapseResults">
+                                                            {{ exam.name }} - {{ exam.year }} : Grade {{ exam.grade }}
+                                                        </div>
+                                                    
+                                                        <div id="collapseResults" class="collapse show" aria-labelledby="headingResults" data-parent="#accordionResults">
+                                                            <div class="card-body">
+                                                                <table class="table table-borderless table-responsive-md">
+                                                                    <tbody>
+                                                                        {% for subject in exam.subjects %}
+                                                                        <tr>
+                                                                            <th scope="row">{{ subject.name }}</th>
+                                                                            <td scope="row">{{ subject.marks }}</td>
+                                                                        </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <!-- END : RESULT TAB -->
+
+                                            <!-- START : TIMETABLE TAB -->
+                                            <div class="tab-pane fade" id="timetable" role="tabpanel" aria-labelledby="timetable-tab">
+                                                <div class="row">
+                                                    <section class="col-12 timetable">
+                            
+                                                        <table class="table table-bordered table-responsive-md">
+                                
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th width="1%" class="text-center" scope="col">Period</th>
+                                                                    <th width="20%" class="text-center" scope="col">Monday</th>
+                                                                    <th width="20%" class="text-center" scope="col">Tuesday</th>
+                                                                    <th width="20%" class="text-center" scope="col">Wednesday</th>
+                                                                    <th width="20%" class="text-center" scope="col">Thursday</th>
+                                                                    <th width="20%" class="text-center" scope="col">Friday</th>
+                                                                </tr>
+                                                            </thead>
+                                
+                                                            <tbody>
+                            
+                                                                {% set period = 1 %}
+                                
+                                                                {% for row in 1..9 %}
+                                                                    {% if row != 5 %}
+                                
+                                                                    <tr>
+                                                                        <th scope="row" class="text-center">{{ period }}</th>
+                                                                        {% for cols in 1..5 %}
+                                                                        <td class="text-center">
+                            
+                                                                            {% for subject in subjects %}
+                                                                                {% if timetable[cols][period].subject_id == subject.id %}
+                                                                                <span><b>{{ subject.name }}</b></span>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                            <br>
+                                                                            {% for staff in staffs %}
+                                                                                {% if timetable[cols][period].staff_id == staff.id %}
+                                                                                <span>{{ staff.initials }} {{ staff.surname }}</span>
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        </td>
+                                                                        {% endfor %}
+                                                                    </tr>
+                                                                    {% set period = period + 1 %}
+                                                                    {% else %}
+                                                                    <tr class="thead-dark">
+                                                                        <th class="text-center" colspan="6">I N T E R V A L</th>
+                                                                    </tr>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            
+                                                            </tbody>
+                                                        </table>
+                                
+                                                        <input id="classId" type="hidden" value="{{ class.id }}" />
+                                
+                                                    </section>
+                                                </div>
+                                            </div>
+                                            <!-- END : TIMETABLE TAB -->
+
+                                            <!-- START : HEALTH TAB -->
+                                            <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="hs-tab">
+                                                <caption>Last updated on : {{ health.date }}</caption>
+                                                <table class="table table-borderless table-responsive-md">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th width="20%" scope="col">Height</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.height }} cm</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="20%" scope="col">Weight</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.weight }} kg</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="20%" scope="col">BMI index</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.bmi }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="20%" scope="col">Blood Group</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.blood_group }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="20%" scope="col">Heart Rate</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.heart_rate }} bpm</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="20%" scope="col">Blood Pressure</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.blood_pressure }} mmHg</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="20%" scope="col">Vaccinations</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.vaccination }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="20%" scope="col">Specialities</th>
+                                                            <th width="10%" scope="col">:</th>
+                                                            <td scope="row">{{ health.speciality }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- END : HEALTH TAB -->
+
+                                            <!-- START : SPORT TAB -->
+                                            <div class="tab-pane fade" id="sport" role="tabpanel" aria-labelledby="sports-tab">
+                                                <table class="table table-bordered table-responsive-md">
+                                
+                                                    <thead class="thead-dark">
+                                                        <tr>
+                                                            <th scope="col">ID</th>
+                                                            <th scope="col">Sport</th>
+                                                            <th scope="col">Coach</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for sport in sports %}
+                                                        <tr>
+                                                            <td scope="row">{{ sport.id }}</td>
+                                                            <td>{{ sport.name }}</td>
+                                                            <td>{{ sport.coach.name }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- END : SPORT TAB -->
+
+                                            <!-- START : PARENT TAB -->
+                                            <div class="tab-pane fade" id="parent" role="tabpanel" aria-labelledby="parents-tab">
+
+                                                <div class="row">
+
+                                                    {% for parent in parents %}
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-header">{{ parent.relation.name }}</div>
+                                                            <div class="card-body">
+                                                    
+                                                                <div class="form-row">
+                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Name</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.initials }} {{ parent.surname }}">
+                                                                        </div>
+                                                                    </div>
+                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">NIC Number</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.nic }}">
+                                                                        </div>
+                                                                    </div>
+                                                    
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Gender</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.gender }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Date of Birth</label>
+                                                                            <input type="date" class="form-control" readonly="readonly" value="{{ parent.dob }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Home Phone</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.phone_home }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Mobile Phone</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.phone_mobile }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Income</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.income }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Email</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.email }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label for="">Address</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.address }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">City</label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.city }}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="form-group">
+                                                                            <label for="district">District</label>
+                                                                            <select class="form-control" id="stu-district" name="district" disabled>
+                                                                                <option value="null" selected>- select -</option>
+                                                                                {% for district in districts %}
+                                                                                    {% if district.id == parent.district_id %}
+                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                    
+                                                                </div>
+                                                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+
+                                                </div>
+
+                                            </div>
+                                            <!-- END : PARENT TAB -->
+
+                                            <!-- START : ABOUT TAB -->
                                             <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
                                                 
                                                 <div class="row">
@@ -214,118 +501,7 @@
                                                 </div>
 
                                             </div>
-                                            <!-- END : BIO TAB -->
-
-                                            <!-- START : PARENT TAB -->
-                                            <div class="tab-pane fade" id="parents" role="tabpanel" aria-labelledby="parents-tab">
-
-                                                <div class="row">
-
-                                                    {% for parent in parents %}
-                                                    <div class="col-md-6">
-                                                        <div class="card">
-                                                            <div class="card-header">{{ parent.relation.name }}</div>
-                                                            <div class="card-body">
-                                                    
-                                                                <div class="form-row">
-                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Name</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.initials }} {{ parent.surname }}">
-                                                                        </div>
-                                                                    </div>
-                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">NIC Number</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.nic }}">
-                                                                        </div>
-                                                                    </div>
-                                                    
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Gender</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.gender }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Date of Birth</label>
-                                                                            <input type="date" class="form-control" readonly="readonly" value="{{ parent.dob }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Home Phone</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.phone_home }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Mobile Phone</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.phone_mobile }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Income</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.income }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">Email</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.email }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-12">
-                                                                        <div class="form-group">
-                                                                            <label for="">Address</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.address }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="">City</label>
-                                                                            <input type="text" class="form-control" readonly="readonly" value="{{ parent.city }}">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-6">
-                                                                        <div class="form-group">
-                                                                            <label for="district">District</label>
-                                                                            <select class="form-control" id="stu-district" name="district" disabled>
-                                                                                <option value="null" selected>- select -</option>
-                                                                                {% for district in districts %}
-                                                                                    {% if district.id == parent.district_id %}
-                                                                                        <option value="{{ district.id }}" selected>{{ district.name }}</option>
-                                                                                    {% else %}
-                                                                                        <option value="{{ district.id }}">{{ district.name }}</option>
-                                                                                    {% endif %}
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                    
-                                                                </div>
-                                                    
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-
-                                                </div>
-
-                                            </div>
-                                            <!-- END : PARENT TAB -->
+                                            <!-- END : ABOUT TAB -->
 
                                             <!-- START : ACCOUNT TAB -->
                                             <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">

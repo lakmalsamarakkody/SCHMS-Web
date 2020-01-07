@@ -447,13 +447,13 @@ class Timetable extends Controller {
         endforeach;
 
         // SUBS
-        $data['subject'] = $this->model_subject->select('id', 'name', 'si_name')->orderBy('id')->get();
+        $data['subjects'] = $this->model_subject->select('id', 'name', 'si_name')->orderBy('id')->get();
 
         // STAFF
         $data['staffs'] = $this->model_staff->select('id', 'initials', 'surname')->orderBy('surname')->get();
 
         // CHECK IF POST REQUEST
-        if ( !empty($this->request->post) ){
+        if ( !empty($this->request->post) ):
 
             $data['class']['id'] = $this->request->post['timetable_class'];
              // PRESERVE SUBMITED DATA
@@ -467,8 +467,7 @@ class Timetable extends Controller {
                     'staff_id' => $element->staff_id
                 );
             endforeach;
-
-        }
+        endif;
 
         // RENDER VIEW
         $this->load->view('timetable/class_timetable', $data);

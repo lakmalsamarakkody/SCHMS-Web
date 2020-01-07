@@ -76,9 +76,9 @@
                                             {% for cols in 1..5 %}
                                             <td class="text-center">
 
-                                                {% for subject in subject %}
+                                                {% for subject in subjects %}
                                                     {% if timetable[cols][period].subject_id == subject.id %}
-                                                    <span>{{ subject.name }}</span>
+                                                    <span><b>{{ subject.name }}</b></span>
                                                     {% endif %}
                                                 {% endfor %}
                                                 <br>
@@ -97,12 +97,7 @@
                                         </tr>
                                         {% endif %}
                                     {% endfor %}
-    
-                                    <!-- {% for sub in subject %}
-                                    {{ loop.index }} - {{ dump(sub) }}
-                                    <br><br><br>
-                                    {% endfor %} -->
-                                
+                                    
                                 </tbody>
                             </table>
     
