@@ -145,7 +145,7 @@
                                             <td>{{ exam_schedule.name }}</td>
                                             <td>{{ exam_schedule.exam_name }}</td>
                                             <td>{{ exam_schedule.subject }}</td>
-                                            <td class="text-center"><input type="text" class="form-control form-control-sm" id="marks" placeholder="{{ exam_schedule.marks }}"/></td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm" id="marks-{{ exam_schedule.id }}" placeholder="{{ exam_schedule.marks }}"/></td>
                                             <td><button type="button" class="btn btn-sm btn-warning" onclick="addresult('{{ exam_schedule.id }}')">Save</button></td>
                                         </tr>
                                         {% endfor %}
@@ -195,7 +195,7 @@
 
             // ADD CLASS DATA
             formData.append('id', id)
-            formData.append('marks', $("#marks").val())
+            formData.append('marks', $("#marks-"+id).val())
 
             // REQUEST
             $.ajax({
@@ -208,16 +208,16 @@
                 success: (res) => {
                     
                     if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Result added successfully ... ").set('onok', function() {
+                        alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Result added successfully ... ").set('onok', function() {
                             location.reload();
                         })
                     } else {
                         console.log(res);
-                        alertify.alert("Failed", res.message);
+                        alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
                     }
                 },
                 error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
+                    alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
                     console.log(e.responseText)
                 }
             })

@@ -348,6 +348,8 @@ class Attendance extends Controller {
         $this->load->model('student/attendance');
         $this->load->model('student/class');
         $this->load->model('staff/attendance');
+        $this->load->model('user');
+        $this->load->model('notification');
 
         // TWIG : STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -498,6 +500,8 @@ class Attendance extends Controller {
         // MODEL
         $this->load->model('student/attendance');
         $this->load->model('staff/attendance');
+        $this->load->model('user');
+        $this->load->model('notification');
 
         // SET JSON HEADER
         header('Content-Type: application/json');
@@ -529,9 +533,23 @@ class Attendance extends Controller {
 
                 // SET STATUS AS ABSENT
                 if ( $this->model_student_attendance->destroy($is_present->id) ):
+
+                    // CHECK AVAILABLE USER
+                    $available_user = $this->model_user->select('id')->where('ref_id', '=', $student_id)->where('user_type', '=', 'student')->first();
+                    if ( $available_user != NULL ):
+                        // INITIATE : NOTIFICATION
+                        $this->model_notification->sender_id = $_SESSION['user']['id'];
+                        $this->model_notification->receiver_id = $available_user->id;
+                        $this->model_notification->title = "Attendance Marked";
+                        $this->model_notification->body = "Your are absent on ".$date;
+                        $this->model_notification->save();
+                    endif;
+
                     echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    exit();
                 else:
                     echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    exit();
                 endif;
 
             else:
@@ -542,9 +560,23 @@ class Attendance extends Controller {
 
                 // CHECK : STUDENT ATTENDANCE QUERY
                 if ( $this->model_student_attendance->save() ):
+
+                    // CHECK AVAILABLE USER
+                    $available_user = $this->model_user->select('id')->where('ref_id', '=', $student_id)->where('user_type', '=', 'student')->first();
+                    if ( $available_user != NULL ):
+                        // INITIATE : NOTIFICATION
+                        $this->model_notification->sender_id = $_SESSION['user']['id'];
+                        $this->model_notification->receiver_id = $available_user->id;
+                        $this->model_notification->title = "Attendance Marked";
+                        $this->model_notification->body = "Your are present on ".$date;
+                        $this->model_notification->save();
+                    endif;
+
                     echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    exit();
                 else:
                     echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    exit();
                 endif;
                         
 
@@ -577,9 +609,23 @@ class Attendance extends Controller {
 
                 // SET STATUS AS ABSENT
                 if ( $this->model_staff_attendance->destroy($is_present->id)):
+
+                    // CHECK AVAILABLE USER
+                    $available_user = $this->model_user->select('id')->where('ref_id', '=', $staff_id)->where('user_type', '=', 'staff')->first();
+                    if ( $available_user != NULL ):
+                        // INITIATE : NOTIFICATION
+                        $this->model_notification->sender_id = $_SESSION['user']['id'];
+                        $this->model_notification->receiver_id = $available_user->id;
+                        $this->model_notification->title = "Attendance Marked";
+                        $this->model_notification->body = "Your are absent on ".$date;
+                        $this->model_notification->save();
+                    endif;
+
                     echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    exit();
                 else:
                     echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    exit();
                 endif;
 
             else:
@@ -589,9 +635,23 @@ class Attendance extends Controller {
 
                 // CHECK : STAFF ATTENDANCE QUERY
                 if ( $this->model_staff_attendance->save() ):
+
+                    // CHECK AVAILABLE USER
+                    $available_user = $this->model_user->select('id')->where('ref_id', '=', $staff_id)->where('user_type', '=', 'staff')->first();
+                    if ( $available_user != NULL ):
+                        // INITIATE : NOTIFICATION
+                        $this->model_notification->sender_id = $_SESSION['user']['id'];
+                        $this->model_notification->receiver_id = $available_user->id;
+                        $this->model_notification->title = "Attendance Marked";
+                        $this->model_notification->body = "Your are present on ".$date;
+                        $this->model_notification->save();
+                    endif;
+
                     echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                    exit();
                 else:
                     echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
+                    exit();
                 endif;
                     
             endif;

@@ -13,22 +13,23 @@
             </a>
             
             <div class="notifications">
-                <i class="la la-bell dropdown-toggle" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                <i class="la la-bell" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
-                <div class="dropdown-container dropdown-menu"  style="width: 500px;;">
+                <div class="dropdown-container dropdown-menu">
                     <ul class="list-group">
 
                         {% for notification in notifications %}
-                        <li id="notification-{{ notification.id }}" class="list-group-item notification-each" style="display: flex; flex-direction: column;">
+                        <li id="notification-{{ notification.id }}" class="list-group-item notification-each {% if notification.status == 0 %} notification-unread {% endif %}" style="display: flex; flex-direction: column;">
                            <div style="display: flex;justify-content: space-between;align-items: center;">
                                 <div class="title">{{ notification.title }}</div>
-                                <i class="la la-check" title="Mark as Read"></i>
+                                <i id="icon-mark-read-{{ notification.title }}" class="la la-check-square mark-read" title="Mark as Read" onclick="readNotification('{{ notification.id }}')"></i>
                            </div>
                             <div style="display: flex;justify-content: space-between;align-items: center;">
                                 <p class="text">{{ notification.body }}</p>
-                                <i class="la la-trash" title="Delete Notification" onclick="deleteNotification('{{ notification.id }}')"></i>
+                                <i class="la la-trash mark-delete" title="Delete Notification" onclick="deleteNotification('{{ notification.id }}')"></i>
                             </div>
                         </li>
+                        <!-- <hr width="80%"/> -->
                         {% endfor %}
 
                     </ul>
@@ -66,8 +67,77 @@
 
 <script>
 
-function deleteNotification(id){
-    $("#notification-"+id).addClass('d-none');
-}
+    // START : DELETE NOTIFICATION
+    readNotification = (notification_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('notification_id', notification_id)
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/notification/ajax_read_notification",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    $("#notification-"+notification_id).removeClass('notification-unread')
+                    $("#icon-mark-read-"+notification_id).addClass('d-none');
+                } else {
+                    console.log(res);
+                    alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                }
+            },
+            error: (e) => {
+                alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+    }
+    // END : DELETE NOTIFICATION
+
+    // START : DELETE NOTIFICATION
+    deleteNotification = (notification_id) => {
+
+        // PAYLOAD
+        var formData = new FormData;
+        formData.append('notification_id', notification_id)
+
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete this Notification...?', 
+            function(){
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/notification/ajax_delete_notification",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert('<span class="text-success"><i class="la la-check-circle"></i> Success</span>', "Notification Deleted successfully ... ").set('onok', function() {
+                                $("#notification-"+notification_id).addClass('d-none');
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+            },
+            function(){ alertify.error('Notification deletion process cancelled')}
+        );
+    }
+    // END : DELETE NOTIFICATION
 
 </script>

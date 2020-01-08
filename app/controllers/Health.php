@@ -394,6 +394,8 @@ class Health extends Controller {
 
         // MODEL
         $this->load->model('student/health');
+        $this->load->model('notification');
+        $this->load->model('user');
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -464,6 +466,18 @@ class Health extends Controller {
                     'vaccination' => empty($this->request->post['vaccination']) ? NULL : $this->request->post['vaccination'],
                     'date' => empty($this->request->post['date']) ? $date_now : $this->request->post['date'],
                 ]);
+
+                // CHECK AVAILABLE USER
+                $available_user = $this->model_user->select('id')->where('ref_id', '=', $this->request->post['id'])->where('user_type', '=', 'student')->first();
+                if ( $available_user != NULL ):
+                    // INITIATE : NOTIFICATION
+                    $this->model_notification->sender_id = $_SESSION['user']['id'];
+                    $this->model_notification->receiver_id = $available_user->id;
+                    $this->model_notification->title = "Health Record Updated";
+                    $this->model_notification->body = "Your health details has been updated";
+                    $this->model_notification->save();
+                endif;
+
                 echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
                 exit();
 
@@ -486,9 +500,23 @@ class Health extends Controller {
             
             // SUBMIT
             if ( $this->model_student_health->save() ):
+
+                // CHECK AVAILABLE USER
+                $available_user = $this->model_user->select('id')->where('ref_id', '=', $this->request->post['id'])->where('user_type', '=', 'student')->first();
+                if ( $available_user != NULL ):
+                    // INITIATE : NOTIFICATION
+                    $this->model_notification->sender_id = $_SESSION['user']['id'];
+                    $this->model_notification->receiver_id = $available_user->id;
+                    $this->model_notification->title = "New Health Record Added";
+                    $this->model_notification->body = "Your health details has been added to the system";
+                    $this->model_notification->save();
+                endif;
+
                 echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
+                exit();
             else:
                 echo json_encode( array( "status" => "failed", "message" => "Record Didn't Saved Successfully" ), JSON_PRETTY_PRINT );
+                exit();
             endif;
         endif;
 
@@ -855,6 +883,17 @@ class Health extends Controller {
                     'vaccination' => empty($this->request->post['vaccination']) ? NULL : $this->request->post['vaccination'],
                     'date' => empty($this->request->post['date']) ? $date_now : $this->request->post['date'],
                 ]);
+
+                // CHECK AVAILABLE USER
+                $available_user = $this->model_user->select('id')->where('ref_id', '=', $this->request->post['id'])->where('user_type', '=', 'student')->first();
+                if ( $available_user != NULL ):
+                    // INITIATE : NOTIFICATION
+                    $this->model_notification->sender_id = $_SESSION['user']['id'];
+                    $this->model_notification->receiver_id = $available_user->id;
+                    $this->model_notification->title = "Health Record Updated";
+                    $this->model_notification->body = "Your health details has been updated";
+                    $this->model_notification->save();
+                endif;
                 echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
                 exit();
 

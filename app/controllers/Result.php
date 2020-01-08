@@ -678,9 +678,11 @@ class Result extends Controller {
 
 		// MODEL
         $this->load->model('student/exam');
+        $this->load->model('user');
+        $this->load->model('notification');
 
         // VALIDATE RESULT ID
-		$is_exist = $this->model_student_exam->select('id')->where('id', '=', $this->request->post['id'])->first();
+		$is_exist = $this->model_student_exam->select('id', 'student_id')->where('id', '=', $this->request->post['id'])->first();
 
 		if( $is_exist == NULL ):
 			echo json_encode( array( "status" => "failed", "message" => "Adding result doesn't exists" ), JSON_PRETTY_PRINT );
@@ -696,7 +698,20 @@ class Result extends Controller {
 
 		// UPDATE
 		try {
-			$this->model_student_exam->where('id', '=', $this->request->post['id'])->update(['marks' => $this->request->post['marks']]);
+            $this->model_student_exam->where('id', '=', $this->request->post['id'])->update(['marks' => $this->request->post['marks']]);
+            
+                // CHECK AVAILABLE USER
+                $available_user = $this->model_user->select('id')->where('ref_id', '=', $is_exist->student_id)->where('user_type', '=', 'student')->first();
+                if ( $available_user != NULL ):
+
+                    // INITIATE : NOTIFICATION
+                    $this->model_notification->sender_id = $_SESSION['user']['id'];
+                    $this->model_notification->receiver_id = $available_user->id;
+                    $this->model_notification->title = "Exam Results Updated";
+                    $this->model_notification->body = "Your exam results has been updated";
+                    $this->model_notification->save();
+                endif;
+
 			echo json_encode( array("status" => "success"), JSON_PRETTY_PRINT );
 			exit();
 

@@ -569,6 +569,8 @@ class Sport extends Controller {
         $this->load->model('student');
         $this->load->model('sport');
         $this->load->model('student/sport');
+        $this->load->model('notification');
+        $this->load->model('user');
 
         // VALIDATION : student_id
         $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric|max_len,6'));
@@ -606,6 +608,17 @@ class Sport extends Controller {
                         'student_id' => $this->request->post['student_id'],
                         'sport_id' => $element
                     ]);
+
+                    // CHECK AVAILABLE USER
+                    $available_user = $this->model_user->select('id')->where('ref_id', '=', $this->request->post['student_id'])->where('user_type', '=', 'student')->first();
+                    if ( $available_user != NULL ):
+                        // INITIATE : NOTIFICATION
+                        $this->model_notification->sender_id = $_SESSION['user']['id'];
+                        $this->model_notification->receiver_id = $available_user->id;
+                        $this->model_notification->title = "Sports List Updated";
+                        $this->model_notification->body = "Your engaged sport list has been updated";
+                        $this->model_notification->save();
+                    endif;
                 else:
                     echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
                     exit();
@@ -990,6 +1003,7 @@ class Sport extends Controller {
         $this->load->model('coach/sport');
         $this->load->model('sport');
         $this->load->model('user');
+        $this->load->model('notification');
 
         if ( isset($this->request->post['coach_id']) AND !empty($this->request->post['coach_id']) ):
             $is_valid_coach_id = $this->model_coach->select('id')->where('id', '=', $this->request->post['coach_id']);
@@ -1241,6 +1255,13 @@ class Sport extends Controller {
                         // UPDATE PASSWORD
                         if ( isset($this->request->post['password']) == TRUE AND !empty( $this->request->post['password']) == TRUE ):
                             $this->model_user->where('user_type', '=', 'coach')->where('ref_id', '=', $this->request->post['coach_id'])->update(['password' => password_hash($this->request->post['password'], PASSWORD_DEFAULT)]);
+                            
+                            // INITIATE : NOTIFICATION
+                            $this->model_notification->sender_id = $_SESSION['user']['id'];
+                            $this->model_notification->receiver_id = $is_available_user->first()->id;
+                            $this->model_notification->title = "Password changed";
+                            $this->model_notification->body = "Your password has been changed by System Administrator";
+                            $this->model_notification->save();
                         endif;
 
                     // CREATE A USER IF STATUS IS ACTIVE
@@ -1283,8 +1304,17 @@ class Sport extends Controller {
 
                         // CHECK : USER RECORD QUERY
                         if ( $this->model_user->save() ):
+
+                            // INITIATE : NOTIFICATION
+                            $this->model_notification->sender_id = $_SESSION['user']['id'];
+                            $this->model_notification->receiver_id = $this->model_user->id;
+                            $this->model_notification->title = "Account Activated";
+                            $this->model_notification->body = "Your account has been activated by System Administrator";
+                            $this->model_notification->save();
+
                             echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
                             exit();
+                            
                         else:
                             echo json_encode( array( "status" => "failed", "message" => "Unable create user. Please set username and password" ), JSON_PRETTY_PRINT );
                             exit();

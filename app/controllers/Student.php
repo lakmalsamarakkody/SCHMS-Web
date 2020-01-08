@@ -858,6 +858,7 @@ class Student extends Controller {
         $this->load->model('district');
         $this->load->model('user');
         $this->load->model('user/role');
+        $this->load->model('notification');
 
         //CHECK LOGIN STATUS
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
@@ -1175,6 +1176,13 @@ class Student extends Controller {
                         // UPDATE PASSWORD
                         if ( isset($this->request->post['password']) == TRUE AND !empty( $this->request->post['password']) == TRUE ):
                             $this->model_user->where('user_type', '=', 'student')->where('ref_id', '=', $this->request->post['student_id'])->update(['password' => password_hash($this->request->post['password'], PASSWORD_DEFAULT)]);
+                            
+                            // INITIATE : NOTIFICATION
+                            $this->model_notification->sender_id = $_SESSION['user']['id'];
+                            $this->model_notification->receiver_id = $is_available_user->first()->id;
+                            $this->model_notification->title = "Password changed";
+                            $this->model_notification->body = "Your password has been changed by System Administrator";
+                            $this->model_notification->save();
                         endif;
 
                     // CREATE A USER IF STATUS IS ACTIVE
@@ -1217,8 +1225,17 @@ class Student extends Controller {
 
                         // CHECK : USER RECORD QUERY
                         if ( $this->model_user->save() ):
+
+                            // INITIATE : NOTIFICATION
+                            $this->model_notification->sender_id = $_SESSION['user']['id'];
+                            $this->model_notification->receiver_id = $this->model_user->id;
+                            $this->model_notification->title = "Account Activated";
+                            $this->model_notification->body = "Your account has been activated by System Administrator";
+                            $this->model_notification->save();
+
                             echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
                             exit();
+                            
                         else:
                             echo json_encode( array( "status" => "failed", "message" => "Unable create user. Please set username and password" ), JSON_PRETTY_PRINT );
                             exit();

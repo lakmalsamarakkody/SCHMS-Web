@@ -290,50 +290,6 @@ class Exam extends Controller {
         endif;
 
     }
-    
-
-    public function ajax_remove_examschedule() {
-
-        //CHECK LOGIN STATUS
-		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-			header( 'Location:' . $this->config->get('base_url') . '/logout' );
-			exit();
-		endif;
-
-        // SET JSON HEADER
-        header('Content-Type: application/json'); 
-
-        // MODEL
-        $this->load->model('exam/schedule');
-        $this->load->model('student/exam');
-
-        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
-
-        /**
-         * check if the exam schedule ID is correct and
-         * this exam has no results associated with it.
-         */
-        if ( isset($this->request->post['id']) AND !empty($this->request->post['id']) AND $this->request->post['date'] >= $date_now ):
-            if ( $this->model_student_exam->select('id', 'marks')->where('exam_schedule_id', '=', $this->request->post['id'])->where('marks', '!=', NULL)->first() == NULL ):
-                if ( $this->model_exam_schedule->find($this->request->post['id'])->delete() ):
-                    echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
-                    exit();
-                else:
-                    echo json_encode( array( "status" => "failed", "message" => "Cannot delete this exam schedule" ), JSON_PRETTY_PRINT );
-                    exit();
-                endif;
-            else:
-                echo json_encode( array( "status" => "failed", "message" => "This exam schedule already has results" ), JSON_PRETTY_PRINT );
-                exit();
-            endif;
-        else:
-            echo json_encode( array( "status" => "failed", "message" => "Cannot delete the exam schedule. Schedule date has expired" ), JSON_PRETTY_PRINT );
-            exit();
-        endif;
-
-
-    }
-
 
     public function create() {
 
@@ -367,6 +323,7 @@ class Exam extends Controller {
         endforeach;
         
         // TWIG : EXAM YEAR
+        $current_year = Carbon::now()->format('Y');
         $exam_year = Carbon::now()->format('Y');
         for ( $i=1; $i<=2; $i++ ):
             $data['years'][$i] = $exam_year;
@@ -374,7 +331,7 @@ class Exam extends Controller {
         endfor;
 
         // TWIG : EXAMS
-        foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year', 'DESC')->get() as $key => $element ):
+        foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->where('year', '>=', $current_year)->orderBy('year', 'DESC')->get() as $key => $element ):
 			$data['exams'][$key]['id'] = $element->id;
             $data['exams'][$key]['type_id']= $element->type_id;
             $data['exams'][$key]['year'] = $element->year;
@@ -671,6 +628,8 @@ class Exam extends Controller {
         $this->load->model('exam/grade');
         $this->load->model('student/exam');
         $this->load->model('student/class');
+        $this->load->model('notification');
+        $this->load->model('user');
 
 
         // SET JSON HEADER
@@ -836,6 +795,17 @@ class Exam extends Controller {
                                     'exam_schedule_id'  => $this->model_exam_schedule->id
                                 ]);
 
+                                // CHECK AVAILABLE USER
+                                $available_user = $this->model_user->select('id')->where('ref_id', '=', $element2->student_id)->where('user_type', '=', 'student')->first();
+                                if ( $available_user != NULL ):
+                                    $this->model_notification->create([
+                                        'sender_id'        => $_SESSION['user']['id'],
+                                        'receiver_id'      => $available_user->id,
+                                        'title'  => "New Exam Schedule Found",
+                                        'body'  => "A new exam schedule has been assigned to you on ".$this->request->post['exam_date']
+                                    ]);
+                                endif;
+
                             } catch (Exception $e) {
                                 echo json_encode( array( "status" => "failed" ), JSON_PRETTY_PRINT );
                                 exit();
@@ -891,6 +861,17 @@ class Exam extends Controller {
                                         'student_id'        => $element2->student_id,
                                         'exam_schedule_id'  => $this->model_exam_schedule->id
                                     ]);
+
+                                    // CHECK AVAILABLE USER
+                                    $available_user = $this->model_user->select('id')->where('ref_id', '=', $element2->student_id)->where('user_type', '=', 'student')->first();
+                                    if ( $available_user != NULL ):
+                                        $this->model_notification->create([
+                                            'sender_id'        => $_SESSION['user']['id'],
+                                            'receiver_id'      => $available_user->id,
+                                            'title'  => "New Exam Schedule Found",
+                                            'body'  => "A new exam schedule has been assigned to you on ".$this->request->post['exam_date']
+                                        ]);
+                                    endif;                                    
     
                                     echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
                                     exit();
@@ -976,6 +957,46 @@ class Exam extends Controller {
 			echo json_encode( array( "status" => "failed", "message" => "Unable to edit exam schedule details. Please contact System Administrator" ), JSON_PRETTY_PRINT );
 			exit();
 		}
+    }
+
+    public function ajax_remove_examschedule() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+		endif;
+
+        // SET JSON HEADER
+        header('Content-Type: application/json'); 
+
+        // MODEL
+        $this->load->model('exam/schedule');
+        $this->load->model('student/exam');
+
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        /**
+         * check if the exam schedule ID is correct and
+         * this exam has no results associated with it.
+         */
+        if ( isset($this->request->post['id']) AND !empty($this->request->post['id']) AND $this->request->post['date'] >= $date_now ):
+            if ( $this->model_student_exam->select('id', 'marks')->where('exam_schedule_id', '=', $this->request->post['id'])->where('marks', '!=', NULL)->first() == NULL ):
+                if ( $this->model_exam_schedule->find($this->request->post['id'])->delete() ):
+                    echo json_encode( array( "status" => "success"), JSON_PRETTY_PRINT );
+                    exit();
+                else:
+                    echo json_encode( array( "status" => "failed", "message" => "Cannot delete this exam schedule" ), JSON_PRETTY_PRINT );
+                    exit();
+                endif;
+            else:
+                echo json_encode( array( "status" => "failed", "message" => "This exam schedule already has results" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+        else:
+            echo json_encode( array( "status" => "failed", "message" => "Cannot delete the exam schedule. Schedule date has expired" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
     }
     
 }

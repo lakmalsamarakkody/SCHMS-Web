@@ -1200,7 +1200,8 @@ class Staff extends Controller {
                             // INITIATE : NOTIFICATION
                             $this->model_notification->sender_id = $_SESSION['user']['id'];
                             $this->model_notification->receiver_id = $is_available_user->first()->id;
-                            $this->model_notification->title = "Your password has been changed";
+                            $this->model_notification->title = "Password changed";
+                            $this->model_notification->body = "Your password has been changed by System Administrator";
                             $this->model_notification->save();
                         endif;
 
@@ -1244,8 +1245,17 @@ class Staff extends Controller {
 
                         // CHECK : USER RECORD QUERY
                         if ( $this->model_user->save() ):
+
+                            // INITIATE : NOTIFICATION
+                            $this->model_notification->sender_id = $_SESSION['user']['id'];
+                            $this->model_notification->receiver_id = $this->model_user->id;
+                            $this->model_notification->title = "Account Activated";
+                            $this->model_notification->body = "Your account has been activated by System Administrator";
+                            $this->model_notification->save();
+
                             echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
                             exit();
+                            
                         else:
                             echo json_encode( array( "status" => "failed", "message" => "Unable to create user. Please set username and password" ), JSON_PRETTY_PRINT );
                             exit();
