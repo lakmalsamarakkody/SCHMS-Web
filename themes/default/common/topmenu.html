@@ -13,7 +13,11 @@
             </a>
             
             <div class="notifications">
-                <i class="la la-bell" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                {% if is_notifications.unread %}
+                    <i class="la la-bell text-danger blinking_notification" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                {% else %}
+                    <i class="la la-bell" id="dropdownNotificationsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                {% endif %}
 
                 <div class="dropdown-container dropdown-menu">
                     <ul class="list-group">

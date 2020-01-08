@@ -11,6 +11,21 @@
     text-transform: uppercase;
 }
 
+.blinking_notification{
+	animation:blinking_notificationText 2s infinite;
+}
+@keyframes blinking_notificationText{
+	0%{		color: rgb(255, 255, 255);  font-weight: 400;	}
+	12%{	color: rgb(255, 189, 189);  font-weight: 500;	}
+	25%{	color: rgb(255, 125, 125);  font-weight: 600;	}
+	37%{	color: rgb(250, 70, 70);    font-weight: 700;	}
+    50%{	color: rgb(255, 1, 1);      font-weight: 800;   }
+    63%{	color: rgb(250, 70, 70);    font-weight: 700;	}
+    75%{	color: rgb(255, 125, 125);  font-weight: 600;	}
+    87%{	color: rgb(255, 189, 189);  font-weight: 500;	}
+    100%{	color: rgb(255, 255, 255);  font-weight: 400;	}
+}
+
 
 body{
     cursor: default;

@@ -39,7 +39,14 @@ class CommonPortal_topmenu extends Controller {
 		foreach ( $this->model_notification->where('receiver_id', '=', $_SESSION['user']['id'])->orderBy('created_on', 'DESC')->get()->take(20) as $key => $element ):
 			$data['notifications'][$key] = $element ;
 		endforeach;
-		
+
+		// UNREAD NOTIFICATIONS
+		$any_unread_notification = $this->model_notification->where('receiver_id', '=', $_SESSION['user']['id'])->where('status', '=', '0')->first();
+		if ( $any_unread_notification != NULL ):
+			$data['is_notifications']['unread'] = TRUE;
+		else:
+			$data['is_notifications']['unread'] = FALSE;
+		endif;		
 
 		return $this->load_view('common/portal_topmenu', $data);
 	}
