@@ -141,6 +141,9 @@ h5.page-title{
 .topmenu .notifications .dropdown-menu{
     margin: 1rem;
     width: 40%;
+    max-height: 20%;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .topmenu .notifications .dropdown-menu i{
