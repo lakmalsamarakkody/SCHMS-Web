@@ -139,9 +139,9 @@ h5.page-title{
 }
 
 .topmenu .notifications .dropdown-menu{
-    margin: 1rem;
+    margin-top: 1.5rem;
     width: 40%;
-    max-height: 20%;
+    max-height: 500px;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -168,6 +168,7 @@ h5.page-title{
 
 .topmenu .notifications ul.list-group li.list-group-item.notification-each .text{
     font-size: 0.8rem;
+    color: #e0e0e0;
 }
 
 .topmenu .notifications ul.list-group li.list-group-item.notification-each i.la{

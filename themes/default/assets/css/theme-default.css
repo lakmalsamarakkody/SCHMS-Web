@@ -103,7 +103,7 @@
 }
 
 .topmenu .notifications ul.list-group li.list-group-item.notification-each i.mark-delete:hover {
-    font-weight: 600;
+    font-weight: 400;
     color: #c03b3b;
 }
 

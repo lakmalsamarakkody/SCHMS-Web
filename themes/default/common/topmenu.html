@@ -22,14 +22,15 @@
                         <li id="notification-{{ notification.id }}" class="list-group-item notification-each {% if notification.status == 0 %} notification-unread {% endif %}" style="display: flex; flex-direction: column;">
                            <div style="display: flex;justify-content: space-between;align-items: center;">
                                 <div class="title">{{ notification.title }}</div>
-                                <i id="icon-mark-read-{{ notification.title }}" class="la la-check-square mark-read" title="Mark as Read" onclick="readNotification('{{ notification.id }}')"></i>
-                           </div>
+                                {% if notification.status == 0 %}
+                                <i id="icon-mark-read-{{ notification.id }}" class="la la-check-square mark-read" title="Mark as Read" onclick="readNotification('{{ notification.id }}')"></i>
+                                {% endif %}
+                            </div>
                             <div style="display: flex;justify-content: space-between;align-items: center;">
                                 <p class="text">{{ notification.body }}</p>
                                 <i class="la la-trash mark-delete" title="Delete Notification" onclick="deleteNotification('{{ notification.id }}')"></i>
                             </div>
                         </li>
-                        <!-- <hr width="80%"/> -->
                         {% endfor %}
 
                     </ul>
