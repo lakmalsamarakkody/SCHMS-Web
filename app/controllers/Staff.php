@@ -876,6 +876,7 @@ class Staff extends Controller {
         $this->load->model('staff/subject');
         $this->load->model('class');
         $this->load->model('subject');
+        $this->load->model('notification');
         $this->load->model('user');
         
         if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
@@ -1195,6 +1196,12 @@ class Staff extends Controller {
                         // UPDATE PASSWORD
                         if ( isset($this->request->post['password']) == TRUE AND !empty( $this->request->post['password']) == TRUE ):
                             $this->model_user->where('user_type', '=', 'staff')->where('ref_id', '=', $this->request->post['staff_id'])->update(['password' => password_hash($this->request->post['password'], PASSWORD_DEFAULT)]);
+                        
+                            // INITIATE : NOTIFICATION
+                            $this->model_notification->sender_id = $_SESSION['user']['id'];
+                            $this->model_notification->receiver_id = $is_available_user->first()->id;
+                            $this->model_notification->title = "Your password has been changed";
+                            $this->model_notification->save();
                         endif;
 
                     // CREATE A USER IF STATUS IS ACTIVE

@@ -953,6 +953,7 @@ class Student extends Controller {
         // MODEL
         $this->load->model('student');
         $this->load->model('student/class');
+        $this->load->model('notification');
         $this->load->model('user');
         
         if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):

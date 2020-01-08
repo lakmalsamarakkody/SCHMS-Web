@@ -12,6 +12,7 @@ class CommonTopmenu extends Controller {
 		endif;
 
 		// MODEL
+		$this->load->model('notification');
 		$this->load->model('student');
 		$this->load->model('staff');
 		$this->load->model('parent');
@@ -30,8 +31,14 @@ class CommonTopmenu extends Controller {
 		
 		// USER DATA
 		$data['user']['view_name'] = $profile->initials." ".$profile->surname;
+		$data['user']['id'] = $_SESSION['user']['id'];
 		$data['user']['type'] = $_SESSION['user']['type'];
-		$data['user']['id'] = $ref_id;
+		$data['user']['ref_id'] = $ref_id;
+
+		// NOTIFICATIONS
+		foreach ( $this->model_notification->where('receiver_id', '=', $_SESSION['user']['id'])->orderBy('created_on', 'DESC')->get()->take(20) as $key => $element ):
+			$data['notifications'][$key] = $element ;
+		endforeach;
 
 		return $this->load_view('common/topmenu', $data);
 	}

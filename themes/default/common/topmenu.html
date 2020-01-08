@@ -18,16 +18,18 @@
                 <div class="dropdown-container dropdown-menu"  style="width: 500px;;">
                     <ul class="list-group">
 
-                        <li id="notification-1" class="list-group-item notification-each" style="display: flex; flex-direction: column;">
+                        {% for notification in notifications %}
+                        <li id="notification-{{ notification.id }}" class="list-group-item notification-each" style="display: flex; flex-direction: column;">
                            <div style="display: flex;justify-content: space-between;align-items: center;">
-                                <div class="title">This is a efing title.</div>
+                                <div class="title">{{ notification.title }}</div>
                                 <i class="la la-check" title="Mark as Read"></i>
                            </div>
                             <div style="display: flex;justify-content: space-between;align-items: center;">
-                                <p class="text">Consectetur nisi sint ea nulla Lorem velit.</p>
-                                <i class="la la-trash" title="Delete Notification" onclick="deleteNotification(1)"></i>
+                                <p class="text">{{ notification.body }}</p>
+                                <i class="la la-trash" title="Delete Notification" onclick="deleteNotification('{{ notification.id }}')"></i>
                             </div>
                         </li>
+                        {% endfor %}
 
                     </ul>
                 </div>
@@ -38,7 +40,7 @@
                 <i class="la la-cog" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="{{ app.url }}/{{ user.type }}/profile/{{ user.id }}"> <i class="la la-user"></i>My Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ app.url }}/{{ user.type }}/profile/{{ user.ref_id }}"> <i class="la la-user"></i>My Profile</a></li>
                     <li class="dropdown-item">
                         <div class="row">
                             <div class="col align-self-center"><i class="la la-adjust"></i>Dark Mode</div>
