@@ -17,6 +17,31 @@ class Login extends Controller {
 		// MODEL
 		$this->load->model('user');
 
+		// CHECK IF HAS REMEMBER COOCKIE
+		if ( isset($_COOKIE['RememberMe']) AND !empty( $_COOKIE['RememberMe']) ):
+			
+			$username = explode('_', $_COOKIE['RememberMe'])[0];
+			$token = explode('_', $_COOKIE['RememberMe'])[1];
+			
+			// CHECK IF USER EXISTS WITH USERNAME AND COOKIE VALUE
+			$user = $this->model_user->where('username', $username)->where('remember_token', $token)->first();
+			if ( $user !== null ){
+				
+				// PROCESS LOGIN
+				$_SESSION['user']['is_login'] = TRUE;
+				$_SESSION['user']['id'] = $user->id;
+				$_SESSION['user']['type'] = 'staff';
+				header('Location:' . $this->config->get('base_url') . '/home');
+				exit();
+
+
+			} else {
+				// EXPIRE COOCKIE
+				setcookie('RememberMe', '', time()-3600);
+			}
+
+		endif;
+
 		// STAFF LOGIN
 		if (isset($this->request->post['is_login']) AND $this->request->post['login_as'] == "staff" ):
 
@@ -31,6 +56,21 @@ class Login extends Controller {
 					if( $user->status == "Active" ):
 						// CHECK PASSWORD IS CORRECT
 						if(password_verify ($this->request->post['password'],$user->password)):
+
+							if ( isset($this->request->post['remember-me']) AND $this->request->post['remember-me'] == 'on'):
+
+								// GENERATE TOKEN
+								$token = bin2hex(random_bytes(16));
+
+								// SET COOCKIE WITH TOKEN
+								setcookie('RememberMe', $user->username . '_' . $token, time()+ 604800);
+
+								// ADD TOKEN TO DATABASE
+								$user->remember_token = $token;
+								$user->save();
+
+							endif;
+
 							// PROCESS TO LOGIN
 							$_SESSION['user']['is_login'] = TRUE;
 							$_SESSION['user']['id'] = $user->id;
