@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="messagessingle">
+				{% if permission.messages.single.view %}
 
 					<!-- START : SINGLE CONVERSATION -->
 					<a href="{{ app.url }}/messages"><button class="btn btn-xs btn-secondary"><i class="la la-comments"></i> Back to Conversations</button></a>
@@ -68,10 +69,13 @@
 						</div>
 
 					</div>
+				{% else %}
+					{% include "blocks/permission_denied.html" %}
+				{% endif %}
 				</div>
 
             </div>
-                <!-- END : CONTENT -->
+			<!-- END : CONTENT -->
 
         </div>
     </div>

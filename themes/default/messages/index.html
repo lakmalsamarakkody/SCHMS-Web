@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="messagesinbox">
+				{% if permission.messages.index.view %}
 
                     <!-- START : CONVERSATIONS -->
 					<h4 class="page-title">Inbox</h4>
@@ -38,6 +39,9 @@
 					</ul>
                     <!-- END : CONVERSATIONS -->
 
+				{% else %}
+					{% include "blocks/permission_denied.html" %}
+				{% endif %}
                 </div>
                 <!-- END : CONTENT -->
 

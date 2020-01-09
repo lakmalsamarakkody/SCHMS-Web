@@ -23,6 +23,7 @@ class Messages extends Controller {
         $data['template']['footer']		= $this->load->controller('common/footer', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
+
         // MODELS
         $this->load->model('user');
         $this->load->model('message');
@@ -35,6 +36,13 @@ class Messages extends Controller {
         $time_now = Carbon::now();
 
         if ( $id !== null ):
+
+            // CHECK PERMISSION : single
+            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('messages-single-view') ):
+                $data['permission']['messages']['single']['view'] = true;
+            else:
+                $data['permission']['messages']['single']['view'] = false;
+            endif;
 
             // SINGLE CONVERSATION
             $messages = $this->model_message->select('id', 'sender_id', 'receiver_id', 'body', 'created_on');
@@ -96,6 +104,13 @@ class Messages extends Controller {
 
             $this->load->view('messages/single', $data);
         else:
+
+            // CHECK PERMISSION : index
+            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('messages-index-view') ):
+                $data['permission']['messages']['index']['view'] = true;
+            else:
+                $data['permission']['messages']['index']['view'] = false;
+            endif;
             
             /**
              * We need to display list of all the conversations specific
