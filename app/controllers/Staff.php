@@ -28,6 +28,14 @@ class Staff extends Controller {
         $this->load->model('staff/attendance');
 		$this->load->model('class');
         $this->load->model('grade');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-index-view') ):
+            $data['permission']['staff']['index']['view'] = true;
+        else:
+            $data['permission']['staff']['index']['view'] = false;
+        endif;
 
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -240,6 +248,14 @@ class Staff extends Controller {
         $this->load->model('district');
         $this->load->model('subject');
         $this->load->model('religion');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-search-view') ):
+            $data['permission']['staff']['search']['view'] = true;
+        else:
+            $data['permission']['staff']['search']['view'] = false;
+        endif;
 
         // TYPE
         foreach( $this->model_staff_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
@@ -439,6 +455,14 @@ class Staff extends Controller {
         $this->load->model('grade');
         $this->load->model('religion');
         $this->load->model('district');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : add
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-add-view') ):
+            $data['permission']['staff']['add']['view'] = true;
+        else:
+            $data['permission']['staff']['add']['view'] = false;
+        endif;
 
 
         // STAFF CATEGORY
@@ -767,6 +791,13 @@ class Staff extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('subject');
+
+        // CHECK PERMISSION : profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-view') ):
+            $data['permission']['staff']['profile']['view'] = true;
+        else:
+            $data['permission']['staff']['profile']['view'] = false;
+        endif;
 
         // QUERY ( RELIGION )
         foreach( $this->model_religion->select('id', 'name')->orderBy('name')->get() as $key => $element ):

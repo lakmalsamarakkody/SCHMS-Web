@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="staffadd">
+                {% if permission.staff.add.view %}
 
                     <form name="empadmission" method="POST" action="#">
                         <div id="accordionAdmission">
@@ -238,6 +239,9 @@
                         <button type="reset" class="btn btn-secondary"> Clear </button>
                         
                     </form>
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>                    
 
             </div>

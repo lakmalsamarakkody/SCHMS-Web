@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="staffsearch">
+                {% if permission.staff.search.view %}
 
                     <h4 class="page-title">View Staff</h4>
 
@@ -242,6 +243,10 @@
                         <!-- END : SEARCH RESULT TABLE -->
                     </section>
                     <!-- END : SEARCH RESULTS -->
+
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="staffprofile">
+                {% if permission.staff.profile.view %}
 
                     <!-- START : STAFF PROFILE  -->
                     <section class="profileview">
@@ -361,7 +362,9 @@
                         </div>
                     </section>
                                 
-
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
 
             </div>

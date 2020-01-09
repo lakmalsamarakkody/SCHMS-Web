@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="staffindex">
+                {% if permission.staff.index.view %}
 
                     <h4 class="page-title"> Staff Overview </h4>
 
@@ -169,6 +170,9 @@
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
             
