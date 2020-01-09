@@ -11,6 +11,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="sportindex">
+                {% if permission.sport.index.view %}
 
                     <!-- START : SPORT SUMMARY  -->
                     <section class="attendaceview">
@@ -120,6 +121,9 @@
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
         </div>

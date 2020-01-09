@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="sportsearchcoach">
+                {% if permission.sport.search_coach.view %}
 
                     <!-- START : SPORT SEARCH -->
                     <h4 class="page-title"> Search Coach </h4>
@@ -136,8 +137,11 @@
                         {% endif %}
                         <!-- END : SEARCH RESULT TABLE -->
                     </section>
-                        <!-- END : SEARCH RESULTS -->
+                    <!-- END : SEARCH RESULTS -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
                 <!-- END : CONTENT -->
 

@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="sportsearchstudent">
+                {% if permission.sport.search_student.view %}
 
                     <!-- START : SPORT SEARCH -->
                     <h4 class="page-title"> Search Student </h4>
@@ -183,6 +184,9 @@
                     </section>
                     <!-- END : SEARCH RESULTS -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
                 <!-- END : CONTENT -->
 

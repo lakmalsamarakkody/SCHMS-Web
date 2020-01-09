@@ -28,6 +28,14 @@ class Sport extends Controller {
         $this->load->model('coach');
         $this->load->model('student/sport');
         $this->load->model('student/sportAchievement');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-index-view') ):
+            $data['permission']['sport']['index']['view'] = true;
+        else:
+            $data['permission']['sport']['index']['view'] = false;
+        endif;
 
         // SPORT CARD
         $data['sport']['total']['all'] = $this->model_sport->select('id')->count();
@@ -118,6 +126,14 @@ class Sport extends Controller {
         $this->load->model('student');
         $this->load->model('student/class');
         $this->load->model('student/sport');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : search_student
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-search_student-view') ):
+            $data['permission']['sport']['search_student']['view'] = true;
+        else:
+            $data['permission']['sport']['search_student']['view'] = false;
+        endif;
 
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -293,6 +309,14 @@ class Sport extends Controller {
         $this->load->model('sport');
         $this->load->model('coach');
         $this->load->model('coach/sport');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : search_coach
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-search_coach-view') ):
+            $data['permission']['sport']['search_coach']['view'] = true;
+        else:
+            $data['permission']['sport']['search_coach']['view'] = false;
+        endif;
 
         // SPORT
 		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
@@ -418,6 +442,14 @@ class Sport extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('sport');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : assign
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-assign-view') ):
+            $data['permission']['sport']['assign']['view'] = true;
+        else:
+            $data['permission']['sport']['assign']['view'] = false;
+        endif;
 
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -655,6 +687,14 @@ class Sport extends Controller {
         // MODEL
         $this->load->model('sport');
         $this->load->model('district');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : add_coach
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-add_coach-view') ):
+            $data['permission']['sport']['add_coach']['view'] = true;
+        else:
+            $data['permission']['sport']['add_coach']['view'] = false;
+        endif;
 
         // SPORT
 		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
@@ -934,6 +974,13 @@ class Sport extends Controller {
         $this->load->model('district');
         $this->load->model('user');
         $this->load->model('user/role');
+
+        // CHECK PERMISSION : profile_coach
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-profile_coach-view') ):
+            $data['permission']['sport']['profile_coach']['view'] = true;
+        else:
+            $data['permission']['sport']['profile_coach']['view'] = false;
+        endif;
 
         // SPORT
 		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):

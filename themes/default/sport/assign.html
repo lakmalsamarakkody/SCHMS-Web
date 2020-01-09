@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="sportassign">
+                {% if permission.sport.assign.view %}
 
                     <h4 class="page-title">Assign Sports to Students</h4>
 
@@ -201,7 +202,9 @@
                     </section>
                      <!-- END : SEARCH RESULTS -->
 
-
+                {% else %}
+                     {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
 

@@ -11,6 +11,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="sportadd">
+                {% if permission.sport.add_coach.view %}
 
                     <div class="d-flex align-middle" style="justify-content: space-between;margin-top: 1rem;">
                         <h4 class="page-title"> Add a Sport Coach </h4>
@@ -172,6 +173,9 @@
                             <button type="reset" class="btn btn-secondary"> Clear </button>
                         </div>
                     </form>
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
         </div>
