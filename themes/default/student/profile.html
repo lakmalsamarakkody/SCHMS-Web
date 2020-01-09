@@ -19,6 +19,15 @@
 
                         <h4 class="page-title">Student Details</h4>
 
+                        {% if permission.upload.propic %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Upload failed</strong>
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+
                         <div class="row mt-5">
                             <div class="col-12">
 
@@ -209,7 +218,28 @@
                                                                                 {% endfor %}
                                                                             </select>
                                                                         </div>
-                                                                    </div>                                                                    
+                                                                    </div>
+
+                                                                    <form action="#" method="post" enctype="multipart/form-data">
+
+                                                                        <!-- HIDDEN -->
+                                                                        <input type="hidden" name="stu_id" value="{{ student.id }}" >
+
+                                                                        <div class="form-row">
+                                                                            <div class="col-8">
+                                                                                <div class="form-group">
+                                                                                    <label for="">Class</label>
+                                                                                    <input class="form-control-file" type="file" name="propic" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <div class="form-group">
+                                                                                    <label for="">&nbsp;</label>
+                                                                                    <button type="submit" class="btn btn-primary btn-sm form-control-sm form-control" onclick="upload_profile_picture()">Save</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
 
                                                                 </div>
                                                             </div>

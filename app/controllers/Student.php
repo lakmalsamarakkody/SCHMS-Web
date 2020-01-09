@@ -897,6 +897,29 @@ class Student extends Controller {
             $data['permission']['student']['profile']['view'] = false;
         endif;
 
+
+
+
+        // PROFILE PICTURE UPLOAD
+        if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
+
+            // CHECK SIZE
+            $size_mb = $_FILES['propic']['size'] / 1048576;
+
+            // CHECK PERMISSION
+            // VALIDATION
+
+            // SAVE
+            if ( $size_mb < 1 AND $_FILES['propic']['type'] == 'image/jpeg' OR $_FILES['propic']['type'] == 'image/jpg' ):
+                move_uploaded_file($_FILES['propic']['tmp_name'], ABS_PATH.'/data/uploads/propics/student/'.$this->request->post['stu_id'].'.jpg');
+            else:
+                $data['permission']['upload']['propic'] = true;
+            endif;
+
+        endif;
+
+
+
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
