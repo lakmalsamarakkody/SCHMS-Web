@@ -8,22 +8,9 @@ class Home extends Controller {
 
 		//Check Login Status
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
-
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );
 			exit();
-
 		endif;
-
-		// FIND USER
-		$this->load->model('user');
-		$AuthUser = $this->model_user->where('id', $_SESSION['user']['id'])->first();
-		
-		// if ( $AuthUser->redirectIfNotPermitted('edit_users') ):
-			// HAS PERMISSION
-		// endif;
-		
-		// $data['authUser'] = $AuthUser;
-		
 
 		// SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -50,6 +37,13 @@ class Home extends Controller {
 		$this->load->model('user');
 		$this->load->model('sport');
 		$this->load->model('coach');
+
+		// CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('home-index-view') ):
+            $data['permission']['home']['index']['view'] = true;
+        else:
+            $data['permission']['home']['index']['view'] = false;
+        endif;
 
 		$date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 

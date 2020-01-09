@@ -17,6 +17,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="homeindex">
+                {% if permission.home.index.view %}
 
                     <h4 class="page-title"> Dashboard </h4>
 
@@ -320,7 +321,9 @@
 
                     </div>
                     <!-- END : PARENT USER SPORT CARDS -->
-
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
         </div>
