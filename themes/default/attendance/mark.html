@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="attendancemark">
+                    {% if permission.attendance.mark.view %}
 
                     <h4 class="page-title">Mark Attendance</h4>
 
@@ -161,6 +162,9 @@
                         </table>
                     </div>
                     <!-- END : ATTENDANCE ADD TABLE -->
+                    {% else %}
+                        {% include "blocks/permission_denied.html" %}
+                    {% endif %}
 
                 </div>
             </div>

@@ -32,7 +32,7 @@ class Attendance extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
 
-        // CHECK PERMISSION : VIEW
+        // CHECK PERMISSION : index
         if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-index-view') ):
             $data['permission']['attendance']['index']['view'] = true;
         else:
@@ -166,7 +166,7 @@ class Attendance extends Controller {
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );
 			exit();
-		endif;
+        endif;
     
         // SITE DETAILS
 		$data['app']['url']			= $this->config->get('base_url');
@@ -187,6 +187,15 @@ class Attendance extends Controller {
         $this->load->model('student');
         $this->load->model('student/class');
         $this->load->model('student/attendance');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-search-view') ):
+            $data['permission']['attendance']['search']['view'] = true;
+        else:
+            $data['permission']['attendance']['search']['view'] = false;
+        endif;
+
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
         // TWIG : STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -355,6 +364,13 @@ class Attendance extends Controller {
         $this->load->model('staff/attendance');
         $this->load->model('user');
         $this->load->model('notification');
+
+        // CHECK PERMISSION : mark
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view') ):
+            $data['permission']['attendance']['mark']['view'] = true;
+        else:
+            $data['permission']['attendance']['mark']['view'] = false;
+        endif;
 
         // TWIG : STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):

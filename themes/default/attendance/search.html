@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="attendancesearch">
+                    {% if permission.attendance.search.view %}
 
                     <!-- START : VIEW ATTENDANCE -->
                     <section class="viewattendance">
@@ -155,64 +156,10 @@
                     </section>
                     <!-- END : VIEW ATTENDANCE -->
 
-                    <!-- START : SEARCH ATTENDANCE -->
-                    <!-- <section class="searchattendance mt-5">
+                    {% else %}
+                        {% include "blocks/permission_denied.html" %}
+                    {% endif %}
 
-                        <h4 class="page-title">Search Attendance</h4>
-
-                        <div class="attendancefilter">
-                            
-                            <form name="form-search-attendance">
-
-                                <div class="form-row">
-
-                                    <div class="form-group col-md-2">
-                                        <label for="addno">Admission / Emp ID</label>
-                                        <input type="number" class="form-control" id="addno"/>
-                                    </div>
-
-                                    <div class="form-group col-md-1">
-                                        <label for="view">Select View</label>
-                                        <select class="form-control" id="view" >
-                                                <option selected disabled> - Select - </option>
-                                                <option value="staff"> Staff </option>
-                                                {% for class in student_class %}
-                                                <option value="{{ class.id }}"> {{ class.grade.name }} - {{ class.name }} </option>
-                                                {% endfor %}
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-1 mr-auto">
-                                        <label for="status">Select Status</label>
-                                        <select class="form-control" id="status">
-                                            <option value="present"> Present </option>
-                                            <option value="absent"> Absent </option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mr-2">
-                                        <label for="datefrom">From</label>
-                                        <input type="date" class="form-control" id="datefrom"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="dateto">To</label>
-                                        <input type="date" class="form-control" id="dateto"/>
-                                    </div>
-
-                                </div>
-                                
-                                <div class="form-row">
-                                    <div class="form-group ml-auto mr-1">
-                                        <button class="btn btn-primary" type="submit"> Go </button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-
-                    </section> -->
-                    <!-- END : SEARCH ATTENDANCE -->
                 </div>
             </div>
             
