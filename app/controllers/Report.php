@@ -925,10 +925,253 @@ class Report extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('class');
+        $this->load->model('grade');
+        $this->load->model('exam');
+        $this->load->model('exam/type');
+        $this->load->model('report');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : result
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-result-view') ):
+            $data['permission']['report']['result']['view'] = true;
+        else:
+            $data['permission']['report']['result']['view'] = false;
+        endif;
+
+        // QUERY CLASS
+        foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
+            $data['classes'][$key]['id'] = $element->id;
+            $data['classes'][$key]['grade']['id'] = $element->grade_id;
+            $data['classes'][$key]['staff']['id'] = $element->staff_id;
+            $data['classes'][$key]['name'] = $element->name;
+
+            $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
+        endforeach;
+
+         // TWIG : EXAM YEAR
+         $current_year = Carbon::now()->format('Y');
+         $least_year = $current_year-2;
+         $exam_year = Carbon::now()->format('Y');
+         for ( $i=1; $i<=2; $i++ ):
+             $data['years'][$i] = $exam_year;
+             $exam_year++;
+         endfor;
+
+        // TWIG : EXAMS
+        foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->where('year', '>=', $least_year)->where('year', '<=', $current_year)->orderBy('year', 'DESC')->get() as $key => $element ):
+			$data['exams'][$key]['id'] = $element->id;
+            $data['exams'][$key]['type_id']= $element->type_id;
+            $data['exams'][$key]['year'] = $element->year;
+            $data['exams'][$key]['venue'] = $element->venue;
+            $data['exams'][$key]['instructions'] = $element->instructions;
+
+            $data['exams'][$key]['type']['name'] = $this->model_exam_type->select('name')->where('id', '=', $element->type_id)->first()->name;
+        endforeach;
+
+        // QUERY REPORTS ( BY CLASS )
+        $is_class_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'class_exam')->get();
+        if ( $is_class_reports !== NULL ):
+            foreach( $is_class_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['class'][$key]['id'] = $el->id;
+                $data['reports']['class'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['class'][$key]['user']['username'] = $user->username;
+                $data['reports']['class'][$key]['path'] = $this->config->get('base_url').'/data/reports/result/'.$el->file_name;
+                $data['reports']['class'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/result', $data);
     }
     // END : RESULT REPORTS
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // START : EXAM ALL CLASS REPORT
+    public function class_exam_result_ajax() {
+
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+        
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
+        $this->load->model("class");
+        $this->load->model("grade");
+        $this->load->model("student");
+        $this->load->model("student/exam");
+        $this->load->model("exam");
+        $this->load->model("exam/type");
+
+        $this->load->model("exam/grade");
+
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+
+        // CHECK IF SUBMITED
+        if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) AND isset($this->request->post['exam_id']) AND !empty($this->request->post['exam_id']) ):
+
+
+            // VALIDATION : class_id
+            $is_valid_class_id = GUMP::is_valid($this->request->post, array('class_id' => 'required|numeric'));
+            if ( $is_valid_class_id !== true ):
+                echo json_encode( array( "status" => "failed", "message" => "Please select a valid class" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // VALIDATION : exam_id
+            $is_valid_exam_id = GUMP::is_valid($this->request->post, array('exam_id' => 'required|numeric'));
+            if ( $is_valid_exam_id !== true ):
+                echo json_encode( array( "status" => "failed", "message" => "Please select a valid exam" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+        
+            // IS ANY STUDENT EXISTS
+            if ( $this->model_student->select('id')->first() === NULL ):
+                echo json_encode( array("status" => "failed", "message" => "No student exists in this system" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // IS CORRECT CLASS ID
+            if ( $this->model_class->select('name')->where('id', '=', $this->request->post['class_id'])->first() === NULL ):
+                echo json_encode( array("status" => "failed", "message" => "Invalid Class is Selected" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
+            // QUERY CLASS NAME
+            $class = $this->model_class->select('grade_id', 'name')->where('id', '=', $this->request->post['class_id'])->first();
+            $grade = $this->model_grade->select('name')->where('id', '=', $class->grade_id)->first();
+            $class_name =  $grade->name. " - ". $class->name ;
+
+            // QUERY EXAM NAME
+            $exam_details = $this->model_exam->select('type_id', 'year')->where('id', '=', $this->request->post['exam_id'])->first();
+            $exam_type_name = $this->model_exam_type->select('name')->where('id', '=', $exam_details->type_id)->first();
+            $exam_name = $exam_type_name->name." - ".$exam_details->year;
+
+            $subjects = DB::table('exam')
+            ->join('exam_has_grade', 'exam.id', 'exam_has_grade.exam_id')
+            ->join('exam_grade_has_schedule', 'exam_has_grade.id', 'exam_grade_has_schedule.exam_grade_id')
+            ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
+            ->where('exam.id', '=', $this->request->post['exam_id'])
+            ->groupBy('exam_grade_has_schedule.subject_id')
+            ->select('exam_grade_has_schedule.subject_id', 'subject.name as subject_name')->get();
+
+            $students = $this->model_student->where('class_id', $this->request->post['class_id'])->get();
+
+            $data['subjects'] = $subjects;
+            $data['students'] = $students;
+
+            foreach( $students as $student ):
+                foreach ( $subjects as $subject ):
+
+                    $schedule = DB::table('exam_has_grade')
+                    ->join('exam_grade_has_schedule', 'exam_has_grade.id', 'exam_grade_has_schedule.exam_grade_id')
+                    ->join('student_has_exam_schedule', 'exam_grade_has_schedule.id', 'student_has_exam_schedule.exam_schedule_id')
+                    ->where('exam_has_grade.exam_id', $this->request->post['exam_id'])
+                    ->where('student_has_exam_schedule.student_id', $student->id)
+                    ->where('exam_grade_has_schedule.subject_id', $subject->subject_id)
+                    ->select('exam_grade_has_schedule.id', 'student_has_exam_schedule.marks')
+                    ->first();
+
+                    // var_dump( $subject->subject_id );
+
+
+                    // $exam_result = DB::table('exam')
+                    // ->join('exam_has_grade', 'exam.id', 'exam_has_grade.exam_id')
+                    // ->join('exam_grade_has_schedule', 'exam_has_grade.id', 'exam_grade_has_schedule.exam_grade_id')
+                    // ->join('student_has_exam_schedule', 'exam_grade_has_schedule.id', 'student_has_exam_schedule.exam_schedule_id')
+                    // ->where('exam.id', '=', $this->request->post['exam_id'])
+                    // ->where('exam_grade_has_schedule.subject_id', '=', $subject->subject_id)
+                    // ->where('student.class_id', '=', $this->request->post['class_id'])
+                    // ->select('student.initials', 'student.surname', 'subject.id as subject_id', 'subject.name as subject_name', 'student_has_exam_schedule.marks')->first();
+
+                    // // STUDENT
+                    // // SUBJECT
+                    if ( $schedule !== null ):
+                        $data['results'][$student->id]['subjects'][$subject->subject_id]['marks'] = $schedule->marks;
+                        $data['results'][$student->id]['subjects'][$subject->subject_id]['subject_name'] = $subject->subject_name;
+                        // var_dump( $schedule->marks );
+                        // echo $exam_result->surname." : ".$exam_result->subject_name." : ".$exam_result->marks."<br>";
+                    else:
+                        $data['results'][$student->id]['subjects'][$subject->subject_id]['marks'] = 'A/B';
+                        $data['results'][$student->id]['subjects'][$subject->subject_id]['subject_name'] = $subject->subject_name;
+                    endif;
+
+                endforeach;
+            endforeach;
+
+            var_dump( $data['students'] );
+
+            // if ( $subjects->get() != NULL ):
+            //     foreach( $subjects->get() as $key => $element ):
+
+            //         $exam_result = DB::table('exam')
+            //         ->join('exam_has_grade', 'exam.id', 'exam_has_grade.exam_id')
+            //         ->join('exam_grade_has_schedule', 'exam_has_grade.id', 'exam_grade_has_schedule.exam_grade_id')
+            //         ->join('student_has_exam_schedule', 'exam_grade_has_schedule.id', 'student_has_exam_schedule.exam_schedule_id')
+            //         ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
+            //         ->join('student', 'student_has_exam_schedule.student_id', 'student.id')
+            //         ->where('exam.id', '=', $this->request->post['exam_id'])
+            //         ->where('exam_grade_has_schedule.subject_id', '=', $element->subject_id)
+            //         ->where('student.class_id', '=', $this->request->post['class_id'])
+            //         ->select('student.initials', 'student.surname', 'subject.id as subject_id', 'subject.name as subject_name', 'student_has_exam_schedule.marks');
+                    
+            //         if ( $exam_result->get() != NULL ):
+            //             foreach( $exam_result->get() as $key2 => $element2 ):
+            //                 echo "hi";
+            //                 var_dump($element2->surname);
+            //                 var_dump($element2->subject_name);
+            //                 var_dump($element2->marks);
+            //             endforeach;
+                        
+            //         else:
+            //             echo json_encode( array("status" => "failed", "message" => "No results exist to this exam" ), JSON_PRETTY_PRINT );
+            //             exit();
+            //         endif;
+
+            //     endforeach;
+            // else:
+            //     echo json_encode( array("status" => "failed", "message" => "No any subjects exist to this exam" ), JSON_PRETTY_PRINT );
+            //     exit();
+            // endif;
+
+        endif;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // START : HEALTH REPORTS
     public function health() {
