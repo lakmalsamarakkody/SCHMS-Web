@@ -897,6 +897,18 @@ class Student extends Controller {
             $data['permission']['student']['profile']['view'] = false;
         endif;
 
+        // PROFILE PICTURE UPLOAD
+        if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
+
+            // 
+
+            echo "<pre>";
+                var_dump( $_FILES['propic'] );
+            echo "</pre>";
+
+        endif;
+
+
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
