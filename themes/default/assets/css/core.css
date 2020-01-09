@@ -304,3 +304,10 @@ h5.page-title{
 .sidenav .sub-menu .la{
     font-size: 1.5rem;
 }
+
+/* DATA TABLES STYLE  */
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover, .dataTables_wrapper .dataTables_paginate .paginate_button:active, .dataTables_wrapper .dataTables_paginate .paginate_button:focus {
+    background: none;
+    box-shadow: none;
+    border: none;
+}
