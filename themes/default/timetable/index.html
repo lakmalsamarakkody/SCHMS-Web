@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="timetableindex">
+                {% if permission.timetable.index.view %}
 
                     <!-- START : ONGOING -->
                     <section class="ongoing">
@@ -146,6 +147,9 @@
 
                     </section>
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
             

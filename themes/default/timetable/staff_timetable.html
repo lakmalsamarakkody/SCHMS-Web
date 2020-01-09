@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="timetablesearch">
+                {% if permission.timetable.staff_timetable.view %}
                     
                     <!-- START : STAFF TIME TABLE SECTION -->
                     <section class="stafftimetable mt-5">
@@ -109,8 +110,11 @@
                         <!-- END : STAFF TIME TABLE -->
 
                     </section>
-                    <!-- START : STAFF TIME TABLE SECTION -->                    
-
+                    <!-- START : STAFF TIME TABLE SECTION -->          
+                              
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
 
             </div>

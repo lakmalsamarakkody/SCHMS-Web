@@ -11,7 +11,8 @@
                 
                 {{ template.topmenu|raw }}
 
-                <div class="timetablecreate">
+                <div class="timetablesearch">
+                {% if permission.timetable.class_timetable.view %}
 
                     <h4 class="page-title"> Create Time Table </h4>
 
@@ -115,9 +116,11 @@
                         </table>
 
                     {% endif %}
-                    
                     <!-- END : CLASS TIME TABLE -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
                 
             </div>

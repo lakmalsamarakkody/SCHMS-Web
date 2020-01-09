@@ -29,6 +29,14 @@ class Timetable extends Controller {
         $this->load->model('subject');
         $this->load->model('staff');
         $this->load->model('staff/attendance');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('timetable-index-view') ):
+            $data['permission']['timetable']['index']['view'] = true;
+        else:
+            $data['permission']['timetable']['index']['view'] = false;
+        endif;
 
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
         $day_now = Carbon::now()->isoFormat('dddd');
@@ -221,6 +229,14 @@ class Timetable extends Controller {
         $this->load->model('staff');
         $this->load->model('class');
         $this->load->model('class/timetable');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : staff_timetable
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('timetable-staff_timetable-view') ):
+            $data['permission']['timetable']['staff_timetable']['view'] = true;
+        else:
+            $data['permission']['timetable']['staff_timetable']['view'] = false;
+        endif;
         
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -330,6 +346,14 @@ class Timetable extends Controller {
         $this->load->model('grade');
         $this->load->model('subject');
         $this->load->model('staff');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : create
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('timetable-create-view') ):
+            $data['permission']['timetable']['create']['view'] = true;
+        else:
+            $data['permission']['timetable']['create']['view'] = false;
+        endif;
         
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBy('grade_id')->get() as $key => $element ):
@@ -434,6 +458,14 @@ class Timetable extends Controller {
         $this->load->model('grade');
         $this->load->model('subject');
         $this->load->model('staff');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : class_timetable
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('timetable-class_timetable-view') ):
+            $data['permission']['timetable']['class_timetable']['view'] = true;
+        else:
+            $data['permission']['timetable']['class_timetable']['view'] = false;
+        endif;
 
         // GIVE ALL CLASSES
         //STUDENT CLASS
@@ -669,11 +701,7 @@ class Timetable extends Controller {
         else:
             echo json_encode(array("status" => "failed"), JSON_PRETTY_PRINT);
             exit();
-        endif;
-
-                
-
-                    
+        endif;                    
     }
 }
 ?>
