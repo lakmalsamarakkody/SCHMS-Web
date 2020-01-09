@@ -10,7 +10,8 @@
             <div class="col-md-10 content">               
                 {{ template.topmenu|raw }}
 
-                <section class="report-attendance">
+                <section class="report-student">
+                {% if permission.report.student.view %}
 
                     <h4 class="page-title"> Student Profile Report </h4>
 
@@ -128,6 +129,9 @@
                         </div>
                     </div>
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </section>
             </div>
         </div>

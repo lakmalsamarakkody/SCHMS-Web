@@ -11,6 +11,7 @@
                 {{ template.topmenu|raw }}
 
                 <section class="report-timetable">
+                {% if permission.report.timetable.view %}
 
                     <h4 class="page-title"> TimeTable Reports </h4>
 
@@ -128,6 +129,9 @@
                         </div>
                     </div>
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </section>
             </div>
         </div>

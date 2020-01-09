@@ -25,6 +25,16 @@ class Report extends Controller {
         $data['template']['sidenav']	= $this->load->controller('common/sidenav', $data);
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
+        // MODEL
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-index-view') ):
+            $data['permission']['report']['index']['view'] = true;
+        else:
+            $data['permission']['report']['index']['view'] = false;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/index', $data);
     }
@@ -56,6 +66,13 @@ class Report extends Controller {
         $this->load->model('report');
         $this->load->model('class');
         $this->load->model('grade');
+
+        // CHECK PERMISSION : attendance
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-attendance-view') ):
+            $data['permission']['report']['attendance']['view'] = true;
+        else:
+            $data['permission']['report']['attendance']['view'] = false;
+        endif;
 
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -337,6 +354,13 @@ class Report extends Controller {
         $this->load->model('grade');
         $this->load->model('student');
 
+        // CHECK PERMISSION : student
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-student-view') ):
+            $data['permission']['report']['student']['view'] = true;
+        else:
+            $data['permission']['report']['student']['view'] = false;
+        endif;
+
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
@@ -615,6 +639,13 @@ class Report extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
         $this->load->model('staff');
+
+        // CHECK PERMISSION : timetable
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-timetable-view') ):
+            $data['permission']['report']['timetable']['view'] = true;
+        else:
+            $data['permission']['report']['timetable']['view'] = false;
+        endif;
 
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -926,6 +957,13 @@ class Report extends Controller {
         $this->load->model('grade');
         $this->load->model('student');
 
+        // CHECK PERMISSION : health
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-health-view') ):
+            $data['permission']['report']['health']['view'] = true;
+        else:
+            $data['permission']['report']['health']['view'] = false;
+        endif;
+
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBY('grade_id')->orderBY('name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
@@ -1185,6 +1223,13 @@ class Report extends Controller {
         // MODELS
         $this->load->model("user");
         $this->load->model("report");
+
+        // CHECK PERMISSION : staff
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-staff-view') ):
+            $data['permission']['report']['staff']['view'] = true;
+        else:
+            $data['permission']['report']['staff']['view'] = false;
+        endif;
 
         // QUERY REPORTS ( BY PRESENT )
         $is_staff_present_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'staff_present_today')->get();

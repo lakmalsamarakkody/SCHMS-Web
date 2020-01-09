@@ -24,13 +24,13 @@ class Attendance extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODEL
-        $this->load->model('user');
 		$this->load->model('student');
 		$this->load->model('student/attendance');
 		$this->load->model('staff');
         $this->load->model('staff/attendance');
         $this->load->model('class');
         $this->load->model('grade');
+        $this->load->model('user');
 
         // CHECK PERMISSION : index
         if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-index-view') ):

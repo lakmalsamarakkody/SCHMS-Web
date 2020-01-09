@@ -11,6 +11,7 @@
                 {{ template.topmenu|raw }}
 
                 <section class="report-health">
+                {% if permission.report.health.view %}
 
                     <h4 class="page-title"> Health Reports </h4>
 
@@ -127,6 +128,9 @@
                         </div>
                     </div>
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </section>
             </div>
         </div>

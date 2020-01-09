@@ -26,6 +26,14 @@ class Result extends Controller {
         // MODEL
         $this->load->model('exam/schedule');
         $this->load->model('student/exam');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('result-index-view') ):
+            $data['permission']['result']['index']['view'] = true;
+        else:
+            $data['permission']['result']['index']['view'] = false;
+        endif;
 
         // DATE AND TIME
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -142,6 +150,14 @@ class Result extends Controller {
         $this->load->model('student');
         $this->load->model('student/exam');
         $this->load->model('student/class');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('result-search-view') ):
+            $data['permission']['result']['search']['view'] = true;
+        else:
+            $data['permission']['result']['search']['view'] = false;
+        endif;
 
         // TWIG : EXAMS
         foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year','DESC')->get() as $key => $element ):
@@ -458,6 +474,14 @@ class Result extends Controller {
         $this->load->model('student');
         $this->load->model('student/exam');
         $this->load->model('student/class');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : add
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('result-add-view') ):
+            $data['permission']['result']['add']['view'] = true;
+        else:
+            $data['permission']['result']['add']['view'] = false;
+        endif;
 
         // TWIG : EXAMS
         foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year','DESC')->get() as $key => $element ):

@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="resultindex">
+                {% if permission.result.index.view %}
 
                     <h4 class="page-title"> Result Overview </h4>
 
@@ -66,6 +67,9 @@
                     </section>
                     <!-- END : RESULT RELEASED -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
 
