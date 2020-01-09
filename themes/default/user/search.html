@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="usersearch">
+                {% if permission.user.search.view %}
 
                     <!-- START : USER SEARCH FORM -->
                     <div class="card">
@@ -192,6 +193,10 @@
                         <!-- END : SEARCH RESULT TABLE -->
                     </section>
                     <!-- END : SEARCH RESULTS -->
+                
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
             

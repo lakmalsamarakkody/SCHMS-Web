@@ -26,6 +26,13 @@ class User extends Controller {
         $this->load->model('user');
         $this->load->model('user/role');
 
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('user-index-view') ):
+            $data['permission']['user']['index']['view'] = true;
+        else:
+            $data['permission']['user']['index']['view'] = false;
+        endif;
+
         // USER CARDS
         $data['user']['total']['all'] = $this->model_user->select('id')->count();
         $data['user']['total']['active'] = $this->model_user->select('id')->where('status', '=', 'Active')->count();
@@ -68,6 +75,13 @@ class User extends Controller {
         $this->load->model('user/role');
         $this->load->model('class');
         $this->load->model('grade');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('user-search-view') ):
+            $data['permission']['user']['search']['view'] = true;
+        else:
+            $data['permission']['user']['search']['view'] = false;
+        endif;
 
         foreach( $this->model_user_role->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
@@ -197,10 +211,19 @@ class User extends Controller {
 
 
         // RETRIVE USER_ROLE
+        $this->load->model('user');
         $this->load->model('user/role');
         $this->load->model('user/permission');
         $this->load->model('user/rolepermission');
 
+        // CHECK PERMISSION : permission
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('user-permission-view') ):
+            $data['permission']['user']['permission']['view'] = true;
+        else:
+            $data['permission']['user']['permission']['view'] = false;
+        endif;
+
+        // QUERY ( USER ROLES )
         foreach( $this->model_user_role->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['user']['roles'][$key]['id'] = $element->id;
             $data['user']['roles'][$key]['name'] = $element->name;
@@ -227,6 +250,7 @@ class User extends Controller {
                 endforeach;
             endforeach;
 
+            // USER ASSIGNED PERMISSION LIST
             foreach( $this->model_user_rolepermission->where('role_id', $this->request->post['role'] )->get() as $key => $value):
                 $data['rolepermissions'][$key] = $value->permission_id;
             endforeach;

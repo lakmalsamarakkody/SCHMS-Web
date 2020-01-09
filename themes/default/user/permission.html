@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="userpermission">
+                {% if permission.user.permission.view %}
 
                     <!-- START : USER SEARCH FORM -->
                     <div class="card">
@@ -57,9 +58,8 @@
                     </div>
                     <!-- END : USER SEARCH FORM -->
 
-                    {% if modules %}
-
                     <!-- START : LIST PERMISSIONS -->
+                    {% if modules %}
                     <div class="card mt-3" id="permission-menu">
                         <div class="card-header">Permissions</div>
                         <div class="card-body">
@@ -95,10 +95,12 @@
                             
                         </div>
                     </div>
+                    {% endif %}
                     <!-- END : LIST PERMISSIONS -->
 
-                    {% endif %}
-
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
             
