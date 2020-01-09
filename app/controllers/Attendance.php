@@ -32,11 +32,11 @@ class Attendance extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
 
-        // CHECK PERMISSION
-        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('view-attendance') ):
-            $data['permission'] = true;
+        // CHECK PERMISSION : VIEW
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-index-view') ):
+            $data['permission']['attendance']['index']['view'] = true;
         else:
-            $data['permission'] = false;
+            $data['permission']['attendance']['index']['view'] = false;
         endif;
 
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');

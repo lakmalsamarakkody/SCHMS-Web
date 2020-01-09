@@ -12,15 +12,12 @@
                 {{ template.topmenu|raw }}
 
                 <div class="attendanceindex">
+                    {% if permission.attendance.index.view %}
 
                     <!-- START : ATTENDANCE SUMMARY  -->
                     <section class="attendaceview">
-
-                        {% if not permission %}
+                        
                         <h4 class="page-title">Attendance Summary</h4>
-                        {% else %}
-                            {% include "blocks/permission.html" %}
-                        {% endif %}
 
                         <div class="row mt-5">
                             <div class="col-12">
@@ -144,6 +141,9 @@
 
                     </section>
                     <!-- END : ABSENT STAFF  -->
+                    {% else %}
+                        {% include "blocks/permission_denied.html" %}
+                    {% endif %}
                     
                 </div>
             </div>

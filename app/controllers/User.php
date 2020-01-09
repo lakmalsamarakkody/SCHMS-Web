@@ -210,9 +210,20 @@ class User extends Controller {
             
             $data['role_id'] = $this->request->post['role'];
             
-            foreach ($this->model_user_permission->all() as $key => $value ):
-                $data['permissions'][$key]['id'] = $value->id;
-                $data['permissions'][$key]['name'] = $value->name;
+            // GROUP PERMISSION MODULES
+            foreach ($this->model_user_permission->select('module')->groupBy('module')->orderBy('module')->get() as $key => $element ):
+
+                $data['modules'][$element->module]['name'] = $element->module;
+
+                // GET PERMISSION IN EACH MODULE
+                foreach ($this->model_user_permission->where('module', '=', $element->module)->orderBy('name')->get() as $key2 => $value ):
+
+                    $data['modules'][$element->module]['permissions'][$key2]['id'] = $value->id;
+                    $data['modules'][$element->module]['permissions'][$key2]['name'] = $value->name;
+
+                    // $data['permissions'][$element->module][$key2]['id'] = $value->id;
+                    // $data['permissions'][$element->module][$key2]['name'] = $value->name;
+                endforeach;
             endforeach;
 
             foreach( $this->model_user_rolepermission->where('role_id', $this->request->post['role'] )->get() as $key => $value):

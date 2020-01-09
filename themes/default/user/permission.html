@@ -25,7 +25,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="role_id">User Role</label>
-                                            <select id="role_id" class="form-control" name="role">
+                                            <select id="role_id" class="form-control" name="role" onchange="hidePermissionMenu()">
                                                 <option value="" selected>- Select -</option>
                                                 {% for user_role in user.roles %}
                                                     {% if role_id and role_id == user_role.id %}
@@ -56,37 +56,41 @@
                     </div>
                     <!-- END : USER SEARCH FORM -->
 
-                    {% if permissions %}
+                    {% if modules %}
 
                     <!-- START : LIST PERMISSIONS -->
-                    <div class="card mt-3">
+                    <div class="card mt-3" id="permission-menu">
                         <div class="card-header">Permissions</div>
                         <div class="card-body">
-                            
-                            <div class="form-row">
 
-                                {% for permission in permissions %}
+                            {% for module in modules %}
+                                <div class="row col-12">
 
-                                    {% if permission.id in rolepermissions %}
-                                    <div class="col-md-3">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="{{ permission.id }}" onclick="addOrRemovePermission({{ permission.id }})" checked>
-                                            <label class="custom-control-label" for="{{ permission.id }}">{{ permission.name }}</label>
+                                    <div class="col-12 mb-2"><span class="h5 text-secondary"><b>{{ module.name }}</b></span></div>
+
+                                    {% for permission in module.permissions %}
+                                        {% if permission.id in rolepermissions %}
+                                        <div class="col-3">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="{{ permission.id }}" onclick="addOrRemovePermission({{ permission.id }})" checked>
+                                                <label class="custom-control-label" for="{{ permission.id }}">{{ permission.name }}</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    {% else %}
-                                    
-                                    <div class="col-md-3">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="{{ permission.id }}" onclick="addOrRemovePermission({{ permission.id }})">
-                                            <label class="custom-control-label" for="{{ permission.id }}">{{ permission.name }}</label>
+                                        {% else %}
+                                        
+                                        <div class="col-3">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="{{ permission.id }}" onclick="addOrRemovePermission({{ permission.id }})">
+                                                <label class="custom-control-label" for="{{ permission.id }}">{{ permission.name }}</label>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
 
-                                {% endfor %}
-                            </div>
+                                </div>
+                                <hr width="100%" class="my-4"/>
+                            {% endfor %}
                             
                         </div>
                     </div>
@@ -103,6 +107,10 @@
     {{ template.footer|raw }}
 
     <script>
+
+        function hidePermissionMenu(){
+            $("#permission-menu").addClass('d-none')
+        }
 
         function addOrRemovePermission(permission_id){
             
