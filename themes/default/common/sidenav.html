@@ -1,15 +1,31 @@
 <div class="col-md-2 left-pane">
     <div class="row">
 
-  
+        <div class="col-md-12 logo pt-5">
+            <!-- PROFILE PICTURE -->
+            <a href="{{ app.url }}/{{ user.type }}/profile/{{ user.id }}">
+                <img src="{{ app.url }}/data/propic/{{ user.type }}/{{ user.id }}" width="100px" height="100px" class="rounded-circle img-thumbnail"/>
+            </a>
+            <!-- WELCOME TEXT WITH USERNAME -->
+            <div class="sidenavusername mt-3">
+                Welcome <br/> 
+                <a href="{{ app.url }}/{{ user.type }}/profile/{{ user.id }}"><i>{{ user.view_name }}</i></a>
+            </div>
+
+            <!-- DEVIDER -->
+            <hr class="hrsidenav mx-auto"/>
+
+        </div>
+
 
         <div class="col-md-12">
             <ul class="sidenav">
 
                 <!-- START : DASHBOARD MENU -->
-                <li class="main-menu mt-3 active">
+                <li class="main-menu mt-5 active">
                     <a href="{{ app.url }}" class="w-100">
-                        <i class="la la-dashboard"></i> &nbsp; Dashboard
+                        <i class="la la-dashboard"></i>
+                        <span class="display:block;">&nbsp; Dashboard</span>
                     </a>
                 </li>
                 <!-- END : DASHBOARD MENU -->
@@ -17,7 +33,8 @@
                 <!-- START : ATTENDANCE MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/attendance/">
-                        <i class="la la-calendar"></i> &nbsp; Attendance
+                        <i class="la la-calendar"></i>
+                        <span class="display:block;">&nbsp; Attendance</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#attendance">
                         <i class="la la-angle-down"></i>
@@ -40,7 +57,8 @@
                 <!-- START : STUDENT MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/student/">
-                        <i class="la la-graduation-cap"></i> &nbsp; Student
+                        <i class="la la-graduation-cap"></i>
+                        <span class="display:block;">&nbsp; Student</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#student">
                         <i class="la la-angle-down"></i>
@@ -64,7 +82,8 @@
                 <!-- START : EXAM MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/exam/">
-                        <i class="la la-newspaper-o"></i> &nbsp; Exam
+                        <i class="la la-newspaper-o"></i>
+                        <span class="display:block;">&nbsp; Exam</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#exam">
                         <i class="la la-angle-down"></i>
@@ -87,7 +106,8 @@
                 <!-- START : TIME TABLE MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/timetable/">
-                        <i class="la la-clock-o"></i> &nbsp; Timetable
+                        <i class="la la-clock-o"></i>
+                        <span class="display:block;">&nbsp; Timetable</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#timetable">
                         <i class="la la-angle-down"></i>
@@ -114,7 +134,8 @@
                 <!-- START :RESULT MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/result/">
-                        <i class="la la-certificate"></i> &nbsp; Result
+                        <i class="la la-certificate"></i>
+                        <span class="display:block;">&nbsp; Result</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#result">
                         <i class="la la-angle-down"></i>
@@ -137,7 +158,8 @@
                 <!-- START : report MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/report/">
-                        <i class="la la-area-chart"></i> &nbsp; Report
+                        <i class="la la-area-chart"></i>
+                        <span class="display:block;">&nbsp; Report</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#report">
                         <i class="la la-angle-down"></i>
@@ -176,7 +198,8 @@
                 <!-- START : SPORT MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/sport">
-                        <i class="la la-futbol-o"></i> &nbsp; Sport
+                        <i class="la la-futbol-o"></i>
+                        <span class="display:block;">&nbsp; Sport</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#sport">
                         <i class="la la-angle-down"></i>
@@ -207,7 +230,8 @@
                 <!-- START : HEALTH MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/health">
-                        <i class="la la-heartbeat"></i> &nbsp; Health
+                        <i class="la la-heartbeat"></i>
+                        <span class="display:block;">&nbsp; Health</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#health">
                         <i class="la la-angle-down"></i>
@@ -230,7 +254,8 @@
                 <!-- START : PARENT MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/parents">
-                        <i class="la la-female"></i> &nbsp; Parent
+                        <i class="la la-female"></i>
+                        <span class="display:block;">&nbsp; Parent</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#parent">
                         <i class="la la-angle-down"></i>
@@ -253,7 +278,8 @@
                 <!-- START : STAFF MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/staff/">
-                        <i class="la la-users"></i> &nbsp; Staff
+                        <i class="la la-users"></i>
+                        <span class="display:block;">&nbsp; Staff</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#staff">
                         <i class="la la-angle-down"></i>
@@ -276,7 +302,8 @@
                  <!-- START : USER MENU -->
                 <li class="main-menu">
                     <a href="{{ app.url }}/user/">
-                        <i class="la la-user"></i> &nbsp; Users
+                        <i class="la la-user"></i>
+                        <span class="display:block;">&nbsp; Users</span>
                     </a>
                     <div class="angle" data-toggle="collapse" data-target="#user">
                         <i class="la la-angle-down"></i>
@@ -298,13 +325,15 @@
 
                 <li class="main-menu">
                     <a href="{{ app.url }}/school" class="w-100">
-                        <i class="la la-institution"></i> &nbsp; School
+                        <i class="la la-institution"></i>
+                        <span class="display:block;">&nbsp; School</span>
                     </a>
                 </li>
 
                 <li class="main-menu w-100">
                     <a href="{{ app.url }}/backup/" class="w-100">
-                        <i class="la la-institution"></i> &nbsp; Backup
+                        <i class="la la-institution"></i>
+                        <span class="display:block;">&nbsp; Backup</span>
                     </a>
                 </li>
 

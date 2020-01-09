@@ -256,6 +256,10 @@ h5.page-title{
     text-decoration: none;
 }
 
+.sidenav .main-menu .la{
+    font-size: 1.4rem;
+}
+
 .sidenav .main-menu {
     display: flex;
     align-items: center;
@@ -264,6 +268,8 @@ h5.page-title{
 .sidenav .main-menu a {
     width: 80%;
     padding: 15px;
+    display: flex;
+    align-items: center;
 }
 
 .sidenav .main-menu .angle {
@@ -271,13 +277,15 @@ h5.page-title{
     width: 20%;
 }
 
+.sidenav .main-menu .angle i {
+    font-size: 1rem;
+}
+
 .sidenav ul {
     padding-left: 0;
 }
 
 .sidenav li.sub-menu{
-    /* padding: 10px;
-    padding-left: 50px; */
     font-size: 15px;
 }
 
@@ -290,7 +298,7 @@ h5.page-title{
     display: flex;
     align-items: center;
     padding: 15px;
-    padding-left: 50px;
+    padding-left: 30px;
 }
 
 .sidenav .sub-menu .la{
