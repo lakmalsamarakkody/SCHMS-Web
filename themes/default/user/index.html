@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="userindex">
+                {% if permission.user.index.view %}
 
                     <!-- START : USER SUMMARY  -->
                     <section class="user-summary">
@@ -80,6 +81,9 @@
                     </section>
                     <!-- END : CLASS VIEW ATTENDANCE -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
             
