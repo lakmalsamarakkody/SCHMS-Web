@@ -24,6 +24,7 @@ class Attendance extends Controller {
         $data['template']['topmenu']	= $this->load->controller('common/topmenu', $data);
 
         // MODEL
+        $this->load->model('user');
 		$this->load->model('student');
 		$this->load->model('student/attendance');
 		$this->load->model('staff');
@@ -31,10 +32,14 @@ class Attendance extends Controller {
         $this->load->model('class');
         $this->load->model('grade');
 
+        // CHECK PERMISSION
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('view-attendance') ):
+            $data['permission'] = true;
+        else:
+            $data['permission'] = false;
+        endif;
+
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
-        
-        // PERMISSION LEVEL
-        $data['permission']['level'] = 'student';
 
 		// STUDENT TOTAL
 		$data['student']['total']['all'] = $this->model_student->select('id')->count();

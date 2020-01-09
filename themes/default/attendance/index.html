@@ -16,7 +16,11 @@
                     <!-- START : ATTENDANCE SUMMARY  -->
                     <section class="attendaceview">
 
+                        {% if not permission %}
                         <h4 class="page-title">Attendance Summary</h4>
+                        {% else %}
+                            {% include "blocks/permission.html" %}
+                        {% endif %}
 
                         <div class="row mt-5">
                             <div class="col-12">
@@ -51,7 +55,7 @@
                                         </div>
                                     </div>
                                 
-                                    <div class="card {% if permission.level == 'admin' %}d-none{% endif %}">
+                                    <div class="card">
                                         <div class="card-header">
                                             Total Staff
                                         </div>
