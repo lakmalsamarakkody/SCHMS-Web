@@ -256,45 +256,19 @@ h5.page-title{
     text-decoration: none;
 }
 
-.sidenav li.main-menu{
-    font-size: 15px;
+.sidenav .main-menu {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+}
+
+.sidenav .main-menu a {
+    width: 80%;
     padding: 15px;
 }
 
-.sidenav .main-menu .la {
-    margin-right: 15px;
-}
-
-.sidenav li.main-menu .col-md-9{
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    align-items: center;
-    margin: 0%;
-}
-
-.sidenav li.main-menu .col-md-3{
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    align-items: center;
-    margin: 0%;
-}
-
-.sidenav li.main-menu a{
-    display: flex;
-    align-items: center;
-}
-
-.sidenav .main-menu .la{
-    font-size: 1.6rem;
-}
-
-.sidenav .main-menu .la-angle-down{
-    font-size: 1rem;
-    float: right;
-    padding-right: 1rem;
+.sidenav .main-menu .angle {
+    padding: 15px;
+    width: 20%;
 }
 
 .sidenav ul {
@@ -302,8 +276,8 @@ h5.page-title{
 }
 
 .sidenav li.sub-menu{
-    padding: 10px;
-    padding-left: 50px;
+    /* padding: 10px;
+    padding-left: 50px; */
     font-size: 15px;
 }
 
@@ -315,6 +289,8 @@ h5.page-title{
 .sidenav li.sub-menu a{
     display: flex;
     align-items: center;
+    padding: 15px;
+    padding-left: 50px;
 }
 
 .sidenav .sub-menu .la{

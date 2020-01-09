@@ -1,275 +1,313 @@
 <div class="col-md-2 left-pane">
     <div class="row">
 
-        <div class="col-md-12 logo pt-5">
-            <!-- PROFILE PICTURE -->
-            <a href="{{ app.url }}/{{ user.type }}/profile/{{ user.id }}">
-                <img src="{{ app.url }}/data/propic/{{ user.type }}/{{ user.id }}" width="100px" height="100px" class="rounded-circle img-thumbnail"/>
-            </a>
-            <!-- WELCOME TEXT WITH USERNAME -->
-            <div class="sidenavusername mt-3">
-                Welcome <br/> 
-                <a href="{{ app.url }}/{{ user.type }}/profile/{{ user.id }}"><i>{{ user.view_name }}</i></a>
-            </div>
-
-            <!-- DEVIDER -->
-            <hr class="hrsidenav mx-auto"/>
-
-        </div>
+  
 
         <div class="col-md-12">
             <ul class="sidenav">
 
                 <!-- START : DASHBOARD MENU -->
-                <li class="main-menu mt-3 active" id="dashboard">
-                    <a href="{{ app.url }}"><i class="la la-dashboard"></i><span>&nbsp;Dashboard</span></a>
+                <li class="main-menu mt-3 active">
+                    <a href="{{ app.url }}" class="w-100">
+                        <i class="la la-dashboard"></i> &nbsp; Dashboard
+                    </a>
                 </li>
                 <!-- END : DASHBOARD MENU -->
 
                 <!-- START : ATTENDANCE MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/attendance/"><i class="la la-calendar"></i><span>&nbsp;Attendance</span></a></div>
-                    <div data-toggle="collapse" data-target="#attendance"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/attendance/">
+                        <i class="la la-calendar"></i> &nbsp; Attendance
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#attendance">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
 
-                    <ul class="collapse" id="attendance">
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/attendance/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
-                        </li>
+                <ul class="collapse" id="attendance">
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/attendance/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                    </li>
 
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/attendance/mark"><i class="la la-plus-circle"></i><span>&nbsp;Mark</span></a>
-                        </li>
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/attendance/mark"><i class="la la-plus-circle"></i><span>&nbsp;Mark</span></a>
+                    </li>
 
-                    </ul>
+                </ul>
                 <!-- END : ATTENDANCE MENU -->
             
                 <!-- START : STUDENT MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/student/"> <i class="la la-graduation-cap"></i><span>&nbsp;Student</span></a></div>
-                    <div data-toggle="collapse" data-target="#student"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/student/">
+                        <i class="la la-graduation-cap"></i> &nbsp; Student
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#student">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
-                
-                    <ul class="collapse" id="student">
 
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/student/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
-                        </li>
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/student/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
-                        </li>
-                        
-                    </ul>
+            
+                <ul class="collapse" id="student">
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/student/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/student/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : STUDENT MENU -->
 
                 <!-- START : EXAM MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/exam/"><i class="la la-newspaper-o"></i><span>&nbsp;Exam</span></a></div>
-                    <div data-toggle="collapse" data-target="#exam"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/exam/">
+                        <i class="la la-newspaper-o"></i> &nbsp; Exam
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#exam">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
 
-                    <ul class="collapse" id="exam">
+                <ul class="collapse" id="exam">
 
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/exam/search"><i class="la la-search"></i><span>&nbsp;Search Schedules</span></a>
-                        </li>
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/exam/create"><i class="la la-plus-circle"></i><span>&nbsp;Create Exam / Schedule</span></a>
-                        </li>
-                        
-                    </ul>
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/exam/search"><i class="la la-search"></i><span>&nbsp;Search Schedules</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/exam/create"><i class="la la-plus-circle"></i><span>&nbsp;Create Exam / Schedule</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : EXAM MENU -->
 
                 <!-- START : TIME TABLE MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/timetable/"><i class="la la-clock-o"></i><span>&nbsp;Time Table</span></a></div>
-                    <div data-toggle="collapse" data-target="#timetable"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/timetable/">
+                        <i class="la la-clock-o"></i> &nbsp; Timetable
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#timetable">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
 
-                    <ul class="collapse" id="timetable">
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/timetable/class_timetable"><i class="la la-users"></i><span>&nbsp;Class Timetable</span></a>
-                        </li>
+                <ul class="collapse" id="timetable">
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/timetable/class_timetable"><i class="la la-users"></i><span>&nbsp;Class Timetable</span></a>
+                    </li>
 
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/timetable/staff_timetable"><i class="la la-user"></i><span>&nbsp;Staff Timetable</span></a>
-                        </li>
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/timetable/create"><i class="la la-plus-circle"></i><span>&nbsp;Create</span></a>
-                        </li>
-                        
-                    </ul>
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/timetable/staff_timetable"><i class="la la-user"></i><span>&nbsp;Staff Timetable</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/timetable/create"><i class="la la-plus-circle"></i><span>&nbsp;Create</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : TIME TABLE MENU -->
 
                 <!-- START :RESULT MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/result/"><i class="la la-certificate"></i><span>&nbsp;Result</span></a></div>
-                    <div data-toggle="collapse" data-target="#result"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/result/">
+                        <i class="la la-certificate"></i> &nbsp; Result
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#result">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
 
-                    <ul class="collapse" id="result">
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/result/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
-                        </li>
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/result/add"><i class="la la-plus-circle"></i><span>&nbsp;Add</span></a>
-                        </li>
-                        
-                    </ul>
+                <ul class="collapse" id="result">
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/result/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/result/add"><i class="la la-plus-circle"></i><span>&nbsp;Add</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : RESULT MENU -->
 
                 <!-- START : report MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/report/"><i class="la la-area-chart"></i><span>&nbsp;Report</span></a></div>
-                    <div data-toggle="collapse" data-target="#report"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/report/">
+                        <i class="la la-area-chart"></i> &nbsp; Report
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#report">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
 
-                    <ul class="collapse" id="report">
-                            
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/report/attendance"><i class="la la-calendar"></i><span>&nbsp;Attendance</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/report/student"><i class="la la-graduation-cap"></i><span>&nbsp;Student</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/report/timetable"><i class="la la-clock-o"></i><span>&nbsp;Time Table</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/report/result"><i class="la la-certificate"></i><span>&nbsp;Exam Results</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/report/health"><i class="la la-heartbeat"></i><span>&nbsp;Health</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/report/staff"><i class="la la-users"></i><span>&nbsp;Staff</span></a>
-                        </li>
+                <ul class="collapse" id="report">
                         
-                    </ul>
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/report/attendance"><i class="la la-calendar"></i><span>&nbsp;Attendance</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/report/student"><i class="la la-graduation-cap"></i><span>&nbsp;Student</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/report/timetable"><i class="la la-clock-o"></i><span>&nbsp;Time Table</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/report/result"><i class="la la-certificate"></i><span>&nbsp;Exam Results</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/report/health"><i class="la la-heartbeat"></i><span>&nbsp;Health</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/report/staff"><i class="la la-users"></i><span>&nbsp;Staff</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : report MENU -->
 
                 <!-- START : SPORT MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/sport"><i class="la la-futbol-o"></i><span>&nbsp;Sport</span></a></div>
-                    <div data-toggle="collapse" data-target="#sport"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/sport">
+                        <i class="la la-futbol-o"></i> &nbsp; Sport
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#sport">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
-
-                    <ul class="collapse" id="sport">
-                            
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/sport/search_student"><i class="la la-graduation-cap"></i><span>&nbsp;Search Student</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/sport/search_coach"><i class="la la-user"></i><span>&nbsp;Search Coach</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/sport/assign"><i class="la la-chevron-right"></i><span>&nbsp;Assign</span></a>
-                        </li>
+            
+                <ul class="collapse" id="sport">
                         
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/sport/add_coach"><i class="la la-plus-circle"></i><span>&nbsp;Add Coach</span></a>
-                        </li>
-                        
-                    </ul>
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/sport/search_student"><i class="la la-graduation-cap"></i><span>&nbsp;Search Student</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/sport/search_coach"><i class="la la-user"></i><span>&nbsp;Search Coach</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/sport/assign"><i class="la la-chevron-right"></i><span>&nbsp;Assign</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/sport/add_coach"><i class="la la-plus-circle"></i><span>&nbsp;Add Coach</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : SPORT MENU -->
 
                 <!-- START : HEALTH MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/health"><i class="la la-heartbeat"></i><span>&nbsp;Health</span></a></div>
-                    <div data-toggle="collapse" data-target="#health"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/health">
+                        <i class="la la-heartbeat"></i> &nbsp; Health
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#health">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
-
-                    <ul class="collapse" id="health">
-                            
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/health/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
-                        </li>
+            
+                <ul class="collapse" id="health">
                         
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/health/add"><i class="la la-plus-circle"></i><span>&nbsp;Add Record</span></a>
-                        </li>
-                        
-                    </ul>
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/health/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/health/add"><i class="la la-plus-circle"></i><span>&nbsp;Add Record</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : HEALTH MENU -->
 
                 <!-- START : PARENT MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/parents"><i class="la la-female"></i><span>&nbsp;Parent</span></a></div>
-                    <div data-toggle="collapse" data-target="#parent"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/parents">
+                        <i class="la la-female"></i> &nbsp; Parent
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#parent">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
 
-                    <ul class="collapse" id="parent">
-                                
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/parents/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
-                        </li>
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/parents/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
-                        </li>
-                        
-                    </ul>
+                <ul class="collapse" id="parent">
+                            
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/parents/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/parents/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : PARENT MENU -->
 
                 <!-- START : STAFF MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/staff/"><i class="la la-users"></i><span>&nbsp;Staff</span></a></div>
-                    <div data-toggle="collapse" data-target="#staff"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/staff/">
+                        <i class="la la-users"></i> &nbsp; Staff
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#staff">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
-                
-                    <ul class="collapse" id="staff">
+            
+                <ul class="collapse" id="staff">
 
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/staff/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
-                        </li>
-                        
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/staff/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
-                        </li>
-                        
-                    </ul>
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/staff/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                    </li>
+                    
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/staff/add"><i class="la la-plus-circle"></i><span>&nbsp;Add New</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : STAFF MENU -->
             
                  <!-- START : USER MENU -->
                 <li class="main-menu">
-                    <div><a href="{{ app.url }}/user/"><i class="la la-user"></i><span>&nbsp;User</span></a></div>
-                    <div data-toggle="collapse" data-target="#user"><i class="la la-angle-down"></i></div>
+                    <a href="{{ app.url }}/user/">
+                        <i class="la la-user"></i> &nbsp; Users
+                    </a>
+                    <div class="angle" data-toggle="collapse" data-target="#user">
+                        <i class="la la-angle-down"></i>
+                    </div>
                 </li>
-                
-                    <ul class="collapse" id="user">
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/user/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
-                        </li>
-
-                        <li class="sub-menu">
-                            <a href="{{ app.url }}/user/permission"><i class="la la-user"></i><span>&nbsp;Role/Permissions</span></a>
-                        </li>
                         
-                    </ul>
+                <ul class="collapse" id="user">
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/user/search"><i class="la la-search"></i><span>&nbsp;Search</span></a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="{{ app.url }}/user/permission"><i class="la la-user"></i><span>&nbsp;Role/Permissions</span></a>
+                    </li>
+                    
+                </ul>
                 <!-- END : USER MENU -->
 
-                <li class="main-menu" id="school">
-                    <div><a href="{{ app.url }}/school"><i class="la la-institution"></i><span>&nbsp;Management</span></a></div>
+                <li class="main-menu">
+                    <a href="{{ app.url }}/school" class="w-100">
+                        <i class="la la-institution"></i> &nbsp; School
+                    </a>
                 </li>
 
-                <li class="main-menu" id="backup">
-                    <div><a href="{{ app.url }}/backup/"><i class="la la-cloud-upload"></i><span>&nbsp;Backup</span></a></div>
+                <li class="main-menu w-100">
+                    <a href="{{ app.url }}/backup/" class="w-100">
+                        <i class="la la-institution"></i> &nbsp; Backup
+                    </a>
                 </li>
+
 
             </ul>
         </div>
