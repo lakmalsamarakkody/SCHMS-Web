@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="healthadd">
+                {% if permission.health.add.view %}
 
                     <!-- START : HEALTH SEARCH -->
                     <h4 class="page-title"> Add Health Records </h4>
@@ -260,7 +261,9 @@
                         <!-- END : SEARCH RESULT TABLE -->
                     </section>
                     <!-- END : SEARCH RESULTS -->
-
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
                 <!-- END : CONTENT -->
 

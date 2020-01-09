@@ -331,6 +331,14 @@ class Exam extends Controller {
         $this->load->model('grade');
         $this->load->model('subject');
 
+        // CHECK PERMISSION : create
+
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-view') ):
+            $data['permission']['exam']['create']['view'] = true;
+        else:
+            $data['permission']['exam']['create']['view'] = false;
+        endif;
+
         // TWIG : EXAM TYPE
         foreach( $this->model_exam_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['exam_types'][$key]['id'] = $element->id;

@@ -28,6 +28,14 @@ class Health extends Controller {
         $this->load->model('student/health');
         $this->load->model('class');
         $this->load->model('grade');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('health-index-view') ):
+            $data['permission']['health']['index']['view'] = true;
+        else:
+            $data['permission']['health']['index']['view'] = false;
+        endif;
         
         // STUDENT TOTAL CARD
 		$data['student']['total']['all'] = $this->model_student->select('id')->count();
@@ -165,6 +173,14 @@ class Health extends Controller {
         $this->load->model('student');
         $this->load->model('student/sport');
         $this->load->model('student/health');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('health-search-view') ):
+            $data['permission']['health']['search']['view'] = true;
+        else:
+            $data['permission']['health']['search']['view'] = false;
+        endif;
 
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -583,6 +599,14 @@ class Health extends Controller {
         $this->load->model('student');
         $this->load->model('student/sport');
         $this->load->model('student/health');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : add
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('health-add-view') ):
+            $data['permission']['health']['add']['view'] = true;
+        else:
+            $data['permission']['health']['add']['view'] = false;
+        endif;
 
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
