@@ -11,9 +11,12 @@
                 {{ template.topmenu|raw }}
 
                 <div class="backupindex">
+                {% if permission.report.index.view %}
 
                     <h4 class="page-title"> Report index </h4>
-
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="stuadd">
+                {% if permission.student.add.view %}
                     
                     <h4 class="page-title">Add Student</h4>
 
@@ -371,6 +372,9 @@
     
                     </form>
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
                 
 

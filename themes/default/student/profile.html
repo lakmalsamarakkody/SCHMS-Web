@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="stuprofile">
+                {% if permission.student.profile.view %}
 
                     <!-- START : STUDENT PROFILE  -->
                     <section class="profileview">
@@ -429,6 +430,9 @@
                         </div>
                         
                     </section>
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
 
             </div>

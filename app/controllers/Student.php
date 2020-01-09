@@ -28,6 +28,14 @@ class Student extends Controller {
         $this->load->model('grade');
 		$this->load->model('student');
         $this->load->model('student/attendance');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-index-view') ):
+            $data['permission']['student']['index']['view'] = true;
+        else:
+            $data['permission']['student']['index']['view'] = false;
+        endif;
         
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -101,6 +109,14 @@ class Student extends Controller {
         $this->load->model('exam/type');
         $this->load->model('sport');
         $this->load->model('religion');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-search-view') ):
+            $data['permission']['student']['search']['view'] = true;
+        else:
+            $data['permission']['student']['search']['view'] = false;
+        endif;
 
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -330,6 +346,14 @@ class Student extends Controller {
         $this->load->model('religion');
         $this->load->model('district');
         $this->load->model('student/relation');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : add
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-add-view') ):
+            $data['permission']['student']['add']['view'] = true;
+        else:
+            $data['permission']['student']['add']['view'] = false;
+        endif;
 
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
@@ -864,6 +888,13 @@ class Student extends Controller {
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );
 			exit();
+        endif;
+
+        // CHECK PERMISSION : profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-view') ):
+            $data['permission']['student']['profile']['view'] = true;
+        else:
+            $data['permission']['student']['profile']['view'] = false;
         endif;
 
         //QUERY ( CLASS )
