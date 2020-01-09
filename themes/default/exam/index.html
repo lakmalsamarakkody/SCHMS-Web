@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="examindex">
+                    {% if permission.exam.index.view %}
 
                     <h4 class="page-title">Exam Overview</h4>
 
@@ -48,6 +49,9 @@
                         </div>
                     </section>
                     <!-- END : RECENT EXAM -->
+                    {% else %}
+                        {% include "blocks/permission_denied.html" %}
+                    {% endif %}
 
                 </div>
             </div>

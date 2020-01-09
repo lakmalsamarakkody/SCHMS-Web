@@ -25,6 +25,14 @@ class Exam extends Controller {
 
         // MODEL
         $this->load->model('exam/schedule');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-index-view') ):
+            $data['permission']['exam']['index']['view'] = true;
+        else:
+            $data['permission']['exam']['index']['view'] = false;
+        endif;
 
         // DATE AND TIME
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -110,6 +118,13 @@ class Exam extends Controller {
         $this->load->model('exam/grade');
         $this->load->model('grade');
         $this->load->model('subject');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-search-view') ):
+            $data['permission']['exam']['search']['view'] = true;
+        else:
+            $data['permission']['exam']['search']['view'] = false;
+        endif;
 
         // TWIG : EXAM YEAR
         $exam_year = Carbon::now()->format('Y');

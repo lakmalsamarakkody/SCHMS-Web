@@ -16,6 +16,7 @@
 
                 <!-- START : EXAM CREATE PAGE -->
                 <div class="examcreate">
+                    {% if permission.exam.create.view %}
 
                     <!-- START : ADD EXAM -->
                     <div class="addexam">
@@ -206,6 +207,9 @@
 
                     </div>
                     <!-- END : SCHEDULE EXAM -->
+                    {% else %}
+                        {% include "blocks/permission_denied.html" %}
+                    {% endif %}
 
                 </div>
                 <!-- END : EXAM CREATE PAGE  -->

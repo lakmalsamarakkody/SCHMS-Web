@@ -25,6 +25,14 @@ class Backup extends Controller {
 
         // MODEL
         $this->load->model('backup');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('backup-index-view') ):
+            $data['permission']['backup']['index']['view'] = true;
+        else:
+            $data['permission']['backup']['index']['view'] = false;
+        endif;
 
         foreach ( $this->model_backup->orderBy('date_time', 'DESC')->get() as $key => $element ):
             $data['backups'][$key]['id'] = $element->id;

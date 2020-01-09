@@ -11,6 +11,7 @@
                 
                 {{ template.topmenu|raw }}
 
+                {% if permission.exam.search.view %}
                 <div class="examsearch">
                     
                     <h4 class="page-title">View exam schedule</h4>
@@ -162,7 +163,10 @@
                         </table>
                     {% endif %}
                 </section>
-                 <!-- END : EXAM SCHEDULE SEARCH RESULT -->
+                <!-- END : EXAM SCHEDULE SEARCH RESULT -->
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
 
             </div>
             

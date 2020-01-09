@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="backupindex">
+                    {% if permission.backup.index.view %}
 
                     <h4 class="page-title">Backup</h4>
 
@@ -97,6 +98,9 @@
                         <!-- END : SEARCH RESULT TABLE -->
                     </section>
                     <!-- END : SEARCH RESULTS -->
+                    {% else %}
+                        {% include "blocks/permission_denied.html" %}
+                    {% endif %}
 
                 </div>
             </div>

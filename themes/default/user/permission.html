@@ -26,7 +26,7 @@
                                         <div class="form-group">
                                             <label for="role_id">User Role</label>
                                             <select id="role_id" class="form-control" name="role" onchange="hidePermissionMenu()">
-                                                <option value="" selected>- Select -</option>
+                                                <option value="null" selected>- Select -</option>
                                                 {% for user_role in user.roles %}
                                                     {% if role_id and role_id == user_role.id %}
                                                     <option value="{{ user_role.id }}" selected>{{ user_role.name }}</option>
@@ -35,6 +35,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </select>
+                                            {% if msg %}<small class="text-danger">{{ msg }}</small>{% endif %}
                                         </div>
                                     </div>
 

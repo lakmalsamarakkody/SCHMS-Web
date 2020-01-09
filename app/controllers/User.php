@@ -206,8 +206,11 @@ class User extends Controller {
             $data['user']['roles'][$key]['name'] = $element->name;
         endforeach;
 
-        if ( isset($this->request->post['is_submit']) ):
-            
+        // VALIDATION : role
+        $is_valid_role = GUMP::is_valid($this->request->post, array('role' => 'required|numeric|min_len,1|max_len,3'));
+
+        if ( isset($this->request->post['is_submit']) AND $is_valid_role === true ):
+
             $data['role_id'] = $this->request->post['role'];
             
             // GROUP PERMISSION MODULES
@@ -221,8 +224,6 @@ class User extends Controller {
                     $data['modules'][$element->module]['permissions'][$key2]['id'] = $value->id;
                     $data['modules'][$element->module]['permissions'][$key2]['name'] = $value->name;
 
-                    // $data['permissions'][$element->module][$key2]['id'] = $value->id;
-                    // $data['permissions'][$element->module][$key2]['name'] = $value->name;
                 endforeach;
             endforeach;
 
@@ -230,6 +231,8 @@ class User extends Controller {
                 $data['rolepermissions'][$key] = $value->permission_id;
             endforeach;
 
+        else:
+            $data['msg'] = "Select a user role from above list";
         endif;
 
 		// RENDER VIEW
