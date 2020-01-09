@@ -36,6 +36,13 @@ class School extends Controller {
 		$this->load->model('user');
 		$this->load->model('user/role');
 
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-view') ):
+            $data['permission']['management']['index']['view'] = true;
+        else:
+            $data['permission']['management']['index']['view'] = false;
+        endif;
+
 		// CLASS
 		foreach( $this->model_class->select('id', 'grade_id', 'staff_id','name')->orderBy('grade_id', 'asc')->orderBy('name', 'asc')->get() as $key => $element ):
 			$data['classes'][$key]['id'] = $element->id;

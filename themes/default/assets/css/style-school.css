@@ -5,11 +5,15 @@
 }
 
 .schoolindex .card {
-    margin-bottom: 25px;;
+    margin-bottom: 25px;
 }
 
 .schoolindex .card .card-body {
     height: 300px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.schoolindex .permission_denied .card .card-body {
+    height: 75vh !important;
 }
