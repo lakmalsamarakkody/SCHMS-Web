@@ -22,6 +22,14 @@ class Parents extends Controller {
 
         // MODEL
         $this->load->model('parent');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : index
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-index-view') ):
+            $data['permission']['parents']['index']['view'] = true;
+        else:
+            $data['permission']['parents']['index']['view'] = false;
+        endif;
 
         // PARENT TOTAL CARD
         $data['parent']['total']['all'] = $this->model_parent->select('id')->count();
@@ -82,6 +90,14 @@ class Parents extends Controller {
         $this->load->model('staff');
         $this->load->model('sport');
         $this->load->model('religion');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : search
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-search-view') ):
+            $data['permission']['parents']['search']['view'] = true;
+        else:
+            $data['permission']['parents']['search']['view'] = false;
+        endif;
 
         // RELATIONSHIP
 		foreach( $this->model_student_relation->select('id', 'name')->orderBy('name')->get() as $key => $element ):
@@ -314,11 +330,18 @@ class Parents extends Controller {
         $this->load->model('student/relation');
         $this->load->model('student/class');
         $this->load->model('student/parent');
-
         $this->load->model('class');
         $this->load->model('grade');       
         $this->load->model('district');
         $this->load->model('province');
+        $this->load->model('user');
+
+        // CHECK PERMISSION : add
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-add-view') ):
+            $data['permission']['parents']['add']['view'] = true;
+        else:
+            $data['permission']['parents']['add']['view'] = false;
+        endif;
 
 
         //STUDENT CLASS
@@ -704,6 +727,13 @@ class Parents extends Controller {
         $this->load->model('grade');
         $this->load->model('user');
         $this->load->model('user/role');
+
+        // CHECK PERMISSION : profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-profile-view') ):
+            $data['permission']['parents']['profile']['view'] = true;
+        else:
+            $data['permission']['parents']['profile']['view'] = false;
+        endif;
 
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):

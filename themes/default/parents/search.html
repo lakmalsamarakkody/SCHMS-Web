@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="parentsearch">
+                {% if permission.parents.search.view %}
 
                     <h4 class="page-title">Search Parent</h4>
 
@@ -230,6 +231,9 @@
                     </section>
                     <!-- END : SEARCH RESULTS -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
             </div>
         </div>

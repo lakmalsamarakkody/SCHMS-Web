@@ -12,6 +12,7 @@
 			<div class="col-md-8 mx-auto messages">
 
 				<div class="messagessingle">
+				{% if permission.portal.single.view %}
 
 					<!-- START : SINGLE CONVERSATION -->
 					<a href="{{ app.url }}/portal/messages"><button class="btn btn-xs btn-secondary"><i class="la la-comments"></i> Back to Conversations</button></a>
@@ -68,6 +69,9 @@
 						</div>
 
 					</div>
+				{% else %}
+					{% include "blocks/permission_denied.html" %}
+				{% endif %}
 				</div>
 			</div>
 

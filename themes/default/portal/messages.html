@@ -10,6 +10,7 @@
 				<div class="col-md-8 mx-auto messages">
 
 					<div class="messagesinbox">
+					{% if permission.portal.messages.view %}
 
 						<!-- START : CONVERSATIONS -->
 						<h4 class="page-title">Your Conversations</h4>
@@ -36,6 +37,9 @@
 						</ul>
 						<!-- END : CONVERSATIONS -->
 
+					{% else %}
+                        {% include "blocks/permission_denied.html" %}
+                    {% endif %}
 					</div>
 				</div>
 				<!-- END : CONTENT -->

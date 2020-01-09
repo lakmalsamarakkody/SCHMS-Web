@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="parentprofile">
+                {% if permission.parents.profile.view %}
 
                     <!-- START : PARENT PROFILE  -->
                     <section class="profileview">
@@ -471,6 +472,10 @@
                         </div>
 
                     </section>
+
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
 
             </div>

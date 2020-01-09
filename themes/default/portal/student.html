@@ -12,6 +12,7 @@
             <div class="col-md-8 mx-auto">
 
                 <div class="student">
+                {% if permission.portal.student.view %}
 
                     <!-- START : STUDENT PROFILE  -->
                     <section class="profileview">
@@ -598,8 +599,9 @@
                             </div>
                         </div>
                     </section>
-                                
-
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
 
             </div>

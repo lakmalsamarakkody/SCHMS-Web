@@ -12,6 +12,7 @@
                 {{ template.topmenu|raw }}
 
                 <div class="parentadd">
+                {% if permission.parents.add.view %}
 
                     <h4 class="page-title"> Add Parent Details </h4>
 
@@ -150,6 +151,9 @@
                     </div>
                     <!-- END : SEARCH STUDENT RESULT TABLE -->
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
                 
             </div>

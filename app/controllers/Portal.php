@@ -47,6 +47,13 @@ class Portal extends Controller {
         $this->load->model('user');
         $this->load->model('user/role');
 
+        // CHECK PERMISSION : student
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-student-view') ):
+            $data['permission']['portal']['student']['view'] = true;
+        else:
+            $data['permission']['portal']['student']['view'] = false;
+        endif;
+
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
@@ -422,6 +429,13 @@ class Portal extends Controller {
         $this->load->model('user');
         $this->load->model('user/role');
 
+        // CHECK PERMISSION : parent
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-parent-view') ):
+            $data['permission']['portal']['parent']['view'] = true;
+        else:
+            $data['permission']['portal']['parent']['view'] = false;
+        endif;
+
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
@@ -778,6 +792,13 @@ class Portal extends Controller {
 
         if ( $id !== null ):
 
+            // CHECK PERMISSION : single
+            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-single-view') ):
+                $data['permission']['portal']['single']['view'] = true;
+            else:
+                $data['permission']['portal']['single']['view'] = false;
+            endif;
+
             // SINGLE CONVERSATION
             $messages = $this->model_message->select('id', 'sender_id', 'receiver_id', 'body', 'created_on');
 
@@ -837,7 +858,15 @@ class Portal extends Controller {
             $data['your']['image']['path'] = $receiver_data->user_type."/".$receiver_data->ref_id;
 
             $this->load->view('portal/single', $data);
+
         else:
+
+            // CHECK PERMISSION : messages
+            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-messages-view') ):
+                $data['permission']['portal']['messages']['view'] = true;
+            else:
+                $data['permission']['portal']['messages']['view'] = false;
+            endif;
             
             /**
              * We need to display list of all the conversations specific

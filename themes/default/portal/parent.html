@@ -12,6 +12,7 @@
             <div class="col-md-8 mx-auto">
 
                 <div class="parent">
+                {% if permission.portal.parent.view %}
 
                     <!-- START : PARENT PROFILE  -->
                     <section class="profileview">
@@ -672,8 +673,10 @@
                             </div>
                         </div>
                     </section>
-                                
 
+                {% else %}
+                    {% include "blocks/permission_denied.html" %}
+                {% endif %}
                 </div>
 
             </div>
