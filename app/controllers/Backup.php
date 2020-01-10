@@ -79,7 +79,7 @@ class Backup extends Controller {
 
 
         // PERMISSION
-        if ( !$this->model_user::find(3)::hasPermission('backup-index-view') ):
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('backup-index-view') ):
             echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
             exit();
         endif;
