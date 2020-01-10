@@ -278,7 +278,7 @@ CREATE TABLE `exam_grade_has_schedule` (
   KEY `exam_schedule_ibfk_2` (`subject_id`),
   CONSTRAINT `exam_grade_has_schedule_ibfk_1` FOREIGN KEY (`exam_grade_id`) REFERENCES `exam_has_grade` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `exam_grade_has_schedule_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -287,7 +287,7 @@ CREATE TABLE `exam_grade_has_schedule` (
 
 LOCK TABLES `exam_grade_has_schedule` WRITE;
 /*!40000 ALTER TABLE `exam_grade_has_schedule` DISABLE KEYS */;
-INSERT INTO `exam_grade_has_schedule` VALUES (77,49,3,'2019-12-08','11:00:00','13:00:00','Ananda Hall','Calculators Allowed','2019-12-08 13:52:11','2019-12-12 04:52:35',NULL),(78,49,10,'2019-12-08','08:00:00','10:00:00','Main Hall','','2019-12-08 13:54:12','2019-12-12 04:53:07',NULL),(79,50,1,'2020-01-16','08:00:00','10:00:00',NULL,NULL,'2020-01-08 00:04:17','2020-01-08 00:04:17',NULL),(82,51,2,'2020-01-14','08:00:00','10:00:00',NULL,NULL,'2020-01-08 00:05:26','2020-01-08 00:05:26',NULL),(85,50,6,'2020-01-09','08:00:00','10:00:00',NULL,NULL,'2020-01-08 17:25:34','2020-01-08 17:25:34',NULL),(86,50,8,'2020-01-10','08:00:00','10:00:00',NULL,NULL,'2020-01-08 17:29:59','2020-01-08 17:29:59',NULL);
+INSERT INTO `exam_grade_has_schedule` VALUES (77,49,3,'2019-12-08','11:00:00','13:00:00','Ananda Hall','Calculators Allowed','2019-12-08 13:52:11','2019-12-12 04:52:35',NULL),(78,49,10,'2019-12-08','08:00:00','10:00:00','Main Hall','','2019-12-08 13:54:12','2019-12-12 04:53:07',NULL),(79,50,1,'2020-01-16','08:00:00','10:00:00',NULL,NULL,'2020-01-08 00:04:17','2020-01-08 00:04:17',NULL),(82,51,2,'2020-01-14','08:00:00','10:00:00',NULL,NULL,'2020-01-08 00:05:26','2020-01-08 00:05:26',NULL),(85,50,6,'2020-01-09','08:00:00','10:00:00',NULL,NULL,'2020-01-08 17:25:34','2020-01-08 17:25:34',NULL),(86,50,8,'2020-01-10','08:00:00','10:00:00',NULL,NULL,'2020-01-08 17:29:59','2020-01-08 17:29:59',NULL),(87,50,4,'2020-01-10','11:00:00','13:00:00',NULL,NULL,'2020-01-10 22:48:36','2020-01-10 22:48:36',NULL);
 /*!40000 ALTER TABLE `exam_grade_has_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,7 +433,7 @@ CREATE TABLE `notification` (
   KEY `sender_id` (`sender_id`),
   CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -442,7 +442,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:12:06',NULL),(2,3,3,'Password changed','Your password has been changed by System Administrator',1,'2020-01-08 05:40:07','2020-01-09 01:10:24','2020-01-09 01:10:24'),(3,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:38',NULL),(4,3,3,'Password changed','Your password has been changed by System Administrator',1,'2020-01-08 05:40:07','2020-01-09 01:10:29',NULL),(5,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:41',NULL),(6,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:02:46',NULL),(7,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:44',NULL),(8,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-08 16:08:37',NULL),(9,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:45',NULL),(10,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:02:42',NULL),(11,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-09 01:06:22',NULL),(12,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:05:20',NULL),(13,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-09 01:06:24',NULL),(14,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:06:17',NULL),(15,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-09 01:06:00',NULL),(16,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:06:26',NULL),(17,3,17,'Account Activated','Your account has been activated by System Administrator',0,'2020-01-08 16:34:08','2020-01-08 16:34:08',NULL),(24,3,7,'Attendance Marked','Your are present on 2020-01-08',0,'2020-01-08 16:57:07','2020-01-08 16:57:07',NULL),(25,3,7,'New Exam Schedule Found','A new exam schedule has been assigned to you on 2020-01-10',0,'2020-01-08 17:29:59','2020-01-08 17:29:59',NULL),(26,3,7,'Results Updated','Your exam results has been updated',0,'2020-01-08 18:12:44','2020-01-08 18:12:44',NULL),(27,3,7,'Sports Updated','Your engaged sport list has been updated',0,'2020-01-08 18:35:41','2020-01-08 18:35:41',NULL),(28,3,5,'Health Updated','Your health details has been updated',1,'2020-01-08 18:40:05','2020-01-09 01:43:54',NULL);
+INSERT INTO `notification` VALUES (1,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:12:06',NULL),(2,3,3,'Password changed','Your password has been changed by System Administrator',1,'2020-01-08 05:40:07','2020-01-09 01:10:24','2020-01-09 01:10:24'),(3,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:38',NULL),(4,3,3,'Password changed','Your password has been changed by System Administrator',1,'2020-01-08 05:40:07','2020-01-09 01:10:29',NULL),(5,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:41',NULL),(6,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:02:46',NULL),(7,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:44',NULL),(8,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-08 16:08:37',NULL),(9,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-08 16:17:45',NULL),(10,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:02:42',NULL),(11,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-09 01:06:22',NULL),(12,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:05:20',NULL),(13,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-09 01:06:24',NULL),(14,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:06:17',NULL),(15,15,3,'Welcome','You are warmly welcome to SCHMS System',0,'2020-01-08 00:00:00','2020-01-09 01:06:00',NULL),(16,3,3,'Password changed','Your password has been changed by System Administrator',0,'2020-01-08 05:40:07','2020-01-09 01:06:26',NULL),(17,3,17,'Account Activated','Your account has been activated by System Administrator',0,'2020-01-08 16:34:08','2020-01-08 16:34:08',NULL),(24,3,7,'Attendance Marked','Your are present on 2020-01-08',0,'2020-01-08 16:57:07','2020-01-08 16:57:07',NULL),(25,3,7,'New Exam Schedule Found','A new exam schedule has been assigned to you on 2020-01-10',0,'2020-01-08 17:29:59','2020-01-08 17:29:59',NULL),(26,3,7,'Results Updated','Your exam results has been updated',0,'2020-01-08 18:12:44','2020-01-08 18:12:44',NULL),(27,3,7,'Sports Updated','Your engaged sport list has been updated',0,'2020-01-08 18:35:41','2020-01-08 18:35:41',NULL),(28,3,5,'Health Updated','Your health details has been updated',1,'2020-01-08 18:40:05','2020-01-09 01:43:54',NULL),(29,3,7,'New Exam Schedule Found','A new exam schedule has been assigned to you on 2020-01-10',0,'2020-01-10 22:48:36','2020-01-10 22:48:36',NULL),(30,3,5,'New Exam Schedule Found','A new exam schedule has been assigned to you on 2020-01-10',0,'2020-01-10 22:48:36','2020-01-10 22:48:36',NULL);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -967,7 +967,7 @@ CREATE TABLE `student_has_exam_schedule` (
   KEY `exam_schedule_id` (`exam_schedule_id`),
   CONSTRAINT `student_has_exam_schedule_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `student_has_exam_schedule_ibfk_2` FOREIGN KEY (`exam_schedule_id`) REFERENCES `exam_grade_has_schedule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -976,7 +976,7 @@ CREATE TABLE `student_has_exam_schedule` (
 
 LOCK TABLES `student_has_exam_schedule` WRITE;
 /*!40000 ALTER TABLE `student_has_exam_schedule` DISABLE KEYS */;
-INSERT INTO `student_has_exam_schedule` VALUES (25,64,77,'85','2019-12-08 13:52:12','2019-12-12 07:10:48',NULL),(27,64,78,'20','2019-12-08 13:54:12','2019-12-08 13:54:12',NULL),(28,67,77,'40','2019-12-27 00:00:00','2019-12-27 00:00:00',NULL),(29,52,79,'60','2020-01-08 00:04:17','2020-01-08 00:04:17',NULL),(32,53,82,'50','2020-01-08 00:05:26','2020-01-08 00:05:26',NULL),(33,64,82,'70','2020-01-08 00:05:26','2020-01-08 18:11:56',NULL),(36,52,85,'69','2020-01-08 17:25:34','2020-01-08 18:12:44',NULL),(37,52,86,'75','2020-01-08 17:29:59','2020-01-08 17:29:59',NULL);
+INSERT INTO `student_has_exam_schedule` VALUES (25,64,77,'85','2019-12-08 13:52:12','2019-12-12 07:10:48',NULL),(27,64,78,'20','2019-12-08 13:54:12','2019-12-08 13:54:12',NULL),(28,67,77,'40','2019-12-27 00:00:00','2019-12-27 00:00:00',NULL),(29,52,79,'60','2020-01-08 00:04:17','2020-01-08 00:04:17',NULL),(32,53,82,'50','2020-01-08 00:05:26','2020-01-08 00:05:26',NULL),(33,64,82,'70','2020-01-08 00:05:26','2020-01-08 18:11:56',NULL),(36,52,85,'69','2020-01-08 17:25:34','2020-01-08 18:12:44',NULL),(37,52,86,'75','2020-01-08 17:29:59','2020-01-08 17:29:59',NULL),(38,52,87,NULL,'2020-01-10 22:48:36','2020-01-10 22:48:36',NULL),(39,53,87,NULL,'2020-01-10 22:48:36','2020-01-10 22:48:36',NULL),(40,64,87,NULL,'2020-01-10 22:48:36','2020-01-10 22:48:36',NULL),(41,66,87,NULL,'2020-01-10 22:48:36','2020-01-10 22:48:36',NULL);
 /*!40000 ALTER TABLE `student_has_exam_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1315,4 +1315,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-10 22:47:56
+-- Dump completed on 2020-01-10 23:21:16
