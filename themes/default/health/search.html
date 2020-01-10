@@ -17,6 +17,15 @@
                     <!-- START : HEALTH SEARCH -->
                     <h4 class="page-title"> Search Health Records </h4>
 
+                    {% if permission.denied.status %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ permission.denied.message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        
                     <div class="card mt-4">
 
                         <div class="card-header">
@@ -411,30 +420,37 @@
             var formData = new FormData;
             formData.append('health_id', health_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/health/ajax_removehealth",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Health Record Deleted successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/health/ajax_removehealth",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Health Record Deleted successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+                })
+
+            },
+            function(){ alertify.error('Deletion process cancelled')}
+            );
         }
         // END : REMOVE HEALTH
     

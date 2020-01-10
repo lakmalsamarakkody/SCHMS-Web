@@ -16,6 +16,15 @@
 
                     <h4 class="page-title">View Staff</h4>
 
+                    {% if permission.denied.status %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ permission.denied.message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+
                     <!-- START : SEARCH STAFF PANEL -->
                     <div class="card mt-4">
                         <div class="card-header">Search Staff</div>

@@ -16,6 +16,15 @@
 
                     <h4 class="page-title">Backup</h4>
 
+                    {% if permission.denied.status %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ permission.denied.message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+
                     <!-- START : BACKUP PANEL -->
                     <div class="card mt-4">
                         <div class="card-header">Database Manual Backup</div>
@@ -157,30 +166,36 @@
             let formData = new FormData()
             formData.append("backup_id", id)
 
-            // AJAX
-            $.ajax({
-                url: "{{ app.url }}/backup/delete_backup_ajax",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: Response => {
-                    if ( Response.status === 'success' ) {
-                        alertify.alert("Success", "Backup Deleted Successfully").set({
-                            'closable': false,
-                            'onok': () => {
-                                location.reload()
-                            }
-                        })
-                    } else {
-                        alertify.alert("Failed", Response.error)
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // AJAX
+                $.ajax({
+                    url: "{{ app.url }}/backup/delete_backup_ajax",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: Response => {
+                        if ( Response.status === 'success' ) {
+                            alertify.alert("Success", "Backup Deleted Successfully").set({
+                                'closable': false,
+                                'onok': () => {
+                                    location.reload()
+                                }
+                            })
+                        } else {
+                            alertify.alert("Failed", Response.error)
+                        }
+                    },
+                    error: e => {
+                        console.log( e.responseText )
                     }
-                },
-                error: e => {
-                    console.log( e.responseText )
-                }
-            })
+                })
+            },
+            function(){ alertify.error('Deletion process cancelled')}
+            );
         }
 
     </script>

@@ -897,28 +897,28 @@ class Student extends Controller {
             $data['permission']['student']['profile']['view'] = false;
         endif;
 
-
-
-
         // PROFILE PICTURE UPLOAD
         if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
 
             // CHECK SIZE
             $size_mb = $_FILES['propic']['size'] / 1048576;
 
-            // CHECK PERMISSION
-            // VALIDATION
-
-            // SAVE
-            if ( $size_mb < 1 AND $_FILES['propic']['type'] == 'image/jpeg' OR $_FILES['propic']['type'] == 'image/jpg' ):
-                move_uploaded_file($_FILES['propic']['tmp_name'], ABS_PATH.'/data/uploads/propics/student/'.$this->request->post['stu_id'].'.jpg');
+            // CHECK PERMISSION : propic
+            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-edit-propic') ):
+                $data['permission']['student']['profile']['edit']['propic'] = true;
+                // SAVE
+                if ( $size_mb < 1 AND $_FILES['propic']['type'] == 'image/jpeg' OR $_FILES['propic']['type'] == 'image/jpg' ):
+                    move_uploaded_file($_FILES['propic']['tmp_name'], ABS_PATH.'/data/uploads/propics/student/'.$this->request->post['student_id'].'.jpg');
+                else:
+                    $data['propic']['upload']['failed']['status'] = true;
+                    $data['propic']['upload']['failed']['message'] = "Profile picture upload failed. Image should less than 1MB and in JPG/JPEG format";
+                endif;
             else:
-                $data['permission']['upload']['propic'] = true;
+                $data['permission']['student']['profile']['edit']['propic'] = false;
+                $data['propic']['upload']['failed']['status'] = true;
+                $data['propic']['upload']['failed']['message'] = "You are not allowed to change profile picture";
             endif;
-
         endif;
-
-
 
         //QUERY ( CLASS )
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):

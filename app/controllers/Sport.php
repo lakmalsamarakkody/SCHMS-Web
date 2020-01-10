@@ -982,6 +982,29 @@ class Sport extends Controller {
             $data['permission']['sport']['profile_coach']['view'] = false;
         endif;
 
+        // PROFILE PICTURE UPLOAD
+        if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
+
+            // CHECK SIZE
+            $size_mb = $_FILES['propic']['size'] / 1048576;
+
+            // CHECK PERMISSION : propic
+            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('coach-profile-edit-propic') ):
+                $data['permission']['coach']['profile']['edit']['propic'] = true;
+                // SAVE
+                if ( $size_mb < 1 AND $_FILES['propic']['type'] == 'image/jpeg' OR $_FILES['propic']['type'] == 'image/jpg' ):
+                    move_uploaded_file($_FILES['propic']['tmp_name'], ABS_PATH.'/data/uploads/propics/coach/'.$this->request->post['coach_id'].'.jpg');
+                else:
+                    $data['propic']['upload']['failed']['status'] = true;
+                    $data['propic']['upload']['failed']['message'] = "Profile picture upload failed. Image should less than 1MB and in JPG/JPEG format";
+                endif;
+            else:
+                $data['permission']['coach']['profile']['edit']['propic'] = false;
+                $data['propic']['upload']['failed']['status'] = true;
+                $data['propic']['upload']['failed']['message'] = "You are not allowed to change profile picture";
+            endif;
+        endif;
+
         // SPORT
 		foreach( $this->model_sport->select('id', 'name')->orderBy('id')->get() as $key => $element ):
 			$data['sports'][$key]['id'] = $element->id;

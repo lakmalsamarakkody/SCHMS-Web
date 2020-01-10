@@ -19,17 +19,17 @@
 
                         <h4 class="page-title">Student Details</h4>
 
-                        {% if permission.upload.propic %}
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Upload failed</strong>
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        {% endif %}
-
                         <div class="row mt-5">
                             <div class="col-12">
+
+                                {% if propic.upload.failed.status %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{{ propic.upload.failed.message }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {% endif %}
 
                                 <div class="card">
                                     <div class="card-header">
@@ -219,29 +219,28 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
+                                                                </div>
 
-                                                                    <form action="#" method="post" enctype="multipart/form-data">
-
-                                                                        <!-- HIDDEN -->
-                                                                        <input type="hidden" name="stu_id" value="{{ student.id }}" >
-
-                                                                        <div class="form-row">
-                                                                            <div class="col-8">
-                                                                                <div class="form-group">
-                                                                                    <label for="">Class</label>
-                                                                                    <input class="form-control-file" type="file" name="propic" />
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <div class="form-group">
-                                                                                    <label for="">&nbsp;</label>
-                                                                                    <button type="submit" class="btn btn-primary btn-sm form-control-sm form-control" onclick="upload_profile_picture()">Save</button>
-                                                                                </div>
+                                                                <!-- PROFILE PICTURE UPLOAD -->
+                                                                <form action="#" method="post" enctype="multipart/form-data">
+                                                                    <!-- HIDDEN -->
+                                                                    <input type="hidden" name="student_id" value="{{ student.id }}" >
+                                                                    <div class="form-row">
+                                                                        <div class="col-4">
+                                                                            <div class="form-group">
+                                                                                <label for="">Profile Picture Upload</label>
+                                                                                <input class="form-control-file" type="file" name="propic" />
                                                                             </div>
                                                                         </div>
-                                                                    </form>
-
-                                                                </div>
+                                                                        <div class="col-2">
+                                                                            <div class="form-group">
+                                                                                <label for="">&nbsp;</label>
+                                                                                <button type="submit" class="btn btn-primary btn-sm form-control-sm form-control" onclick="upload_profile_picture()">Save</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
@@ -585,36 +584,36 @@
         var formData = new FormData;
         formData.append('student_id', student_id)
 
-        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this student will be deleted.', 
-            function(){ 
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+        function(){ 
 
-                // REQUEST
-                $.ajax({
-                    url: "{{ app.url }}/student/ajax_removestudent",
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    dataType: 'json',
-                    success: (res) => {
-                        
-                        if ( res.status == 'success' ) {
-                            alertify.alert("Success", "Student Record Deleted successfully ... ").set('onok', function() {
-                                window.location.replace("{{ app.url}}/student/search");
-                            })
-                        } else {
-                            console.log(res);
-                            alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
-                        }
-                    },
-                    error: (e) => {
-                        alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
-                        console.log(e.responseText)
+            // REQUEST
+            $.ajax({
+                url: "{{ app.url }}/student/ajax_removestudent",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: (res) => {
+                    
+                    if ( res.status == 'success' ) {
+                        alertify.alert("Success", "Student Record Deleted successfully ... ").set('onok', function() {
+                            window.location.replace("{{ app.url}}/student/search");
+                        })
+                    } else {
+                        console.log(res);
+                        alertify.alert('<span class="text-warning"><i class="la la-exclamation-circle"></i> Warning</span>', res.message);
                     }
-                })
-            },
-            function(){ alertify.error('Student deletion process cancelled')}
-            // function(){ alertify.error('Cancel')}
+                },
+                error: (e) => {
+                    alertify.alert('<span class="text-danger"><i class="la la-exclamation-triangle"></i> Error</span>', "Something went wrong ... ");
+                    console.log(e.responseText)
+                }
+            })
+
+        },
+        function(){ alertify.error('Deletion process cancelled')}
         );
     }
     // END : REMOVE STUDENT

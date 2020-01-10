@@ -231,6 +231,9 @@ class Attendance extends Controller {
 
             if ( isset($this->request->post['isStaff']) ):
 
+                // CHECK PERMISSION : propic
+                if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-search-view-staff') ):
+
                 /**
                  * Front end user is asking for attendance data for
                  * the staff members. We have to pull data from the
@@ -273,7 +276,16 @@ class Attendance extends Controller {
 
                 endforeach;
 
+                else:
+                    $data['permission']['denied']['status'] = true;
+                    $data['permission']['denied']['message'] = "You do not have required permission";
+                endif;
+
             else:
+
+                // CHECK PERMISSION : propic
+                if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-search-view-student') ):
+
                 /**
                  * Front end user is asking for attendance data for
                  * the students. We have to pull data from the
@@ -325,6 +337,11 @@ class Attendance extends Controller {
                     endfor;
 
                 endforeach;
+
+                else:
+                    $data['permission']['denied']['status'] = true;
+                    $data['permission']['denied']['message'] = "You do not have required permission";
+                endif;
 
             endif;
         
@@ -404,6 +421,9 @@ class Attendance extends Controller {
              */
             if ( isset($this->request->post['isStaff']) ):
 
+                // CHECK PERMISSION : propic
+                if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view-staff') ):
+
                 /**
                  * Front end user is asking for attendance data for
                  * the staff members. We have to pull data from the
@@ -451,7 +471,15 @@ class Attendance extends Controller {
 
                 endforeach;
 
+                else:
+                    $data['permission']['denied']['status'] = true;
+                    $data['permission']['denied']['message'] = "You do not have required permission";
+                endif;
+
             else:
+
+                // CHECK PERMISSION : propic
+                if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view-student') ):
 
                 /**
                  * User is asking for student attendance records.
@@ -500,6 +528,11 @@ class Attendance extends Controller {
                     endif;
 
                 endforeach;
+
+                else:
+                    $data['permission']['denied']['status'] = true;
+                    $data['permission']['denied']['message'] = "You do not have required permission";
+                endif;
 
             endif;
 

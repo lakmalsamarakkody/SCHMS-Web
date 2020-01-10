@@ -16,6 +16,15 @@
                     
                     <h4 class="page-title">View exam schedule</h4>
 
+                    {% if permission.denied.status %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ permission.denied.message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+
                     <div class="card mt-4">
                         <div class="card-header">Search Exam</div>
                         <div class="card-body">
@@ -389,6 +398,9 @@
                 var formData = new FormData;
                 formData.append("exam_id", examId)
 
+                alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+                function(){ 
+
                 $.ajax({
                     url: "{{ app.url }}/exam/ajax_remove_exam",
                     method: 'POST',
@@ -411,6 +423,10 @@
                         console.log(e.responseText)
                     }
                 })
+
+                },
+                function(){ alertify.error('Deletion process cancelled')}
+                );
                 
             },
 
