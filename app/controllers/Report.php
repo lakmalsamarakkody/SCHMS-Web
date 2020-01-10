@@ -1055,6 +1055,12 @@ class Report extends Controller {
             $data['classes'][$key]['grade']['name'] = $this->model_grade->select('name')->where('id', '=', $element->grade_id)->first()->name;
         endforeach;
 
+        // QUERY STUDENT
+        foreach( $this->model_student->select('id', 'full_name')->get() as $key => $element ):
+            $data['students'][$key]['id'] = $element->id;
+            $data['students'][$key]['full_name'] = $element->full_name;
+        endforeach;
+
          // TWIG : EXAM YEAR
          $current_year = Carbon::now()->format('Y');
          $least_year = $current_year-2;
@@ -1093,7 +1099,68 @@ class Report extends Controller {
     }
     // END : RESULT REPORTS
 
+    // START : STUDENT EXAM RESULT
+    public function student_exam_result_ajax() {
 
+        //CHECK LOGIN STATUS
+		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
+			header( 'Location:' . $this->config->get('base_url') . '/logout' );
+			exit();
+        endif;
+        
+        // SET JSON HEADER
+        header('Content-Type: application/json');
+
+        // MODELS
+        $this->load->model("user");
+        $this->load->model("report");
+        $this->load->model("class");
+        $this->load->model("grade");
+        $this->load->model("student");
+        $this->load->model("student/exam");
+        $this->load->model("exam");
+        $this->load->model("exam/type");
+        $this->load->model("exam/grade");
+
+        $time_now = Carbon::now()->format('Y-m-d h:i:s A');
+        $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // VALIDATION : student_id
+        $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric'));
+        if ( $is_valid_student_id !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a valid student" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // VALIDATION : exam_id
+        $is_valid_exam_id = GUMP::is_valid($this->request->post, array('exam_id' => 'required|numeric'));
+        if ( $is_valid_exam_id !== true ):
+            echo json_encode( array( "status" => "failed", "message" => "Please select a valid exam" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // IS STUDENT EXISTS
+        if ( $this->model_student->select('id')->where('id', '=', $this->request->post['student_id'])->first() === NULL ):
+            echo json_encode( array("status" => "failed", "message" => "Invalid student selected" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // IS EXAM ID EXISTS
+        if ( $this->model_exam->select('id')->where('id', '=', $this->request->post['exam_id'])->first() === NULL ):
+            echo json_encode( array("status" => "failed", "message" => "Invalid exam is selected" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
+        // QUERY EXAM NAME
+        $exam_details = $this->model_exam->select('type_id', 'year')->where('id', '=', $this->request->post['exam_id'])->first();
+        $exam_type_name = $this->model_exam_type->select('name')->where('id', '=', $exam_details->type_id)->first();
+        $exam_name = $exam_type_name->name." - ".$exam_details->year;
+        
+        echo "hi";
+        var_dump($exam_name);
+        exit();
+    }
+    // END : STUDENT EXAM RESULT
 
 
 
@@ -1126,7 +1193,6 @@ class Report extends Controller {
         $this->load->model("student/exam");
         $this->load->model("exam");
         $this->load->model("exam/type");
-
         $this->load->model("exam/grade");
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
