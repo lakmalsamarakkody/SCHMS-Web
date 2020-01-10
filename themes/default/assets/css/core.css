@@ -311,3 +311,8 @@ h5.page-title{
     box-shadow: none;
     border: none;
 }
+
+.pagination .paginate_button.page-item {
+    margin: 0rem;
+    padding: 0rem;
+}
