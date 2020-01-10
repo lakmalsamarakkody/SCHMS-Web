@@ -37,10 +37,14 @@
                                             <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/parent/{{ parent.id }}">
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ parent.initials }} {{ parent.surname }}</h5>
+                                                {% if permission.parents.profile.edit %}
                                                 <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
                                                 <button class="btn btn-xs btn-success" id="btn-save" onclick="update_parent('{{ parent.id }}')" hidden><i class="la la-save"></i> Save</button>
                                                 <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
+                                                {% if permission.parents.profile.delete %}
                                                 <button class="btn btn-xs btn-danger" onclick="remove_parent('{{ parent.id }}')"><i class="la la-trash"></i> Delete</button>
+                                                {% endif %}
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

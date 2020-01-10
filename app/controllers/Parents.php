@@ -742,6 +742,20 @@ class Parents extends Controller {
             $data['permission']['parents']['profile']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : edit
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-profile-edit') ):
+            $data['permission']['parents']['profile']['edit'] = true;
+        else:
+            $data['permission']['parents']['profile']['edit'] = false;
+        endif;
+
+        // CHECK PERMISSION : delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-profile-delete') ):
+            $data['permission']['parents']['profile']['delete'] = true;
+        else:
+            $data['permission']['parents']['profile']['delete'] = false;
+        endif;
+
         // PROFILE PICTURE UPLOAD
         if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
 

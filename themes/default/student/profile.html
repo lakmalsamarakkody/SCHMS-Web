@@ -38,10 +38,14 @@
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ student.initials }} {{ student.surname }}</h5>
                                                 <h6 class="my-0 text-secondary mb-2">( {{ class.name }} )</h6>
+                                                {% if permission.student.profile.edit %}
                                                 <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
                                                 <button class="btn btn-xs btn-success" id="btn-save" onclick="update_student('{{ student.id }}')" hidden><i class="la la-save"></i> Save</button>
                                                 <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
+                                                {% if permission.student.profile.delete %}
                                                 <button class="btn btn-xs btn-danger" id="btn-remove" onclick="remove_student('{{ student.id }}')"><i class="la la-trash"></i> Delete</button>
+                                                {% endif %}
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

@@ -897,6 +897,20 @@ class Student extends Controller {
             $data['permission']['student']['profile']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : edit
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-edit') ):
+            $data['permission']['student']['profile']['edit'] = true;
+        else:
+            $data['permission']['student']['profile']['edit'] = false;
+        endif;
+
+        // CHECK PERMISSION : delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-delete') ):
+            $data['permission']['student']['profile']['delete'] = true;
+        else:
+            $data['permission']['student']['profile']['delete'] = false;
+        endif;
+
         // PROFILE PICTURE UPLOAD
         if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
 

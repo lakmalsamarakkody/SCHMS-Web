@@ -549,7 +549,7 @@ class Attendance extends Controller {
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );
 			exit();
-		endif;
+        endif;
 
         // MODEL
         $this->load->model('student/attendance');
@@ -559,6 +559,12 @@ class Attendance extends Controller {
 
         // SET JSON HEADER
         header('Content-Type: application/json');
+
+        // CHECK PERMISSION : mark
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view') != TRUE ):
+            echo json_encode( array( "error" => "Permission Denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         if ( $this->request->post['student_id'] != "NULL" ):
 

@@ -38,10 +38,14 @@
                                             <div class="media-body align-self-center">
                                                 <h5 class="my-0">{{ staff.initials }} {{ staff.surname }}</h5>
                                                 <h6 class="my-0 text-secondary mb-2">{{ staff.type }}</h6>
+                                                {% if permission.staff.profile.edit %}
                                                 <button class="btn btn-xs btn-warning" id="btn-edit" onclick="edit_mode()"><i class="la la-edit"></i> Edit</button>
                                                 <button class="btn btn-xs btn-success" id="btn-save" onclick="update_staff('{{ staff.id }}')" hidden><i class="la la-save"></i> Save</button>
                                                 <button class="btn btn-xs btn-info" id="btn-cancel" onclick="cancel_edit_mode()" hidden><i class="la la-close"></i> Cancel</button>
+                                                {% if permission.staff.profile.edit %}
                                                 <button class="btn btn-xs btn-danger" onclick="remove_staff('{{ staff.id }}')"><i class="la la-trash"></i> Delete</button>
+                                                {% endif %}
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>

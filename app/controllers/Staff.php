@@ -264,6 +264,20 @@ class Staff extends Controller {
             $data['permission']['staff']['profile']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : edit
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-edit') ):
+            $data['permission']['staff']['profile']['edit'] = true;
+        else:
+            $data['permission']['staff']['profile']['edit'] = false;
+        endif;
+
+        // CHECK PERMISSION : delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-delete') ):
+            $data['permission']['staff']['profile']['delete'] = true;
+        else:
+            $data['permission']['staff']['profile']['delete'] = false;
+        endif;
+
         // TYPE
         foreach( $this->model_staff_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['staff_types'][$key]['id'] = $element->id;

@@ -1003,6 +1003,20 @@ class Sport extends Controller {
             $data['permission']['sport']['profile_coach']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : edit
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('coach-profile-edit') ):
+            $data['permission']['coach']['profile']['edit'] = true;
+        else:
+            $data['permission']['coach']['profile']['edit'] = false;
+        endif;
+
+        // CHECK PERMISSION : delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('coach-profile-delete') ):
+            $data['permission']['coach']['profile']['delete'] = true;
+        else:
+            $data['permission']['coach']['profile']['delete'] = false;
+        endif;
+
         // PROFILE PICTURE UPLOAD
         if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
 
