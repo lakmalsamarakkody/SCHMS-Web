@@ -147,7 +147,7 @@
                     <section class="mt-5">
                         <!-- START : SEARCH RESULT TABLE -->
                         {% if students %}
-                            <table class="table table-hover table-responsive-md">
+                            <table id="table_sport_assign_student" class="table table-hover table-responsive-md">
                                 <caption> Search Results of Students </caption>
                                 <thead class="thead-dark">
                                     <tr>
@@ -223,6 +223,11 @@
     {{ template.footer|raw }}
 
     <script>
+
+        // DATA TABLE
+        $(document).ready(function() {
+            $('#table_sport_assign_student').DataTable();
+        } );
 
         assignSport = (id) => {
 
