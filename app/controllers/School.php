@@ -1645,9 +1645,9 @@ class School extends Controller {
 		$this->load->model('user/role');
 		
 		if ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ):
-			$is_available_role = $this->model_user->select('id')->where('role_id', '=', $this->request->post['role_id'])->first();
+			$is_available_user = $this->model_user->select('id')->where('role_id', '=', $this->request->post['role_id'])->first();
 
-			if ( $is_available_role == NULL ):
+			if ( $is_available_user == NULL ):
 				if ( $this->model_user_role->find($this->request->post['role_id'])->delete() ):
 					echo json_encode( array( "status" => "success" ), JSON_PRETTY_PRINT );
 					exit();

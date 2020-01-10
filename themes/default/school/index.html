@@ -14,7 +14,7 @@
                 <div class="row schoolindex">
                 {% if permission.management.index.view %}
 
-                {% if permission.denied.status %}
+                    {% if permission.denied.status %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>{{ permission.denied.message }}</strong>
                             <button type="button" class="close" data-dismiss="alert">
@@ -1274,31 +1274,36 @@
             var formData = new FormData;
             formData.append('class_id', class_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removeclass",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Class Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
-                    }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
 
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removeclass",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Class Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE CLASS
 
@@ -1387,31 +1392,35 @@
             var formData = new FormData;
             formData.append('grade_id', grade_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removegrade",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Grade Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removegrade",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Grade Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
-
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE GRADE
 
@@ -1500,30 +1509,36 @@
             var formData = new FormData;
             formData.append('religion_id', religion_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removereligion",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Religion Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removereligion",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Religion Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
 
         }
         // END : REMOVE GRADE
@@ -1616,30 +1631,36 @@
             var formData = new FormData;
             formData.append('subject_id', subject_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removesubject",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Subject Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removesubject",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Subject Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE SUBJECT
 
@@ -1728,30 +1749,36 @@
             var formData = new FormData;
             formData.append('relation_id', relation_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removerelation",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Relation type Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removerelation",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Relation type Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE RELATION
 
@@ -1840,30 +1867,36 @@
             var formData = new FormData;
             formData.append('examtype_id', examtype_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removeexamtype",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Exam type Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removeexamtype",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Exam type Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE EXAM_TYPE
 
@@ -1952,30 +1985,36 @@
             var formData = new FormData;
             formData.append('sport_id', sport_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removesport",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Sport Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removesport",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Sport Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE SPORT
 
@@ -2064,30 +2103,36 @@
             var formData = new FormData;
             formData.append('category_id', category_id)
 
-            // REQUEST
-            $.ajax({
-                url: "{{ app.url }}/school/ajax_removestaffcategory",
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                success: (res) => {
-                    
-                    if ( res.status == 'success' ) {
-                        alertify.alert("Success", "Staff category Removed successfully ... ").set('onok', function() {
-                            location.reload();
-                        })
-                    } else {
-                        console.log(res);
-                        alertify.alert("Failed", res.message);
+            alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removestaffcategory",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Staff category Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
                     }
-                },
-                error: (e) => {
-                    alertify.alert("Error", "Something went wrong ... ");
-                    console.log(e.responseText)
-                }
-            })
+                })
+            },
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE SPORT
 
@@ -2180,30 +2225,36 @@
         var formData = new FormData;
         formData.append('type_id', type_id)
 
-        // REQUEST
-        $.ajax({
-            url: "{{ app.url }}/school/ajax_removestafftype",
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: (res) => {
-                
-                if ( res.status == 'success' ) {
-                    alertify.alert("Success", "Staff Type Removed successfully ... ").set('onok', function() {
-                        location.reload();
-                    })
-                } else {
-                    console.log(res);
-                    alertify.alert("Failed", res.message);
-                }
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removestafftype",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "Staff Type Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
             },
-            error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
-                console.log(e.responseText)
-            }
-        })
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE STAFF TYPE
 
@@ -2295,30 +2346,36 @@
         var formData = new FormData;
         formData.append('role_id', role_id)
 
-        // REQUEST
-        $.ajax({
-            url: "{{ app.url }}/school/ajax_removeuserrole",
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: (res) => {
-                
-                if ( res.status == 'success' ) {
-                    alertify.alert("Success", "User Role Removed successfully ... ").set('onok', function() {
-                        location.reload();
-                    })
-                } else {
-                    console.log(res);
-                    alertify.alert("Failed", res.message);
-                }
+        alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+            function(){ 
+
+                // REQUEST
+                $.ajax({
+                    url: "{{ app.url }}/school/ajax_removeuserrole",
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: (res) => {
+                        
+                        if ( res.status == 'success' ) {
+                            alertify.alert("Success", "User Role Removed successfully ... ").set('onok', function() {
+                                location.reload();
+                            })
+                        } else {
+                            console.log(res);
+                            alertify.alert("Failed", res.message);
+                        }
+                    },
+                    error: (e) => {
+                        alertify.alert("Error", "Something went wrong ... ");
+                        console.log(e.responseText)
+                    }
+                })
             },
-            error: (e) => {
-                alertify.alert("Error", "Something went wrong ... ");
-                console.log(e.responseText)
-            }
-        })
+        function(){ alertify.error('Deletion process cancelled')}
+        );
         }
         // END : REMOVE STAFF TYPE
     
