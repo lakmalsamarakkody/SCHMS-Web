@@ -514,10 +514,17 @@ class Parents extends Controller {
         // MODEL
         $this->load->model('parent');
         $this->load->model('student/parent');
+        $this->load->model('user');
 
 
         // SET JSON HEADER
         header('Content-Type: application/json');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-add-view') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // SECOND GUARDIAN VALIDATION
         // VALIDATION : second_guardian_full_name
@@ -873,6 +880,12 @@ class Parents extends Controller {
         $this->load->model('user');
         $this->load->model('notification');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-profile-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         if ( isset($this->request->post['parent_id']) AND !empty($this->request->post['parent_id']) ):
             $is_valid_parent_id = $this->model_parent->select('id')->where('id', '=', $this->request->post['parent_id']);
 
@@ -1202,6 +1215,13 @@ class Parents extends Controller {
         // MODEL
         $this->load->model('parent');
         $this->load->model('student/parent');
+        $this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-profile-delete') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
         if ( isset($this->request->post['parent_id']) AND !empty($this->request->post['parent_id']) ):
             $is_valid_parent_id = $this->model_parent->select('id')->where('id', '=', $this->request->post['parent_id']);

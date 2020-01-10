@@ -12,6 +12,10 @@ class Notification extends Controller {
 			exit();
 		endif;
 
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+		// MODEL
 		$this->load->model('notification');
 		$this->load->model('user');
 
@@ -46,6 +50,10 @@ class Notification extends Controller {
 			exit();
 		endif;
 
+		// SET JSON HEADER
+        header('Content-Type: application/json');
+
+		// MODEL
 		$this->load->model('notification');
 		$this->load->model('user');
 

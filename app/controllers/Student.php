@@ -477,6 +477,13 @@ class Student extends Controller {
         $this->load->model('parent');
         $this->load->model('student/parent');
         $this->load->model('student/class');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('student-add-view') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : STUDENT
         // VALIDATION : admission_number
@@ -1031,6 +1038,12 @@ class Student extends Controller {
         $this->load->model('student/class');
         $this->load->model('notification');
         $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
         if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
             $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);
@@ -1352,6 +1365,13 @@ class Student extends Controller {
         $this->load->model('student');
         $this->load->model('student/exam');
         $this->load->model('student/health');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-delete') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
         if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
             $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);

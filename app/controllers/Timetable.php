@@ -422,14 +422,10 @@ class Timetable extends Controller {
                 endif;
 
             endif;
-
-            
-    
         endif;
         
 		// RENDER VIEW
-        $this->load->view('timetable/create', $data);
-        
+        $this->load->view('timetable/create', $data);        
     }
 
 
@@ -526,6 +522,13 @@ class Timetable extends Controller {
         $this->load->model('class/timetable');
         $this->load->model('student/class');
         $this->load->model('student/subject');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('timetable-assign-subject') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // GUMP VALIDATION
         $gump = new GUMP();
@@ -625,13 +628,23 @@ class Timetable extends Controller {
 		if( !isset($_SESSION['user']) OR $_SESSION['user']['is_login'] != true ):
 			header( 'Location:' . $this->config->get('base_url') . '/logout' );
 			exit();
-		endif;
+        endif;
+        
+        // SET JSON HEADER
+        header('Content-Type: application/json');
 
         // MODEL
         $this->load->model('class');
         $this->load->model('staff');
         $this->load->model('staff/subject');
         $this->load->model('class/timetable');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('timetable-assign-staff') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // GUMP VALIDATION
         $gump = new GUMP();

@@ -400,7 +400,14 @@ class Result extends Controller {
 		header('Content-Type: application/json');
 
 		// MODEL
-		$this->load->model('student/exam');
+        $this->load->model('student/exam');
+        $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('result-search-edit-result') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE RESULT ID
 		$is_exist = $this->model_student_exam->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -443,6 +450,13 @@ class Result extends Controller {
 
 		// MODEL
         $this->load->model('student/exam');
+        $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('result-search-delete-result') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
         // VALIDATE RESULT ID
 		$is_exist = $this->model_student_exam->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -725,6 +739,12 @@ class Result extends Controller {
         $this->load->model('student/exam');
         $this->load->model('user');
         $this->load->model('notification');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('result-add-view') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATE RESULT ID
 		$is_exist = $this->model_student_exam->select('id', 'student_id')->where('id', '=', $this->request->post['id'])->first();

@@ -589,11 +589,18 @@ class Staff extends Controller {
          *    - response ( JSON )
          */
 
-        // MODEL
-        $this->load->model('staff');
-
         // SET JSON HEADER
         header('Content-Type: application/json');
+        
+         // MODEL
+        $this->load->model('staff');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-add-view') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : admission_date
         $is_valid_admission_date = GUMP::is_valid($this->request->post, array('admission_date' => 'required|date'));
@@ -960,6 +967,12 @@ class Staff extends Controller {
         $this->load->model('subject');
         $this->load->model('notification');
         $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
         if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
             $is_valid_staff_id = $this->model_staff->select('id')->where('id', '=', $this->request->post['staff_id']);
@@ -1378,6 +1391,13 @@ class Staff extends Controller {
         // MODEL
         $this->load->model('staff');
         $this->load->model('class');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-delete') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
         if ( isset($this->request->post['staff_id']) AND !empty($this->request->post['staff_id']) ):
             $is_valid_staff_id = $this->model_staff->select('id')->where('id', '=', $this->request->post['staff_id']);

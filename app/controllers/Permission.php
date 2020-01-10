@@ -17,9 +17,17 @@ class Permission extends Controller {
             return;
         }
         
+        // MODELS
         $this->load->model('user/role');
         $this->load->model('user/permission');
         $this->load->model('user/rolepermission');
+        $this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('user-permission-view-edit') ):
+            echo json_encode( array( "status" => "error", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // CHECK IF ROLE EXISTS
         $role = $this->model_user_role->find($this->request->post['role_id']);

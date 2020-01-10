@@ -228,6 +228,12 @@ class Portal extends Controller {
         $this->load->model('student');
         $this->load->model('user');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-student-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
             $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);
 
@@ -300,6 +306,12 @@ class Portal extends Controller {
         // MODEL
         $this->load->model('student');
         $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-student-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         if ( isset($this->request->post['student_id']) AND !empty($this->request->post['student_id']) ):
             $is_valid_student_id = $this->model_student->select('id')->where('id', '=', $this->request->post['student_id']);
@@ -598,6 +610,12 @@ class Portal extends Controller {
         $this->load->model('parent');
         $this->load->model('user');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-parent-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         if ( isset($this->request->post['parent_id']) AND !empty($this->request->post['parent_id']) ):
             $is_valid_parent_id = $this->model_parent->select('id')->where('id', '=', $this->request->post['parent_id']);
 
@@ -670,6 +688,12 @@ class Portal extends Controller {
         // MODEL
         $this->load->model('parent');
         $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-parent-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         if ( isset($this->request->post['parent_id']) AND !empty($this->request->post['parent_id']) ):
             $is_valid_parent_id = $this->model_parent->select('id')->where('id', '=', $this->request->post['parent_id']);
@@ -1019,6 +1043,12 @@ class Portal extends Controller {
         $this->load->model('user');
         $this->load->model('message');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-messages-create-new') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
 		// VALIDATION : receiver_type
 		$is_valid_receiver_type = GUMP::is_valid($this->request->post, array('receiver_type' => 'required|contains_list,staff;student;parent;coach'));
 		if ( $is_valid_receiver_type !== true ):
@@ -1089,6 +1119,12 @@ class Portal extends Controller {
 		//  MODEL
         $this->load->model('user');
         $this->load->model('message');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('portal-messages-conversation-reply') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATION : participant_id
 		$is_valid_participant_id = GUMP::is_valid($this->request->post, array('participant_id' => 'required|numeric|min_len,1|max_len,8'));

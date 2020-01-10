@@ -164,13 +164,20 @@ class School extends Controller {
          *    - response ( JSON )
          */
 
-		//  MODEL
-		$this->load->model('class');
-		$this->load->model('staff');
-
 
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+
+		//  MODEL
+		$this->load->model('class');
+		$this->load->model('staff');
+		$this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : class_name
         $is_valid_class_name = GUMP::is_valid($this->request->post, array('class_name' => 'required|alpha_numeric|max_len,2'));
@@ -247,6 +254,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('class');
 		$this->load->model('staff');
+		$this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATION : class_id
         $is_valid_class_id = GUMP::is_valid($this->request->post, array('id' => 'required|alpha_numeric|max_len,3'));
@@ -347,6 +361,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('class');
 		$this->load->model('student/class');
+		$this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['class_id']) AND !empty($this->request->post['class_id']) ):
 			$is_available_student = $this->model_student_class->select('id')->where('class_id', '=', $this->request->post['class_id'])->first();
@@ -391,9 +412,16 @@ class School extends Controller {
 
 		//  MODEL
 		$this->load->model('grade');
+		$this->load->model('user');
 
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : grade_name
         $is_valid_grade_name = GUMP::is_valid($this->request->post, array('grade_name' => 'required|numeric|max_len,2'));
@@ -431,6 +459,13 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('grade');
+		$this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE GRADE ID
 		$is_exist = $this->model_grade->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -480,6 +515,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('grade');
 		$this->load->model('class');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['grade_id']) AND !empty($this->request->post['grade_id']) ):
 			$is_available_class = $this->model_class->select('id')->where('grade_id', '=', $this->request->post['grade_id']);
@@ -522,11 +564,18 @@ class School extends Controller {
          *    - response ( JSON )
          */
 
-		//  MODEL
-		$this->load->model('religion');
-
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+
+		//  MODEL
+		$this->load->model('religion');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : religion_name
         $is_valid_religion_name = GUMP::is_valid($this->request->post, array('religion_name' => 'required|valid_name'));
@@ -564,6 +613,13 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('religion');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE RELIGION ID
 		$is_exist = $this->model_religion->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -614,6 +670,13 @@ class School extends Controller {
 		$this->load->model('religion');
 		$this->load->model('student');
 		$this->load->model('staff');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['religion_id']) AND !empty($this->request->post['religion_id']) ):
 			$is_available_student = $this->model_student->select('id')->where('religion_id', '=', $this->request->post['religion_id']);
@@ -659,11 +722,18 @@ class School extends Controller {
          *    - response ( JSON )
          */
 
-		//  MODEL
-		$this->load->model('subject');
-
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+		
+		 //  MODEL
+		$this->load->model('subject');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : subject_name
         $is_valid_subject_name = GUMP::is_valid($this->request->post, array('subject_name' => 'required|valid_name'));
@@ -710,6 +780,13 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('subject');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE subject ID
 		$is_exist = $this->model_subject->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -768,6 +845,13 @@ class School extends Controller {
 		$this->load->model('student/subject');
 		$this->load->model('staff/subject');
 		$this->load->model('exam/schedule');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['subject_id']) AND !empty($this->request->post['subject_id']) ):
 			$is_available_student = $this->model_student_subject->select('id')->where('subject_id', '=', $this->request->post['subject_id'])->first();
@@ -813,11 +897,18 @@ class School extends Controller {
          *    - response ( JSON )
          */
 
-		//  MODEL
-		$this->load->model('student/relation');
-
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+		
+		 //  MODEL
+		$this->load->model('student/relation');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : relation_name
         $is_valid_relation_name = GUMP::is_valid($this->request->post, array('relation_name' => 'required'));
@@ -855,6 +946,13 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('student/relation');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE relation ID
 		$is_exist = $this->model_student_relation->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -904,6 +1002,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('student/relation');
 		$this->load->model('student/parent');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['relation_id']) AND !empty($this->request->post['relation_id']) ):
 			$is_available_relation = $this->model_student_parent->select('id')->where('relation_id', '=', $this->request->post['relation_id'])->first();
@@ -952,12 +1057,19 @@ class School extends Controller {
  
 		//  MODEL
 		$this->load->model('exam/type');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE exam_type ID
 		$is_exist = $this->model_exam_type->select('id')->where('id', '=', $this->request->post['id'])->first();
 
 		if( $is_exist == NULL ):
-			echo json_encode( array( "status" => "failed", "message" => "Editing exam type doesn't exists" ), JSON_PRETTY_PRINT );
+			echo json_encode( array( "error" => "Editing exam type doesn't exists" ), JSON_PRETTY_PRINT );
 			exit();
 		endif;
 		
@@ -997,6 +1109,13 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('exam/type');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : exam_type_name
         $is_valid_exam_type_name = GUMP::is_valid($this->request->post, array('name' => 'required'));
@@ -1038,6 +1157,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('exam');
 		$this->load->model('exam/type');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['examtype_id']) AND !empty($this->request->post['examtype_id']) ):
 			$is_available_exam_type = $this->model_exam->select('id')->where('type_id', '=', $this->request->post['examtype_id'])->first();
@@ -1081,11 +1207,18 @@ class School extends Controller {
 		  *    - response ( JSON )
 		  */
  
-		//  MODEL
-		$this->load->model('sport');
-
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+		
+		  //  MODEL
+		$this->load->model('sport');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : sport
 		$is_valid_sport = GUMP::is_valid($this->request->post, array('sport_name' => 'required|valid_name'));
@@ -1123,6 +1256,13 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('sport');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE sport ID
 		$is_exist = $this->model_sport->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -1172,6 +1312,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('sport');
 		$this->load->model('student/sport');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['sport_id']) AND !empty($this->request->post['sport_id']) ):
 			$is_available_sport = $this->model_student_sport->select('id')->where('sport_id', '=', $this->request->post['sport_id'])->first();
@@ -1215,11 +1362,18 @@ class School extends Controller {
 		  *    - response ( JSON )
 		  */
  
-		//  MODEL
-		$this->load->model('staff/category');
-
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+		
+		  //  MODEL
+		$this->load->model('staff/category');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		// VALIDATION : staff_category_name
 		$is_valid_staff_category_name = GUMP::is_valid($this->request->post, array('staff_category_name' => 'required|valid_name'));
@@ -1257,6 +1411,13 @@ class School extends Controller {
 
 		// MODEL
 		$this->load->model('staff/category');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE staff_category ID
 		$is_exist = $this->model_staff_category->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -1306,6 +1467,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('staff/category');
 		$this->load->model('staff/type');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['category_id']) AND !empty($this->request->post['category_id']) ):
 			$is_available_category = $this->model_staff_type->select('id')->where('category_id', '=', $this->request->post['category_id'])->first();
@@ -1349,12 +1517,19 @@ class School extends Controller {
 		  *    - response ( JSON )
 		  */
  
-		//  MODEL
-		$this->load->model('staff/type');
-
 		// SET JSON HEADER
 		header('Content-Type: application/json');
 
+		  //  MODEL
+		$this->load->model('staff/type');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+		
 		// VALIDATION : staff_category_id
 		$is_valid_staff_category_id = GUMP::is_valid($this->request->post, array('staff_category_id' => 'required|numeric|min_len,1|max_len,3'));
 		if ( $is_valid_staff_category_id !== true ):
@@ -1401,6 +1576,13 @@ class School extends Controller {
 		$this->load->model('staff');
 		$this->load->model('staff/category');
 		$this->load->model('staff/type');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE staff_type ID
 		$is_exist = $this->model_staff_type->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -1469,6 +1651,13 @@ class School extends Controller {
 		$this->load->model('staff');
 		$this->load->model('staff/category');
 		$this->load->model('staff/type');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['type_id']) AND !empty($this->request->post['type_id']) ):
 			$is_available_type = $this->model_staff->select('id')->where('type_id', '=', $this->request->post['type_id'])->first();
@@ -1512,12 +1701,19 @@ class School extends Controller {
 		  *    - response ( JSON )
 		  */
  
-		//  MODEL
-		$this->load->model('user');
-		$this->load->model('user/role');
-
 		// SET JSON HEADER
 		header('Content-Type: application/json');
+		
+		  //  MODEL
+		$this->load->model('user');
+		$this->load->model('user/role');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-add-any') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATION : user_role_name
 		$is_valid_user_role_name = GUMP::is_valid($this->request->post, array('user_role_name' => 'required|valid_name|min_len,1'));
@@ -1571,12 +1767,19 @@ class School extends Controller {
 		  *    - response ( JSON )
 		  */
  
+		// SET JSON HEADER
+		header('Content-Type: application/json');
+
 		//  MODEL
 		$this->load->model('user');
 		$this->load->model('user/role');
-
-		// SET JSON HEADER
-		header('Content-Type: application/json');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATE staff_type ID
 		$is_exist = $this->model_user_role->select('id')->where('id', '=', $this->request->post['id'])->first();
@@ -1643,6 +1846,13 @@ class School extends Controller {
 		// MODEL
 		$this->load->model('user');
 		$this->load->model('user/role');
+		$this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-delete-any') ):
+            echo json_encode( array( "status" => "error", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
 		if ( isset($this->request->post['role_id']) AND !empty($this->request->post['role_id']) ):
 			$is_available_user = $this->model_user->select('id')->where('role_id', '=', $this->request->post['role_id'])->first();

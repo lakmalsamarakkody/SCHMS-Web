@@ -276,6 +276,13 @@ class Sport extends Controller {
         // MODEL
         $this->load->model('student/sport');
         $this->load->model('student');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-student-delete') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : student_id
         $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric|max_len,6'));
@@ -624,6 +631,12 @@ class Sport extends Controller {
         $this->load->model('student/sport');
         $this->load->model('notification');
         $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-student-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : student_id
         $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric|max_len,6'));
@@ -769,6 +782,13 @@ class Sport extends Controller {
         $this->load->model('coach');
         $this->load->model('coach/sport');
         $this->load->model('sport');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('sport-add_coach-view') ):
+            echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : full_name
         $is_valid_full_name = GUMP::is_valid($this->request->post, array('full_name' => 'required|valid_name|max_len,100'));
@@ -1109,6 +1129,13 @@ class Sport extends Controller {
         $this->load->model('sport');
         $this->load->model('user');
         $this->load->model('notification');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('coach-profile-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         if ( isset($this->request->post['coach_id']) AND !empty($this->request->post['coach_id']) ):
             $is_valid_coach_id = $this->model_coach->select('id')->where('id', '=', $this->request->post['coach_id']);
@@ -1460,6 +1487,13 @@ class Sport extends Controller {
         // MODEL
         $this->load->model('coach');
         $this->load->model('coach/sport');
+        $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('coach-profile-delete') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
         
         if ( isset($this->request->post['coach_id']) AND !empty($this->request->post['coach_id']) ):
             $is_valid_coach_id = $this->model_coach->select('id')->where('id', '=', $this->request->post['coach_id']);

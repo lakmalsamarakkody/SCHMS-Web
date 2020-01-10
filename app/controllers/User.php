@@ -286,6 +286,12 @@ class User extends Controller {
 
         // LOAD MODEL
         $this->load->model('user');
+		
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('user-edit-theme') ):
+            echo json_encode( array( "status" => "error", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // GET LOGGED IN USER'S MODEL
         $User = $this->model_user->findOrFail($_SESSION['user']['id']);
@@ -294,7 +300,6 @@ class User extends Controller {
 
         echo json_encode(array("status" => "success"), JSON_PRETTY_PRINT);
         return;
-
     }
 
 

@@ -179,6 +179,12 @@ class Report extends Controller {
         $this->load->model("student/class");
         $this->load->model("student/attendance");
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -289,6 +295,12 @@ class Report extends Controller {
         $this->load->model("report");
         $this->load->model("staff");
         $this->load->model("staff/attendance");
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -491,6 +503,12 @@ class Report extends Controller {
         $this->load->model("class");
         $this->load->model("grade");
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -592,6 +610,12 @@ class Report extends Controller {
         $this->load->model("student/class");
         $this->load->model("class");
         $this->load->model("grade");
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -797,6 +821,12 @@ class Report extends Controller {
         $this->load->model("subject");
         $this->load->model("staff");
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -900,6 +930,12 @@ class Report extends Controller {
         $this->load->model("class/timetable");
         $this->load->model("subject");
         $this->load->model("staff");
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -1135,6 +1171,12 @@ class Report extends Controller {
         $this->load->model("exam/type");
         $this->load->model("exam/grade");
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -1255,6 +1297,12 @@ class Report extends Controller {
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 
         // CHECK IF SUBMITED
@@ -1522,6 +1570,12 @@ class Report extends Controller {
         $this->load->model("student");
         $this->load->model("student/health");
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -1615,6 +1669,12 @@ class Report extends Controller {
         $this->load->model("grade");
         $this->load->model("student");
         $this->load->model("student/health");
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -1794,6 +1854,12 @@ class Report extends Controller {
         $this->load->model("staff");
         $this->load->model("staff/attendance");
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -1902,6 +1968,12 @@ class Report extends Controller {
         $this->load->model("grade");
         $this->load->model("staff");
         $this->load->model("staff/attendance");
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-create') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
@@ -2014,6 +2086,13 @@ class Report extends Controller {
 
         // MODELS
         $this->load->model("report");
+        $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            echo json_encode( array( "status" => "failed", "msg" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // QUERY REPORT
         $report = $this->model_report->find($this->request->post['report_id']);
