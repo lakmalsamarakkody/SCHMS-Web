@@ -22,7 +22,7 @@ class Api extends Controller {
 
         // PERMISSION
         if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('mobile-schms-api') ):
-            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "error" => array("message" => "Permission denied" )), JSON_PRETTY_PRINT );
             exit();
         endif;
 
