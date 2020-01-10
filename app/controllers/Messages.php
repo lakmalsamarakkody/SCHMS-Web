@@ -263,6 +263,12 @@ class Messages extends Controller {
         $this->load->model('user');
         $this->load->model('message');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('messages-create-new') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
 		// VALIDATION : receiver_type
 		$is_valid_receiver_type = GUMP::is_valid($this->request->post, array('receiver_type' => 'required|contains_list,staff;student;parent;coach'));
 		if ( $is_valid_receiver_type !== true ):
@@ -333,6 +339,12 @@ class Messages extends Controller {
 		//  MODEL
         $this->load->model('user');
         $this->load->model('message');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('messages-conversation-reply') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATION : participant_id
 		$is_valid_participant_id = GUMP::is_valid($this->request->post, array('participant_id' => 'required|numeric|min_len,1|max_len,8'));

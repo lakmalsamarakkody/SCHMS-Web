@@ -560,13 +560,19 @@ class Attendance extends Controller {
         // SET JSON HEADER
         header('Content-Type: application/json');
 
-        // CHECK PERMISSION : mark
-        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view') != TRUE ):
-            echo json_encode( array( "error" => "Permission Denied" ), JSON_PRETTY_PRINT );
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         if ( $this->request->post['student_id'] != "NULL" ):
+
+            // PERMISSION
+            if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view-student') ):
+                echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
 
             // VALIDATION : student_id
             $is_valid_student_id = GUMP::is_valid($this->request->post, array('student_id' => 'required|numeric|max_len,6'));
@@ -643,6 +649,12 @@ class Attendance extends Controller {
             endif;
 
         else:
+
+            // PERMISSION
+            if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('attendance-mark-view-staff') ):
+                echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+                exit();
+            endif;
             
             // VALIDATION : staff_id
             $is_valid_staff_id = GUMP::is_valid($this->request->post, array('staff_id' => 'required|numeric|max_len,6'));

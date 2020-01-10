@@ -290,9 +290,16 @@ class Exam extends Controller {
 
         // MODEL
         $this->load->model('exam');
+        $this->load->model('user');
 
         // SET JSON HEADER
-        header('Content-Type: application/json'); 
+        header('Content-Type: application/json');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-search-delete-exam') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         $is_present_exam_id = $this->model_exam->select('id')->where('id', '=', $this->request->post['exam_id'])->first();
         if ($is_present_exam_id != NULL ):
@@ -433,6 +440,13 @@ class Exam extends Controller {
 
         // MODEL
         $this->load->model('exam/type');
+        $this->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-edit-exam_type') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // UPDATE
         if ( $this->model_exam_type->where('id', '=', $this->request->post['id'])->update(['name' => $this->request->post['name']]) ):
@@ -460,7 +474,13 @@ class Exam extends Controller {
         // MODEL
         $this->load->model('exam');
         $this->load->model('exam/type');
+        $this->load->model('user');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-delete-exam_type') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         /**
          * check if the exam type ID is correct and
@@ -512,9 +532,16 @@ class Exam extends Controller {
 
         // MODEL
         $this->load->model('exam');
+        $this->load->model('user');
 
         // SET JSON HEADER
         header('Content-Type: application/json');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-view') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : exam_year
         $is_valid_exam_year = GUMP::is_valid($this->request->post, array('exam_year' => 'required|numeric|exact_len,4'));
@@ -591,9 +618,16 @@ class Exam extends Controller {
 
         // MODEL
         $this->load->model('exam');
+        $this->load->model('user');
 
         // SET JSON HEADER
         header('Content-Type: application/json');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-search-edit-exam') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : year
         $is_valid_year = GUMP::is_valid($this->request->post, array('year' => 'required|numeric|exact_len,4'));
@@ -691,6 +725,12 @@ class Exam extends Controller {
 
         // SET JSON HEADER
         header('Content-Type: application/json');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-add-schedule') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : select_exam
         $is_valid_select_exam = GUMP::is_valid($this->request->post, array('select_exam_name' => 'required|numeric|max_len,4'));
@@ -983,21 +1023,29 @@ class Exam extends Controller {
 
         // MODEL
         $this->load->model('exam/schedule');
+        $this->load->model('user');
+
 
         // SET JSON HEADER
         header('Content-Type: application/json');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-edit-schedule') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         // VALIDATION : venue
         $is_valid_venue = GUMP::is_valid($this->request->post, array('venue' => 'alpha_space|max_len,50'));
         if ( $is_valid_venue !== true ):
-            echo json_encode( array( "status" => "failed", "error" => $is_valid_venue[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "message" => $is_valid_venue[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // VALIDATION : instructions
         $is_valid_instructions = GUMP::is_valid($this->request->post, array('instructions' => 'alpha_space|max_len,200'));
         if ( $is_valid_instructions !== true ):
-            echo json_encode( array( "status" => "failed", "error" => $is_valid_instructions[0] ), JSON_PRETTY_PRINT );
+            echo json_encode( array( "status" => "failed", "message" => $is_valid_instructions[0] ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
@@ -1030,6 +1078,13 @@ class Exam extends Controller {
         // MODEL
         $this->load->model('exam/schedule');
         $this->load->model('student/exam');
+        $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-search-delete-schedule') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 

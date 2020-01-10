@@ -13,6 +13,13 @@ class Notification extends Controller {
 		endif;
 
 		$this->load->model('notification');
+		$this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('notification-delete') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATION : notification_id
 		$is_valid_notification_id = GUMP::is_valid($this->request->post, array('notification_id' => 'required|numeric'));
@@ -39,7 +46,14 @@ class Notification extends Controller {
 			exit();
 		endif;
 
-        $this->load->model('notification');
+		$this->load->model('notification');
+		$this->load->model('user');
+
+		// PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('notification-read') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
 		// VALIDATION : notification_id
 		$is_valid_notification_id = GUMP::is_valid($this->request->post, array('notification_id' => 'required|numeric'));

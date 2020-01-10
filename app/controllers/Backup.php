@@ -133,6 +133,13 @@ class Backup extends Controller {
 
         // MODELS
         $this->load->model("backup");
+        $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('backup-index-view') ):
+            echo json_encode( array( "status" => "failed", "msg" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // QUERY BACKUP
         $backup = $this->model_backup->find($this->request->post['backup_id']);

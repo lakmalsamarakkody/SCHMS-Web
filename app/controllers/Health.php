@@ -434,6 +434,12 @@ class Health extends Controller {
         $this->load->model('notification');
         $this->load->model('user');
 
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('health-search-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
 
@@ -571,7 +577,14 @@ class Health extends Controller {
 		header('Content-Type: application/json');
 
 		// MODEL
-		$this->load->model('student/health');
+        $this->load->model('student/health');
+        $this->load->model('user');
+        
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('health-search-delete') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 		
         if ( isset($this->request->post['health_id']) AND !empty($this->request->post['health_id']) ):
             $is_valid_health_id = $this->model_student_health->select('id')->where('id', '=', $this->request->post['health_id']);
@@ -858,6 +871,14 @@ class Health extends Controller {
 
 		// MODEL
         $this->load->model('student/health');
+        $this->load->model('user');
+
+        // PERMISSION
+        if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('health-search-edit') ):
+            echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
+
 
         $time_now = Carbon::now()->format('Y-m-d h:i:s A');
         $date_now = Carbon::now()->isoFormat('YYYY-MM-DD');
