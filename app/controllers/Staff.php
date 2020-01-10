@@ -829,6 +829,20 @@ class Staff extends Controller {
             $data['permission']['staff']['profile']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-edit') ):
+            $data['permission']['staff']['profile']['edit'] = true;
+        else:
+            $data['permission']['staff']['profile']['edit'] = false;
+        endif;
+
+        // CHECK PERMISSION : profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-delete') ):
+            $data['permission']['staff']['profile']['delete'] = true;
+        else:
+            $data['permission']['staff']['profile']['delete'] = false;
+        endif;
+
         // PROFILE PICTURE UPLOAD
         if ( isset($_FILES['propic']) && $_FILES["propic"]["error"] == 0 ):
 
