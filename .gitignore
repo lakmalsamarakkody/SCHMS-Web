@@ -1,3 +1,6 @@
 libs/*
 config/default.php
 error.log
+
+# DATA
+data/backups/*.sql
