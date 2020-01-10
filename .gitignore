@@ -4,3 +4,5 @@ error.log
 
 # DATA
 data/backups/*.sql
+data/uploads/propics/staff/*.jpg
+data/uploads/propics/student/*.jpg
