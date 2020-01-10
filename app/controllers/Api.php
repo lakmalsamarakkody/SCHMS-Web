@@ -20,11 +20,6 @@ class Api extends Controller {
         // MODELS
         $this->load->model('user');
 
-        // // PERMISSION
-        // if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('mobile-schms-api') ):
-        //     echo json_encode( array( "status" => "failed", "error" => array("message" => "Permission denied" )), JSON_PRETTY_PRINT );
-        //     exit();
-        // endif;
 
         // VALIDATE
         $validate = GUMP::is_valid($this->request->post, ['username' => 'required', 'password' => 'required']);
@@ -36,6 +31,13 @@ class Api extends Controller {
         // AUTH
         $user = $this->model_user::where('username', $this->request->post['username'])->where('user_type', '=', 'staff')->first();
         if( $user != null ):
+
+            // PERMISSION
+            if ( !$user->hasPermission('mobile-schms-api') ):
+                echo json_encode( array( "status" => "failed", "error" => array("message" => "Permission denied" )), JSON_PRETTY_PRINT );
+                exit();
+            endif;
+
             if( password_verify($this->request->post['password'], $user->password) ):
                 echo json_encode(array("status" => "success"), JSON_PRETTY_PRINT);
                 exit();
