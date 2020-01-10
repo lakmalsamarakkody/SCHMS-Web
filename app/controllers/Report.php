@@ -35,6 +35,27 @@ class Report extends Controller {
             $data['permission']['report']['index']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : report_any_generate
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-generate') ):
+            $data['permission']['report']['any']['generate'] = true;
+        else:
+            $data['permission']['report']['any']['generate'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_view
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-view') ):
+            $data['permission']['report']['any']['view'] = true;
+        else:
+            $data['permission']['report']['any']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            $data['permission']['report']['any']['delete'] = true;
+        else:
+            $data['permission']['report']['any']['delete'] = false;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/index', $data);
     }
@@ -72,6 +93,27 @@ class Report extends Controller {
             $data['permission']['report']['attendance']['view'] = true;
         else:
             $data['permission']['report']['attendance']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_generate
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-generate') ):
+            $data['permission']['report']['any']['generate'] = true;
+        else:
+            $data['permission']['report']['any']['generate'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_view
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-view') ):
+            $data['permission']['report']['any']['view'] = true;
+        else:
+            $data['permission']['report']['any']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            $data['permission']['report']['any']['delete'] = true;
+        else:
+            $data['permission']['report']['any']['delete'] = false;
         endif;
 
         // QUERY CLASS
@@ -361,6 +403,27 @@ class Report extends Controller {
             $data['permission']['report']['student']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : report_any_generate
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-generate') ):
+            $data['permission']['report']['any']['generate'] = true;
+        else:
+            $data['permission']['report']['any']['generate'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_view
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-view') ):
+            $data['permission']['report']['any']['view'] = true;
+        else:
+            $data['permission']['report']['any']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            $data['permission']['report']['any']['delete'] = true;
+        else:
+            $data['permission']['report']['any']['delete'] = false;
+        endif;
+
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBy('grade_id')->orderBy('name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
@@ -645,6 +708,27 @@ class Report extends Controller {
             $data['permission']['report']['timetable']['view'] = true;
         else:
             $data['permission']['report']['timetable']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_generate
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-generate') ):
+            $data['permission']['report']['any']['generate'] = true;
+        else:
+            $data['permission']['report']['any']['generate'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_view
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-view') ):
+            $data['permission']['report']['any']['view'] = true;
+        else:
+            $data['permission']['report']['any']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            $data['permission']['report']['any']['delete'] = true;
+        else:
+            $data['permission']['report']['any']['delete'] = false;
         endif;
 
         // QUERY CLASS
@@ -940,6 +1024,27 @@ class Report extends Controller {
             $data['permission']['report']['result']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : report_any_generate
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-generate') ):
+            $data['permission']['report']['any']['generate'] = true;
+        else:
+            $data['permission']['report']['any']['generate'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_view
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-view') ):
+            $data['permission']['report']['any']['view'] = true;
+        else:
+            $data['permission']['report']['any']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            $data['permission']['report']['any']['delete'] = true;
+        else:
+            $data['permission']['report']['any']['delete'] = false;
+        endif;
+
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
@@ -1207,6 +1312,27 @@ class Report extends Controller {
             $data['permission']['report']['health']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : report_any_generate
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-generate') ):
+            $data['permission']['report']['any']['generate'] = true;
+        else:
+            $data['permission']['report']['any']['generate'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_view
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-view') ):
+            $data['permission']['report']['any']['view'] = true;
+        else:
+            $data['permission']['report']['any']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            $data['permission']['report']['any']['delete'] = true;
+        else:
+            $data['permission']['report']['any']['delete'] = false;
+        endif;
+
         // QUERY CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->orderBY('grade_id')->orderBY('name')->get() as $key => $element ):
             $data['classes'][$key]['id'] = $element->id;
@@ -1472,6 +1598,27 @@ class Report extends Controller {
             $data['permission']['report']['staff']['view'] = true;
         else:
             $data['permission']['report']['staff']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_generate
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-generate') ):
+            $data['permission']['report']['any']['generate'] = true;
+        else:
+            $data['permission']['report']['any']['generate'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_view
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-view') ):
+            $data['permission']['report']['any']['view'] = true;
+        else:
+            $data['permission']['report']['any']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : report_any_delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('report-any-delete') ):
+            $data['permission']['report']['any']['delete'] = true;
+        else:
+            $data['permission']['report']['any']['delete'] = false;
         endif;
 
         // QUERY REPORTS ( BY PRESENT )

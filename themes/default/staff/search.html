@@ -229,7 +229,7 @@
                                             <td>{{ staff.gender }}</td>
                                             <td>{{ staff.name }}</td>
                                             <td>{{ staff.mobile }}</td>
-                                            <td  class="text-right"><a href="{{ app.url }}/staff/profile/{{ staff.id }}"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i> View Profile </button></a></td>
+                                            {% if permission.staff.profile.view %}<td  class="text-right"><a href="{{ app.url }}/staff/profile/{{ staff.id }}"><button type="button" class="btn btn-sm btn-success"><i class="la la-user"></i> View Profile </button></a></td>{% endif %}
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -266,6 +266,11 @@
     {{ template.footer|raw }}
 
     <script>
+
+        // DATA TABLE
+        $(document).ready(function() {
+            $('#table_staff_search').DataTable();
+        } );
         
         //  CLEAR FORM
         function clearForm(oForm) {

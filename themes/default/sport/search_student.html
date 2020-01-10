@@ -163,8 +163,8 @@
                                             <td>
                                                 <div class="row">
                                                     <div class="col-12 text-right">
-                                                        <a href="{{ app.url }}/student/profile/{{ student.id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>
-                                                        <button class="btn btn-sm btn-danger" onclick="removestudentsport('{{ student.id }}')"><i class="la la-trash"></i></button>
+                                                        {% if permission.student.profile.view %}<a href="{{ app.url }}/student/profile/{{ student.id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>{% endif %}
+                                                        {% if permission.student.sport.delete %}<button class="btn btn-sm btn-danger" onclick="removestudentsport('{{ student.id }}')"><i class="la la-trash"></i></button>{% endif %}
                                                     </div>
                                                 </div>
                                             </td>

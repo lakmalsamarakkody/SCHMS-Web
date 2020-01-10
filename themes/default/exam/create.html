@@ -34,8 +34,8 @@
                             <h4 class="page-title"> Create an Exam </h4>
 
                             <div>
-                                <button type="button" class="btn btn-sm btn-warning ml-2" data-toggle="modal" data-target="#view-exam-type"> Edit / Remove exam type </button>
-                                <button type="button" class="btn btn-sm btn-secondary ml-2"  data-toggle="modal" data-target="#create-exam-type"> Add new exam type </button>
+                                {% if permission.exam.create.edit.exam_type %}<button type="button" class="btn btn-sm btn-warning ml-2" data-toggle="modal" data-target="#view-exam-type"> Edit / Remove exam type </button>{% endif %}
+                                {% if permission.exam.create.add.exam_type %}<button type="button" class="btn btn-sm btn-secondary ml-2"  data-toggle="modal" data-target="#create-exam-type"> Add new exam type </button>{% endif %}
                             </div>
                         </div>
 
@@ -106,7 +106,7 @@
                         <div class="d-flex align-middle" style="justify-content: space-between;margin-top: 1rem;">
                             <h4 class="page-title mt-5"> Schedule an exam </h4>
                             <div class="mt-5">
-                                <button type="button" class="btn btn-sm btn-warning ml-auto" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>
+                                {% if permission.exam.search.edit.exam %}<button type="button" class="btn btn-sm btn-warning ml-auto" data-toggle="modal" data-target="#edit-exam"> Edit / Remove exam </button>{% endif %}
                             </div>
                         </div>
 

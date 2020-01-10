@@ -257,6 +257,13 @@ class Staff extends Controller {
             $data['permission']['staff']['search']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('staff-profile-view') ):
+            $data['permission']['staff']['profile']['view'] = true;
+        else:
+            $data['permission']['staff']['profile']['view'] = false;
+        endif;
+
         // TYPE
         foreach( $this->model_staff_type->select('id', 'name')->orderBy('name')->get() as $key => $element ):
             $data['staff_types'][$key]['id'] = $element->id;

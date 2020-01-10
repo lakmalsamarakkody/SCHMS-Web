@@ -182,6 +182,27 @@ class Health extends Controller {
             $data['permission']['health']['search']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : student-profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-view') ):
+            $data['permission']['student']['profile']['view'] = true;
+        else:
+            $data['permission']['student']['profile']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : edit
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('health-search-edit') ):
+            $data['permission']['health']['search']['edit'] = true;
+        else:
+            $data['permission']['health']['search']['edit'] = false;
+        endif;
+
+        // CHECK PERMISSION : delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('health-search-delete') ):
+            $data['permission']['health']['search']['delete'] = true;
+        else:
+            $data['permission']['health']['search']['delete'] = false;
+        endif;
+
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['student_class'][$key]['id'] = $element->id;

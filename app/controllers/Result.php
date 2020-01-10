@@ -159,6 +159,27 @@ class Result extends Controller {
             $data['permission']['result']['search']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : edit-result
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('result-search-edit-result') ):
+            $data['permission']['result']['search']['edit']['result'] = true;
+        else:
+            $data['permission']['result']['search']['edit']['result'] = false;
+        endif;
+
+        // CHECK PERMISSION : delete-result
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('result-search-delete-result') ):
+            $data['permission']['result']['search']['delete']['result'] = true;
+        else:
+            $data['permission']['result']['search']['delete']['result'] = false;
+        endif;
+
+        // CHECK PERMISSION : student-profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-view') ):
+            $data['permission']['student']['profile']['view'] = true;
+        else:
+            $data['permission']['student']['profile']['view'] = false;
+        endif;
+
         // TWIG : EXAMS
         foreach( $this->model_exam->select('id', 'type_id', 'year', 'venue', 'instructions')->orderBy('year','DESC')->get() as $key => $element ):
 			$data['exams'][$key]['id'] = $element->id;

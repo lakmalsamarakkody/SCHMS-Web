@@ -159,9 +159,9 @@
                                             <td>
                                                 <div class="row">
                                                     <div class="col-12 text-right">
-                                                        <a href="{{ app.url }}/student/profile/{{ exam_schedule.student_id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>
-                                                        <button class="btn btn-sm btn-warning" onclick="invokeResultEditModal('{{exam_schedule.id}}', '{{ exam_schedule.student_id }}', '{{ exam_schedule.name }}', '{{ exam_schedule.exam_name }}', '{{ exam_schedule.subject }}', '{{ exam_schedule.marks }}')"><i class="la la-edit"></i></button>
-                                                        <button class="btn btn-sm btn-danger" onclick="removeresult('{{exam_schedule.id}}')"><i class="la la-trash"></i></button>
+                                                        {% if permission.student.profile.view %}<a href="{{ app.url }}/student/profile/{{ exam_schedule.student_id }}"><button class="btn btn-sm btn-success mt-1"><i class="la la-user"></i></button></a>{% endif %}
+                                                        {% if permission.result.search.edit.result %}<button class="btn btn-sm btn-warning" onclick="invokeResultEditModal('{{exam_schedule.id}}', '{{ exam_schedule.student_id }}', '{{ exam_schedule.name }}', '{{ exam_schedule.exam_name }}', '{{ exam_schedule.subject }}', '{{ exam_schedule.marks }}')"><i class="la la-edit"></i></button>{% endif %}
+                                                        {% if permission.result.search.delete.result %}<button class="btn btn-sm btn-danger" onclick="removeresult('{{exam_schedule.id}}')"><i class="la la-trash"></i></button>{% endif %}
                                                     </div>
                                                 </div>
                                             </td>
@@ -199,6 +199,7 @@
 
     {{ template.footer|raw }}
 
+    {% if permission.result.search.edit.result %}
     <!-- START : MODAL : EDIT RESULTS -->
     <div class="modal fade" id="modal_editresult" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
@@ -213,7 +214,8 @@
                     <input type="hidden" id="modal-edit-result-id" />
                     <form method="post">
 
-                        {% for exam_schedule in exam.schedules if exam_schedules.student_id == modal-edit-result-student_id %}
+                        {% for exam_schedule in exam.schedules %}
+                        {% if exam_schedule.student_id == modal-edit-result-student_id %}
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="grade">Name : </label><span> {{ exam_schedule.name }}</span><br/>
@@ -221,6 +223,7 @@
                                 <label for="grade">Subject : </label><span> {{ exam_schedule.subject }}</span><br/>
                             </div>
                         </div>
+                        {% endif %}
                         {% endfor %}
 
                         <div class="col-12">
@@ -242,6 +245,7 @@
         </div>
     </div>
     <!-- END : MODAL : EDIT RESULTS -->
+    {% endif %}
 
     <script>
         // DATA TABLE

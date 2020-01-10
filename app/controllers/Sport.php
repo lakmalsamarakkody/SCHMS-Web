@@ -135,6 +135,20 @@ class Sport extends Controller {
             $data['permission']['sport']['search_student']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : student-profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-profile-view') ):
+            $data['permission']['student']['profile']['view'] = true;
+        else:
+            $data['permission']['student']['profile']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : student-sport-delete
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('student-sport-delete') ):
+            $data['permission']['student']['sport']['delete'] = true;
+        else:
+            $data['permission']['student']['sport']['delete'] = false;
+        endif;
+
         //STUDENT CLASS
         foreach( $this->model_class->select('id', 'grade_id', 'staff_id', 'name')->get() as $key => $element ):
             $data['student_class'][$key]['id'] = $element->id;
@@ -316,6 +330,13 @@ class Sport extends Controller {
             $data['permission']['sport']['search_coach']['view'] = true;
         else:
             $data['permission']['sport']['search_coach']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : coach-profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('coach-profile-view') ):
+            $data['permission']['coach']['profile']['view'] = true;
+        else:
+            $data['permission']['coach']['profile']['view'] = false;
         endif;
 
         // SPORT

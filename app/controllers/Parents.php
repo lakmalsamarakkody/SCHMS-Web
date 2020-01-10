@@ -99,6 +99,13 @@ class Parents extends Controller {
             $data['permission']['parents']['search']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : parent-profile
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-profile-view') ):
+            $data['permission']['parent']['profile']['view'] = true;
+        else:
+            $data['permission']['parent']['profile']['view'] = false;
+        endif;
+
         // RELATIONSHIP
 		foreach( $this->model_student_relation->select('id', 'name')->orderBy('name')->get() as $key => $element ):
 			$data['student_relations'][$key]['id'] = $element->id;
@@ -742,7 +749,7 @@ class Parents extends Controller {
             $size_mb = $_FILES['propic']['size'] / 1048576;
 
             // CHECK PERMISSION : propic
-            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parent-profile-edit-propic') ):
+            if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('parents-profile-edit-propic') ):
                 $data['permission']['parent']['profile']['edit']['propic'] = true;
                 // SAVE
                 if ( $size_mb < 1 AND $_FILES['propic']['type'] == 'image/jpeg' OR $_FILES['propic']['type'] == 'image/jpg' ):

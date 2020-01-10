@@ -126,6 +126,20 @@ class Exam extends Controller {
             $data['permission']['exam']['search']['view'] = false;
         endif;
 
+        // CHECK PERMISSION : edit_exam
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-search-edit-exam') ):
+            $data['permission']['exam']['search']['edit']['exam'] = true;
+        else:
+            $data['permission']['exam']['search']['edit']['exam'] = false;            
+        endif;
+
+        // CHECK PERMISSION : delete_exam
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-search-delete-exam') ):
+            $data['permission']['exam']['search']['delete']['exam'] = true;
+        else:
+            $data['permission']['exam']['search']['delete']['exam'] = false;            
+        endif;
+
         // TWIG : EXAM YEAR
         $exam_year = Carbon::now()->format('Y');
         for ( $i=1; $i<=2; $i++ ):
@@ -332,11 +346,31 @@ class Exam extends Controller {
         $this->load->model('subject');
 
         // CHECK PERMISSION : create
-
         if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-view') ):
             $data['permission']['exam']['create']['view'] = true;
         else:
             $data['permission']['exam']['create']['view'] = false;
+        endif;
+
+        // CHECK PERMISSION : edit exam_type
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-edit-exam_type') ):
+            $data['permission']['exam']['create']['edit']['exam_type'] = true;
+        else:
+            $data['permission']['exam']['create']['edit']['exam_type'] = false;
+        endif;
+
+        // CHECK PERMISSION : add exam_type
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-create-add-exam_type') ):
+            $data['permission']['exam']['create']['add']['exam_type'] = true;
+        else:
+            $data['permission']['exam']['create']['add']['exam_type'] = false;
+        endif;
+
+        // CHECK PERMISSION : edit exam
+        if ( $this->model_user->find($_SESSION['user']['id'])->hasPermission('exam-search-edit-exam') ):
+            $data['permission']['exam']['search']['edit']['exam'] = true;
+        else:
+            $data['permission']['exam']['search']['edit']['exam'] = false;
         endif;
 
         // TWIG : EXAM TYPE

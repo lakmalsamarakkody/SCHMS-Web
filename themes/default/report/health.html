@@ -45,7 +45,7 @@
 
                                 </div>
                                 <div class="card-footer bg-transparent border-0">
-                                    <button class="btn btn-primary" onclick="Generate_ClassHealth();">Generate</button>
+                                    {% if permission.report.any.generate %}<button class="btn btn-primary" onclick="Generate_ClassHealth();">Generate</button>{% endif %}
                                 </div>
                             </div>
 
@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer bg-transparent border-0">
-                                    <button class="btn btn-primary" onclick="Generate_StudentHealth();">Generate</button>
+                                    {% if permission.report.any.generate %}<button class="btn btn-primary" onclick="Generate_StudentHealth();">Generate</button>{% endif %}
                                 </div>
                             </div>
 
@@ -91,8 +91,8 @@
                                                 <td class="text-center">{{ report.generated_on }}</td>
                                                 <td class="text-center" scope="col">{{ report.user.username }}</td>
                                                 <td class="text-right">
-                                                    <a href="{{ report.path }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
-                                                    <button onClick="onClick_DeleteReport('{{ report.id }}')" class="btn btn-sm btn-danger">Remove</button>
+                                                    {% if permission.report.any.view %}<a href="{{ report.path }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>{% endif %}
+                                                    {% if permission.report.any.delete %}<button onClick="onClick_DeleteReport('{{ report.id }}')" class="btn btn-sm btn-danger">Remove</button>{% endif %}
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -120,8 +120,8 @@
                                                 <td class="text-center">{{ report.generated_on }}</td>
                                                 <td class="text-center" scope="col">{{ report.user.username }}</td>
                                                 <td class="text-right">
-                                                    <a href="{{ report.path }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>
-                                                    <button onClick="onClick_DeleteReport('{{ report.id }}')" class="btn btn-sm btn-danger">Remove</button>
+                                                    {% if permission.report.any.view %}<a href="{{ report.path }}" target="_blank"><button class="btn btn-sm btn-primary">View</button></a>{% endif %}
+                                                    {% if permission.report.any.delete %}<button onClick="onClick_DeleteReport('{{ report.id }}')" class="btn btn-sm btn-danger">Remove</button>{% endif %}
                                                 </td>
                                             </tr>
                                             {% endfor %}

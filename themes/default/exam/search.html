@@ -182,6 +182,7 @@
         </div>
     </div>
 
+    {% if permission.exam.search.edit.exam %}
     <!-- START : MODAL EDIT / REMOVE EXAMS -->
     <div class="modal fade" id="edit-exam" tabindex="-1" role="dialog" aria-labelledby="edit-exam-title" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
@@ -218,7 +219,7 @@
                                         <div class="row">
                                             <div class="col-12 text-center">
                                                 <button class="btn btn-sm btn-warning" onclick="exam.invokeExamEditModal('{{ exam.id }}','{{ exam.type_id }}','{{ exam.year }}','{{ exam.venue }}','{{ exam.instructions }}');"><i class="la la-edit"></i></button>
-                                                <button type="button" class="btn btn-sm btn-danger" onclick="exam.remove('{{ exam.id }}');"><i class="la la-trash"></i></button>
+                                                {% if permission.exam.search.delete.exam %}<button type="button" class="btn btn-sm btn-danger" onclick="exam.remove('{{ exam.id }}');"><i class="la la-trash"></i></button>{% endif %}
                                             </div>
                                         </div>
                                     </td>
@@ -233,6 +234,7 @@
         </div>
     </div>
     <!-- END : MODAL EDIT / REMOVE EXAMS -->
+    {% endif %}
 
     <!-- START : MODAL EDIT EXAM -->
     <div class="modal fade" id="modal_editexam" tabindex="-1" role="dialog" aria-labelledby="modal_editexam-title" aria-hidden="true">
@@ -481,31 +483,37 @@
                     formData.append('id', id)
                     formData.append('date', date)
 
-                    // AJAX
-                    $.ajax({
-                        url: "{{ app.url }}/exam/ajax_remove_examschedule",
-                        method: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        dataType: 'json',
-                        success: Response => {
-                            if ( Response.status === 'success' ) {
-                                alertify.alert("Success", "Schedule Deleted Successfully").set({
-                                    'closable': false,
-                                    'onok': () => {
-                                        location.reload()
-                                    }
-                                })
+                    alertify.confirm('<span class="text-danger"><i class="la la-exclamation-circle"></i> Caution</span>', 'Are you sure you want to Delete...? All data related to this record will be deleted.', 
+                    function(){ 
+
+                        // AJAX
+                        $.ajax({
+                            url: "{{ app.url }}/exam/ajax_remove_examschedule",
+                            method: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            dataType: 'json',
+                            success: Response => {
+                                if ( Response.status === 'success' ) {
+                                    alertify.alert("Success", "Schedule Deleted Successfully").set({
+                                        'closable': false,
+                                        'onok': () => {
+                                            location.reload()
+                                        }
+                                    })
+                                }
+                                else {
+                                    alertify.alert("Failed", Response.message)
+                                }
+                            },
+                            error: (e) => {
+                                console.log( e.responseText )
                             }
-                            else {
-                                alertify.alert("Failed", Response.message)
-                            }
-                        },
-                        error: (e) => {
-                            console.log( e.responseText )
-                        }
-                    })
+                        })
+                    },
+                function(){ alertify.error('Deletion process cancelled')}
+                );
                 }
             }
         }
