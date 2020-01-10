@@ -1094,6 +1094,19 @@ class Report extends Controller {
             endforeach;
         endif;
 
+        // QUERY REPORTS ( BY STUDENT )
+        $is_student_reports = $this->model_report->select('id', 'file_name', 'generated_by', 'created_on')->where('type', '=', 'student_exam')->get();
+        if ( $is_student_reports !== NULL ):
+            foreach( $is_student_reports as $key => $el ):
+                $user = $this->model_user->select('username')->where('id', '=', $el->generated_by)->first();
+                $data['reports']['student'][$key]['id'] = $el->id;
+                $data['reports']['student'][$key]['generated_on'] = $el->created_on->format('Y-m-d h:i:s A');
+                $data['reports']['student'][$key]['user']['username'] = $user->username;
+                $data['reports']['student'][$key]['path'] = $this->config->get('base_url').'/data/reports/result/'.$el->file_name;
+                $data['reports']['student'][$key]['file'] = $el->file_name;
+            endforeach;
+        endif;
+
 		// RENDER VIEW
         $this->load->view('report/result', $data);
     }
@@ -1140,25 +1153,70 @@ class Report extends Controller {
         endif;
 
         // IS STUDENT EXISTS
-        if ( $this->model_student->select('id')->where('id', '=', $this->request->post['student_id'])->first() === NULL ):
+        if ( $this->model_student->where('id', '=', $this->request->post['student_id'])->first() === NULL ):
             echo json_encode( array("status" => "failed", "message" => "Invalid student selected" ), JSON_PRETTY_PRINT );
             exit();
         endif;
 
         // IS EXAM ID EXISTS
-        if ( $this->model_exam->select('id')->where('id', '=', $this->request->post['exam_id'])->first() === NULL ):
+        if ( $this->model_exam->where('id', '=', $this->request->post['exam_id'])->first() === NULL ):
             echo json_encode( array("status" => "failed", "message" => "Invalid exam is selected" ), JSON_PRETTY_PRINT );
             exit();
         endif;
+
+        $student = $this->model_student->where('id', '=', $this->request->post['student_id'])->first();
+        $exam = $this->model_exam->where('id', '=', $this->request->post['exam_id'])->first();
 
         // QUERY EXAM NAME
         $exam_details = $this->model_exam->select('type_id', 'year')->where('id', '=', $this->request->post['exam_id'])->first();
         $exam_type_name = $this->model_exam_type->select('name')->where('id', '=', $exam_details->type_id)->first();
         $exam_name = $exam_type_name->name." - ".$exam_details->year;
-        
-        echo "hi";
-        var_dump($exam_name);
-        exit();
+
+        // QUERY GRADE
+        $grade_id = $this->model_class->select('grade_id')->where('id', '=', $student->class_id)->first()->grade_id;
+        $grade_name = $this->model_grade->select('name')->where('id', '=', $grade_id)->first()->name;
+
+        // TITLE DETAILS
+        $data['student_exam_report']['student_name'] = $student->initials." ".$student->surname;
+        $data['student_exam_report']['exam_name'] = $exam_name;
+        $data['student_exam_report']['grade'] = $grade_name;
+        $data['student_exam_report']['generated_on'] = $time_now;
+        $data['student_exam_report']['generated_by'] = $this->model_user->select('username')->where('id', '=', $_SESSION['user']['id'])->first()->username;
+
+        $exam_result = DB::table('student_has_exam_schedule')
+        ->join('exam_grade_has_schedule', 'student_has_exam_schedule.exam_schedule_id', 'exam_grade_has_schedule.id')
+        ->join('exam_has_grade', 'exam_grade_has_schedule.exam_grade_id', 'exam_has_grade.id')
+        ->join('exam', 'exam_has_grade.exam_id', 'exam.id')
+        ->join('exam_type', 'exam.type_id', 'exam_type.id')
+        ->join('grade', 'exam_has_grade.grade_id', 'grade.id')
+        ->join('subject', 'exam_grade_has_schedule.subject_id', 'subject.id')
+        ->where('student_has_exam_schedule.student_id', '=', $this->request->post['student_id'])
+        ->where('exam.id', '=', $this->request->post['exam_id'])
+        ->select('subject.name as subject_name', 'student_has_exam_schedule.marks');
+
+        foreach ( $exam_result->get() as $key => $element ):
+            $data['exam']['subject'][$key]['name'] = $element->subject_name;
+            $data['exam']['subject'][$key]['mark'] = $element->marks;
+        endforeach;
+
+        // JSReports
+        $JSReport = new JSReport();
+        $file = 'student_result_'.$_SESSION['user']['id'].'_'.Carbon::now()->format('Ymd_His');
+        $JSReport->get_report('STUDENT_EXAM', $data, 'result/'.$file);
+
+        // ADD ENTRY TO DATABASE ( report table )
+        $this->model_report->type = 'student_exam';
+        $this->model_report->file_name = $file.'.pdf';
+        $this->model_report->generated_by = $_SESSION['user']['id'];
+
+        // VALIDATE SAVE
+        if ( $this->model_report->save() ):
+            echo json_encode( array("status" => "success", "path" => $this->config->get('base_url').'/data/report/result/' ), JSON_PRETTY_PRINT );  
+            exit();
+        else:
+            echo json_encode( array("status" => "failed", "error" => "Error occured while saving your report" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
     }
     // END : STUDENT EXAM RESULT
 
