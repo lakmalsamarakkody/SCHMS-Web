@@ -600,7 +600,7 @@ class Sport extends Controller {
 
                 $data['students'][$key]['id'] = $value->id;
                 $data['students'][$key]['admission_no'] = $value->admission_no;
-                $data['students'][$key]['class'] = $student_data->grade_name." ".$student_data->class_name;
+                $data['students'][$key]['class'] = $student_data->grade_name." - ".$student_data->class_name;
                 $data['students'][$key]['index'] = $student_data->index_no;
                 $data['students'][$key]['name'] = $value->initials." ".$value->surname;
                 $data['students'][$key]['gender'] = $value->gender;
