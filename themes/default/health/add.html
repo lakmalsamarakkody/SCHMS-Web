@@ -236,7 +236,7 @@
                                             <td><input id="inpt-heart_rate" data-name="heart_rate" data-stuid="{{ student.id }}" type="number" class="form-control" value="{{ student.hr }}" maxlength="3"/></td>
                                             <td><input id="inpt-blood_pressure" data-name="blood_pressure" data-stuid="{{ student.id }}" type="number" class="form-control" value="{{ student.bp }}" maxlength="3"/></td>
                                             <td>
-                                                <select class="form-control selectpicker show-tick" id="inpt-blood_group" data-name="blood_group" data-stuid="{{ student.id }}">
+                                                <select class="form-control" id="inpt-blood_group" data-name="blood_group" data-stuid="{{ student.id }}">
                                                     <option value="" selected>- Select -</option>
                                                     {% for type in blood.types %}
                                                         <option value="{{ type.name }}" {% if student.bg  == type.name %}selected{% endif %}>{{ type.name }}</option>
