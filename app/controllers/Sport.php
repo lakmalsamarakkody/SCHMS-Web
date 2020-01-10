@@ -591,7 +591,7 @@ class Sport extends Controller {
                     ->join('student_has_class', 'student.id', '=', 'student_has_class.student_id')
                     ->join('class', 'student_has_class.class_id', '=', 'class.id')
                     ->join('grade', 'class.grade_id', '=', 'grade.id')
-                    ->select('student_has_class.index_no', 'student_has_class.class_id', 'class.name', 'grade.name')
+                    ->select('student_has_class.index_no', 'student_has_class.class_id', 'class.name as class_name', 'grade.name as grade_name')
                     ->where('student.id', '=', $value->id)->first();
 
                 foreach ( $this->model_student_sport->where('student_id', '=', $value->id)->get() as $key2 => $el ):
@@ -600,7 +600,7 @@ class Sport extends Controller {
 
                 $data['students'][$key]['id'] = $value->id;
                 $data['students'][$key]['admission_no'] = $value->admission_no;
-                $data['students'][$key]['class'] = $student_data->name;
+                $data['students'][$key]['class'] = $student_data->grade_name." ".$student_data->class_name;
                 $data['students'][$key]['index'] = $student_data->index_no;
                 $data['students'][$key]['name'] = $value->initials." ".$value->surname;
                 $data['students'][$key]['gender'] = $value->gender;

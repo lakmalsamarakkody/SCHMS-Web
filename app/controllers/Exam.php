@@ -880,7 +880,7 @@ class Exam extends Controller {
                 foreach ( $this->model_class->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get() as $key => $element ):
                     
                     // CHECK ONE OR MORE STUDENT IN A CLASS EXIST
-                    if( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->first() !== NULL ):
+                    if( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->first() != NULL ):
                         
                         // SELECT ALL STUDENTS IN A CLASS
                         foreach ( $this->model_student_class->select('student_id')->where('class_id', '=', $element->id)->get() as $key2 => $element2 ):
