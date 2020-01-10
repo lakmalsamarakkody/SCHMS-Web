@@ -9,3 +9,6 @@ data/uploads/propics/student/*.jpg
 data/reports/attendance/*.pdf
 data/reports/result/*.pdf
 data/reports/student/*.pdf
+data/reports/health/*.pdf
+data/reports/staff/*.pdf
+data/reports/timetable/*.pdf
