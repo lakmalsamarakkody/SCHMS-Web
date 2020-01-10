@@ -72,9 +72,17 @@ class Backup extends Controller {
 
         // MODEL
         $this->load->model('backup');
+        $this->load->model('user');
 
         // SET JSON HEADER
         header('Content-Type: application/json');
+
+
+        // PERMISSION
+        if ( !$this->model_user::find(3)::hasPermission('backup-index-view') ):
+            echo json_encode( array( "status" => "failed", "error" => "Permission denied" ), JSON_PRETTY_PRINT );
+            exit();
+        endif;
 
         // VALIDATION : description
         $is_valid_description = GUMP::is_valid($this->request->post, array('description' => 'required|valid_name|max_len,50'));
