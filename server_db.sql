@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 10, 2020 at 06:27 PM
+-- Generation Time: Jan 10, 2020 at 07:17 PM
 -- Server version: 10.1.41-MariaDB-0+deb9u1
 -- PHP Version: 7.3.13-1+0~20191218.50+debian9~1.gbp23c2da
 
@@ -38,6 +38,13 @@ CREATE TABLE `backup` (
   `updated_on` datetime NOT NULL,
   `deleted_on` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `backup`
+--
+
+INSERT INTO `backup` (`id`, `name`, `description`, `date_time`, `file_size`, `created_on`, `updated_on`, `deleted_on`) VALUES
+(1, 'DB_20200111_000613.sql', 'test data partial', '2020-01-11 00:06:13', 226, '2020-01-11 00:06:13', '2020-01-11 00:06:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -444,14 +451,22 @@ CREATE TABLE `notification` (
 
 INSERT INTO `notification` (`id`, `sender_id`, `receiver_id`, `title`, `body`, `status`, `created_on`, `updated_on`, `deleted_on`) VALUES
 (1, 2, 1, 'Attendance Marked', 'Your are present on 2020-01-06', 0, '2020-01-10 19:10:09', '2020-01-10 19:10:09', NULL),
-(2, 2, 2, 'Attendance Marked', 'Your are present on 2020-01-06', 0, '2020-01-10 19:10:34', '2020-01-10 19:10:34', NULL),
+(2, 2, 2, 'Attendance Marked', 'Your are present on 2020-01-06', 1, '2020-01-10 19:10:34', '2020-01-11 00:35:40', NULL),
 (3, 2, 1, 'Attendance Marked', 'Your are present on 2020-01-07', 0, '2020-01-10 19:10:53', '2020-01-10 19:10:53', NULL),
 (4, 2, 1, 'Attendance Marked', 'Your are present on 2020-01-08', 0, '2020-01-10 19:11:34', '2020-01-10 19:11:34', NULL),
 (5, 2, 1, 'Attendance Marked', 'Your are present on 2020-01-09', 0, '2020-01-10 19:12:18', '2020-01-10 19:12:18', NULL),
-(6, 2, 2, 'Attendance Marked', 'Your are present on 2020-01-09', 0, '2020-01-10 19:12:35', '2020-01-10 19:12:35', NULL),
+(6, 2, 2, 'Attendance Marked', 'Your are present on 2020-01-09', 1, '2020-01-10 19:12:35', '2020-01-11 00:35:38', NULL),
 (7, 2, 3, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-10 20:39:25', '2020-01-10 20:39:25', NULL),
 (8, 3, 4, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-10 23:19:33', '2020-01-10 23:19:33', NULL),
-(9, 3, 4, 'Exam Results Updated', 'Your exam results has been updated', 0, '2020-01-10 23:56:16', '2020-01-10 23:56:16', NULL);
+(9, 3, 4, 'Exam Results Updated', 'Your exam results has been updated', 0, '2020-01-10 23:56:16', '2020-01-10 23:56:16', NULL),
+(10, 3, 5, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:07:26', '2020-01-11 00:07:26', NULL),
+(11, 3, 6, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:25:36', '2020-01-11 00:25:36', NULL),
+(12, 3, 7, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:27:33', '2020-01-11 00:27:33', NULL),
+(13, 3, 8, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:27:59', '2020-01-11 00:27:59', NULL),
+(14, 3, 9, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:29:29', '2020-01-11 00:29:29', NULL),
+(15, 3, 10, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:29:49', '2020-01-11 00:29:49', NULL),
+(16, 3, 11, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:30:05', '2020-01-11 00:30:05', NULL),
+(17, 3, 12, 'Account Activated', 'Your account has been activated by System Administrator', 0, '2020-01-11 00:30:30', '2020-01-11 00:30:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -488,7 +503,7 @@ CREATE TABLE `parent` (
 INSERT INTO `parent` (`id`, `nic`, `full_name`, `initials`, `surname`, `dob`, `gender`, `email`, `phone_home`, `phone_mobile`, `occupation`, `position`, `income`, `address`, `city`, `district_id`, `created_on`, `updated_on`, `deleted_on`) VALUES
 (1, '198724512345', 'Ruwanpathirana Arachchige Buddhika Ruwanpathirana', 'R A B', 'Ruwanpathirana', '1987-10-15', 'Male', 'buddhika87@gmail.com', '0332544542', '712543654', 'Teacher', NULL, 45000, '267/10, Nagahakotuwa road', 'Gampaha', 1, '2019-12-14 14:15:29', '2019-12-14 14:15:29', NULL),
 (2, '197012509876', 'Edirisinghe Dewage Chanaka  Naveen Edirisinghe', 'E D C N', 'Edirisinghe', '1970-12-30', 'Male', 'chanakanaveen@gmail.com', '0117893546', '0772581532', 'Software engineer', NULL, 70000, '144/5A, Palmgrove estate', 'Veyangoda', 1, '2019-12-14 15:54:45', '2019-12-14 15:54:45', NULL),
-(3, '198832487654', 'Herath Muduyanselage Janith Chathuranga Herath', 'H M J C', 'Herath', '1988-05-04', 'Male', 'chathuranga12@ymail.com', '0338524639', '0779823516', 'Accountant', NULL, 50000, '234/2, malwaththa road', 'Gampaha', 1, '2019-12-14 16:01:15', '2019-12-14 16:01:15', NULL),
+(3, '198832487654', 'Herath Muduyanselage Janith Chathuranga Herath', 'H M J C', 'Herath', '1988-05-04', 'Female', 'chathuranga12@ymail.com', '0338524639', '0779823516', 'Accountant', '', 50000, '234/2, malwaththa road', 'Gampaha', 1, '2019-12-14 16:01:15', '2020-01-11 00:07:26', NULL),
 (4, '196928736985', 'Hettiarachchi Gamage Mahesh Kulathunga', 'H G M', 'Kulathunga', '1969-08-24', 'Male', 'maheshkulathunga@gmail.com', NULL, '714563278', 'Businessman', NULL, 40000, '12/2B, Poruthota road', 'Minuwangoda', 1, '2019-12-14 16:08:06', '2019-12-14 16:08:06', NULL),
 (5, '198575674125', 'Handugala Dewage Imalsha Sirideva', 'H D I', 'Sirideva', '1985-11-03', 'Female', 'sirideva11@gmail.com', '0119632312', '0774078087', 'Teacher', NULL, 50000, '321/A, Cemetry road', 'Yatiyana', 1, '2019-12-14 16:25:04', '2019-12-14 16:25:04', NULL),
 (6, '198712645431', 'Colambage Don Kanchana Weerasinghe', 'C D K', 'Weerasinghe', '1987-09-16', 'Male', 'weerasinghe@gmail.com', '0119874532', '0783219674', 'Accountant Clerk', NULL, 25000, '123/5, Silva Mawatha', 'Dewalapola', 1, '2019-12-14 16:32:37', '2019-12-14 16:32:37', NULL),
@@ -760,7 +775,7 @@ CREATE TABLE `staff` (
 
 INSERT INTO `staff` (`id`, `employee_number`, `type_id`, `admission_date`, `nic`, `full_name`, `initials`, `surname`, `dob`, `gender`, `email`, `phone_home`, `phone_mobile`, `address`, `city`, `district_id`, `religion_id`, `created_on`, `updated_on`, `deleted_on`) VALUES
 (1, 1, 3, '2010-01-10', '196579114551', 'Handugala Dewage Pathmini Siridewa', 'H D P', 'Siridewa', '1965-08-22', 'Female', 'pathminisiridewa@gmail.com', '0332554562', '0774078087', '267/10, Nagahakotuwa road', 'Gampaha', 1, 1, '2020-01-04 19:59:25', '2020-01-04 19:59:25', NULL),
-(2, 2, 2, '2010-04-22', '197245114553', 'Sooriyarachchi Mohottilage Sumedha Sooriyarachchi', 'S M S', 'Sooriyarachchi', '1972-02-14', 'Male', 'sumeda14@gmail.com', NULL, '0715469845', '126/2, Welmilla road', 'Aluthepola', 1, 1, '2020-01-04 20:10:18', '2020-01-04 20:10:18', NULL),
+(2, 2, 2, '2010-04-22', '197245114553', 'Sooriyarachchi Mohottilage Sumedha Sooriyarachchi', 'S M S', 'Sooriyarachchi', '1972-02-14', 'Male', 'sumeda14@gmail.com', '', '0715469845', '126/2, Welmilla road', 'Aluthepola', 1, 1, '2020-01-04 20:10:18', '2020-01-11 00:27:33', NULL),
 (3, 3, 1, '2011-02-12', '198962512434', 'Edirisnghe Dewage Isanka Sheyamini Edirisnghe', 'E D I S', 'Edirisnghe', '1989-01-13', 'Female', 'isankaedirisnghe@gmail.com', '0118524132', '0712587463', '68/12, Ihala Yagoda road', 'Minuwangoda', 1, 1, '2020-01-04 20:13:32', '2020-01-04 20:13:32', NULL),
 (4, 4, 3, '2011-09-04', '197835421456', 'Gunasekara Arachchilage Sisil Priyankara Gunasekara', 'G A S P', ' Gunasekara', '1978-05-30', 'Male', 'sisilpriya@gmail.com', '0112584215', '0778541237', '254/5, Uyana road', 'Minuwangoda', 1, 1, '2020-01-04 20:17:08', '2020-01-04 20:17:08', NULL),
 (5, 5, 1, '2011-09-04', '198252142121', 'Herath Mudiyanselage Menaka Jeewanthi Herath', 'H M M J', 'Herath', '1982-12-05', 'Female', 'jeewanthiherath@gmail.com', NULL, '0708524012', '522/4, Orutota road', 'Gampaha', 3, 1, '2020-01-04 20:20:12', '2020-01-04 20:20:12', NULL),
@@ -768,7 +783,7 @@ INSERT INTO `staff` (`id`, `employee_number`, `type_id`, `admission_date`, `nic`
 (7, 7, 1, '2012-05-12', '197823120356', 'Jayawardhana Weththasinghelage Ajith Pushpakumara Jayawardhana', 'J W A P', 'Jayawardhana', '1978-05-13', 'Male', 'ajipushpakumara@gmail.com', NULL, '0778563012', '523/2, Katwellagama', 'Udugampola', 1, 1, '2020-01-04 20:26:15', '2020-01-04 20:26:15', NULL),
 (8, 8, 1, '2012-08-16', '198563214524', 'Ramanayaka Mudiyanselage Chathuri Nimanthika Ramanayaka', 'R M C N', 'Ramanayaka', '1985-06-11', 'Female', 'chathujaye@gmail.com', '0338531276', '0708534216', '201/3, Ambagahamulla road', 'Gampaha', 1, 1, '2020-01-04 20:29:59', '2020-01-04 20:29:59', NULL),
 (9, 9, 1, '2012-11-20', '199065821341', 'Udagedara Mohottilage Chamini Lakmali Udagedara', 'U M C L', 'Udagedara', '1990-12-05', 'Female', 'lakmaludagedara@gmail.com', NULL, '0718524976', '578/6, Vishaka road', 'Korase', 1, 1, '2020-01-04 20:32:50', '2020-01-04 20:32:50', NULL),
-(10, 10, 1, '2013-01-28', '198730285216', 'Siriwardhana Gamage Kanchana Siriwardhana', 'S G K', 'Siriwardhana', '1987-04-13', 'Male', 'kanchana13@gmail.com', '0112587964', '0778564132', '211/8, Medagampitiya road', 'Yatiyana', 1, 1, '2020-01-04 20:36:53', '2020-01-04 20:36:53', NULL),
+(10, 10, 11, '2013-01-28', '198730285216', 'Siriwardhana Gamage Kanchana Siriwardhana', 'S G K', 'Siriwardhana', '1987-04-13', 'Male', 'kanchana13@gmail.com', '0112587964', '0778564132', '211/8, Medagampitiya road', 'Yatiyana', 1, 1, '2020-01-04 20:36:53', '2020-01-11 00:26:08', NULL),
 (11, 11, 1, '2014-08-15', '197852213494', 'Raigama Arachchige Naduni Nisansala Raigamage', 'R A N N', 'Raigamage', '1978-03-18', 'Female', 'raigamage78@gmail.com', '0118967542', '0785204100', '308/2B, Aruggoda road', 'Minuwangoda', 1, 1, '2020-01-04 20:40:38', '2020-01-04 20:40:38', NULL),
 (12, 12, 1, '2014-11-03', '198213285436', 'Hewa Fonsekalage Gihan Dhananjaya Fonseka', 'H F G D', 'Fonseka', '1982-05-07', 'Male', 'gihanfonseka@gmail.com', NULL, '0778560032', '22/5, Kidagammulla road', 'Udugampola', 1, 2, '2020-01-04 20:43:56', '2020-01-04 20:43:56', NULL),
 (13, 13, 1, '2015-08-11', '199049832015', 'Udupila Liyanage Sachini Nisansala Liyanage', 'U L S N', 'Liyanage', '1990-08-30', 'Female', 'nisansalaliyanage@gmail.com', '0114238675', '0718524012', '32/41, Galloluwa road', 'Nilpanagoda', 1, 1, '2020-01-04 20:48:10', '2020-01-04 20:48:10', NULL),
@@ -948,15 +963,15 @@ INSERT INTO `staff_has_subject` (`id`, `staff_id`, `subject_id`, `created_on`, `
 (2, 13, 5, '2020-01-10 23:12:01', '2020-01-10 23:12:01', NULL),
 (3, 7, 8, '2020-01-10 23:12:34', '2020-01-10 23:12:34', NULL),
 (4, 12, 3, '2020-01-10 23:13:10', '2020-01-10 23:13:10', NULL),
-(5, 1, 2, '2020-01-10 23:13:40', '2020-01-10 23:13:40', NULL),
-(6, 14, 4, '2020-01-10 23:14:04', '2020-01-10 23:14:04', NULL),
 (7, 17, 6, '2020-01-10 23:14:32', '2020-01-10 23:14:32', NULL),
 (8, 5, 7, '2020-01-10 23:18:28', '2020-01-10 23:18:28', NULL),
 (9, 16, 6, '2020-01-10 23:34:39', '2020-01-10 23:34:39', NULL),
 (10, 19, 6, '2020-01-10 23:35:16', '2020-01-10 23:35:16', NULL),
-(11, 3, 2, '2020-01-10 23:39:25', '2020-01-10 23:39:25', NULL),
-(12, 3, 1, '2020-01-10 23:40:15', '2020-01-10 23:40:15', NULL),
-(13, 4, 1, '2020-01-10 23:48:52', '2020-01-10 23:48:52', NULL);
+(13, 4, 1, '2020-01-10 23:48:52', '2020-01-10 23:48:52', NULL),
+(14, 14, 4, '2020-01-11 00:08:02', '2020-01-11 00:08:02', NULL),
+(16, 1, 2, '2020-01-11 00:27:17', '2020-01-11 00:27:17', NULL),
+(17, 3, 1, '2020-01-11 00:27:59', '2020-01-11 00:27:59', NULL),
+(18, 3, 2, '2020-01-11 00:27:59', '2020-01-11 00:27:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -987,7 +1002,8 @@ INSERT INTO `staff_type` (`id`, `name`, `category_id`, `created_on`, `updated_on
 (7, 'Cleaner', 3, '2020-01-04 19:35:59', '2020-01-04 19:35:59', NULL),
 (8, 'Driver', 3, '2020-01-04 19:36:08', '2020-01-04 19:36:08', NULL),
 (9, 'Security Officer', 3, '2020-01-04 19:37:10', '2020-01-04 19:37:10', NULL),
-(10, 'System Administrator', 2, '2020-01-08 18:21:32', '2020-01-08 18:21:32', NULL);
+(10, 'System Administrator', 2, '2020-01-08 18:21:32', '2020-01-08 18:21:32', NULL),
+(11, 'Security', 3, '2020-01-11 00:25:55', '2020-01-11 00:25:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -1025,11 +1041,11 @@ INSERT INTO `student` (`id`, `admission_no`, `admission_date`, `class_id`, `full
 (1, 1, '2019-01-07', 1, 'Ruwanpathirana Arachchige Abhishma Ruwanpathirana', 'R A A', 'Ruwanpathirana', '2013-12-02', 'female', '', '0778978541', '267/10, Nagahakotuwa road', 'Gampaha', NULL, 1, 1, '2019-12-14 14:15:29', '2020-01-10 23:19:33', NULL),
 (2, 2, '2019-01-07', 1, 'Edirisinghe Dewage Boditha Dimuthu Edirisinghe', 'E D B D', 'Edirisinghe', '2013-05-08', 'male', NULL, NULL, '144/5A, Palmgrove estate', 'Veyangoda', 'Ragama', 1, 1, '2019-12-14 15:54:45', '2019-12-14 15:54:45', NULL),
 (3, 3, '2019-01-07', 1, 'Herath Mudiyanselage Senuth Dimsara Herath', 'H M S D', 'Herath', '2014-12-01', 'male', NULL, NULL, '234/2, malwaththa road', 'Gampaha', 'Gampaha', 1, 1, '2019-12-14 16:01:15', '2019-12-14 16:01:15', NULL),
-(4, 4, '2019-01-07', 1, 'Hettiarachchi Gamage Lithuli Senulya Kulathunga', 'H G L S', 'Kulathunga', '2013-02-25', 'female', NULL, NULL, '12/2B, Poruthota road', 'Minuwangoda', 'Colombo', 1, 2, '2019-12-14 16:08:06', '2019-12-14 16:08:06', NULL),
+(4, 4, '2019-01-07', 1, 'Hettiarachchi Gamage Lithuli Senulya Kulathunga', 'H G L S', 'Kulathunga', '2013-02-25', 'female', '', '', '12/2B, Poruthota road', 'Minuwangoda', 'Colombo', 1, 2, '2019-12-14 16:08:06', '2020-01-11 00:29:29', NULL),
 (5, 5, '2019-01-07', 1, 'Hettiarachchi Gamage Methuli Dulanya Kulathunga', 'H G M D', 'Kulathunga', '2013-02-25', 'female', NULL, NULL, '12/2B, Poruthota road', 'Minuwangoda', 'Colombo', 1, 2, '2019-12-14 16:18:38', '2019-12-14 16:18:38', NULL),
-(6, 6, '2019-01-07', 1, 'Amarasinghe Mudalige Osadi Dahamsa Amarasinghe', 'A M O D', 'Amarasinghe', '2013-10-17', 'female', NULL, NULL, '321/A, Cemetry road', 'Yatiyana', 'Gampaha', 1, 1, '2019-12-14 16:25:04', '2019-12-14 16:25:04', NULL),
-(7, 7, '2019-01-07', 1, 'Colomage Don Nethum Wisal Weerasinghe', 'C D N W', 'Weerasinghe', '2013-04-15', 'male', NULL, NULL, '123/5, Silva Mawatha', 'Dewalapola', 'Ragama', 1, 1, '2019-12-14 16:32:37', '2019-12-14 16:32:37', NULL),
-(8, 8, '2019-01-08', 1, 'Rupasinghe Jayawardhana Mudiyanselage Kavith Rupasinghe', 'R J M K', 'Rupasinghe', '2013-07-28', 'male', NULL, NULL, '45/2, Ekala road', 'Minuwangoda', 'Colombo', 1, 1, '2019-12-14 16:39:32', '2019-12-14 16:39:32', NULL),
+(6, 6, '2019-01-07', 1, 'Amarasinghe Mudalige Osadi Dahamsa Amarasinghe', 'A M O D', 'Amarasinghe', '2013-10-17', 'female', '', '', '321/A, Cemetry road', 'Yatiyana', 'Gampaha', 1, 1, '2019-12-14 16:25:04', '2020-01-11 00:29:49', NULL),
+(7, 7, '2019-01-07', 1, 'Colomage Don Nethum Wisal Weerasinghe', 'C D N W', 'Weerasinghe', '2013-04-15', 'male', '', '', '123/5, Silva Mawatha', 'Dewalapola', 'Ragama', 1, 1, '2019-12-14 16:32:37', '2020-01-11 00:30:04', NULL),
+(8, 8, '2019-01-08', 1, 'Rupasinghe Jayawardhana Mudiyanselage Kavith Rupasinghe', 'R J M K', 'Rupasinghe', '2013-07-28', 'male', '', '', '45/2, Ekala road', 'Minuwangoda', 'Colombo', 1, 1, '2019-12-14 16:39:32', '2020-01-11 00:30:30', NULL),
 (9, 9, '2019-01-08', 1, 'Handunneththige Shamindi Gayathma Kulasekara', 'H S G', 'Kulasekara', '2013-06-25', 'female', NULL, NULL, '675/8, Pansala Road', 'Udugampola', 'Wathupitiwala', 1, 1, '2019-12-14 16:45:57', '2019-12-14 16:45:57', NULL),
 (10, 10, '2019-01-08', 1, 'Ranasinghe Bandaralage Sanura Haseth Ranasinghe', 'R B S H', 'Ranasinghe', '2013-03-14', 'male', NULL, NULL, '314/6, Oruthota Road', 'Gampaha', 'Gampaha', 1, 2, '2019-12-14 16:55:02', '2019-12-14 16:55:02', NULL),
 (11, 11, '2019-01-08', 1, 'Udupila Liyanage Umeth Bimsada Liyanage', 'U L U B', 'Liyanage', '2014-01-26', 'male', NULL, NULL, '187/2, 2nd lane', 'Bulugahamulla', 'Colombo', 1, 1, '2019-12-14 17:02:24', '2019-12-14 17:02:24', NULL),
@@ -1762,11 +1778,11 @@ INSERT INTO `student_has_class` (`id`, `student_id`, `class_id`, `index_no`, `cr
 (1, 1, 1, 1, '2019-12-14 14:15:29', '2020-01-10 23:19:33', NULL),
 (2, 2, 1, 2, '2019-12-14 15:54:45', '2019-12-14 15:54:45', NULL),
 (3, 3, 1, 3, '2019-12-14 16:01:15', '2019-12-14 16:01:15', NULL),
-(4, 4, 1, 4, '2019-12-14 16:08:06', '2019-12-14 16:08:06', NULL),
+(4, 4, 1, 4, '2019-12-14 16:08:06', '2020-01-11 00:29:29', NULL),
 (5, 5, 1, 5, '2019-12-14 16:18:38', '2019-12-14 16:18:38', NULL),
-(6, 6, 1, 6, '2019-12-14 16:25:04', '2019-12-14 16:25:04', NULL),
-(7, 7, 1, 7, '2019-12-14 16:32:37', '2019-12-14 16:32:37', NULL),
-(8, 8, 1, 8, '2019-12-14 16:39:32', '2019-12-14 16:39:32', NULL),
+(6, 6, 1, 6, '2019-12-14 16:25:04', '2020-01-11 00:29:49', NULL),
+(7, 7, 1, 7, '2019-12-14 16:32:37', '2020-01-11 00:30:04', NULL),
+(8, 8, 1, 8, '2019-12-14 16:39:32', '2020-01-11 00:30:30', NULL),
 (9, 9, 1, 9, '2019-12-14 16:45:57', '2019-12-14 16:45:57', NULL),
 (10, 10, 1, 10, '2019-12-14 16:55:02', '2019-12-14 16:55:02', NULL),
 (11, 11, 1, 11, '2019-12-14 17:02:24', '2019-12-14 17:02:24', NULL),
@@ -1894,18 +1910,18 @@ INSERT INTO `student_has_exam_schedule` (`id`, `student_id`, `exam_schedule_id`,
 (2, 1, 2, '58', '2020-01-10 22:43:43', '2020-01-10 23:56:16', NULL),
 (3, 2, 2, '91', '2020-01-10 22:43:43', '2020-01-10 23:56:54', NULL),
 (4, 3, 2, '54', '2020-01-10 22:43:43', '2020-01-10 23:57:17', NULL),
-(5, 4, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(6, 5, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(7, 6, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(8, 7, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(9, 8, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(10, 9, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(11, 10, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(12, 11, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(13, 12, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(14, 13, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(15, 14, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
-(16, 15, 2, NULL, '2020-01-10 22:43:43', '2020-01-10 22:43:43', NULL),
+(5, 4, 2, '47', '2020-01-10 22:43:43', '2020-01-10 23:57:42', NULL),
+(6, 5, 2, '56', '2020-01-10 22:43:43', '2020-01-10 23:59:23', NULL),
+(7, 6, 2, '69', '2020-01-10 22:43:43', '2020-01-10 23:59:32', NULL),
+(8, 7, 2, '69', '2020-01-10 22:43:43', '2020-01-10 23:59:42', NULL),
+(9, 8, 2, '49', '2020-01-10 22:43:43', '2020-01-10 23:59:57', NULL),
+(10, 9, 2, '46', '2020-01-10 22:43:43', '2020-01-11 00:00:10', NULL),
+(11, 10, 2, '91', '2020-01-10 22:43:43', '2020-01-11 00:00:32', NULL),
+(12, 11, 2, '73', '2020-01-10 22:43:43', '2020-01-11 00:00:40', NULL),
+(13, 12, 2, '59', '2020-01-10 22:43:43', '2020-01-11 00:00:51', NULL),
+(14, 13, 2, '74', '2020-01-10 22:43:43', '2020-01-11 00:01:12', NULL),
+(15, 14, 2, '90', '2020-01-10 22:43:43', '2020-01-11 00:01:26', NULL),
+(16, 15, 2, '53', '2020-01-10 22:43:43', '2020-01-10 23:59:02', NULL),
 (17, 1, 3, NULL, '2020-01-10 22:45:03', '2020-01-10 22:45:03', NULL),
 (18, 2, 3, NULL, '2020-01-10 22:45:03', '2020-01-10 22:45:03', NULL),
 (19, 3, 3, NULL, '2020-01-10 22:45:03', '2020-01-10 22:45:03', NULL),
@@ -2656,10 +2672,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `ref_id`, `user_type`, `username`, `password`, `theme`, `role_id`, `status`, `remember_token`, `created_on`, `updated_on`, `deleted_on`) VALUES
-(1, 1, 'staff', 'Siridewa', '$2y$10$.KxlajkHK00BrlONfrt2nO0LZ7IqIWrpIUqwlLquiuGIUYJikzQ0e', 'Default', 2, 'Active', NULL, '2019-02-20 00:00:00', '2020-01-08 04:46:45', NULL),
-(2, 14, 'staff', 'Narangoda', '$2y$10$ypne5jgEEkrN4YAnX67ZmeyadDsCJR6t1ruU8wP4W9UF.y1dr/8ve', 'Default', 1, 'Active', 'ab7435a924752116511c4305d269510a', '2020-01-08 04:47:16', '2020-01-10 11:14:49', NULL),
+(1, 1, 'staff', 'Siridewa', '$2y$10$.KxlajkHK00BrlONfrt2nO0LZ7IqIWrpIUqwlLquiuGIUYJikzQ0e', 'Default', 2, 'Active', NULL, '2019-02-20 00:00:00', '2020-01-11 00:27:17', NULL),
+(2, 14, 'staff', 'Narangoda', '$2y$10$ypne5jgEEkrN4YAnX67ZmeyadDsCJR6t1ruU8wP4W9UF.y1dr/8ve', 'Default', 2, 'Active', 'ab7435a924752116511c4305d269510a', '2020-01-08 04:47:16', '2020-01-11 00:08:02', NULL),
 (3, 19, 'staff', 'lakmal', '$2y$10$ZqlLwYixGUX7RBynFJ/ZGuBoZsaDzQR/OALx3wm2LwetNy4ddiTlK', 'Default', 1, 'Active', 'e63158462b37fbdf9b202abf22bcc9a1', '2020-01-10 20:39:25', '2020-01-10 22:21:37', NULL),
-(4, 1, 'student', 'Ruwanpathirana', '$2y$10$3qEuQz4GGvdLfdtePyQXQOZaxYZ.7eHD7kihaK9MICmmzchbnEedi', 'Default', 3, 'Active', NULL, '2020-01-10 23:19:33', '2020-01-10 23:19:33', NULL);
+(4, 1, 'student', 'Ruwanpathirana', '$2y$10$3qEuQz4GGvdLfdtePyQXQOZaxYZ.7eHD7kihaK9MICmmzchbnEedi', 'Default', 3, 'Active', NULL, '2020-01-10 23:19:33', '2020-01-10 23:19:33', NULL),
+(5, 3, 'parent', 'Herath', '$2y$10$PaYeZb7kyHdU6RPlo7FUdOgHckPErMt2Pp0Z9QHo3bh9cvMyV11Be', 'Default', 4, 'Active', NULL, '2020-01-11 00:07:26', '2020-01-11 00:07:26', NULL),
+(6, 10, 'staff', 'Siriwardhana', '$2y$10$wjc40KrbYjuDmAsCjKQ8YeFhI8NGxyVouC52iULyBSTFrVwnyRGXe', 'Default', 7, 'Active', NULL, '2020-01-11 00:25:36', '2020-01-11 00:26:08', NULL),
+(7, 2, 'staff', 'Sooriyarachchi', '$2y$10$DRDbNpiq4OdnXhtLA.XFkuOhxnpnSU1AcMAXj6a7RYIVFLMIBVisi', 'Default', 6, 'Active', NULL, '2020-01-11 00:27:33', '2020-01-11 00:27:33', NULL),
+(8, 3, 'staff', 'Edirisnghe', '$2y$10$M.F4tw1ShsI9wtfFMIiPF.ZrHcnrxARXilyCWNmDDoj0OwlTRzAN2', 'Default', 2, 'Active', NULL, '2020-01-11 00:27:59', '2020-01-11 00:27:59', NULL),
+(9, 4, 'student', 'Kulathunga', '$2y$10$AIeVAzJo1Jvif3jmH2BND.cN/fO..o3oixe1fZJIPkCuh13JEdNIa', 'Default', 3, 'Active', NULL, '2020-01-11 00:29:29', '2020-01-11 00:29:29', NULL),
+(10, 6, 'student', 'Amarasinghe', '$2y$10$2fx50t2vwhZYp.rgMPDDSecetrMJXiAn3E7lTx3M3cguvOwBKPZOe', 'Default', 3, 'Active', NULL, '2020-01-11 00:29:49', '2020-01-11 00:29:49', NULL),
+(11, 7, 'student', 'Weerasinghe', '$2y$10$yBOhNM9epyy4jZvewY/pM.QZwi7Bc.79WGkkFW8u2Elqutby4Zur2', 'Default', 3, 'Active', NULL, '2020-01-11 00:30:05', '2020-01-11 00:30:05', NULL),
+(12, 8, 'student', 'Rupasinghe', '$2y$10$HvCw2lcCBED3fdFhr0VetuXnVMDgP48nbTfKEpvhD4R4zKTBWZjEi', 'Default', 4, 'Active', NULL, '2020-01-11 00:30:30', '2020-01-11 00:30:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -2812,7 +2836,8 @@ INSERT INTO `user_role` (`id`, `name`, `description`, `created_on`, `updated_on`
 (3, 'Student', 'Only student portal is allowed', '2020-01-05 04:18:40', '2020-01-05 04:19:43', NULL),
 (4, 'Parent', 'Only parent portal is allowed', '2020-01-05 04:19:02', '2020-01-05 04:19:36', NULL),
 (5, 'Coach', 'Only sport module is allowed', '2020-01-05 04:19:27', '2020-01-05 04:19:27', NULL),
-(6, 'Guest Staff', 'Only view the system as a guest', '2020-01-05 04:25:51', '2020-01-05 04:25:51', NULL);
+(6, 'Guest Staff', 'Only view the system as a guest', '2020-01-05 04:25:51', '2020-01-05 04:25:51', NULL),
+(7, 'Gate Attendance Marker', 'Marking attendance at the entrance', '2020-01-11 00:09:56', '2020-01-11 00:09:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -2929,7 +2954,92 @@ INSERT INTO `user_role_has_permission` (`id`, `role_id`, `permission_id`, `creat
 (98, 1, 102, '2020-01-10 20:27:18', '2020-01-10 20:27:18', NULL),
 (99, 1, 101, '2020-01-10 20:27:22', '2020-01-10 20:27:22', NULL),
 (100, 1, 103, '2020-01-10 20:27:27', '2020-01-10 20:27:27', NULL),
-(101, 1, 95, '2020-01-10 23:34:57', '2020-01-10 23:34:57', NULL);
+(101, 1, 95, '2020-01-10 23:34:57', '2020-01-10 23:34:57', NULL),
+(102, 5, 68, '2020-01-11 00:10:36', '2020-01-11 00:10:36', NULL),
+(103, 5, 76, '2020-01-11 00:10:37', '2020-01-11 00:10:37', NULL),
+(104, 5, 9, '2020-01-11 00:10:45', '2020-01-11 00:10:45', NULL),
+(106, 5, 1, '2020-01-11 00:11:03', '2020-01-11 00:11:03', NULL),
+(107, 5, 94, '2020-01-11 00:11:18', '2020-01-11 00:11:18', NULL),
+(108, 5, 93, '2020-01-11 00:11:23', '2020-01-11 00:11:23', NULL),
+(109, 5, 18, '2020-01-11 00:11:26', '2020-01-11 00:11:26', NULL),
+(111, 5, 20, '2020-01-11 00:11:42', '2020-01-11 00:11:42', NULL),
+(112, 5, 23, '2020-01-11 00:11:58', '2020-01-11 00:11:58', NULL),
+(113, 7, 104, '2020-01-11 00:12:51', '2020-01-11 00:12:51', NULL),
+(114, 7, 2, '2020-01-11 00:13:24', '2020-01-11 00:13:24', NULL),
+(115, 7, 3, '2020-01-11 00:13:26', '2020-01-11 00:13:26', NULL),
+(116, 7, 60, '2020-01-11 00:13:30', '2020-01-11 00:13:30', NULL),
+(117, 7, 4, '2020-01-11 00:13:35', '2020-01-11 00:13:35', NULL),
+(118, 7, 57, '2020-01-11 00:13:36', '2020-01-11 00:13:36', NULL),
+(119, 6, 2, '2020-01-11 00:14:29', '2020-01-11 00:14:29', NULL),
+(120, 6, 68, '2020-01-11 00:14:39', '2020-01-11 00:14:39', NULL),
+(121, 6, 6, '2020-01-11 00:14:46', '2020-01-11 00:14:46', NULL),
+(122, 6, 9, '2020-01-11 00:14:53', '2020-01-11 00:14:53', NULL),
+(123, 6, 1, '2020-01-11 00:14:58', '2020-01-11 00:14:58', NULL),
+(124, 6, 31, '2020-01-11 00:15:04', '2020-01-11 00:15:04', NULL),
+(125, 6, 87, '2020-01-11 00:15:12', '2020-01-11 00:15:12', NULL),
+(126, 6, 86, '2020-01-11 00:15:14', '2020-01-11 00:15:14', NULL),
+(127, 6, 12, '2020-01-11 00:15:18', '2020-01-11 00:15:18', NULL),
+(128, 6, 13, '2020-01-11 00:15:20', '2020-01-11 00:15:20', NULL),
+(129, 6, 89, '2020-01-11 00:15:24', '2020-01-11 00:15:24', NULL),
+(130, 6, 88, '2020-01-11 00:15:27', '2020-01-11 00:15:27', NULL),
+(131, 2, 2, '2020-01-11 00:16:09', '2020-01-11 00:16:09', NULL),
+(132, 2, 3, '2020-01-11 00:16:13', '2020-01-11 00:16:13', NULL),
+(133, 2, 60, '2020-01-11 00:16:16', '2020-01-11 00:16:16', NULL),
+(134, 2, 4, '2020-01-11 00:16:21', '2020-01-11 00:16:21', NULL),
+(135, 2, 57, '2020-01-11 00:16:23', '2020-01-11 00:16:23', NULL),
+(136, 2, 68, '2020-01-11 00:16:28', '2020-01-11 00:16:28', NULL),
+(137, 2, 83, '2020-01-11 00:16:36', '2020-01-11 00:16:36', NULL),
+(138, 2, 84, '2020-01-11 00:16:42', '2020-01-11 00:16:42', NULL),
+(139, 2, 6, '2020-01-11 00:16:50', '2020-01-11 00:16:50', NULL),
+(140, 2, 61, '2020-01-11 00:16:59', '2020-01-11 00:16:59', NULL),
+(141, 2, 8, '2020-01-11 00:17:01', '2020-01-11 00:17:01', NULL),
+(142, 2, 10, '2020-01-11 00:17:11', '2020-01-11 00:17:11', NULL),
+(143, 2, 9, '2020-01-11 00:17:13', '2020-01-11 00:17:13', NULL),
+(144, 2, 69, '2020-01-11 00:17:15', '2020-01-11 00:17:15', NULL),
+(145, 2, 11, '2020-01-11 00:17:19', '2020-01-11 00:17:19', NULL),
+(146, 2, 1, '2020-01-11 00:17:20', '2020-01-11 00:17:20', NULL),
+(147, 2, 31, '2020-01-11 00:17:25', '2020-01-11 00:17:25', NULL),
+(148, 2, 87, '2020-01-11 00:17:29', '2020-01-11 00:17:29', NULL),
+(149, 2, 86, '2020-01-11 00:17:31', '2020-01-11 00:17:31', NULL),
+(150, 2, 12, '2020-01-11 00:17:33', '2020-01-11 00:17:33', NULL),
+(151, 2, 13, '2020-01-11 00:17:35', '2020-01-11 00:17:35', NULL),
+(152, 2, 104, '2020-01-11 00:17:44', '2020-01-11 00:17:44', NULL),
+(153, 2, 89, '2020-01-11 00:17:51', '2020-01-11 00:17:51', NULL),
+(154, 2, 88, '2020-01-11 00:17:54', '2020-01-11 00:17:54', NULL),
+(155, 2, 15, '2020-01-11 00:17:59', '2020-01-11 00:17:59', NULL),
+(156, 2, 14, '2020-01-11 00:18:02', '2020-01-11 00:18:02', NULL),
+(157, 2, 16, '2020-01-11 00:18:10', '2020-01-11 00:18:10', NULL),
+(158, 2, 17, '2020-01-11 00:18:15', '2020-01-11 00:18:15', NULL),
+(159, 2, 24, '2020-01-11 00:18:44', '2020-01-11 00:18:44', NULL),
+(160, 2, 71, '2020-01-11 00:18:49', '2020-01-11 00:18:49', NULL),
+(161, 2, 72, '2020-01-11 00:18:55', '2020-01-11 00:18:55', NULL),
+(162, 2, 22, '2020-01-11 00:19:01', '2020-01-11 00:19:01', NULL),
+(163, 2, 26, '2020-01-11 00:19:07', '2020-01-11 00:19:07', NULL),
+(164, 2, 27, '2020-01-11 00:19:10', '2020-01-11 00:19:10', NULL),
+(165, 2, 29, '2020-01-11 00:19:54', '2020-01-11 00:19:54', NULL),
+(166, 2, 28, '2020-01-11 00:19:58', '2020-01-11 00:19:58', NULL),
+(167, 2, 62, '2020-01-11 00:20:05', '2020-01-11 00:20:05', NULL),
+(168, 2, 38, '2020-01-11 00:20:14', '2020-01-11 00:20:14', NULL),
+(169, 2, 40, '2020-01-11 00:20:20', '2020-01-11 00:20:20', NULL),
+(170, 2, 42, '2020-01-11 00:20:48', '2020-01-11 00:20:48', NULL),
+(171, 2, 45, '2020-01-11 00:20:55', '2020-01-11 00:20:55', NULL),
+(172, 2, 44, '2020-01-11 00:20:58', '2020-01-11 00:20:58', NULL),
+(173, 4, 94, '2020-01-11 00:21:17', '2020-01-11 00:21:17', NULL),
+(174, 4, 19, '2020-01-11 00:21:20', '2020-01-11 00:21:20', NULL),
+(175, 4, 93, '2020-01-11 00:21:28', '2020-01-11 00:21:28', NULL),
+(176, 4, 20, '2020-01-11 00:21:31', '2020-01-11 00:21:31', NULL),
+(177, 4, 18, '2020-01-11 00:21:35', '2020-01-11 00:21:35', NULL),
+(178, 3, 94, '2020-01-11 00:21:53', '2020-01-11 00:21:53', NULL),
+(179, 3, 93, '2020-01-11 00:21:55', '2020-01-11 00:21:55', NULL),
+(180, 3, 20, '2020-01-11 00:21:58', '2020-01-11 00:21:58', NULL),
+(181, 3, 18, '2020-01-11 00:22:01', '2020-01-11 00:22:01', NULL),
+(182, 3, 21, '2020-01-11 00:22:04', '2020-01-11 00:22:04', NULL),
+(183, 3, 103, '2020-01-11 00:22:14', '2020-01-11 00:22:14', NULL),
+(184, 4, 103, '2020-01-11 00:22:21', '2020-01-11 00:22:21', NULL),
+(185, 2, 103, '2020-01-11 00:22:29', '2020-01-11 00:22:29', NULL),
+(186, 6, 103, '2020-01-11 00:22:35', '2020-01-11 00:22:35', NULL),
+(187, 7, 103, '2020-01-11 00:22:42', '2020-01-11 00:22:42', NULL),
+(188, 5, 103, '2020-01-11 00:22:47', '2020-01-11 00:22:47', NULL);
 
 --
 -- Indexes for dumped tables
@@ -3245,7 +3355,7 @@ ALTER TABLE `user_role_has_permission`
 -- AUTO_INCREMENT for table `backup`
 --
 ALTER TABLE `backup`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `class`
@@ -3317,7 +3427,7 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `parent`
@@ -3377,13 +3487,13 @@ ALTER TABLE `staff_category`
 -- AUTO_INCREMENT for table `staff_has_subject`
 --
 ALTER TABLE `staff_has_subject`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `staff_type`
 --
 ALTER TABLE `staff_type`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `student`
@@ -3455,7 +3565,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_permission`
@@ -3467,13 +3577,13 @@ ALTER TABLE `user_permission`
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user_role_has_permission`
 --
 ALTER TABLE `user_role_has_permission`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- Constraints for dumped tables
