@@ -32,7 +32,7 @@
                                 {% endif %}
 
                                 <div class="card">
-                                    <div class="card-header">
+                                    <div class="card-header d-flex" style="align-items: center; justify-content: space-between;">
                                         <div class="media">
                                             <img class="mr-4 img-fluid rounded-circle img-thumbnail" width="150px" height="150px" src="{{ app.url }}/data/propic/staff/{{ staff.id }}">
                                             <div class="media-body align-self-center">
@@ -48,6 +48,7 @@
                                                 {% endif %}
                                             </div>
                                         </div>
+                                        <img style="width: 150px;height: 150px;" src="data:image/png;base64, {{ qrcode }}">
                                     </div>
 
                                     <!-- CARD BODY -->

@@ -1,6 +1,8 @@
 <?php
 
 use Carbon\Carbon;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Response\QrCodeResponse;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class Student extends Controller {
@@ -1003,6 +1005,11 @@ class Student extends Controller {
             $data['settings']['theme'] = $settings_data->theme;
             $data['settings']['status'] = $settings_data->status;
         endif;
+
+        // GENERATE QRCODE
+        $qrcode = new QrCode('student:'.$student->id);
+        $qrcode->setSize(150);
+        $data['qrcode'] = base64_encode($qrcode->writeString());
 
         // RENDER VIEW
         $this->load->view('student/profile', $data);
