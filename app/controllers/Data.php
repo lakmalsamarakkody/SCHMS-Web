@@ -41,7 +41,7 @@ class Data extends Controller {
                     if ( file_exists( ABS_PATH.'/data/uploads/propics/student/'.$id.'.jpg' ) ):
                         $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/student/'.$id.'.jpg');
                     else:
-                        $image = imagecreatefromjpeg(ABS_PATH.'/data/img/default_user.jpg');
+                        $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/default.jpg');
                     endif;
 
                     imagejpeg($image);
@@ -62,7 +62,7 @@ class Data extends Controller {
                     if ( file_exists( ABS_PATH.'/data/uploads/propics/staff/'.$id.'.jpg' ) ):
                         $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/staff/'.$id.'.jpg');
                     else:
-                        $image = imagecreatefromjpeg(ABS_PATH.'/data/img/default_user.jpg');
+                        $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/default.jpg');
                     endif;
 
                     imagejpeg($image);
@@ -83,7 +83,7 @@ class Data extends Controller {
                     if ( file_exists( ABS_PATH.'/data/uploads/propics/parent/'.$id.'.jpg' ) ):
                         $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/parent/'.$id.'.jpg');
                     else:
-                        $image = imagecreatefromjpeg(ABS_PATH.'/data/img/default_user.jpg');
+                        $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/default.jpg');
                     endif;
 
                     imagejpeg($image);
@@ -104,7 +104,7 @@ class Data extends Controller {
                     if ( file_exists( ABS_PATH.'/data/uploads/propics/coach/'.$id.'.jpg' ) ):
                         $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/coach/'.$id.'.jpg');
                     else:
-                        $image = imagecreatefromjpeg(ABS_PATH.'/data/img/default_user.jpg');
+                        $image = imagecreatefromjpeg(ABS_PATH.'/data/uploads/propics/default.jpg');
                     endif;
 
                     imagejpeg($image);

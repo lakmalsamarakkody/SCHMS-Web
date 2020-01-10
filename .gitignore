@@ -1,3 +1,11 @@
 libs/*
 config/default.php
 error.log
+
+# DATA
+data/backups/*.sql
+data/uploads/propics/staff/*.jpg
+data/uploads/propics/student/*.jpg
+data/reports/attendance/*.pdf
+data/reports/result/*.pdf
+data/reports/student/*.pdf
