@@ -1064,14 +1064,6 @@ class School extends Controller {
             echo json_encode( array( "error" => "Permission denied" ), JSON_PRETTY_PRINT );
             exit();
         endif;
-
-		// VALIDATE exam_type ID
-		$is_exist = $this->model_exam_type->select('id')->where('id', '=', $this->request->post['id'])->first();
-
-		if( $is_exist == NULL ):
-			echo json_encode( array( "error" => "Editing exam type doesn't exists" ), JSON_PRETTY_PRINT );
-			exit();
-		endif;
 		
 		// VALIDATION : exam_type_name
 		$is_valid_exam_type_name = GUMP::is_valid($this->request->post, array('exam_type_name' => 'required|alpha_space'));
@@ -1115,7 +1107,15 @@ class School extends Controller {
         if ( !$this->model_user->find($_SESSION['user']['id'])->hasPermission('management-index-edit-any') ):
             echo json_encode( array( "status" => "failed", "message" => "Permission denied" ), JSON_PRETTY_PRINT );
             exit();
-        endif;
+		endif;
+		
+		// VALIDATE exam_type ID
+		$is_exist = $this->model_exam_type->select('id')->where('id', '=', $this->request->post['id'])->first();
+
+		if( $is_exist == NULL ):
+			echo json_encode( array( "error" => "Editing exam type doesn't exists" ), JSON_PRETTY_PRINT );
+			exit();
+		endif;
 		
 		// VALIDATION : exam_type_name
         $is_valid_exam_type_name = GUMP::is_valid($this->request->post, array('name' => 'required'));
