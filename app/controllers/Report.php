@@ -1236,9 +1236,18 @@ class Report extends Controller {
         ->where('exam.id', '=', $this->request->post['exam_id'])
         ->select('subject.name as subject_name', 'student_has_exam_schedule.marks');
 
+        $data['exam_total']['total']['marks'] = 0;
+        $data['exam_average']['average']['marks'] = 0;
+        $total = 0;
+        $subject_count = 0;
+
         foreach ( $exam_result->get() as $key => $element ):
             $data['exam']['subject'][$key]['name'] = $element->subject_name;
             $data['exam']['subject'][$key]['mark'] = $element->marks;
+            $data['exam_total']['total']['marks'] = $total + $element->marks;
+            $total = $data['exam_total']['total']['marks'];
+            $subject_count = $subject_count + 1;
+            $data['exam_average']['average']['marks'] = $total / $subject_count;
         endforeach;
 
         // JSReports

@@ -100,6 +100,42 @@
                     </div>
                     <!-- END : ADD EXAM -->
 
+                    <div class="col-12">
+                        <div class="row">
+                            {% if exam.schedules and exam_triggered.status %}
+                                <table id="table_exam_search" class="table table-hover table-responsive-md">
+                                    <caption> Results of Exam Schedules </caption>
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th width="20%" class="text-center" scope="col">Exam Name</th>
+                                            <th width="8%" class="text-center" scope="col">Grade</th>
+                                            <th class="text-center" scope="col">Subject</th>
+                                            <th width="9%" class="text-center" scope="col">Date</th>
+                                            <th width="8%" class="text-center" scope="col">Starts at</th>
+                                            <th width="8%" class="text-center" scope="col">Ends at</th>
+                                            <!-- <th class="text-center" scope="col">Venue</th> -->
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for exam_schedule in exam.schedules %}
+                                            <tr>
+                                                <td class="text-center">{{ exam_schedule.exam_type_name }} - {{ exam_schedule.exam_year }}</td>
+                                                <td class="text-center">Grade - {{ exam_schedule.grade }}</td>
+                                                <td class="text-center">{{ exam_schedule.subject }}</td>
+                                                <td class="text-center">{{ exam_schedule.date }}</td>
+                                                <td class="text-center">{{ exam_schedule.starts }}</td>
+                                                <td class="text-center">{{ exam_schedule.ends }}</td>
+                                                <!-- <td class="text-center">{{ exam_schedule.venue }}</td> -->
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
+
                     <!-- START : SCHEDULE EXAM -->
                     <div class="scheduleexam">
 
@@ -119,7 +155,7 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="exam"> Select Exam </label>
-                                                <select class="form-control" id="exam_name">
+                                                <select class="form-control" name="exam_name" id="exam_name">
                                                     <option selected disabled> - Select Exam - </option>
                                                     {% for exam in exams %}
                                                         <option value="{{ exam.id }}"> {{ exam.type.name }} - {{ exam.year }} </option>
@@ -131,7 +167,7 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="grade"> Grade </label>
-                                                <select class="form-control" id="exam_grade">
+                                                <select class="form-control" name="exam_grade" id="exam_grade">
                                                     <option selected disabled> - Select Grade - </option>
                                                     {% for grade in grades %}
                                                         <option value="{{ grade.id }}"> {{ grade.name }} </option>
@@ -149,6 +185,14 @@
                                                         <option value="{{ subject.id }}"> {{ subject.name }} </option>
                                                     {% endfor %}
                                                 </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="subject"> &nbsp; </label>
+                                                <input type="hidden" name="search_schedules"/>
+                                                <button type="submit" class="btn btn-primary">Search exisiting schedules</button>
                                             </div>
                                         </div>
 
@@ -813,6 +857,44 @@
             location.replace(location);
             }
         }
+
+
+
+
+        // START : SCRIPT : ADD EXAM SCHEDULE
+        search_existing_schedule = () => {
+
+        // PAYLOAD
+        var formData = new FormData;
+
+        // ADD EXAM SCHEDULE DATA
+        formData.append('exam_name', $("#exam_name").val())
+        formData.append('exam_grade', $("#exam_grade").val())
+
+        // REQUEST
+        $.ajax({
+            url: "{{ app.url }}/exam/search_existing_schedule",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: (res) => {
+                
+                if ( res.status == 'success' ) {
+                    alertify.alert("Success", "Searching successfully completed ... ");
+                } else {
+                    console.log(res);
+                    alertify.alert(res.error);
+                }
+            },
+            error: (e) => {
+                alertify.alert("Error", "Something went wrong ... ");
+                console.log(e.responseText)
+            }
+        })
+        }
+        // END : SCRIPT : ADD EXAM SCHEDULE
 
     </script>
 

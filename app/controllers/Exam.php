@@ -272,7 +272,93 @@ class Exam extends Controller {
 
 		// RENDER VIEW
         $this->load->view('exam/search', $data);
-        
+    }
+
+    public function search_existing_schedule() {
+
+        // MODEL
+        $this->load->model('exam');
+        $this->load->model('exam/type');
+        $this->load->model('exam/schedule');
+        $this->load->model('exam/grade');
+        $this->load->model('grade');
+        $this->load->model('subject');
+
+        $exam_schedule = $this->model_exam_schedule->select('id', 'exam_grade_id', 'subject_id', 'date', 'start_time', 'end_time', 'venue', 'instructions');
+
+            // FILTER ( EXAM )
+            if ( isset($this->request->post['exam_name']) AND !empty($this->request->post['exam_name']) ):
+                $exam_grades = $this->model_exam_grade->select('id')->where('exam_id', '=', $this->request->post['exam_name'])->get();
+                if ( $exam_grades != NULL ):
+                    $exam_schedule_ids = array();
+                    foreach ( $exam_grades as $key => $element):
+                        $exam_schedule_id = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
+                        if ( $exam_schedule_id != NULL ):
+                            foreach ( $exam_schedule_id as $key2 => $element2 ):
+                                array_push($exam_schedule_ids, $element2->id);
+                            endforeach;
+                        endif;
+                    endforeach;
+                    $exam_schedule->where(function($query) use ($exam_schedule_ids) {
+                        $query->whereIn('id', $exam_schedule_ids);
+                    });
+                endif;
+            endif;
+
+            // FILTER ( GRADE )
+            if ( isset($this->request->post['exam_grade']) AND !empty($this->request->post['exam_grade']) ):
+                $exam_grades = $this->model_exam_grade->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get();
+                if ( $exam_grades != NULL ):
+                    $exam_schedule_ids = array();
+                    foreach ( $exam_grades as $key => $element ):
+                        $exam_grade_schedule = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
+                        if ( $exam_grade_schedule != NULL ):
+                            foreach ( $exam_grade_schedule as $key2 => $element2 ):
+                                array_push($exam_schedule_ids, $element2->id);
+                            endforeach;
+                        endif;
+                    endforeach;
+                    $exam_schedule->where(function($query) use ($exam_schedule_ids) {
+                        $query->whereIn('id', $exam_schedule_ids);
+                    });
+                endif;
+            endif;
+
+            foreach( $exam_schedule->get() as $key => $element ):
+
+                $data['exam']['schedules'][$key]['id'] = $element->id;
+
+                    // EXAM GRADE 
+                    $exam_grade_id = $this->model_exam_schedule->select('id', 'exam_grade_id')->where('id', '=', $element->id)->first()->exam_grade_id;
+                    $exam_grade = $this->model_exam_grade->select('exam_id', 'grade_id')->where('id', '=', $exam_grade_id)->first();
+                    $grade_id = $exam_grade->grade_id;
+                    $exam_id = $exam_grade->exam_id;
+                    $grade_name = $this->model_grade->select('name')->where('id', '=', $grade_id)->first()->name;
+
+                    // EXAM TYPE AND YEAR
+                    $exam = $this->model_exam->select('id', 'type_id', 'year')->where('id', '=', $exam_id)->first();
+                    $exam_type_name = $this->model_exam_type->select('name')->where('id', '=', $exam->type_id)->first()->name;
+
+                    // SUBJECT NAME
+                    $subject_name = $this->model_subject->select('name')->where('id', '=', $element->subject_id)->first()->name;
+
+                    // START AND END TIME
+                    $start_time = Carbon::createFromFormat("H:i:s", $element->start_time);
+                    $end_time = Carbon::createFromFormat("H:i:s", $element->end_time);
+
+                $data['exam']['schedules'][$key]['exam_type_name'] = $exam_type_name;
+                $data['exam']['schedules'][$key]['exam_year'] = $exam->year;
+                $data['exam']['schedules'][$key]['grade'] = $grade_name;
+                $data['exam']['schedules'][$key]['subject'] = $subject_name;
+                $data['exam']['schedules'][$key]['date'] = $element->date;
+                $data['exam']['schedules'][$key]['starts'] = $start_time->isoFormat('h:mm A');
+                $data['exam']['schedules'][$key]['ends'] = $end_time->isoFormat('h:mm A');
+                $data['exam']['schedules'][$key]['venue'] = $element->venue;
+                $data['exam']['schedules'][$key]['instructions'] = $element->instructions;
+
+            endforeach;
+
+            var_dump( $data['exam']['schedules'] );
     }
 
     public function ajax_remove_exam() {
@@ -421,6 +507,94 @@ class Exam extends Controller {
         //  TWIG : SELECT EXAM DATE
         $data['exam_min_date'] = Carbon::now()->format('Y-m-d');
         $data['exam_max_date'] = Carbon::now()->addYears(1)->format('Y-m-d');
+
+        if ( isset($this->request->post['search_schedules']) ):
+
+            // MODEL
+            $this->load->model('exam');
+            $this->load->model('exam/type');
+            $this->load->model('exam/schedule');
+            $this->load->model('exam/grade');
+            $this->load->model('grade');
+            $this->load->model('subject');
+
+            $exam_schedule = $this->model_exam_schedule->select('id', 'exam_grade_id', 'subject_id', 'date', 'start_time', 'end_time', 'venue', 'instructions');
+
+            // FILTER ( EXAM )
+            if ( isset($this->request->post['exam_name']) AND !empty($this->request->post['exam_name']) ):
+                $exam_grades = $this->model_exam_grade->select('id')->where('exam_id', '=', $this->request->post['exam_name'])->get();
+                if ( $exam_grades != NULL ):
+                    $exam_schedule_ids = array();
+                    foreach ( $exam_grades as $key => $element):
+                        $exam_schedule_id = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
+                        if ( $exam_schedule_id != NULL ):
+                            foreach ( $exam_schedule_id as $key2 => $element2 ):
+                                array_push($exam_schedule_ids, $element2->id);
+                            endforeach;
+                        endif;
+                    endforeach;
+                    $exam_schedule->where(function($query) use ($exam_schedule_ids) {
+                        $query->whereIn('id', $exam_schedule_ids);
+                    });
+                endif;
+            endif;
+
+            // FILTER ( GRADE )
+            if ( isset($this->request->post['exam_grade']) AND !empty($this->request->post['exam_grade']) ):
+                $exam_grades = $this->model_exam_grade->select('id')->where('grade_id', '=', $this->request->post['exam_grade'])->get();
+                if ( $exam_grades != NULL ):
+                    $exam_schedule_ids = array();
+                    foreach ( $exam_grades as $key => $element ):
+                        $exam_grade_schedule = $this->model_exam_schedule->select('id')->where('exam_grade_id', '=', $element->id)->get();
+                        if ( $exam_grade_schedule != NULL ):
+                            foreach ( $exam_grade_schedule as $key2 => $element2 ):
+                                array_push($exam_schedule_ids, $element2->id);
+                            endforeach;
+                        endif;
+                    endforeach;
+                    $exam_schedule->where(function($query) use ($exam_schedule_ids) {
+                        $query->whereIn('id', $exam_schedule_ids);
+                    });
+                endif;
+            endif;
+
+            foreach( $exam_schedule->get() as $key => $element ):
+
+                $data['exam']['schedules'][$key]['id'] = $element->id;
+
+                    // EXAM GRADE 
+                    $exam_grade_id = $this->model_exam_schedule->select('id', 'exam_grade_id')->where('id', '=', $element->id)->first()->exam_grade_id;
+                    $exam_grade = $this->model_exam_grade->select('exam_id', 'grade_id')->where('id', '=', $exam_grade_id)->first();
+                    $grade_id = $exam_grade->grade_id;
+                    $exam_id = $exam_grade->exam_id;
+                    $grade_name = $this->model_grade->select('name')->where('id', '=', $grade_id)->first()->name;
+
+                    // EXAM TYPE AND YEAR
+                    $exam = $this->model_exam->select('id', 'type_id', 'year')->where('id', '=', $exam_id)->first();
+                    $exam_type_name = $this->model_exam_type->select('name')->where('id', '=', $exam->type_id)->first()->name;
+
+                    // SUBJECT NAME
+                    $subject_name = $this->model_subject->select('name')->where('id', '=', $element->subject_id)->first()->name;
+
+                    // START AND END TIME
+                    $start_time = Carbon::createFromFormat("H:i:s", $element->start_time);
+                    $end_time = Carbon::createFromFormat("H:i:s", $element->end_time);
+
+                $data['exam']['schedules'][$key]['exam_type_name'] = $exam_type_name;
+                $data['exam']['schedules'][$key]['exam_year'] = $exam->year;
+                $data['exam']['schedules'][$key]['grade'] = $grade_name;
+                $data['exam']['schedules'][$key]['subject'] = $subject_name;
+                $data['exam']['schedules'][$key]['date'] = $element->date;
+                $data['exam']['schedules'][$key]['starts'] = $start_time->isoFormat('h:mm A');
+                $data['exam']['schedules'][$key]['ends'] = $end_time->isoFormat('h:mm A');
+                $data['exam']['schedules'][$key]['venue'] = $element->venue;
+                $data['exam']['schedules'][$key]['instructions'] = $element->instructions;
+
+            endforeach;
+
+            $data['exam_triggered']['status'] = true;
+
+        endif;
 
 		// RENDER VIEW
         $this->load->view('exam/create', $data);
